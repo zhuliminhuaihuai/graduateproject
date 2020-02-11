@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.RoomMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Room" >
+    <constructor >
+      <idArg column="room_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_building" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_sections1" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_sections2" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_sections3" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_sections4" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_people" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_purpose" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="room_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    room_id, room_state, room_code, room_building, room_number, room_sections1, room_sections2, 
+    room_sections3, room_sections4, room_people, room_purpose, room_remark, room_address, 
+    room_create_time, room_update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from classroom_room
+    where room_id = #{roomId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from classroom_room
+    where room_id = #{roomId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Room" >
+    insert into classroom_room (room_id, room_state, room_code, 
+      room_building, room_number, room_sections1, 
+      room_sections2, room_sections3, room_sections4, 
+      room_people, room_purpose, room_remark, 
+      room_address, room_create_time, room_update_time
+      )
+    values (#{roomId,jdbcType=INTEGER}, #{roomState,jdbcType=INTEGER}, #{roomCode,jdbcType=VARCHAR}, 
+      #{roomBuilding,jdbcType=VARCHAR}, #{roomNumber,jdbcType=VARCHAR}, #{roomSections1,jdbcType=INTEGER}, 
+      #{roomSections2,jdbcType=INTEGER}, #{roomSections3,jdbcType=INTEGER}, #{roomSections4,jdbcType=INTEGER}, 
+      #{roomPeople,jdbcType=VARCHAR}, #{roomPurpose,jdbcType=VARCHAR}, #{roomRemark,jdbcType=VARCHAR}, 
+      #{roomAddress,jdbcType=VARCHAR}, #{roomCreateTime,jdbcType=TIMESTAMP}, #{roomUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Room" >
+    insert into classroom_room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="roomState != null" >
+        room_state,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="roomBuilding != null" >
+        room_building,
+      </if>
+      <if test="roomNumber != null" >
+        room_number,
+      </if>
+      <if test="roomSections1 != null" >
+        room_sections1,
+      </if>
+      <if test="roomSections2 != null" >
+        room_sections2,
+      </if>
+      <if test="roomSections3 != null" >
+        room_sections3,
+      </if>
+      <if test="roomSections4 != null" >
+        room_sections4,
+      </if>
+      <if test="roomPeople != null" >
+        room_people,
+      </if>
+      <if test="roomPurpose != null" >
+        room_purpose,
+      </if>
+      <if test="roomRemark != null" >
+        room_remark,
+      </if>
+      <if test="roomAddress != null" >
+        room_address,
+      </if>
+      <if test="roomCreateTime != null" >
+        room_create_time,
+      </if>
+      <if test="roomUpdateTime != null" >
+        room_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roomId != null" >
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="roomState != null" >
+        #{roomState,jdbcType=INTEGER},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomBuilding != null" >
+        #{roomBuilding,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNumber != null" >
+        #{roomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="roomSections1 != null" >
+        #{roomSections1,jdbcType=INTEGER},
+      </if>
+      <if test="roomSections2 != null" >
+        #{roomSections2,jdbcType=INTEGER},
+      </if>
+      <if test="roomSections3 != null" >
+        #{roomSections3,jdbcType=INTEGER},
+      </if>
+      <if test="roomSections4 != null" >
+        #{roomSections4,jdbcType=INTEGER},
+      </if>
+      <if test="roomPeople != null" >
+        #{roomPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="roomPurpose != null" >
+        #{roomPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="roomRemark != null" >
+        #{roomRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="roomAddress != null" >
+        #{roomAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCreateTime != null" >
+        #{roomCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roomUpdateTime != null" >
+        #{roomUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Room" >
+    update classroom_room
+    <set >
+      <if test="roomState != null" >
+        room_state = #{roomState,jdbcType=INTEGER},
+      </if>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomBuilding != null" >
+        room_building = #{roomBuilding,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNumber != null" >
+        room_number = #{roomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="roomSections1 != null" >
+        room_sections1 = #{roomSections1,jdbcType=INTEGER},
+      </if>
+      <if test="roomSections2 != null" >
+        room_sections2 = #{roomSections2,jdbcType=INTEGER},
+      </if>
+      <if test="roomSections3 != null" >
+        room_sections3 = #{roomSections3,jdbcType=INTEGER},
+      </if>
+      <if test="roomSections4 != null" >
+        room_sections4 = #{roomSections4,jdbcType=INTEGER},
+      </if>
+      <if test="roomPeople != null" >
+        room_people = #{roomPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="roomPurpose != null" >
+        room_purpose = #{roomPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="roomRemark != null" >
+        room_remark = #{roomRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="roomAddress != null" >
+        room_address = #{roomAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCreateTime != null" >
+        room_create_time = #{roomCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roomUpdateTime != null" >
+        room_update_time = #{roomUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where room_id = #{roomId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Room" >
+    update classroom_room
+    set room_state = #{roomState,jdbcType=INTEGER},
+      room_code = #{roomCode,jdbcType=VARCHAR},
+      room_building = #{roomBuilding,jdbcType=VARCHAR},
+      room_number = #{roomNumber,jdbcType=VARCHAR},
+      room_sections1 = #{roomSections1,jdbcType=INTEGER},
+      room_sections2 = #{roomSections2,jdbcType=INTEGER},
+      room_sections3 = #{roomSections3,jdbcType=INTEGER},
+      room_sections4 = #{roomSections4,jdbcType=INTEGER},
+      room_people = #{roomPeople,jdbcType=VARCHAR},
+      room_purpose = #{roomPurpose,jdbcType=VARCHAR},
+      room_remark = #{roomRemark,jdbcType=VARCHAR},
+      room_address = #{roomAddress,jdbcType=VARCHAR},
+      room_create_time = #{roomCreateTime,jdbcType=TIMESTAMP},
+      room_update_time = #{roomUpdateTime,jdbcType=TIMESTAMP}
+    where room_id = #{roomId,jdbcType=INTEGER}
+  </update>
+    <select id="getRoomList" resultMap="BaseResultMap" parameterType="com.project.vo.ClassRoomQueryVo">
+        select <include refid="Base_Column_List"></include>
+        from  classroom_room
+        <where>
+            <if test="roomCode !=null and roomCode!=''">
+                and room_code = #{roomCode}
+            </if>
+            <if test="roomBuilding!=null and roomBuilding!=''">
+                and room_building = #{roomBuilding}
+            </if>
+            <if test="roomNumber!=null and roomNumber!=''">
+                and room_number like "%"#{roomNumber}"%"
+            </if>
+            <if test="roomSections1!=null and roomSections1!=''">
+                and room_sections1 = #{roomSections1}
+            </if>
+            <if test="roomSections2!=null and roomSections2!=''">
+                and room_sections2 = #{roomSections2}
+            </if>
+            <if test="roomSections3!=null and roomSections3!=''">
+                and room_sections3 = #{roomSections3}
+            </if>
+            <if test="roomSections4!=null and roomSections4!=''">
+                and room_sections4 = #{roomSections4}
+            </if>
+            <if test="roomPeople!=null and roomPeople!=''">
+                room_people = #{roomPeople}
+            </if>
+            <if test="roomPurpose!=null and roomPurpose!=''">
+                and room_purpose like "%"#{roomPurpose}"%"
+            </if>
+            <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+                <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+                    <if test="startTime!=null and startTime!=''">
+                        and  <![CDATA[ timetable_create_time >= #{startTime}]]>
+                    </if>
+                    <if test="endTime!=null and endTime!=''">
+                        and <![CDATA[ timetable_create_time <= #{endTime}]]>
+                    </if>
+                </if>
+                <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+                    and  <![CDATA[ timetable_create_time >= #{startTime}]]>
+                </if>
+                <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+                    and <![CDATA[ timetable_create_time <= #{endTime}]]>
+                </if>
+            </if>
+        </where>
+    </select>
+  <select id="getBorrowRoomList" resultMap="BaseResultMap" parameterType="com.project.vo.ClassRoomQueryVo">
+    select <include refid="Base_Column_List"></include>
+    from  classroom_room
+    <where>
+      <if test="roomCode !=null and roomCode!=''">
+        and room_code = #{roomCode}
+      </if>
+      <if test="roomBuilding!=null and roomBuilding!=''">
+        and room_building = #{roomBuilding}
+      </if>
+      <if test="roomNumber!=null and roomNumber!=''">
+        and room_number like "%"#{roomNumber}"%"
+      </if>
+      <if test="roomSections1!=null and roomSections1!=''">
+        and room_sections1 = #{roomSections1}
+      </if>
+      <if test="roomSections2!=null and roomSections2!=''">
+        and room_sections2 = #{roomSections2}
+      </if>
+      <if test="roomSections3!=null and roomSections3!=''">
+        and room_sections3 = #{roomSections3}
+      </if>
+      <if test="roomSections4!=null and roomSections4!=''">
+        and room_sections4 = #{roomSections4}
+      </if>
+      <if test="roomPeople!=null and roomPeople!=''">
+        room_people = #{roomPeople}
+      </if>
+      <if test="roomPurpose!=null and roomPurpose!=''">
+        and room_purpose like "%"#{roomPurpose}"%"
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ timetable_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ timetable_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ timetable_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ timetable_create_time <= #{endTime}]]>
+        </if>
+      </if>
+      and room_state = 1
+    </where>
+  </select>
+</mapper>

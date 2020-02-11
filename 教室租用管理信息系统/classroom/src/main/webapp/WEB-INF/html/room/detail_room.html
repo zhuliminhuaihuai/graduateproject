@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>添加新教室</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+
+<div class="x-body">
+    <div class="layui-form" id="form">
+
+        <legend>教室信息</legend>
+        <div class="layui-form-item">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>教室编号
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" disabled="disabled" type="text" id="roomCode" name="roomCode"
+                       lay-verify="roomCode" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>教师编号 唯一标识，不可更改
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="x-red">*</span>大楼名称</label>
+            <div class="layui-input-inline" style="width:100px;">
+                <select name="roomBuilding" disabled="disabled" id="roomBuilding" lay-verify="roomBuilding" lay-filter="" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="1号楼">1号楼</option>
+                    <option value="2号楼">2号楼</option>
+                    <option value="3号楼">3号楼</option>
+                    <option value="4号楼">4号楼</option>
+                    <option value="5号楼">5号楼</option>
+                    <option value="6号楼">6号楼</option>
+                    <option value="7号楼">7号楼</option>
+                    <option value="8号楼">8号楼</option>
+                    <option value="9号楼">9号楼</option>
+                    <option value="10号楼">10号楼</option>
+                    <option value="11号楼">11号楼</option>
+                    <option value="12号楼">12号楼</option>
+                    <option value="13号楼">13号楼</option>
+                    <option value="14号楼">14号楼</option>
+                    <option value="15号楼">15号楼</option>
+                    <option value="16号楼">16号楼</option>
+                    <option value="17号楼">17号楼</option>
+                    <option value="18号楼">18号楼</option>
+                    <option value="19号楼">19号楼</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>大楼名称
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="roomNumber" class="layui-form-label">
+                <span class="x-red">*</span>教室门牌号
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" disabled="disabled" type="text" id="roomNumber" name="roomNumber"
+                       lay-verify="roomNumber" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>教室牌号 例如：402
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="x-red">*</span>容纳人数</label>
+            <div class="layui-input-inline" style="width:100px;">
+                <select name="roomPeople" id="roomPeople" lay-verify="roomPeople" lay-filter="roomPeople" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="10-20人">10-20人</option>
+                    <option value="20-30人">20-30人</option>
+                    <option value="30-40人">30-40人</option>
+                    <option value="40-50人">40-50人</option>
+                    <option value="50-60人">50-60人</option>
+                    <option value="60-70人">60-70人</option>
+                    <option value="70-80人">70-80人</option>
+                    <option value="80-90人">80-90人</option>
+                    <option value="100-150人">100-150人</option>
+                    <option value="150以上">150以上</option>
+                    <option value="200以上">200以上</option>
+                    <option value="300以上">300以上</option>
+                    <option value="400以上">400以上</option>
+                    <option value="500以上">500以上</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>该教室所能容纳的最大人数
+            </div>
+        </div>
+        <div class="layui-form-item" id="roomPurposeList">
+            <label class="layui-form-label"><span class="x-red">*</span>用途</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="roomPurpose[]" value="书面课" title="书面课">
+                <input type="checkbox" name="roomPurpose[]" value="音乐课" title="音乐课">
+                <input type="checkbox" name="roomPurpose[]" value="美术课" title="美术课">
+                <input type="checkbox" name="roomPurpose[]" value="情景模拟" title="情景模拟">
+                <input type="checkbox" name="roomPurpose[]" value="舞会" title="舞会">
+                <input type="checkbox" name="roomPurpose[]" value="小型晚会" title="小型晚会">
+                <input type="checkbox" name="roomPurpose[]" value="大型晚会" title="大型晚会">
+                <input type="checkbox" name="roomPurpose[]" value="化学实验室" title="化学实验室">
+                <input type="checkbox" name="roomPurpose[]" value="生物实验室" title="生物实验室">
+                <input type="checkbox" name="roomPurpose[]" value="地理实验室" title="地理实验室">
+                <input type="checkbox" name="roomPurpose[]" value="物理实验室" title="物理实验室">
+                <input type="checkbox" name="roomPurpose[]" value="医学实验室" title="医学实验室">
+                <input type="checkbox" name="roomPurpose[]" value="小型会议室" title="小型会议室">
+                <input type="checkbox" name="roomPurpose[]" value="大型会议室" title="大型会议室">
+                <input type="checkbox" name="roomPurpose[]" value="画室" title="画室">
+                <input type="checkbox" name="roomPurpose[]" value="辩论赛室" title="辩论赛室">
+                <input type="checkbox" name="roomPurpose[]" value="话剧室" title="话剧室">
+                <input type="checkbox" name="roomPurpose[]" value="舞蹈房" title="舞蹈房">
+                <input type="checkbox" name="roomPurpose[]" value="投影房" title="投影房">
+                <input type="checkbox" name="roomPurpose[]" value="电脑房" title="电脑房">
+                <input type="checkbox" name="roomPurpose[]" value="钢琴房" title="钢琴房">
+                <input type="checkbox" name="roomPurpose[]" value="小提琴房" title="小提琴房">
+                <input type="checkbox" name="roomPurpose[]" value="吉他房" title="吉他房">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>教室可用来干嘛用
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="x-red">*</span>教室备注</label>
+            <div class="layui-input-block">
+                <textarea placeholder="教室备注..." class="layui-textarea" id="roomRemark"  lay-verify="roomRemark" name="roomRemark" ></textarea>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>可以备注教室的情况，以及教室哪节课不能使用说明
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+            <label class="layui-form-label"> </label>
+            <button class="layui-btn" lay-filter="save" lay-submit="">
+                保存
+            </button>
+            <button class="layui-btn layui-btn-danger" class="layui-btn layui-btn-primary" onclick="goback()">
+                返回
+            </button>
+        </div>
+    </div>
+</div>
+
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+
+<script type="text/javascript">
+    var $;
+    var roomId = localStorage.getItem("roomId");
+    localStorage.removeItem("roomId");
+    layui.use(['form', 'laydate', 'layer'], function () {
+        $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , laydate = layui.laydate;
+
+        form.verify({
+            roomBuilding: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '大楼名称不能为空';
+                }
+            },
+            roomNumber: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '教室门牌号不能为空';
+                }
+                var reg = /^[0-9]+.?[0-9]*$/;
+                var flag = reg.test(value);
+                if (flag == false)
+                    return '非法字符，请重新输入（纯数字）';
+            },
+            roomPeople: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '容纳人数不能为空';
+                }
+            },
+            roomRemark: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '教室备注不能为空';
+                }
+
+            },
+        });
+        $.ajax({
+            url: "/manage/room/detailRoom",
+            type: "post",
+            dateType: "json",
+            data:{
+                roomId:roomId
+            },
+            success: function (res) {
+                var data = res.data;
+                $("#roomCode").val(data.roomCode);
+                $("#roomBuilding").val(data.roomBuilding);
+                $("#roomNumber").val(data.roomNumber);
+                $("#roomPeople").val(data.roomPeople);
+                var roomPurpose = data.roomPurpose;
+                var roomPurposeArray = new Array();
+                roomPurposeArray = roomPurpose.split(",");
+                var child = $("input[type='checkbox']");
+                for (var i = 0; i < roomPurposeArray.length; i++) {
+                    child.each(function (index, item) {
+                        if ($(item).val() == roomPurposeArray[i].substring(1, roomPurposeArray[i].length - 1)) {
+                            $(item).prop("checked", true);
+                            form.render();
+                            return;
+                        }
+                    });
+                }
+                $("#roomRemark").val(data.roomRemark);
+                form.render();
+            }
+        })
+
+        form.on('submit(save)', function (data) {
+            var roomPeople = $("#roomPeople option:selected").val();
+            var roomRemark = $("#roomRemark").val();
+
+            var roomPurposeList = new Array();
+
+            var child = $("input[type='checkbox']");
+            child.each(function (index, item) {
+                if (item.checked == true && $(item).val() != "on") {
+                    roomPurposeList.push($(item).val());
+                }
+            });
+            console.log("教师用途:" + roomPurposeList);
+            if (roomPurposeList.length == 0) {
+                layer.msg("教室用途不能为空！", {icon: 5, time: 1000});
+                return false;
+            }
+            var roomPurpose = JSON.stringify(eval(roomPurposeList));
+
+
+
+
+            /*var userSex = $("input[name='userSex']:checked").val();*/
+            $.ajax({
+                type: 'post',
+                url: '/manage/room/saveRoom',
+                dataType: 'json',
+                data: {
+                    roomId: roomId,
+                    roomPeople: roomPeople,
+                    roomRemark: roomRemark,
+                    roomPurpose: roomPurpose,
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg(data.msg, {
+                            icon: 6, time: 1500, end: function () {
+                                parent.location.reload();
+                            }
+                        });
+                    } else {
+                        layer.msg(data.msg, {
+                            icon: 5, time: 1500, end: function () {
+                                return false;
+                            }
+                        });
+                    }
+                },
+                error: function (XMLHttpResponse, textStatus, errorThrown, data) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                }
+            });
+
+        });
+
+
+    });
+
+    $('.content .layui-btn').on('click', function(){
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+    function goback() {
+        parent.location.reload();
+    }
+
+
+</script>
+
+</body>
+
+
+</html>

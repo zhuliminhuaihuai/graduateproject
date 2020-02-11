@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>租用教室</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all"/>
+</head>
+<body>
+
+<div class="x-body">
+    <div class="layui-form" id="form">
+
+        <legend>借用教室信息</legend>
+        <div class="layui-form-item">
+            <label for="orderAppointmentTime" class="layui-form-label"> <span
+                    class="x-red">*</span>借用时间
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" name="orderAppointmentTime" id="orderAppointmentTime" lay-verify="date"
+                       placeholder="借用时间"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>选择借用教室的时间
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="orderPurpose" class="layui-form-label"> <span
+                    class="x-red">*</span>借用用途
+            </label>
+            <div class="layui-input-inline">
+                <select name="orderPurpose" id="orderPurpose" lay-verify="orderPurpose" lay-search="">
+                    <option value="">请选择用途...</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>借用教室的用处
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="orderSelection" class="layui-form-label"> <span
+                    class="x-red">*</span>第几节课
+            </label>
+            <div class="layui-input-inline">
+                <select name="orderSelection" id="orderSelection" lay-verify="orderSelection" lay-search="">
+                    <option value="">请选择课时...</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>借用该教室的哪节课
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">借用理由</label>
+            <div class="layui-input-block">
+                <textarea placeholder="理由描述..." class="layui-textarea" id="orderRemark" lay-verify="orderRemark"
+                          name="orderRemark"></textarea>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>借用该教室的用处，大致描述，好让管理员审核通过。
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+            <label class="layui-form-label"> </label>
+            <button class="layui-btn" lay-filter="add" lay-submit="">
+                申请
+            </button>
+            <button class="layui-btn layui-btn-danger" class="layui-btn layui-btn-primary" onclick="resetmessage()">
+                重置
+            </button>
+        </div>
+    </div>
+</div>
+
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+
+<script type="text/javascript">
+    var $;
+    var roomId = localStorage.getItem("roomId");
+    var roomCode = "";
+    var roomBuilding = "";
+    var roomNumber = "";
+    layui.use(['form', 'laydate', 'layer'], function () {
+        $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , laydate = layui.laydate;
+
+
+        form.verify({
+            orderAppointmentTime: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '借用时间不能为空';
+                }
+            },
+            orderPurpose: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '借用用途不能为空';
+                }
+            },
+            orderSelection: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '借用课时不能为空';
+                }
+            },
+            orderRemark: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '借用理由不能为空';
+                }
+            },
+        });
+
+
+        $.ajax({
+            url: "/manage/room/detailRoom",
+            type: "post",
+            dateType: "json",
+            data: {
+                roomId: roomId
+            },
+            success: function (res) {
+                var data = res.data;
+                console.log("ddddddd:0" + JSON.stringify(data));
+                var roomPurpose = data.roomPurpose;
+                console.log("roomPurpose:" + roomPurpose);
+                var roomPurposeArray = new Array();
+                roomPurposeArray = roomPurpose.split(",");
+                var orderPurpose = document.getElementById("orderPurpose");
+                for (var i = 0; i < roomPurposeArray.length; i++) {
+                    orderPurpose.add(new Option(roomPurposeArray[i].substring(1, roomPurposeArray[i].length - 1), roomPurposeArray[i].substring(1, roomPurposeArray[i].length - 1)));
+                }
+                var orderSelection = document.getElementById("orderSelection");
+                if (data.roomSections1 == 1) {
+                    orderSelection.add(new Option("1-2节", "1-2节"));
+                }
+                if (data.roomSections2 == 1) {
+                    orderSelection.add(new Option("3-4节", "3-4节"));
+                }
+                if (data.roomSections3 == 1) {
+                    orderSelection.add(new Option("5-6节", "5-6节"));
+                }
+                if (data.roomSections4 == 1) {
+                    orderSelection.add(new Option("7-8节", "7-8节"));
+                }
+                roomCode = data.roomCode;
+                roomBuilding = data.roomBuilding;
+                roomNumber = data.roomNumber;
+                form.render();
+            }
+        })
+
+        form.on('submit(add)', function (data) {
+            var orderAppointmentTime = $("#orderAppointmentTime").val();
+            var orderPurpose = $("#orderPurpose option:selected").val();
+            var orderSelection = $("#orderSelection option:selected").val();
+            var orderRemark = $("#orderRemark").val();
+
+
+            $.ajax({
+                type: 'post',
+                url: '/manage/order/addBorrowOrder',
+                dataType: 'json',
+                data: {
+                    orderAppointmentTime1: orderAppointmentTime,
+                    orderPurpose: orderPurpose,
+                    orderSelection: orderSelection,
+                    orderRemark: orderRemark,
+                    roomCode: roomCode,
+                    roomBuilding: roomBuilding,
+                    roomNumber: roomNumber,
+                },
+                async: false,
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg(data.msg, {
+                            icon: 6, time: 1500, end: function () {
+                                parent.location.reload();
+                            }
+                        });
+                    } else {
+                        layer.msg(data.msg, {
+                            icon: 5, time: 1500, end: function () {
+                                return false;
+                            }
+                        });
+                    }
+                },
+                error: function (XMLHttpResponse, textStatus, errorThrown, data) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                }
+            });
+
+        });
+        laydate.render({
+            elem: '#orderAppointmentTime'
+            , type: 'date'
+            , min: '0'
+        });
+
+    });
+
+    $('.content .layui-btn').on('click', function () {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+    function resetmessage() {
+        window.location.reload();
+    }
+
+
+</script>
+
+</body>
+
+
+</html>

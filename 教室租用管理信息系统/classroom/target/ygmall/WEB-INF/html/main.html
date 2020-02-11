@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<base href="<%=basePath%>">
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>后台首页</title>
+	<link rel="stylesheet" type="text/css" href="/../../layui/css/layui.css"/>
+	<link rel="stylesheet" type="text/css" href="/../../css/admin.css"/>
+</head>
+<body>
+<div class="layui-tab page-content-wrap">
+	<ul class="layui-tab-title">
+		<li class="layui-this">待审核</li>
+		<li>个人资料</li>
+		<li>修改密码</li>
+	</ul>
+	<div class="layui-tab-content">
+		<div class="layui-tab-item layui-show">
+			<form class="layui-form"  style="width: 100%;padding-top: 20px;">
+				<table class="layui-hide" id="user" lay-filter="userTable"></table>
+			</form>
+		</div>
+
+
+		<div class="layui-tab-item">
+			<div class="layui-form"  style="width: 90%;padding-top: 20px;">
+				<div class="layui-form-item">
+					<label for="facultyList" class="layui-form-label"> <span
+							class="x-red">*</span>所属院系
+					</label>
+					<div class="layui-input-inline">
+						<select name="facultyList" disabled="disabled" id="facultyList" lay-verify="facultyList" lay-search="">
+							<option value="">请选择学院...</option>
+							<option value="智慧教育学院">智慧教育学院</option>
+							<option value="哲学与公共管理学院">哲学与公共管理学院</option>
+							<option value="文学院">文学院</option>
+							<option value="语言科学与艺术学院">语言科学与艺术学院</option>
+							<option value="历史文化与旅游学院">历史文化与旅游学院</option>
+							<option value="法律政治学院">法律政治学院</option>
+							<option value="外国语学院">外国语学院</option>
+							<option value="商学院">商学院</option>
+							<option value="教育科学学院">教育科学学院</option>
+							<option value="物理与电子工程学院">物理与电子工程学院</option>
+							<option value="化学化工学院">化学化工学院</option>
+							<option value="生命科学学院">生命科学学院</option>
+							<option value="马克思主义学院">马克思主义学院</option>
+							<option value="体育学院">体育学院</option>
+							<option value="音乐学院">音乐学院</option>
+							<option value="美术学院">美术学院</option>
+							<option value="传媒与影视学院">传媒与影视学院</option>
+							<option value="机电工程学院">机电工程学院</option>
+							<option value="中俄学院">中俄学院</option>
+							<option value="电气工程及自动化学院">电气工程及自动化学院</option>
+							<option value="地理测绘与城乡规划学院">地理测绘与城乡规划学院</option>
+							<option value="科文学院">科文学院</option>
+							<option value="教育研究院">教育研究院</option>
+							<option value="继续教育学院">继续教育学院</option>
+							<option value="敬文书院">敬文书院</option>
+							<option value="圣彼得堡彼得大帝理工大学联合工程学院">圣彼得堡彼得大帝理工大学联合工程学院</option>
+						</select>
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>学生所属院系
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="userName" class="layui-form-label">
+						所处班级
+					</label>
+					<div class="layui-input-inline">
+						<input class="layui-input" type="text" id="userClassroom" name="userClassroom"
+							   lay-verify="userClassroom" autocomplete="off" value="">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>学生所在班级 务必真实 方便管理
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">用户编号</label>
+					<div class="layui-input-inline">
+						<input type="text" id="userCode" disabled="disabled" name="userCode" required=""
+							   lay-verify="userCode" autocomplete="off"
+							   class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="userName" class="layui-form-label">
+						<span class="x-red">*</span>用户名
+					</label>
+					<div class="layui-input-inline">
+						<input class="layui-input" type="text" id="userName" name="userName"
+							   lay-verify="userName" autocomplete="off" value="">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>用来登录系统的用户名
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="userRealName" class="layui-form-label">
+						<span class="x-red">*</span>真实姓名
+					</label>
+					<div class="layui-input-inline">
+						<input class="layui-input" type="text" id="userRealName" name="userRealName"
+							   lay-verify="userRealName" autocomplete="off" value="">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>你的真实姓名（上课的人）ps：务必真实 方便管理
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label for="userPhone" class="layui-form-label">
+						<span class="x-red">*</span>手机号
+					</label>
+					<div class="layui-input-inline">
+						<input class="layui-input" type="text" id="userPhone" name="userPhone"
+							   lay-verify="userPhone" placeholder="" autocomplete="off" value="">
+					</div>
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>用于联系
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label  class="layui-form-label">
+						<span class="x-red">*</span>性别
+					</label>
+					<div class="layui-form">
+						<input type="radio" name="userSex" id="userSex1" lay-filter="filter" required="required" lay-verify="userSex" value="男生" title="男生">
+						<input type="radio" name="userSex" id="userSex2" lay-filter="filter" required="required" lay-verify="userSex" value="女生" title="女生">
+						<input type="radio" name="userSex" id="userSex3" lay-filter="filter" required="required" lay-verify="userSex" value="保密" title="保密">
+					</div>
+					<input id="distributionmode" style="display: none;">
+					<div class="layui-form-mid layui-word-aux">
+						<span class="x-red">*</span>性别选择不想公开那就选择保密
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveUser">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="layui-tab-item">
+			<div class="layui-form"  style="width: 90%;padding-top: 20px;">
+				<!--<div class="layui-form-item">
+					<label class="layui-form-label">用户名：</label>
+					<div class="layui-input-block">
+						<input type="text" name="userName1" id="userName1" disabled autocomplete="off" class="layui-input layui-disabled" >
+					</div>
+				</div>-->
+				<div class="layui-form-item">
+					<label class="layui-form-label">旧密码：</label>
+					<div class="layui-input-block">
+						<input type="password" name="oldPssword" id="oldPssword" lay-verify="oldPssword" placeholder="请输入密码" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">新密码：</label>
+					<div class="layui-input-block">
+						<input type="password" name="newPassword" id="newPassword"  lay-verify="newPassword" placeholder="请输入密码" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">重复密码：</label>
+					<div class="layui-input-block">
+						<input type="password" name="againPassword" id="againPassword"  lay-verify="againPassword" placeholder="请输入密码" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn layui-btn-normal" lay-submit lay-filter="modifyPassword">修改</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/html" id="barDemo">
+	{{# if(${session_manage_token.getUserRole()} ==0 && d.orderState ===1 ){ }}
+	<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">申请详情</a>
+	<a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="withdraw">撤回</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="pass">审核通过</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="nopass">审核不通过</a>
+	{{# }else
+	if(${session_manage_token.getUserRole()} ==1 && d.orderState ===2) { }}
+	<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">申请详情</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>
+	{{# }else
+	if(${session_manage_token.getUserRole()} ==1 && d.orderState ===1) { }}
+	<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">申请详情</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="">审核中</a>
+	<a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="withdraw">撤回</a>
+	{{# }else
+	if(${session_manage_token.getUserRole()} ==0 && d.orderState ===2) { }}
+	<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">申请详情</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>
+	{{# }else { }}
+	<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">申请详情</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>
+	{{# }
+	}}
+
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../js/xadmin.js"></script>
+<script>
+    var userId ='${session_manage_token.getUserId()}';
+    var userRole = '${session_manage_token.getUserRole()}';
+    var userCode = '${session_manage_token.getUserCode()}';
+
+    function delcommafy(num) {
+        if (num != undefined) {
+            num = num.toString();
+            num = num.replace(/[ ]/g, ""); //去除空格
+            num = num.replace(/,/gi, '');
+            return Number(num);
+        }
+    }
+
+
+
+    //Demo
+    layui.use(['form','element','laydate','table'], function(){
+        var form = layui.form;
+        var element = layui.element;
+        var laydate = layui.laydate;
+        var table = layui.table;
+
+            laydate.render({
+            elem: '#birthday'
+        });
+        form.verify({
+            facultyList: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '所属院系选择不能为空';
+                }
+            },
+            userName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '用户名不能为空';
+                }
+            },
+            userRealName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '真实姓名不能为空';
+                }
+            },
+            userPhone: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '手机号不能为空';
+                }
+                var isPhone=/^1[0-9]{10}$/;
+                var flag=isPhone.test(value);
+                if(flag==false)
+                    return '手机号格式错误';
+            },
+            userClassroom: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '所处班级不能为空';
+                }
+            },
+            oldPssword : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '原密码不能为空';
+                }
+            },
+            newPassword : function(value) {
+                if (value.length ==null ||value.length =="" ) {
+                    return '新密码不能为空';
+                }
+                if (value.length <3 ||value.length >12 ) {
+                    return '新密码必须3到12位';
+                }
+
+            },
+            againPassword : function(value) {
+                if (value.length ==null ||value.length =="" ) {
+                    return '确认密码不能为空';
+                }
+                if ($('#newPassword').val() != $('#againPassword').val()) {
+                    return '两次密码不一致';
+                }
+            },
+        });
+
+        //渲染
+        table.render({
+            elem: '#user'
+            ,id : 'testReload'
+            ,url: '/manage/order/getBorrowOrderList?userRole='+userRole+'&userCode='+userCode//数据接口
+            ,cols: [[
+                {type: 'checkbox'}
+                , {field: 'orderCode', width:'12%' , align: 'center',title: '审核编号'}
+                , {field: 'orderState', width:'7%' , align: 'center',title: '审核状态'}
+                , {field: 'orderExamineState', width:'7%' , align: 'center',title: '审核结果'}
+                , {field: 'orderResult', width:'10%' , align: 'center',title: '结果反馈'}
+                , {field: 'orderAppointmentTime', width:'8%' , align: 'center',title: '借用时间',
+                    templet :function (row){
+                        return createTime1(row.orderAppointmentTime);
+                    }}
+                , {field: 'orderPurpose', width:'8%' , align: 'center',title: '借用用途'}
+                , {field: 'orderSelection', width:'7%' , align: 'center',title: '借用课时'}
+                , {field: 'orderCreateTime', width:'10%' ,sort:'true', align: 'center',title: '申请时间',
+                    templet :function (row){
+                        return createTime(row.orderCreateTime);
+                    }}
+                , {field: 'orderUpdateTime', width:'10%' , align: 'center',sort:'true',title: '审核/撤回时间',
+                    templet :function (row){
+                        return createTime(row.orderUpdateTime);
+                    }}
+                , {field: 'studentName', width:'8%' , align: 'center',title: '申请人'}
+                , {fixed: 'right', width: '18%', align: 'center', title: '操作', toolbar: '#barDemo'}
+            ]]
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                ,curr: 1 //设定初始在第 1 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit: 10
+                ,limits: [5,10,15,20]
+            }  //true表示分页
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+                $("[data-field='orderState']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("审核中")
+                    }else if($(this).text()=='2') {
+                        $(this).text("已审核")
+                    }else if($(this).text()=='3') {
+                        $(this).text("撤回")
+                    }
+                })
+                $("[data-field='orderExamineState']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("审核通过")
+                    }else if($(this).text()=='2') {
+                        $(this).text("审核不通过")
+                    }
+                })
+                $("[data-field='orderUpdateTime']").children().each(function(){
+                    if($(this).text()=='1970-01-01 08:00:00'){
+                        $(this).text("")
+                    }
+                })
+            }
+
+        })
+        //表格数据操作-查看详情和删除
+        table.on('tool(userTable)', function(obj){
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                localStorage.setItem("orderId", data.orderId);
+                x_admin_show('申请请求详情','/manage/order/openBorrowOrderDetail.html',60,80);
+            }else if(obj.event === 'pass'){
+                layer.confirm('确定审核通过？', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/order/passOrder',
+                        data:{
+                            orderId:data.orderId,
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.status == 0) {
+                                layer.msg(data.msg, {
+                                    icon: 6,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        },
+                        error : function () {
+                            layer.msg('审核失败');
+                        }
+                    });
+                });
+            }else if(obj.event === 'nopass'){
+                layer.confirm('确定审核不通过？', function(index){
+                    localStorage.setItem("orderId", data.orderId);
+                    x_admin_show('结果反馈','/manage/order/openOrderNoPass.html',60,57);
+                });
+            }else if(obj.event === 'withdraw'){
+                layer.confirm('确定撤回此申请请求？', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/order/withdrawOrder',
+                        data:{
+                            orderId:data.orderId,
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.status == 0) {
+                                layer.msg(data.msg, {
+                                    icon: 6,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        },
+                        error : function () {
+                            layer.msg('撤回失败');
+                        }
+                    });
+                });
+            }else if(obj.event === 'del'){
+                layer.confirm('确定删除此申请请求？', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/order/deleteOrder',
+                        data:{
+                            orderId:data.orderId,
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.status == 0) {
+                                layer.msg(data.msg, {
+                                    icon: 6,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        },
+                        error : function () {
+                            layer.msg('删除失败');
+                        }
+                    });
+                });
+            }
+        });
+
+        //请求数据 用户的个人信息
+        $.ajax({
+            url:'/manage/user/detailUser',
+            type:'post',
+            data:{
+                userId:delcommafy(userId),
+            },
+            dataType:'json',
+            success:function (res) {
+                if(res.status==0){
+                    var data = res.data;
+                    $("#facultyList").val(data.userCollege);
+                    $("#userClassroom").val(data.userClassroom);
+
+                    $("#userCode").val(data.userCode);
+                    $("#userName").val(data.userName);
+                    $("#userRealName").val(data.userRealName);
+                    $("#userPhone").val(data.userPhone);
+                    if (data.userSex == "男生") {
+                        $("#userSex1").attr('checked', 'true');
+                    } else if (data.userSex == "女生") {
+                        $("#userSex2").attr('checked', 'true');
+                    } else {
+                        $("#userSex3").attr('checked', 'true');
+                    }
+                    form.render();
+                }
+            }
+        })
+        //监听信息提交
+        form.on('submit(saveUser)', function(data){
+            var userSex = $("input[name='userSex']:checked").val();
+            var userRealName = $("#userRealName").val();
+            var userName = $("#userName").val();
+            var userPhone = $("#userPhone").val();
+            if (userSex == null || userSex == '') {
+                layer.msg("性别选择不能为空！", {icon: 5, time: 1000});
+                return false;
+            }
+            $.ajax({
+                type: 'post',
+                url: '/manage/user/saveUser',
+                dataType: 'json',
+                data: {
+                    userId:delcommafy(userId),
+                    userSex:userSex,
+                    userName: userName,
+                    userRealName: userRealName,
+                    userPhone: userPhone,
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg(data.msg, {
+                            icon: 6,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            return false;
+                        });
+                    }else {
+                        layer.msg(data.msg, {
+                            icon: 5,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            return false;
+                        });
+                    }
+                },
+                error :function (XMLHttpResponse, textStatus, errorThrown, data) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                }
+            });
+        });
+        //监听密码提交
+        form.on('submit(modifyPassword)', function(data){
+            var oldPssword = $("#oldPssword").val();
+            var newPassword = $("#newPassword").val();
+            $.ajax({
+                type:'post',
+                url:'/manage/user/modifyUserPassword',
+                dataType: 'json',
+                data:{
+                    userId:delcommafy(userId),
+                    oldPssword:oldPssword,
+                    newPassword:newPassword,
+                },
+                async:false,
+                success:function (data) {
+                    if(data.status == 0){
+                        layer.msg(data.msg,{icon: 6,time:2000,end:function ()
+                            {
+                                parent.location.href="/manage/user/jumpLogin.html";
+                            }
+                        })
+                    }else {
+                        layer.msg(data.msg,{icon: 5,time:2000});
+                        return false;
+                    }
+                },
+                error:function () {
+                    alert("error");
+                }
+            })
+        });
+    });
+
+    //数字时间转DATE时间类型
+    function createTime(v){
+        if (v == null) {
+            return "";
+        } else {
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth()+1;
+            m = m<10?'0'+m:m;
+            var d = date.getDate();
+            d = d<10?("0"+d):d;
+            var h = date.getHours();
+            h = h<10?("0"+h):h;
+            var M = date.getMinutes();
+            M = M<10?("0"+M):M;
+            var S = date.getSeconds();
+            S = S<10?("0"+S):S;
+            var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+            return str;
+        }
+    }
+    //数字时间转DATE时间类型
+    function createTime1(v){
+        if (v == null) {
+            return "";
+        } else {
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth()+1;
+            m = m<10?'0'+m:m;
+            var d = date.getDate();
+            d = d<10?("0"+d):d;
+            var str = y+"-"+m+"-"+d;
+            return str;
+        }
+    }
+</script>
+</body>
+</html>

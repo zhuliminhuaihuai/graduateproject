@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Order" >
+    <constructor >
+      <idArg column="order_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_examine_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_appointment_time" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="order_purpose" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_selection" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_result" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="order_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="room_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_building" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="student_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="student_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="student_college" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="student_class" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tercher_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tercher_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, order_code, order_state, order_examine_state, order_appointment_time, order_purpose,
+    order_selection, order_remark, order_result, order_create_time, order_update_time,
+    room_code, room_building, room_number, student_code, student_name, student_college,
+    student_class, tercher_code, tercher_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from classroom_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from classroom_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Order" >
+    insert into classroom_order (order_id, order_code, order_state,
+      order_examine_state, order_appointment_time, order_purpose,
+      order_selection, order_remark, order_result,
+      order_create_time, order_update_time, room_code,
+      room_building, room_number, student_code,
+      student_name, student_college, student_class,
+      tercher_code, tercher_name)
+    values (#{orderId,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{orderState,jdbcType=INTEGER},
+      #{orderExamineState,jdbcType=INTEGER}, #{orderAppointmentTime,jdbcType=DATE}, #{orderPurpose,jdbcType=VARCHAR},
+      #{orderSelection,jdbcType=VARCHAR}, #{orderRemark,jdbcType=VARCHAR}, #{orderResult,jdbcType=VARCHAR},
+      #{orderCreateTime,jdbcType=TIMESTAMP}, #{orderUpdateTime,jdbcType=TIMESTAMP}, #{roomCode,jdbcType=VARCHAR},
+      #{roomBuilding,jdbcType=VARCHAR}, #{roomNumber,jdbcType=VARCHAR}, #{studentCode,jdbcType=VARCHAR},
+      #{studentName,jdbcType=VARCHAR}, #{studentCollege,jdbcType=VARCHAR}, #{studentClass,jdbcType=VARCHAR},
+      #{tercherCode,jdbcType=VARCHAR}, #{tercherName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Order" >
+    insert into classroom_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderCode != null" >
+        order_code,
+      </if>
+      <if test="orderState != null" >
+        order_state,
+      </if>
+      <if test="orderExamineState != null" >
+        order_examine_state,
+      </if>
+      <if test="orderAppointmentTime != null" >
+        order_appointment_time,
+      </if>
+      <if test="orderPurpose != null" >
+        order_purpose,
+      </if>
+      <if test="orderSelection != null" >
+        order_selection,
+      </if>
+      <if test="orderRemark != null" >
+        order_remark,
+      </if>
+      <if test="orderResult != null" >
+        order_result,
+      </if>
+      <if test="orderCreateTime != null" >
+        order_create_time,
+      </if>
+      <if test="orderUpdateTime != null" >
+        order_update_time,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="roomBuilding != null" >
+        room_building,
+      </if>
+      <if test="roomNumber != null" >
+        room_number,
+      </if>
+      <if test="studentCode != null" >
+        student_code,
+      </if>
+      <if test="studentName != null" >
+        student_name,
+      </if>
+      <if test="studentCollege != null" >
+        student_college,
+      </if>
+      <if test="studentClass != null" >
+        student_class,
+      </if>
+      <if test="tercherCode != null" >
+        tercher_code,
+      </if>
+      <if test="tercherName != null" >
+        tercher_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderCode != null" >
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null" >
+        #{orderState,jdbcType=INTEGER},
+      </if>
+      <if test="orderExamineState != null" >
+        #{orderExamineState,jdbcType=INTEGER},
+      </if>
+      <if test="orderAppointmentTime != null" >
+        #{orderAppointmentTime,jdbcType=DATE},
+      </if>
+      <if test="orderPurpose != null" >
+        #{orderPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSelection != null" >
+        #{orderSelection,jdbcType=VARCHAR},
+      </if>
+      <if test="orderRemark != null" >
+        #{orderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderResult != null" >
+        #{orderResult,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreateTime != null" >
+        #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUpdateTime != null" >
+        #{orderUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomBuilding != null" >
+        #{roomBuilding,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNumber != null" >
+        #{roomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCode != null" >
+        #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null" >
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCollege != null" >
+        #{studentCollege,jdbcType=VARCHAR},
+      </if>
+      <if test="studentClass != null" >
+        #{studentClass,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherCode != null" >
+        #{tercherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherName != null" >
+        #{tercherName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Order" >
+    update classroom_order
+    <set >
+      <if test="orderCode != null" >
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null" >
+        order_state = #{orderState,jdbcType=INTEGER},
+      </if>
+      <if test="orderExamineState != null" >
+        order_examine_state = #{orderExamineState,jdbcType=INTEGER},
+      </if>
+      <if test="orderAppointmentTime != null" >
+        order_appointment_time = #{orderAppointmentTime,jdbcType=DATE},
+      </if>
+      <if test="orderPurpose != null" >
+        order_purpose = #{orderPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSelection != null" >
+        order_selection = #{orderSelection,jdbcType=VARCHAR},
+      </if>
+      <if test="orderRemark != null" >
+        order_remark = #{orderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderResult != null" >
+        order_result = #{orderResult,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreateTime != null" >
+        order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUpdateTime != null" >
+        order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomBuilding != null" >
+        room_building = #{roomBuilding,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNumber != null" >
+        room_number = #{roomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCode != null" >
+        student_code = #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null" >
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentCollege != null" >
+        student_college = #{studentCollege,jdbcType=VARCHAR},
+      </if>
+      <if test="studentClass != null" >
+        student_class = #{studentClass,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherCode != null" >
+        tercher_code = #{tercherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherName != null" >
+        tercher_name = #{tercherName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Order" >
+    update classroom_order
+    set order_code = #{orderCode,jdbcType=VARCHAR},
+      order_state = #{orderState,jdbcType=INTEGER},
+      order_examine_state = #{orderExamineState,jdbcType=INTEGER},
+      order_appointment_time = #{orderAppointmentTime,jdbcType=DATE},
+      order_purpose = #{orderPurpose,jdbcType=VARCHAR},
+      order_selection = #{orderSelection,jdbcType=VARCHAR},
+      order_remark = #{orderRemark,jdbcType=VARCHAR},
+      order_result = #{orderResult,jdbcType=VARCHAR},
+      order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP},
+      room_code = #{roomCode,jdbcType=VARCHAR},
+      room_building = #{roomBuilding,jdbcType=VARCHAR},
+      room_number = #{roomNumber,jdbcType=VARCHAR},
+      student_code = #{studentCode,jdbcType=VARCHAR},
+      student_name = #{studentName,jdbcType=VARCHAR},
+      student_college = #{studentCollege,jdbcType=VARCHAR},
+      student_class = #{studentClass,jdbcType=VARCHAR},
+      tercher_code = #{tercherCode,jdbcType=VARCHAR},
+      tercher_name = #{tercherName,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <select id="checkRoomIsBorrow" parameterType="java.lang.String" resultType="int">
+    select count(1)
+    from classroom_order
+    where <![CDATA[ order_appointment_time = #{orderAppointmentTime}]]>
+    and order_selection = #{orderSelection} and order_state = 2 and order_examine_state = 1
+  </select>
+  <select id="getBorrowOrderList" resultMap="BaseResultMap" parameterType="com.project.vo.OrderQueryVo">
+    select <include refid="Base_Column_List"></include>
+    from classroom_order
+    <where>
+      <if test="orderCode!=null and orderCode!=''">
+        and order_code = #{orderCode}
+      </if>
+      <if test="orderState!=null and orderState!=''">
+        and order_state = #{orderState}
+      </if>
+      <if test="orderExamineState!=null and orderExamineState!=''">
+        and order_examine_state = #{orderExamineState}
+      </if>
+      <if test="appointmentStartTime!=null and appointmentStartTime!=''  or appointmentEndTime!=null and appointmentEndTime!=''">
+        <if test="appointmentStartTime!=null and appointmentStartTime!=''  and appointmentEndTime!=null and appointmentEndTime!=''">
+          <if test="appointmentStartTime!=null and appointmentStartTime!=''">
+            and  <![CDATA[ order_appointment_time >= #{appointmentStartTime}]]>
+          </if>
+          <if test="appointmentEndTime!=null and appointmentEndTime!=''">
+            and <![CDATA[ order_appointment_time <= #{appointmentEndTime}]]>
+          </if>
+        </if>
+        <if test="appointmentStartTime!=null and appointmentStartTime!='' and appointmentEndTime==null or appointmentEndTime==''">
+          and  <![CDATA[ order_appointment_time >= #{appointmentStartTime}]]>
+        </if>
+        <if test="appointmentEndTime!=null and appointmentEndTime!='' and appointmentStartTime==null or appointmentStartTime==''">
+          and <![CDATA[ order_appointment_time <= #{appointmentEndTime}]]>
+        </if>
+      </if>
+      <if test="orderPurpose!=null and orderPurpose!=''">
+        and order_purpose = #{orderPurpose}
+      </if>
+      <if test="orderSelection!=null and orderSelection!=''">
+        and order_selection = #{orderSelection}
+      </if>
+      <if test="roomBuilding!=null and roomBuilding!=''">
+        and room_building = #{roomBuilding}
+      </if>
+      <if test="studentCollege!=null and studentCollege!=''">
+        and student_college =#{studentCollege}
+      </if>
+      <if test="studentClass!=null and studentClass!=''">
+        and student_class like "%"#{studentClass}"%"
+      </if>
+      <if test="studentName!=null and studentName!=''">
+        and student_name like "%"#{student_name}"%"
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ order_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ order_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ order_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ order_create_time <= #{endTime}]]>
+        </if>
+      </if>
+      <if test="studentCode!=null and studentCode!=''">
+        and student_code = #{studentCode}
+      </if>
+    </where>
+    order by order_create_time DESC
+  </select>
+    <select id="getOrederHistory" resultMap="BaseResultMap" parameterType="com.project.vo.OrderQueryVo">
+        select <include refid="Base_Column_List"></include>
+        from classroom_order
+        <where>
+            <if test="orderCode!=null and orderCode!=''">
+                and order_code = #{orderCode}
+            </if>
+            <if test="orderState!=null and orderState!=''">
+                and order_state = #{orderState}
+            </if>
+            <if test="orderExamineState!=null and orderExamineState!=''">
+                and order_examine_state = #{orderExamineState}
+            </if>
+            <if test="appointmentStartTime!=null and appointmentStartTime!=''  or appointmentEndTime!=null and appointmentEndTime!=''">
+                <if test="appointmentStartTime!=null and appointmentStartTime!=''  and appointmentEndTime!=null and appointmentEndTime!=''">
+                    <if test="appointmentStartTime!=null and appointmentStartTime!=''">
+                        and  <![CDATA[ order_appointment_time >= #{appointmentStartTime}]]>
+                    </if>
+                    <if test="appointmentEndTime!=null and appointmentEndTime!=''">
+                        and <![CDATA[ order_appointment_time <= #{appointmentEndTime}]]>
+                    </if>
+                </if>
+                <if test="appointmentStartTime!=null and appointmentStartTime!='' and appointmentEndTime==null or appointmentEndTime==''">
+                    and  <![CDATA[ order_appointment_time >= #{appointmentStartTime}]]>
+                </if>
+                <if test="appointmentEndTime!=null and appointmentEndTime!='' and appointmentStartTime==null or appointmentStartTime==''">
+                    and <![CDATA[ order_appointment_time <= #{appointmentEndTime}]]>
+                </if>
+            </if>
+            <if test="orderPurpose!=null and orderPurpose!=''">
+                and order_purpose = #{orderPurpose}
+            </if>
+            <if test="orderSelection!=null and orderSelection!=''">
+                and order_selection = #{orderSelection}
+            </if>
+            <if test="roomBuilding!=null and roomBuilding!=''">
+                and room_building = #{roomBuilding}
+            </if>
+            <if test="studentCollege!=null and studentCollege!=''">
+                and student_college =#{studentCollege}
+            </if>
+            <if test="studentClass!=null and studentClass!=''">
+                and student_class like "%"#{studentClass}"%"
+            </if>
+            <if test="studentName!=null and studentName!=''">
+                and student_name like "%"#{student_name}"%"
+            </if>
+            <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+                <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+                    <if test="startTime!=null and startTime!=''">
+                        and  <![CDATA[ order_create_time >= #{startTime}]]>
+                    </if>
+                    <if test="endTime!=null and endTime!=''">
+                        and <![CDATA[ order_create_time <= #{endTime}]]>
+                    </if>
+                </if>
+                <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+                    and  <![CDATA[ order_create_time >= #{startTime}]]>
+                </if>
+                <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+                    and <![CDATA[ order_create_time <= #{endTime}]]>
+                </if>
+            </if>
+            <if test="studentCode!=null and studentCode!=''">
+                and student_code = #{studentCode}
+            </if>
+            and order_state = 2
+        </where>
+        order by order_create_time DESC
+    </select>
+</mapper>
