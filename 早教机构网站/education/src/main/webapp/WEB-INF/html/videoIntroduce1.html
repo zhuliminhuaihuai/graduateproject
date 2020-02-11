@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>视频简介</title>
+    <link rel="shortcut icon" href="../../images/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="../../layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <link rel="stylesheet" type="text/css" href="../../css/login.css" />
+    <style type="text/css">
+        .title1{
+            display: block;
+            animation: star 1s linear infinite;
+        }
+        @keyframes star {
+            0% {
+                transform: rotate(0);
+            }
+            50% {
+                transform: rotate(6deg);
+            }
+            100% {
+                transform: rotate(-6deg);
+            }
+        }
+    </style>
+    <!--加载meta IE兼容文件-->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="header">
+    <div class="menu-btn">
+        <div class="menu"></div>
+    </div>
+    <h1 class="logo">
+        <a href="/manage/user/jumpHomePage.html">
+            <span>MYBLOG</span>
+            <img src="../../images/logo.jpg" style="margin-bottom: 20px;">
+        </a>
+    </h1>
+    <div class="nav">
+        <a href="/manage/user/jumpHomePage1.html" >首页</a>
+        <a href="/manage/user/jumpVideoIntroduce1.html" class="active">视频简介</a>
+        <a href="/manage/user/jumpOnlineApplication1.html">在线报名</a>
+        <a href="/manage/user/jumpOnlineCourses1.html">在线选课</a>
+        <!--<a href="">关于</a>-->
+    </div>
+    <p class="welcome-text">
+        欢迎，
+        <span class="name" id="userName1"  style="color: #800c19"></span>
+        <a href="javascript:;" onclick="toIndex()" id="center" >
+            <span class="name" style="color: #800c19">个人中心</span>
+        </a>
+        <a href="javascript:;" onclick="logout()" id="logout"  >
+            <span class="name" style="color: red" >退出</span>
+        </a>
+    </p>
+</div>
+<div class="content whisper-content leacots-content details-content">
+    <div class="cont w1000">
+        <div class="whisper-list">
+            <div class="item-box">
+                <div class="review-version">
+                    <div class="form-box">
+                        <div class="article-cont">
+                            <div class="title">
+                                <h3 id="productName"></h3>
+                                <div class="title">
+                                    <h1 class="title1" style="width: 1000px;height: 50px ;color: #df5000">早教机构最新视频宣传</h1>
+                                </div>
+                            </div>
+                            <p id=""></p>
+                            <video width="1000px" height="550px" controls="controls"  id="demo4">
+                            </video>
+                            <!--<p id="productIntroduce"></p>-->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="demo" style="text-align: center;"></div>
+    </div>
+</div>
+<div class="footer-wrap">
+    <div class="footer w1000">
+        <div class="qrcode">
+            <p><span class="WeChat" style="font-size: 30px">官网微信公众号</span></p>
+            <p><span class="WeChat" style="font-size: 30px">&nbsp;&nbsp</span></p>
+            <img src="../../images/erweima.jpg">
+        </div>
+        <div class="practice-mode">
+            <img src="../../images/down_img.jpg">
+            <div class="text">
+                <h4 class="title">官网的联系方式</h4>
+                <p>微信<span class="WeChat">1234567890</span></p>
+                <p>手机<span class="iphone">1234567890</span></p>
+                <p>邮箱<span class="email">1234567890@qq.com</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../layui/layui.all.js"></script>
+<script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../layui/lay/modules/laypage.js"></script>
+<script type="text/javascript">
+    var userRealName ='${session_manage_token.getUserRealName()}';
+    $("#userName1").html(userRealName);
+    var layer = layui.layer;
+    //弹出登录页
+    function toLogin() {
+        layer.open({
+            type: 1
+            ,title: '登录网站' //显示标题栏
+            ,closeBtn: true//关闭按钮键
+            ,area: ['450px','270px']
+            ,shade: 0.8
+            ,shadeClose:true
+            ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+            /*  ,btn: ['登录', '取消']*/
+            ,btnAlign: 'c'
+            ,moveType: 0 //拖拽模式，0或者1
+            ,content: '<div class="m-login-warp">\n' +
+                '\t\t\t\t\t<div class="layui-form">\n' +
+                '\t\t\t\t\t\t<div class="layui-form-item">\n' +
+                '\t\t\t\t\t\t\t<input type="text" id="userName"   lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input">\n' +
+                '\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t\t<div class="layui-form-item">\n' +
+                '\t\t\t\t\t\t\t<input type="password" id="password"  lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">\n' +
+                '\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t\t<div class="layui-form-item m-login-btn">\n' +
+                '\t\t\t\t\t\t\t<div class="layui-inline">\n' +
+                '\t\t\t\t\t\t\t\t<button class="layui-btn layui-btn-normal" type="button" lay-submit="" onclick="login()" lay-filter="login">登录</button>\n' +
+                '\t\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t</div>\n' +
+                '\t\t\t\t</div>\n'
+
+        });
+    }
+    //验证登录
+    function login() {
+        var userName = $("#userName").val();
+        var password = $("#password").val();
+        if (userName == ''||userName == null) {
+            layer.msg("请输入用户名！", {icon: 5, time: 1000});
+            return false;
+        }
+        if (password == ''||password == null) {
+            layer.msg("请输入密码！", {icon: 5, time: 1000});
+            return false;
+        }
+        //登录请求
+        $.ajax({
+            url:'/manage/user/login',
+            type:'post',
+            data:{
+                userName:userName,
+                password:password,
+            },
+            async:false,
+            dataType:'json',
+            success:function (data) {
+                if(data.status==0){//status==0 说明登录成功
+                    layer.msg(data.msg, {icon: 6, time: 1000});
+                    setTimeout(function(){//
+                        parent.layer.closeAll();
+                        /* $("#userName1").html(data.data.realName);
+                         $("#userName1").show();
+                         $("#realName").hide();
+                         $("#center").show();
+                         $("#logout").show();*/
+
+                        window.location.href="/manage/user/jumpBackstage.html";
+                    },1500);
+                }else{//status!=0 说明登录失败 可能密码错误/用户名不存在
+                    layer.msg(data.msg, {icon: 5, time: 1000});
+                    return false;
+                }
+            },
+            error:function (data) {
+                alert("进入错误")
+            }
+        });
+    }
+
+
+    $.ajax({
+        type: 'post',
+        url: '/manage/office/getOfficeVideo',
+        dataType: 'json',
+        success: function (res) {
+            if (res.status == 0) {
+                $("#demo4").attr("src", "http://127.0.0.1:8080/upload/" + res.data.messageVideo);
+            } else {
+                var index = layer.load(3, {time: 30*1000});
+                layer.msg('请求失败，检查后台接口');
+            }
+        },
+        error: function () {
+            var index = layer.load(3, {time: 10*1000});
+            layer.msg('请求失败，检查后台接口');
+        }
+    })
+    function returnFirst() {
+        window.location.href = "/manage/user/toFirst"
+    }
+    function toBranch() {
+        var branchId = $("#branchId").val();
+        localStorage.setItem("branchId",branchId);
+        window.location.href="/manage/user/toBranch"
+    }
+    function logout() {
+        window.location.href="/manage/user/jumpNoLoginHomePage.html"
+    }
+    function toIndex() {
+        window.location.href="/manage/user/jumpBackstage.html"
+    }
+</script>
+</body>
+</html>

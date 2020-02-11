@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+
+    <!-- 扫描service包下所有使用注解的类型-->  <!-- 扫描包指定到controller，防止重复扫描 -->
+    <context:component-scan base-package="com.manage.controller" annotation-config="true" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <context:component-scan base-package="com.manage.service"/> <!-- 配置事务管理器 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> <!-- 注入数据库连接池 -->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 配置基于注解的声明式事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+    <!-- AOP定义切面添加事务管理 -->
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/plain;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+
+    <!-- 文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760"/> <!-- 10m -->
+        <property name="maxInMemorySize" value="4096"/>
+        <property name="defaultEncoding" value="UTF-8"></property>
+    </bean>
+
+    <!-- 视图解析器1:html视图解析器 必须先配置freemarkerConfig,注意html是没有prefix前缀属性的 -->
+    <bean id="freemarkerConfig"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="freemarkerSettings">
+            <bean
+                    class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+                <property name="properties">
+                    <props>
+                        <prop key="default_encoding">utf-8</prop>
+                        <prop key="output_encoding">utf-8</prop>
+                    </props>
+                </property>
+            </bean>
+        </property>
+        <property name="templateLoaderPath">
+            <value>/WEB-INF/html/</value>
+        </property>
+    </bean>
+    <bean id="htmlviewResolver"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver"
+          p:suffix=".html" p:order="0">
+        <property name="contentType" value="text/html;charset=UTF-8" />
+    </bean>
+    <!-- 视图解析器2:jsp视图解析器 -->
+    <bean id="jspviewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/html/" p:suffix=".jsp" p:order="1">
+        <property name="contentType" value="text/html;charset=UTF-8" />
+    </bean>
+
+
+    <mvc:resources location="/css/" mapping="/css/**"/>
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/font/" mapping="/font/**"/>
+    <mvc:resources location="/fonts/" mapping="/fonts/**"/>
+    <mvc:resources location="/images/" mapping="/images/**"/>
+    <mvc:resources location="html/" mapping="/html/**"/>
+    <mvc:resources location="/" mapping="/index.html"/>
+    <mvc:resources location="/" mapping="/user_backstage_login.html"/>
+
+    <mvc:interceptors>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/manage/**"/>
+            <bean class="com.manage.controller.common.interceptor.AuthorityInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/cart/**"/>
+            <bean class="com.manage.controller.common.interceptor.PortalInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/bound/**"/>
+            <bean class="com.manage.controller.common.interceptor.PortalInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/order/**"/>
+            <bean class="com.manage.controller.common.interceptor.PortalInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+</beans>

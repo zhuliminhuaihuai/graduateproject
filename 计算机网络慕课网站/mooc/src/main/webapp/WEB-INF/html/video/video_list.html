@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>水果批发商城</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../../../layui/css/layui.css">
+    <script type="text/javascript" src="../../../layui/layui.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+
+</head>
+<body>
+<style type="text/css">
+    .vintage2 {
+        font-weight: 600;
+        font-size: 35px;
+        font-family: "黑体";
+        color: #8c888b;
+        background: -webkit-linear-gradient(45deg, #70f7fe, #fbd7c6, #fdefac, #bfb5dd, #bed5f5);
+    -moz-linear-gradient(45deg, #70f7fe, #fbd7c6, #fdefac, #bfb5dd, #bed5f5);
+    -ms-linear-gradient(45deg, #70f7fe, #fbd7c6, #fdefac, #bfb5dd, #bed5f5);
+        color: transparent;
+        /*设置字体颜色透明*/
+        -webkit-background-clip: text;
+        /*背景裁剪为文本形式*/
+        animation: ran 10s linear infinite;
+        /*动态10s展示*/
+    }
+
+    @keyframes ran {
+        from {
+            backgroud-position: 0 0;
+        }
+        to {
+            background-position: 2000px 0;
+        }
+    }
+</style>
+
+<!--<div class="site-nav-bg">-->
+    <!--<div class="site-nav w1200">-->
+        <!--<p class="sn-back-home">-->
+            <!--<i class="layui-icon layui-icon-home"></i>-->
+            <!--<a onclick="backstagePage()">后台首页</a>-->
+        <!--</p>-->
+        <!--<div class="sn-quick-menu">-->
+            <!--<div class="login"><a href="/manage/user/jumpUserRegister.html">注册</a></div>-->
+            <!--<div class="login"><a href="/manage/user/jumpUserLogin.html">登录</a></div>-->
+            <!--<div class="sp-cart"><a onclick="shoppingCart()" >购物车</a><span>0</span></div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+
+
+<div class="header">
+    <div class="headerLayout w1200">
+        <div class="headerCon">
+            <h1 style="height: 80px" class="vintage2">
+                学习课程
+            </h1>
+            <div class="mallSearch">
+                <div  class="layui-form" novalidate>
+                    <input type="text" name="title" id="educationVideoName" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入视频章节标题">
+                    <button class="layui-btn" onclick="searchGoods()" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+                    <!--<button class="layui-btn" onclick="searchGoods()"  >
+                        <i class="layui-icon layui-icon-search"></i>
+                    </button>-->
+                    <input type="hidden" name="" value="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="content content-nav-base commodity-content">
+    <div class="main-nav">
+        <div class="inner-cont0">
+            <div class="inner-cont1 w1200">
+                <div class="inner-cont2">
+                    <!--<a onclick="typeGoods(0,0)" href="" class="active">所有水果</a>-->
+                    <!-- <a href="buytoday.html">今日团购</a>
+                     <a href="information.html">母婴资讯</a>
+                     <a href="about.html">关于我们</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="commod-cont-wrap">
+        <div class="commod-cont w1200 layui-clear">
+            <div class="left-nav">
+                <div class="title">所有视频</div>
+                <div class="list-box">
+                    <!--<dl>-->
+                        <!--<dt>常见水果</dt>-->
+                        <!--<dd><a onclick="typeGoods(1,0)" href="javascript:;">所有常见水果</a></dd>-->
+                        <!--<dd><a onclick="typeGoods(1,1)" href="javascript:;">寒性水果</a></dd>-->
+                        <!--<dd><a onclick="typeGoods(1,2)" href="javascript:;">温性水果</a></dd>-->
+                        <!--<dd><a onclick="typeGoods(1,3)" href="javascript:;">中性水果</a></dd>-->
+                    <!--</dl>-->
+                    <!--<dl>-->
+                        <!--<dt>进口水果</dt>-->
+                        <!--<dd><a onclick="typeGoods(2,0)" href="javascript:;">所有进口水果</a></dd>-->
+                        <!--<dd><a onclick="typeGoods(2,1)" href="javascript:;">寒性水果</a></dd>-->
+                        <!--<dd><a onclick="typeGoods(2,2)" href="javascript:;">温性水果</a></dd>-->
+                        <!--<dd><a onclick="typeGoods(2,3)" href="javascript:;">中性水果</a></dd>-->
+                    <!--</dl>-->
+                </div>
+            </div>
+            <div class="right-cont-wrap">
+                <div class="right-cont">
+                    <!--   <div class="sort layui-clear">
+                           <a class="active" href="javascript:;" event = 'volume'>销量</a>
+                           <a href="javascript:;" event = 'price'>价格</a>
+                           <a href="javascript:;" event = 'newprod'>新品</a>
+                           <a href="javascript:;" event = 'collection'>收藏</a>
+                       </div>-->
+                    <!--<div>-->
+                        <!--<span style="color: red">所处位置：</span><span style="font-size: larger;color: #a31717" id="position">所有水果</span>-->
+                    <!--</div>-->
+                    <div class="prod-number">
+                        共有<span style="color: red" id="goodsNum">0</span>个视频
+                    </div>
+                    <div class="cont-list layui-clear" id="list-cont">
+                    </div>
+                    <div id="demo0" style="text-align: center;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 模版引擎导入 -->
+<script type="text/html" id="demo">
+    {{# layui.each(d.content,function(index,item){}}
+    <div class="item">
+        <div class="img">
+            <!--<embed width="320" height="240" controls="controls" src="{{item.educationVideoPath}}" id="demo4"/>-->
+            <video width="320" height="240" controls="controls" src="{{item.educationVideoPath}}" id="demo4"></video>
+
+            <!--<a href="/manage/goods/jumpGoodsDetailNoLogin.html?goodsId={{item.goodsId}}" target="_blank"><img style="height:280px; width:280px" src="{{item.img}}"></a>-->
+        </div>
+        <div class="text">
+            <p class="title">{{item.educationVideoName}}</p>
+            <p class="price">
+                <span class="pri">{{item.coursesName}}</span>
+                <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius"  href="/manage/video/delete?educationVideoId={{item.educationVideoId}}"  lay-event="del">删除</a>
+                <!--<del>{{item.tercherName}}</del>-->
+                <span class="nub">{{item.tercherName}}</span>
+            </p>
+        </div>
+    </div>
+    {{# }); }}
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    var bigType;
+    var smallType;
+    var coursesId = localStorage.getItem("coursesId");
+
+    layui.config({
+        base: '../../../static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+    }).use(['mm', 'laypage', 'jquery'], function () {
+        var laypage = layui.laypage, $ = layui.$,
+            mm = layui.mm;
+        /*    laypage.render({
+                elem: 'demo0'
+                ,count: 15 //数据总数
+                ,jump:function (obj) {
+
+                }
+            });*/
+        // 模版引擎导入
+        var html = demo.innerHTML;
+        var listCont = document.getElementById('list-cont');
+
+        // console.log(layui.router("#/about.html"))
+        mm.request({
+            url: '/manage/video/videoList?coursesId='+coursesId,
+
+            success: function (res) {
+                console.log(res)
+                listCont.innerHTML = mm.renderHtml(html, res.data)
+                $("#goodsNum").html(res.data.count);
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        })
+
+
+
+
+        $('.sort a').on('click', function () {
+            $(this).addClass('active').siblings().removeClass('active');
+        })
+        $('.list-box dt').on('click', function () {
+            if ($(this).attr('off')) {
+                $(this).removeClass('active').siblings('dd').show()
+                $(this).attr('off', '')
+            } else {
+                $(this).addClass('active').siblings('dd').hide()
+                $(this).attr('off', true)
+            }
+        })
+
+    });
+    //测试
+    function test(state) {
+        alert(state);
+
+    }
+    //搜索商品
+    function searchGoods() {
+        // 模版引擎导入
+        var html = demo.innerHTML;
+        var listCont = document.getElementById('list-cont');
+        var educationVideoName = layui.$("#educationVideoName").val();
+        // console.log("title" + title);
+
+        // console.log(layui.router("#/about.html"))
+        layui.mm.request({
+            url: '/manage/video/videoList?coursesId=' + coursesId +'&educationVideoName=' + educationVideoName,
+            success: function (res) {
+                console.log(res)
+                if (res.status == 0) {
+                    console.log("aaaa");
+                    listCont.innerHTML = layui.mm.renderHtml(html, res.data);
+                    layui.$("#goodsNum").html(res.data.count);
+                } else {
+                    listCont.innerHTML = '暂无视频!!';
+                    layui.$("#goodsNum").html(0);
+                }
+            },
+            error: function (res) {
+                console.log(res);
+                listCont.innerHTML = '暂无视频!!';
+                layui.$("#goodsNum").html(0);
+            }
+        })
+    }
+    //点击后台首页
+    function backstagePage() {
+        window.location.href="/manage/user/jumpUserBackStageLogin.html";
+        /*layui.use(['layer'], function () {
+            var layer = layui.layer;
+            layer.msg("亲~请您先登录再进入后台首页",{icon: 6,time:2500,end:function ()
+                {
+                    window.location.href="/manage/user/jumpUserLogin.html";
+                }
+            })
+        });*/
+    }
+    //点击购物车
+    function shoppingCart() {
+        layui.use(['layer'], function () {
+            var layer = layui.layer;
+            layer.msg("亲~请您先登录再查看购物车",{icon: 6,time:2500,end:function ()
+                {
+                    window.location.href="/manage/user/jumpUserLogin.html";
+                }
+            })
+        });
+
+    }
+    //分类商品
+    function typeGoods(goodsBigType,goodsType) {
+        bigType = goodsBigType;
+        smallType = goodsType;
+        if (bigType == 0) {
+            layui.$("#position").html("所有水果");
+        }else if (bigType == 1 && smallType == 0) {
+            layui.$("#position").html("所有常见水果");
+        }else if (bigType == 1 && smallType == 1) {
+            layui.$("#position").html("常见水果-->寒性水果");
+        }else if (bigType == 1 && smallType == 2) {
+            layui.$("#position").html("常见水果-->温性水果");
+        }else if (bigType == 1 && smallType == 3) {
+            layui.$("#position").html("常见水果-->中性水果");
+        }else if (bigType == 2 && smallType == 0) {
+            layui.$("#position").html("所有进口水果");
+        }else if (bigType == 2 && smallType == 1) {
+            layui.$("#position").html("进口水果-->寒性水果");
+        }else if (bigType == 2 && smallType == 2) {
+            layui.$("#position").html("进口水果-->温性水果");
+        }else if (bigType == 2 && smallType == 3) {
+            layui.$("#position").html("进口水果-->中性水果");
+        }
+
+
+
+
+        // 模版引擎导入
+        var html = demo.innerHTML;
+        var listCont = document.getElementById('list-cont');
+
+        // console.log(layui.router("#/about.html"))
+        layui.mm.request({
+            url: '/manage/goods/portalGetGoodsImg?goodsBigType=' + goodsBigType + '&goodsType='+goodsType,
+            success: function (res) {
+                console.log(res)
+                if (res.status == 0) {
+                    console.log("aaaa");
+                    listCont.innerHTML = layui.mm.renderHtml(html, res.data);
+                    layui.$("#goodsNum").html(res.data.count);
+                } else {
+                    listCont.innerHTML = '暂无商品!!';
+                    layui.$("#goodsNum").html(0);
+                }
+            },
+            error: function (res) {
+                console.log(res);
+                listCont.innerHTML = '暂无商品!!';
+                layui.$("#goodsNum").html(0);
+            }
+        })
+
+    }
+</script>
+
+
+</body>
+</html>

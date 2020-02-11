@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>添加新用户</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+
+<div class="x-body">
+    <div class="layui-form" id="form">
+
+        <legend >用户信息设定</legend>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="x-red">*</span>角色类型</label>
+            <div class="layui-input-inline" style="width:100px;">
+                <select name="userRole" id="userRole" lay-verify="userRole" lay-filter="chooseRole" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="1">学生</option>
+                    <option value="2">教师</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" id="coursesTitleList">
+            <label class="layui-form-label">擅长领域</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="coursesTitle[]" value="C编程" title="C编程">
+                <input type="checkbox" name="coursesTitle[]" value="Python编程" title="Python编程">
+                <input type="checkbox" name="coursesTitle[]" value="Java编程" title="Java编程">
+                <input type="checkbox" name="coursesTitle[]" value="C++编程" title="C++编程">
+                <input type="checkbox" name="coursesTitle[]" value=".NET编程" title=".NET编程">
+                <input type="checkbox" name="coursesTitle[]" value="JavaScript编程" title="JavaScript编程">
+                <input type="checkbox" name="coursesTitle[]" value="C#编程" title="C#编程">
+                <input type="checkbox" name="coursesTitle[]" value="PHP编程" title="PHP编程">
+                <input type="checkbox" name="coursesTitle[]" value="SQL编程" title="SQL编程">
+                <input type="checkbox" name="coursesTitle[]" value="Objecttive-C编程" title="Objecttive-C编程">
+                <input type="checkbox" name="coursesTitle[]" value="MATLAB编程" title="MATLAB编程">
+                <input type="checkbox" name="coursesTitle[]" value="R编程" title="R编程">
+                <input type="checkbox" name="coursesTitle[]" value="Perl编程" title="Perl编程">
+                <input type="checkbox" name="coursesTitle[]" value="Swift编程" title="Swift编程">
+                <input type="checkbox" name="coursesTitle[]" value="Go编程" title="Go编程">
+                <input type="checkbox" name="coursesTitle[]" value="PL/SQL编程" title="PL/SQL编程">
+                <input type="checkbox" name="coursesTitle[]" value="Visual Basic编程" title="Visual Basic编程">
+                <input type="checkbox" name="coursesTitle[]" value="A编程" title="A编程">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userName" class="layui-form-label">
+                <span class="x-red">*</span>用户名
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="userName" name="userName"
+                       lay-verify="userName" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>用来登录网站的用户名
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userPassword" class="layui-form-label">
+                <span class="x-red">*</span>登陆密码
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="password" id="userPassword" name="userPassword"
+                       lay-verify="userPassword" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>将用来登陆系统时的密码  ps:密码长度在3-12
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="rePassword" class="layui-form-label">
+                <span class="x-red">*</span>确认密码
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="password" id="rePassword" name="rePassword"
+                       lay-verify="rePassword" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>再输入一遍你的密码
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userRealName" class="layui-form-label">
+                <span class="x-red">*</span>真实姓名
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="userRealName" name="userRealName"
+                       lay-verify="userRealName" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>你的真实姓名（上课的人）ps：务必真实 方便管理
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userPhone" class="layui-form-label">
+                <span class="x-red">*</span>手机号
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="userPhone" name="userPhone"
+                       lay-verify="userPhone" placeholder="" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>用于联系
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label  class="layui-form-label">
+                <span class="x-red">*</span>性别
+            </label>
+            <div class="layui-form">
+                <input type="radio" name="userSex" id="userSex1" lay-filter="filter" required="required" lay-verify="userSex" value="男生" title="男生">
+                <input type="radio" name="userSex" id="userSex2" lay-filter="filter" required="required" lay-verify="userSex" value="女生" title="女生">
+                <input type="radio" name="userSex" id="userSex3" lay-filter="filter" required="required" lay-verify="userSex" value="保密" title="保密">
+            </div>
+            <input id="distributionmode" style="display: none;">
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>性别选择不想公开那就选择保密
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+            <label class="layui-form-label"> </label>
+            <button class="layui-btn" lay-filter="add" lay-submit="">
+                添加
+            </button>
+            <button class="layui-btn layui-btn-danger" class="layui-btn layui-btn-primary" onclick="resetmessage()">
+                重置
+            </button>
+        </div>
+    </div>
+</div>
+
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+
+<script type="text/javascript">
+    var $;
+    $("#coursesTitleList").hide();
+    layui.use(['form','laydate','layer'],function () {
+        $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , laydate = layui.laydate;
+
+
+        form.verify({
+            userRole: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '角色类型不能为空';
+                }
+            },
+            userName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '用户名不能为空';
+                }
+            },
+            userRealName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '真实姓名不能为空';
+                }
+            },
+            userPassword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '登录密码不能为空';
+                }
+                if (value.length <3 ||value.length >12 ) {
+                    return '新密码必须3到12位';
+                }
+            },
+            rePassword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '确认密码不能为空';
+                }
+                if (value != $("#userPassword").val()) {
+                    return '两次输入的密码不同';
+                }
+            },
+            userPhone: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '手机号不能为空';
+                }
+                var isPhone=/^1[0-9]{10}$/;
+                var flag=isPhone.test(value);
+                if(flag==false)
+                    return '手机号格式错误';
+            },
+
+        });
+        //监听角色类型
+        form.on('select(chooseRole)', function (data) {
+            var userRole = $("#userRole option:selected").val();
+            if (userRole == 2) {
+                $("#coursesTitleList").show();
+            } else {
+                $("#coursesTitleList").hide();
+
+            }
+            
+        });
+        form.on('submit(add)', function (data) {
+            var userRole = $("#userRole option:selected").val();
+
+            var coursesTitleList = new Array();
+            var child = $("input[type='checkbox']");
+            child.each(function(index, item){
+                if (item.checked == true) {
+                    coursesTitleList.push($(item).val());
+                }
+            });
+            if (coursesTitleList.length == 0 && userRole == 2) {
+                layer.msg("擅长领域不能为空！", {icon: 5, time: 1000});
+                return false;
+            }
+            var coursesTitle = JSON.stringify(eval(coursesTitleList));
+
+            var userSex = $("input[name='userSex']:checked").val();
+            var userRealName = $("#userRealName").val();
+            var userName = $("#userName").val();
+            var userPassword = $("#userPassword").val();
+            var userPhone = $("#userPhone").val();
+            if (userSex == null || userSex == '') {
+                layer.msg("性别选择不能为空！", {icon: 5, time: 1000});
+                return false;
+            }
+            $.ajax({
+                type: 'post',
+                url: '/manage/user/addUser',
+                dataType: 'json',
+                data: {
+                    coursesTitle:coursesTitle,
+                    userRole:userRole,
+                    userSex:userSex,
+                    userName: userName,
+                    userRealName: userRealName,
+                    userPassword: userPassword,
+                    userPhone: userPhone,
+                },
+                async: false,
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg(data.msg,{
+                            icon :6,time:1500,end:function () {
+                                parent.location.reload();
+                            }
+                        });
+                    }else {
+                        layer.msg(data.msg,{
+                            icon :5,time:1500,end:function () {
+                                return false;
+                            }
+                        });
+                    }
+                },
+                error :function (XMLHttpResponse, textStatus, errorThrown, data) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                }
+            });
+
+        });
+
+
+    });
+
+    $('.content .layui-btn').on('click', function(){
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+    function resetmessage() {
+        window.location.reload();
+    }
+
+
+</script>
+
+</body>
+
+
+</html>

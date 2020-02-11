@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>宿舍大楼列表</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+<div class="childrenBody">
+    <blockquote class="layui-elem-quote news_search layui-form">
+        <div class="demoTable">
+            <div class="layui-inline">
+                <label>宿舍楼编号</label>&nbsp
+                <div class="layui-input-inline">
+                    <input type="text" id="buildingCode" placeholder="楼房 编号" class="layui-input search_input">
+                </div>
+                <label>宿舍楼名字</label>&nbsp
+                <div class="layui-input-inline">
+                    <input type="text" id="buildingName" placeholder="大楼名字 如：12号楼" class="layui-input search_input">
+                </div>
+                <label>宿舍楼昵称</label>&nbsp
+                <div class="layui-input-inline">
+                    <input type="text" id="buildingTitle" placeholder="楼房大名 如：田家炳大楼" class="layui-input search_input">
+                </div>
+                <label>创建时间范围</label>&nbsp
+                <div class="layui-input-inline">
+                    <input type="text" name="startTime" id="startTime" lay-verify="date" placeholder="创建时间"
+                           class="layui-input">
+                </div>
+                ~
+                <div class="layui-input-inline">
+                    <input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="创建时间" class="layui-input">
+                </div>
+
+                <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+                <!--<button class="layui-btn" onclick="x_admin_show('添加新用户','/manage/user/openAddUser.html',60,97)"><i class="layui-icon"></i>添加新宿舍楼</button>-->
+            </div>
+        </div>
+    </blockquote>
+    <table class="layui-hide" id="building" lay-filter="buildingTable"></table>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">详情</a>
+        <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="modify">修改</a>
+        <!--<a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="czpassword">重置密码</a>-->
+        <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>
+    </script>
+</div>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../js/main.js"></script>
+<script type="text/javascript" src="../../../js/index.js"></script>
+<script type="text/javascript" src="../../../js/xadmin.js"></script>
+<style>
+    .laytable-cell-1-0-7 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-2-0-7 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-3-0-7 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-4-0-7 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-5-0-7 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-6-0-7 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-7-0-7 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-8-0-7 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+</style>
+<script>
+    var userRole = '${session_manage_token.getUserRole()}';
+
+    layui.use(['table','laydate','layer'], function(){
+        $ = layui.jquery;
+        var table = layui.table,
+            laydate = layui.laydate,
+            layer = layui.layer;
+
+        //渲染
+        table.render({
+            elem: '#building'
+            ,id : 'testReload'
+            ,url: '/manage/building/getBuildingList'//数据接口
+            ,cols: [[
+                {type: 'checkbox'}
+                , {field: 'buildingCode', width:'15%' , align: 'center',title: '楼房编号',sort: true}
+                , {field: 'buildingName', width:'10%' ,align: 'center', title: '楼房名字'}
+                , {field: 'buildingTitle', width:'10%' ,align: 'center', title: '楼房昵称'}
+                , {field: 'buildingCreateTime', width:'12%' ,align: 'center', title: '创建时间',
+                    templet :function (row){
+                        return createTime(row.buildingCreateTime);
+                    } }
+                , {field: 'buildingAdress', width:'10%' , align: 'center',title: '楼房地址'}
+                , {field: 'buildingSex', width:'10%' , align: 'center',title: '宿舍楼性别'}
+                , {field: 'buildingImg', width:'10%' , align: 'center',title: '楼房照片',templet:'<div><img  src="{{ d.buildingImg}}"></div>'}
+                , {fixed: 'right', width: '20%', align: 'center', title: '操作', toolbar: '#barDemo'}
+            ]]
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                ,curr: 1 //设定初始在第 1 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit: 10
+                ,limits: [5,10,15,20]
+            }  //true表示分页
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+                $("[data-field='buildingSex']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("男生宿舍")
+                    }else if($(this).text()=='2') {
+                        $(this).text("女生宿舍")
+                    }
+                })
+            }
+
+        })
+        //表格数据操作-查看详情和删除
+        table.on('tool(buildingTable)', function(obj){
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                localStorage.setItem("buildingId", data.buildingId);
+                x_admin_show('楼房房间详情', '/manage/building/jumpBuildingDetail.html', 80, 100);
+            }else if(obj.event === 'modify'){
+                if (userRole == 1) {
+                    localStorage.setItem("buildingId", data.buildingId);
+                    x_admin_show('修改宿舍楼', '/manage/building/jumpBuildingModify.html', 80, 100);
+                } else {
+                    layer.msg("您并无权限修改宿舍楼", {icon: 5, time: 2000,});
+                }
+            }else if(obj.event === 'del'){
+                if (userRole == 1) {
+                    layer.confirm('确定删除么？会把宿舍楼所有房间信息以及人员信息删除，您考虑清楚了么？', function (index) {
+                        var index = layer.load(3, {time: 30*1000});
+                        $.ajax({
+                            type: 'post',
+                            url: '/manage/building/deleteBuilding',
+                            data: {
+                                buildingId: data.buildingId,
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                layer.close(index);
+
+                                if (data.status == 0) {
+                                    window.location.reload();
+                                } else {
+                                    layer.msg("删除失败!",{icon:5,time:1500});
+                                }
+                            },
+                            error: function () {
+                                layer.close(index);
+                                layer.msg("删除失败!",{icon:5,time:1500});
+                            }
+                        });
+                    });
+                } else {
+                    layer.msg("您并无权限删除宿舍楼", {icon: 5, time: 2000,});
+                }
+
+            }
+        });
+        var $ = layui.jquery, active = {
+            reload: function(){
+                var buildingCode = $("#buildingCode").val();
+                var buildingName = $("#buildingName").val();
+                var endTime = $("#endTime").val();
+                var startTime = $("#startTime").val();
+                var buildingTitle = $("#buildingTitle").val();
+                table.reload('testReload', {
+                    method:'post',
+                    where:{buildingCode:buildingCode,startTime:startTime,endTime:endTime,buildingName:buildingName,buildingTitle:buildingTitle}
+                });
+            }
+        };
+        laydate.render({
+            elem: '#startTime'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#endTime'
+            ,type: 'datetime'
+        });
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+
+    //数字时间转DATE时间类型
+    function createTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+        return str;
+    }
+
+</script>
+</body>
+</html>

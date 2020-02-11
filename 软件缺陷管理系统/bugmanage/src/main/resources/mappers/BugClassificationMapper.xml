@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.BugClassificationMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.BugClassification" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bug_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="bug_describe" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, bug_name, create_time, bug_describe
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sd_bug_classification
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sd_bug_classification
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.BugClassification" >
+    insert into sd_bug_classification (id, bug_name, create_time, 
+      bug_describe)
+    values (#{id,jdbcType=INTEGER}, #{bugName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{bugDescribe,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.BugClassification" >
+    insert into sd_bug_classification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bugName != null" >
+        bug_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="bugDescribe != null" >
+        bug_describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bugName != null" >
+        #{bugName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bugDescribe != null" >
+        #{bugDescribe,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.BugClassification" >
+    update sd_bug_classification
+    <set >
+      <if test="bugName != null" >
+        bug_name = #{bugName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bugDescribe != null" >
+        bug_describe = #{bugDescribe,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.BugClassification" >
+    update sd_bug_classification
+    set bug_name = #{bugName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      bug_describe = #{bugDescribe,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="bugClassList" resultMap="BaseResultMap" parameterType="com.project.vo.CommonVo" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from sd_bug_classification
+    <where>
+      <if test="bugName!=null and bugName!=''">
+        and bug_name like "%"#{bugName}"%"
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ create_time <= #{endTime}]]>
+        </if>
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ create_time <= #{endTime}]]>
+          </if>
+        </if>
+      </if>
+    </where>
+    order by  id desc
+  </select>
+  <select id="selectBugClass" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from sd_bug_classification
+  </select>
+  <select id="checkBugName" resultType="int" >
+    SELECT
+    count(1)
+    from sd_bug_classification
+    where bug_name = #{bugName}
+  </select>
+</mapper>

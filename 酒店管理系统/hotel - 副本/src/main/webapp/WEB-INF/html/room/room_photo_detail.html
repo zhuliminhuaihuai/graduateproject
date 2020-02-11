@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>房内照片</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../x-admin/css/font.css">
+    <link rel="stylesheet" href="../../../x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script type="text/javascript" src="../../../x-admin/js/xadmin.js"></script>
+
+</head>
+<body>
+<!-- 顶部开始 -->
+
+<!-- 顶部结束 -->
+<!-- 中部开始 -->
+<div class="wrapper">
+    <!-- 左侧菜单开始 -->
+    <!-- 左侧菜单结束 -->
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <form class="layui-form">
+                <blockquote class="layui-elem-quote news_search">
+                    <div class="layui-inline">
+                        <input type="checkbox" name="selectAll" id="selectAll" lay-filter="selectAll" lay-skin="primary" title="全选">
+                    </div>
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-sm layui-btn-danger batchDel">批量删除</a>
+                    </div>
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-sm uploadNewImg">上传新图片</a>
+                    </div>
+                    <div class="layui-inline" style="float:right">
+                        <a class="layui-btn layui-btn-sm layui-btn-warm" onclick="goback()"><i class="layui-icon">&#xe65c;</i>返回上一级</a>
+                    </div>
+                    <div class="layui-inline" style="text-align: right">
+                        <a class="layui-btn layui-btn-sm layui-btn-radius layui-btn-warm"  id="receive" onclick="reloadPage()"><i class="layui-icon">&#xe669;</i> 刷新</a>
+                    </div>
+                </blockquote>
+                <ul class="layer-photos-demo" id="Images"></ul>
+            </form>
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<!-- 中部结束 -->
+<!-- 底部开始 -->
+
+<!-- 底部结束 -->
+<!-- 背景切换开始 -->
+<div class="bg-changer">
+    <div class="swiper-container changer-list">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/a.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/b.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/c.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/d.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/e.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/f.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/g.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/h.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/i.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/j.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/k.jpg" alt=""></div>
+            <div class="swiper-slide"><span class="reset">初始化</span></div>
+        </div>
+    </div>
+    <div class="bg-out"></div>
+    <div id="changer-set"><i class="iconfont">&#xe696;</i></div>
+</div>
+<!-- 背景切换结束 -->
+<link rel="stylesheet" href="../../../x-admin/lib/layui/css/modules/layer/default/layer.css">
+
+<script src="../../../x-admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+
+<style>
+    .layer-photos-demo li{
+        width: 270px;
+
+
+        height: 300px;
+        float: left!important;
+    }
+    .layer-photos-demo i {
+        width: 220px;
+        padding-left: 100px   !important;
+    }
+</style>
+
+<script>
+    var roomId = localStorage.getItem("roomId");
+    var data;
+    layui.config({
+        base : "../../../js/"
+    }).use(['flow','form','layer','upload'],function(){
+        var flow = layui.flow,
+            form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            upload = layui.upload,
+            $ = layui.jquery;
+
+        //流加载图片
+        var imgNums = 15;  //单页显示图片数量
+        flow.load({
+            elem: '#Images', //流加载容器
+            done: function(page, next){ //加载下一页
+                $.get("/manage/room/roomPhotoDetail?roomId="+roomId,function(res){
+                    //模拟插入
+                    var imgList = [];
+                    if (res.status == 0) {
+                        data = res.data;
+                        var maxPage = imgNums * page < data.length ? imgNums * page : data.length;
+
+                        setTimeout(function () {
+                            for (var i = imgNums * (page - 1); i < maxPage; i++) {
+                                imgList.push('<li><img width="250px" height="250px" layer-src="http://127.0.0.1:8080/upload/' + data[i].imgCode + '" src="http://127.0.0.1:8080/upload/' + data[i].imgCode + '" alt="照片' + (i + 1) + '"><div class="operate"><div class="check"><input type="checkbox" name="belle" lay-filter="choose" lay-skin="primary" title="照片' + (i + 1) + '"><a class="layui-icon img_del" title="删除照片">&#xe640;</a></div></div></li>');
+                            }
+                            next(imgList.join(''), page < (data.length / imgNums));
+                            form.render();
+                        }, 500);
+                    } else {
+                        layer.msg("暂无房内照片!",{icon: 5,time:2500});
+                    }
+
+                });
+            }
+        });
+
+        //设置图片的高度
+        $(window).resize(function(){
+            $("#Images li img").height($("#Images li img").width());
+        })
+
+        //多图片上传
+        upload.render({
+            elem: '.uploadNewImg',
+            url: '/manage/room/uploadImg',
+            multiple: true,
+            before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#Images').prepend('<li><img layer-src="'+ result +'" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img"><div class="operate"><div class="check"><input type="checkbox" name="belle" lay-filter="choose" lay-skin="primary" title="'+file.name+'"></div><i class="layui-icon img_del">&#xe640;</i></div></li>')
+                    //设置图片的高度
+                    $("#Images li img").height($("#Images li img").width());
+                });
+            },
+            done: function(res){
+                //上传完毕
+                var img = res.data.uri;
+                $.ajax({
+                    url: "/manage/room/addRoomImg",
+                    type: "post",
+                    dataType: "json",
+                    data:{
+                        photoImg:img,
+                        roomId:roomId
+                    },
+                    success: function (data) {
+                        if (data.status == 0) {
+                            layer.msg("上传完成", {icon: 6, time: 1500, end: function () {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            layer.msg("上传失败", {icon: 5, time: 1500,});
+                        }
+
+                    }
+                })
+            }
+        });
+
+        //弹出层
+        $("body").on("click","#Images img",function(){
+            showImg();
+        })
+
+        //删除单张图片
+        $("body").on("click",".img_del",function(){
+            var _this = $(this);
+            layer.confirm('确定删除图片"'+_this.siblings().find("span").html()+'"吗？',{icon:3, title:'提示信息'},function(index){
+                _this.parents("li").hide(1000);
+                setTimeout(function(){_this.parents("li").remove();},950);
+                layer.close(index);
+                var title = _this.siblings().find("span").html();
+                console.log("title:" + title);
+                for (var i=0;i<data.length;i++) {
+                    if (title == "照片" + (i+1)) {
+                        var imgId = data[i].imgId;
+                    }
+                }
+                $.ajax({
+                    url: "/manage/room/deleteRoomImg",
+                    type: "post",
+                    dataType: "json",
+                    data:{
+                        imgId:imgId
+                    },
+                    success: function (data) {
+                        if (data.status == 0) {
+                            layer.msg("删除成功！", {icon: 6, time: 1500,
+                            });
+                        }
+                        else {
+                            layer.msg("删除失败！", {icon: 5, time: 1500,});
+                        }
+
+                    }
+                })
+
+            });
+        })
+
+        //全选
+        form.on('checkbox(selectAll)', function(data){
+            var child = $("#Images li input[type='checkbox']");
+            child.each(function(index, item){
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+
+        //通过判断是否全部选中来确定全选按钮是否选中
+        form.on("checkbox(choose)",function(data){
+            var child = $(data.elem).parents('#Images').find('li input[type="checkbox"]');
+            var childChecked = $(data.elem).parents('#Images').find('li input[type="checkbox"]:checked');
+            if(childChecked.length == child.length){
+                $(data.elem).parents('#Images').siblings("blockquote").find('input#selectAll').get(0).checked = true;
+            }else{
+                $(data.elem).parents('#Images').siblings("blockquote").find('input#selectAll').get(0).checked = false;
+            }
+            form.render('checkbox');
+        })
+
+        //批量删除
+        $(".batchDel").click(function(){
+            var $checkbox = $('#Images li input[type="checkbox"]');
+            var $checked = $('#Images li input[type="checkbox"]:checked');
+            var photoIds = new Array();
+            if($checkbox.is(":checked")){
+                layer.confirm('确定删除选中的图片？',{icon:3, title:'提示信息'},function(index){
+                    var index = layer.msg('删除中，请稍候',{icon: 16,time:false,shade:0.8});
+                    setTimeout(function(){
+                        //删除数据
+                        $checked.each(function(){
+                            var title = $(this).attr("title");
+                            console.log("title:" + title);
+                            for (var i=0;i<data.length;i++) {
+                                if (title == "照片" + (i+1)) {
+                                    var imgId = data[i].imgId;
+                                    photoIds.push(imgId);
+                                }
+                            }
+                            $(this).parents("li").hide(1000);
+                            setTimeout(function(){$(this).parents("li").remove();},950);
+                        })
+                        $('#Images li input[type="checkbox"],#selectAll').prop("checked",false);
+                        form.render();
+                        layer.close(index);
+                        var ids = JSON.stringify(eval(photoIds));
+                        $.ajax({
+                            url: "/manage/room/deleteManyRoomImg",
+                            type: "post",
+                            dataType: "json",
+                            data:{
+                                photoIds:ids
+                            },
+                            success: function (data) {
+                                if (data.status == 0) {
+                                    layer.msg("删除成功！", {icon: 6, time: 1500,});
+                                } else {
+                                    layer.msg("删除失败！", {icon: 5, time: 1500,});
+                                }
+                            }
+                        })
+                    },2000);
+                })
+            }else{
+                layer.msg("请选择需要删除的图片");
+            }
+        })
+    })
+    function goback() {
+        parent.location.href = "/manage/room/jumpRoomList.html";
+    }
+    function reloadPage() {
+        window.location.href = "/manage/room/jumpRoomPhotoDetail.html";
+    }
+    //图片管理弹窗
+    function showImg(){
+        layer.photos({
+            photos: '#Images',
+            anim: 4
+        });
+    }
+    //数字时间转DATE时间类型
+    function editTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+        return str;
+    }
+</script>
+</body>
+</html>

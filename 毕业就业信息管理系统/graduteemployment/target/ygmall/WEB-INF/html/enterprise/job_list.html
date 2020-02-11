@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>职位列表</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../../../css/font_eolqem241z66flxr.css" media="all" />
+	<link rel="stylesheet" href="../../../css/news.css" media="all" />
+</head>
+<body >
+<div class="childrenBody">
+	<blockquote class="layui-elem-quote news_search layui-form">
+		<div class="demoTable">
+			<div class="layui-inline">
+				<label>职位关键字</label>&nbsp
+				<div class="layui-input-inline">
+					<input type="text" id="userName" placeholder="请输入职位关键字" class="layui-input search_input">
+				</div>
+				<label>职位创建时间范围</label>&nbsp
+				<div class="layui-input-inline">
+					<input type="text" name="startTime" id="startTime" lay-verify="date" placeholder="职位创建时间"
+						   class="layui-input">
+				</div>
+				~
+				<div class="layui-input-inline">
+					<input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="职位创建时间" class="layui-input">
+				</div>
+				<button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+				<button class="layui-btn" id="jobAdd" onclick="jobAdd()"><i class="layui-icon"></i>添加职位</button>
+
+				<!--		<a class="layui-btn search_btn">查询</a>-->
+			</div>
+		</div>
+	</blockquote>
+	<script type="text/html" id="switchTpl" lay-filter="test1">
+		<input type="checkbox" name="isShow" id="isShow" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="isShow" {{ d.isOn == 1 ? 'checked' : '' }}>
+	</script>
+	<table class="layui-hide" id="work" lay-filter="test"></table>
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	</script>
+</div>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../layui/layui.js"></script>
+	<script type="text/javascript" src="../../../js/main.js"></script>
+                                                                                                                                                                           	<script type="text/javascript" src="../../../js/xadmin.js"></script>
+	<script>
+
+        var role ='${session_manage_token.getRole()}';
+        var userCode ='${session_manage_token.getUserCode()}';
+        if(role!=2){
+            $("#jobAdd").hide();
+		}
+
+
+        layui.use(['table','laydate','layer','form'], function(){
+            $ = layui.jquery;
+            var table = layui.table,
+                laydate = layui.laydate,
+				layer = layui.layer
+				form = layui.form;
+            var page=1;
+            var limit=5;
+
+            //渲染
+            table.render({
+                elem: '#work'
+                ,id : 'testReload'
+                ,url: '/manage/job/jobList'//数据接口
+                ,cols: [[
+                    {type: 'checkbox'}
+                    , {field: 'jobName', width:'20%' , title: '职位名称',sort: true}
+                    , {field: 'createTime', width:'20%' , title: '职位发布时间',
+                        templet :function (row){
+                            return createTime(row.createTime);
+                        } }
+                    , {field: 'enterpriseName', width:'15%' , title: '职位所属公司'}
+                    , {field: 'jobType', width:'10%' , title: '职位类型'}
+                    , {field: 'isOn', width:'10%' , title: '职位是否开启',templet: '#switchTpl', unresize: true}
+                    , {fixed: 'right', width: '20%', align: 'center', title: '操作', toolbar: '#barDemo'}
+                ]]
+                ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                    ,curr: 1 //设定初始在第 1 页
+                    ,groups: 1 //只显示 1 个连续页码
+                    ,limit: 10
+                    ,limits: [5,10,15,20]
+                }  //true表示分页
+                ,done: function(res, curr, count){
+                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    console.log(res);
+                    //得到当前页码
+                    console.log(curr);
+                    //得到数据总量
+                    console.log(count);
+                    $("[data-field='isOn']").children().each(function(){
+                        if($(this).text()=='1'){
+                            $(this).text("开启")
+                        }else if($(this).text()=='2'){
+                            $(this).text("关闭")
+                        }
+                    })
+
+                }
+
+            })
+            //表格数据操作-查看详情和删除
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                if(obj.event === 'detail'){
+                    //layer.msg('查看操作');
+                    localStorage.setItem("id",data.id);
+                    x_admin_show('修改角色','/manage/job/job_edit',800,650)
+                }else if(obj.event === 'del'){
+                    layer.confirm('真的删除行么', function(index){
+                        $.ajax({
+                            type: 'post',
+                            url: '/manage/job/deleteJob',
+                            data:{
+                                id:data.id,
+                            },
+                            dataType: 'json',
+                            success : function (data) {
+                                if(data.status==0){
+                                    window.location.reload();
+								}
+                            },
+                            error : function () {
+                                layer.msg('删除失败');
+                            }
+                        });
+                    });
+                }
+            });
+            form.on('switch(isShow)', function(obj){
+                var data = obj.data;
+                var isOn="";
+                if(obj.elem.checked==0){
+                    isOn=2;
+                }else {
+                    isOn=1;
+                }
+                console.log("isOn"+isOn+"....THIS"+this.value);
+                    $.ajax({
+                        url:'/manage/job/shutOrOpenJob',
+                        type:'post',
+                        data:{
+                            id:this.value,
+                            isOn:isOn,
+                        },
+                        dataType:'json',
+                        success:function (data) {
+                            $(".layui-laypage-btn").click();
+                        },
+                    });
+            });
+            var $ = layui.jquery, active = {
+                reload: function(){
+                    var userName = $("#userName").val();
+                    var endTime = $("#endTime").val();
+                    var startTime = $("#startTime").val();
+                    var role = $("#role option:selected").val();
+                    console.log(userName);
+                    console.log("role:"+role);
+                    table.reload('testReload', {
+                        method:'post',
+                        where:{startTime:startTime,endTime:endTime,userName:userName,role:role}
+                    });
+                }
+            };
+            laydate.render({
+                elem: '#startTime'
+                ,type: 'datetime'
+            });
+            laydate.render({
+                elem: '#endTime'
+                ,type: 'datetime'
+            });
+            $('.demoTable .layui-btn').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+            $('i').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+            $('.layui-btn').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+        });
+
+        //数字时间转DATE时间类型
+        function createTime(v){
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth()+1;
+            m = m<10?'0'+m:m;
+            var d = date.getDate();
+            d = d<10?("0"+d):d;
+            var h = date.getHours();
+            h = h<10?("0"+h):h;
+            var M = date.getMinutes();
+            M = M<10?("0"+M):M;
+            var S = date.getSeconds();
+            S = S<10?("0"+S):S;
+            var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+            return str;
+        }
+		
+        //添加职位前 先验证注册的企业是否通过审批
+		function  jobAdd() {
+            $.ajax({
+                type: 'post',
+                url: '/manage/job/checkEnter',
+                data:{
+                    userCode:userCode,
+                },
+                dataType: 'json',
+                success : function (data) {
+                    console.log("data:"+data.status)
+                    if(data.status==0){
+                        x_admin_show('添加职位','/manage/job/job_add',850,600)
+                    }else {
+                        layer.msg('您注册的企业还未审批通过');
+                        return false;
+					}
+                },
+                error : function () {
+                }
+            });
+        }
+	</script>
+</body>
+</html>

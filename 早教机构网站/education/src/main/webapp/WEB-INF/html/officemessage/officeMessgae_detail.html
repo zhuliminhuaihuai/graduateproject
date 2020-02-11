@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>机构信息详情</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../../css/user.css" media="all" />
+</head>
+<body>
+<fieldset class="layui-elem-field" style="width:60%;margin-left: 20%;margin-top: 1% ">
+    <div class="layui-form">
+        <tbody>
+        <tr>
+            <th colspan="2" style="text-align:left;background-color: #eee"><h2 style="font-family: 黑体">机构基本信息</h2>
+            </th>
+        <tr>
+        </tbody>
+        <div class="layui-form-item">
+            <label class="layui-form-label">信息编号</label>
+            <div class="layui-input-inline">
+                <input type="text" id="messageCode" disabled="disabled" name="messageCode" required=""
+                       lay-verify="messageCode" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">信息标题</label>
+            <div class="layui-input-inline">
+                <input type="text" id="messageTitle" name="messageTitle" required=""
+                       lay-verify="messageTitle" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="user_right">
+            <input type="text" style="display: none" name="messageImg" id="messageImg" lay-verify="messageImg" >
+            <div class="layui-form-item" >
+                <label  class="layui-form-label">资料照片
+                </label>
+                <div class="layui-upload" style="padding-left: 130px;">
+                    <div class="layui-upload-list" id="demo3" >
+                        <img class="layui-upload-img " id="demo2" width="250px" height="250px"  >
+                    </div>
+                    <button type="button" class="layui-btn" id="test2">修改照片</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">照片介绍</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请描述机构照片信息..." class="layui-textarea" id="messageDetail" lay-verify="messageDetail" name="messageDetail" ></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center">
+            <button class="layui-btn layui-btn-danger" lay-filter="save" lay-submit="">保存</button>
+            <button class="layui-btn layui-btn-warm" onclick="goback()">返回</button>
+        </div>
+    </div>
+</fieldset>
+
+
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../js/main.js"></script>
+<script type="text/javascript" src="../../../js/index.js"></script>
+<script type="text/javascript" src="../../../js/xadmin.js"></script>
+<script>
+    var messageId = localStorage.getItem("messageId");
+    localStorage.removeItem("messageId");
+    layui.use(['form', 'layer', 'laydate', 'code', 'upload'], function () {
+        $ = layui.jquery;
+        form = layui.form,
+            layer = layui.layer,
+            laydate = layui.laydate,
+            upload = layui.upload;
+        form.verify({
+            messageTitle : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '信息标题不能为空';
+                }
+            },
+            messageImg : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '资料照片不能为空';
+                }
+            },
+            messageDetail : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '照片介绍不能为空';
+                }
+            },
+        });
+
+
+        $.ajax({
+            url: "/manage/office/detailOfficeMessage",
+            type: "post",
+            dataType: "json",
+            data:{
+                messageId:messageId
+            },
+            success: function (data) {
+                console.log(JSON.stringify(data));
+                var data = data.data;
+                $("#messageCode").val(data.messageCode);
+                $("#messageTitle").val(data.messageTitle);
+                $("#messageDetail").val(data.messageDetail);
+
+                var messageImg = data.messageImg;
+                $("#demo2").attr("src","http://127.0.0.1:8080/upload/"+messageImg);
+                $("#messageImg").val(messageImg);
+                form.render();
+            }
+        });
+
+        //图片上传
+        upload.render({
+            elem: '#test2'
+            , url: '/manage/office/uploadImg'
+            , multiple: false
+            , size: 2048
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    //console.log(file);
+                    $('#demo2').remove();
+                    $('#demo3').append('<img width="250px" height="250px" id="demo2" src="' + result + '" alt="' + file.name + '" class="layui-upload-img ">');
+                });
+            }
+            , done: function (res) {
+                var img = res.data.uri;
+                $("#messageImg").val(img);
+                layer.msg("上传完成", {icon: 6, time: 1500,});
+            }
+
+        });
+        form.on('submit(save)', function(data) {
+            var messageCode = $("#messageCode").val();
+            var messageTitle = $("#messageTitle").val();
+            var messageDetail = $("#messageDetail").val();
+            var messageImg= $("#messageImg").val();
+            $.ajax({
+                url: "/manage/office/saveOfficeMessage",
+                type: "post",
+                dataType: "json",
+                data:{
+                    messageId:messageId,
+                    messageCode:messageCode,
+                    messageTitle:messageTitle,
+                    messageDetail:messageDetail,
+                    messageImg:messageImg
+                },
+                success: function (data) {
+                    if (data.status == 0) {
+                        layer.msg('保存成功!', {
+                            icon: 6,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            window.location.href = "/manage/office/jumpOfficeMessageAll.html";
+                        });
+                    }else  {
+                        layer.msg('保存失败!');
+                    }
+                }
+
+            });
+
+        });
+
+    });
+
+    function goback() {
+        window.location.href = "/manage/office/jumpOfficeMessageAll.html";
+
+    }
+    //数字时间转DATE时间类型
+    function editTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d;
+        if (str == "1970-01-01") {
+            return "";
+        }
+        return str;
+    }
+
+</script>
+</body>
+</html>

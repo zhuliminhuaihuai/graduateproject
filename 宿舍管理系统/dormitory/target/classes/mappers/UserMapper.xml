@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.managesystem.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.managesystem.pojo.User" >
+    <constructor >
+      <idArg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_role" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_find_password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_birthday" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="headimg" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="province" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="city" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="district" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_faculty" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bedroom_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="user_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_name, user_password, user_code, user_role, user_find_password, user_phone,
+    user_birthday, headimg, province, city, district, user_faculty, user_state, bedroom_code,
+    user_create_time, user_update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from dormitory_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dormitory_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.managesystem.pojo.User" >
+    insert into dormitory_user (user_id, user_name, user_password,
+      user_code, user_role, user_find_password,
+      user_phone, user_birthday, headimg,
+      province, city, district,
+      user_faculty, user_state, bedroom_code,
+      user_create_time, user_update_time)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
+      #{userCode,jdbcType=VARCHAR}, #{userRole,jdbcType=INTEGER}, #{userFindPassword,jdbcType=VARCHAR},
+      #{userPhone,jdbcType=VARCHAR}, #{userBirthday,jdbcType=DATE}, #{headimg,jdbcType=VARCHAR},
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR},
+      #{userFaculty,jdbcType=VARCHAR}, #{userState,jdbcType=INTEGER}, #{bedroomCode,jdbcType=VARCHAR},
+      #{userCreateTime,jdbcType=TIMESTAMP}, #{userUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.managesystem.pojo.User" >
+    insert into dormitory_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPassword != null" >
+        user_password,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="userRole != null" >
+        user_role,
+      </if>
+      <if test="userFindPassword != null" >
+        user_find_password,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="userBirthday != null" >
+        user_birthday,
+      </if>
+      <if test="headimg != null" >
+        headimg,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="userFaculty != null" >
+        user_faculty,
+      </if>
+      <if test="userState != null" >
+        user_state,
+      </if>
+      <if test="bedroomCode != null" >
+        bedroom_code,
+      </if>
+      <if test="userCreateTime != null" >
+        user_create_time,
+      </if>
+      <if test="userUpdateTime != null" >
+        user_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userRole != null" >
+        #{userRole,jdbcType=INTEGER},
+      </if>
+      <if test="userFindPassword != null" >
+        #{userFindPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userBirthday != null" >
+        #{userBirthday,jdbcType=DATE},
+      </if>
+      <if test="headimg != null" >
+        #{headimg,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="userFaculty != null" >
+        #{userFaculty,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null" >
+        #{userState,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomCode != null" >
+        #{bedroomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userCreateTime != null" >
+        #{userCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userUpdateTime != null" >
+        #{userUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.managesystem.pojo.User" >
+    update dormitory_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userRole != null" >
+        user_role = #{userRole,jdbcType=INTEGER},
+      </if>
+      <if test="userFindPassword != null" >
+        user_find_password = #{userFindPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userBirthday != null" >
+        user_birthday = #{userBirthday,jdbcType=DATE},
+      </if>
+      <if test="headimg != null" >
+        headimg = #{headimg,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="userFaculty != null" >
+        user_faculty = #{userFaculty,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null" >
+        user_state = #{userState,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomCode != null" >
+        bedroom_code = #{bedroomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userCreateTime != null" >
+        user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userUpdateTime != null" >
+        user_update_time = #{userUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.managesystem.pojo.User" >
+    update dormitory_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      user_role = #{userRole,jdbcType=INTEGER},
+      user_find_password = #{userFindPassword,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_birthday = #{userBirthday,jdbcType=DATE},
+      headimg = #{headimg,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      user_faculty = #{userFaculty,jdbcType=VARCHAR},
+      user_state = #{userState,jdbcType=INTEGER},
+      bedroom_code = #{bedroomCode,jdbcType=VARCHAR},
+      user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+      user_update_time = #{userUpdateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+  <select id="checkUserName" parameterType="java.lang.String" resultType="int">
+    select count(1)
+    from dormitory_user
+    where user_name = #{userName}
+  </select>
+  <select id="login" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from dormitory_user
+    where user_name = #{userName}
+    and user_password = #{password}
+  </select>
+  <select id="findUserByUserCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from dormitory_user
+    where user_code = #{userCode}
+  </select>
+  <select id="getUserList" resultMap="BaseResultMap" parameterType="com.managesystem.vo.UserVo">
+    select
+    <include refid="Base_Column_List"></include>
+    from dormitory_user
+    <where>
+      <if test="userName!='' and userName!=null">
+        and user_name like  "%"#{userName}"%"
+      </if>
+      <if test="userCode!='' and userCode!=null">
+        and user_code like  "%"#{userCode}"%"
+      </if>
+      <if test="userRole!='' and userRole!=null">
+        and user_role = #{userRole}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ user_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ user_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ user_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ user_create_time <= #{endTime}]]>
+        </if>
+      </if>
+      and user_role not in(1,0)
+    </where>
+  </select>
+  <update id="rePasswordManageUser" parameterType="int">
+    update dormitory_user
+        set user_password = "202cb962ac59075b964b07152d234b70"
+        where user_id = #{userId}
+  </update>
+  <select id="findManageByUserRole" parameterType="int" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from dormitory_user
+    where user_role = #{userRole}
+  </select>
+  <select id="getStudentList" resultMap="BaseResultMap" parameterType="com.managesystem.vo.StudentQueryVo">
+    select <include refid="Base_Column_List"></include>
+    from  dormitory_user
+    <where>
+      <if test="userFaculty!=null and userFaculty!=''">
+        and user_faculty = #{userFaculty}
+      </if>
+      <if test="userState!=null and userState!=''">
+        and user_state = #{userState}
+      </if>
+      <if test="userPhone!=null and userPhone!=''">
+        and user_phone like "%"#{userPhone}"%"
+      </if>
+      <if test="userName!=null and userName!=''">
+        and user_name like "%"#{userName}"%"
+      </if>
+      <if test="userCode!=null and userCode!=''">
+        and user_code = #{userCode}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ user_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ user_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ user_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ user_create_time <= #{endTime}]]>
+        </if>
+      </if>
+      and user_role =0
+    </where>
+  </select>
+  <select id="checkPassword" parameterType="java.lang.String" resultType="int">
+    select count(1)
+    from dormitory_user
+    where user_code = #{userCode} and user_password = #{password}
+  </select>
+  <update id="modifyPassword" parameterType="java.lang.String">
+    update dormitory_user
+    set user_password = #{password}
+    where user_code = #{userCode}
+  </update>
+  <select id="finduserFacultyStudent" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from dormitory_user
+    where user_faculty = #{userFaculty} and user_role = 0 and user_state = 1 and headimg = #{studentSex}
+  </select>
+  <update id="updateStudentCheckInRoom" parameterType="map">
+    update dormitory_user
+    set user_state = 2,
+    bedroom_code = #{bedRoomCode}
+    where user_id in
+    <foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </update>
+  <select id="findStudentByBedRoomCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from dormitory_user
+    where bedroom_code = #{bedRoomCode} and user_role = 0
+  </select>
+</mapper>

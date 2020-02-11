@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit">
+  		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>后台主页</title>
+		<link rel="stylesheet" type="text/css" href="../../layuiv1.0.9/css/layui.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/admin.css"/>
+	</head>
+	<body>
+		<div class="main-layout" id='main-layout'>
+			<!--侧边栏-->
+			<div class="main-layout-side">
+				<div class="m-logo">
+				</div>
+				<ul class="layui-nav layui-nav-tree" lay-filter="leftNav">
+				  <li class="layui-nav-item layui-nav-itemed" id="product">
+				    <a href="javascript:;"><i class="iconfont">&#xe607;</i>作品管理</a>
+				    <dl class="layui-nav-child">
+				      <dd><a href="javascript:;" data-url="/manage/product/product_list" data-id='1' data-text="作品信息"><span class="l-line"></span>作品信息</a></dd>
+				      <dd><a href="javascript:;" data-url="/manage/product/under_product_list" data-id='2' data-text="已下架作品"><span class="l-line"></span>已下架作品</a></dd>
+				    </dl>
+				  </li>
+				  <li class="layui-nav-item" id="branch">
+				    <a href="javascript:;"><i class="iconfont">&#xe604;</i>机构管理</a>
+				    <dl class="layui-nav-child">
+				      <dd><a href="javascript:;" data-url="/manage/branch/branch_list" data-id='9' data-text="机构信息"><span class="l-line"></span>机构信息</a></dd>
+				    </dl>
+				  </li>
+				  <li class="layui-nav-item" id="user">
+				    <a href="javascript:;"><i class="iconfont">&#xe606;</i>用户管理</a>
+				    <dl class="layui-nav-child">
+				      <dd id="1"><a href="javascript:;" data-url="/manage/user/student_user_list" data-id='3' data-text="学生信息"><span class="l-line"></span>学生信息</a></dd>
+				      <dd id="2"><a href="javascript:;" data-url="/manage/user/teacher_user_list" data-id='11' data-text="教师信息"><span class="l-line"></span>教师信息</a></dd>
+				      <dd id="3"><a href="javascript:;" data-url="/manage/user/branch_user_list" data-id='10' data-text="机构管理者信息"><span class="l-line"></span>机构管理者信息</a></dd>
+				    </dl>
+				  </li>
+				</ul>
+			</div>
+			<!--右侧内容-->
+			<div class="main-layout-container">
+				<!--头部-->
+				<div class="main-layout-header" >
+					<div class="menu-btn" id="hideBtn">
+						<a href="javascript:;">
+							<span class="iconfont">&#xe60e;</span>
+						</a>
+					</div>
+					<ul class="layui-nav" lay-filter="rightNav">
+						<li class="layui-nav-item">
+                            <a href="javascript:;" data-url="/manage/user/index_user_info" data-id='5' data-text="个人信息" style="color: #2ec5ff"><span id="realName"></span></a>
+						</li>
+						<li class="layui-nav-item">
+                            <a href="/manage/user/toFirst1" style="color: green">返回首页</a>
+						</li>
+						<li class="layui-nav-item"><a href="/manage/user/logout" style="color: #ff2621">退出</a></li>
+					</ul>
+				</div>
+				<!--主体内容-->
+				<div class="main-layout-body">
+					<!--tab 切换-->
+					<div class="layui-tab layui-tab-brief main-layout-tab" lay-filter="tab" lay-allowClose="true">
+						<ul class="layui-tab-title">
+							<li class="layui-this welcome">后台主页</li>
+						</ul>
+						<div class="layui-tab-content">
+							<div class="layui-tab-item layui-show" style="background: #f5f5f5;">
+								<!--1-->
+								<iframe src="/manage/user/main" width="100%" height="100%" name="iframe" scrolling="auto" class="iframe" framborder="0"></iframe>
+								<!--1end-->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--遮罩-->
+			<div class="main-mask">
+				
+			</div>
+		</div>
+		<script type="text/javascript">
+			var scope={
+				link:'./welcome.html'
+			}
+		</script>
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+		<script src="../../layuiv1.0.9/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            var realName ='${session_manage_token.getRealName()}';
+            $("#realName").html(realName);
+            var role ='${session_manage_token.getRole()}';
+            //管理员可以看全部
+			if(role==1){//学生 只查看作品管理
+				$("#branch").hide();
+				$("#user").hide();
+			}
+			if(role==2){//机构 只查看作品管理 教师信息 学生信息
+				$("#branch").hide();
+				$("#3").hide();
+			}
+			if(role==3){//教师 只查看作品管理 学生信息
+				$("#branch").hide();
+				$("#2").hide();
+				$("#3").hide();
+			}
+        </script>
+	</body>
+</html>

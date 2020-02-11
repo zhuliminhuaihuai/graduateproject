@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manage.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.manage.pojo.User" >
+    <constructor >
+      <idArg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_role" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id_card" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="user_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_name, user_password, user_code, user_role, user_id_card, user_phone,
+    room_code, room_state, user_create_time, user_update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from hotel_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hotel_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.manage.pojo.User" >
+    insert into hotel_user (user_id, user_name, user_password,
+      user_code, user_role, user_id_card,
+      user_phone, room_code, room_state,
+      user_create_time, user_update_time)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
+      #{userCode,jdbcType=VARCHAR}, #{userRole,jdbcType=INTEGER}, #{userIdCard,jdbcType=VARCHAR},
+      #{userPhone,jdbcType=VARCHAR}, #{roomCode,jdbcType=VARCHAR}, #{roomState,jdbcType=INTEGER},
+      #{userCreateTime,jdbcType=TIMESTAMP}, #{userUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.manage.pojo.User" >
+    insert into hotel_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPassword != null" >
+        user_password,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="userRole != null" >
+        user_role,
+      </if>
+      <if test="userIdCard != null" >
+        user_id_card,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="roomState != null" >
+        room_state,
+      </if>
+      <if test="userCreateTime != null" >
+        user_create_time,
+      </if>
+      <if test="userUpdateTime != null" >
+        user_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userRole != null" >
+        #{userRole,jdbcType=INTEGER},
+      </if>
+      <if test="userIdCard != null" >
+        #{userIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomState != null" >
+        #{roomState,jdbcType=INTEGER},
+      </if>
+      <if test="userCreateTime != null" >
+        #{userCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userUpdateTime != null" >
+        #{userUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.manage.pojo.User" >
+    update hotel_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userRole != null" >
+        user_role = #{userRole,jdbcType=INTEGER},
+      </if>
+      <if test="userIdCard != null" >
+        user_id_card = #{userIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomState != null" >
+        room_state = #{roomState,jdbcType=INTEGER},
+      </if>
+      <if test="userCreateTime != null" >
+        user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userUpdateTime != null" >
+        user_update_time = #{userUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.manage.pojo.User" >
+    update hotel_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      user_role = #{userRole,jdbcType=INTEGER},
+      user_id_card = #{userIdCard,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      room_code = #{roomCode,jdbcType=VARCHAR},
+      room_state = #{roomState,jdbcType=INTEGER},
+      user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+      user_update_time = #{userUpdateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+  <select id="checkUserName" parameterType="java.lang.String" resultType="int">
+    select count(1)
+    from hotel_user
+    where user_name = #{userName}
+  </select>
+  <select id="login" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from hotel_user
+    where user_name = #{userName}
+    and user_password = #{password}
+  </select>
+  <select id="findUserByUserCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from hotel_user
+    where user_code = #{userCode}
+  </select>
+  <select id="getUserListByCondition" parameterType="com.manage.pojo.User" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from hotel_user
+    <where>
+      <if test="1==1">
+        and user_role = 2
+      </if>
+      <if test="userName!=null and userName!=''">
+        and user_name like "%"#{userName}"%"
+      </if>
+      <if test="userCode!=null and userCode!=''">
+        and user_code = #{userCode}
+      </if>
+      <if test="userPhone!=null and userPhone!=''">
+        and user_phone like "%"#{userPhone}"%"
+      </if>
+      <if test="roomState!=null and roomState!=''">
+        and room_state = #{roomState}
+      </if>
+      <if test="userIdCard!=null and userIdCard!=''">
+        and user_id_card like "%"#{userIdCard}"%"
+      </if>
+    </where>
+  </select>
+
+</mapper>

@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>配送完成订单列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../x-admin/css/font.css">
+    <link rel="stylesheet" href="../../../x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+
+</head>
+<body>
+<!-- 顶部开始 -->
+<div class="container">
+    <div class="logo"><a href="">水果批发商城后台管理</a></div>
+    <div class="open-nav"><i class="iconfont">&#xe699;</i></div>
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;" id="userName"></a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                <dd><a onclick="x_admin_show('个人信息','/manage/user/openUserInfo.html',600,400)">个人信息</a></dd>
+                <dd><a href="/manage/user/jumpUserBackStageLogin.html">切换帐号</a></dd>
+                <dd><a href="/manage/user/jumpShop.html">退出</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a href="/manage/user/jumpUserShop.html">前台首页</a></li>
+    </ul>
+</div>
+<!-- 顶部结束 -->
+<!-- 中部开始 -->
+<div class="wrapper">
+    <!-- 左侧菜单开始 -->
+    <div class="left-nav">
+        <div id="side-nav">
+
+        </div>
+    </div>
+    <!-- 左侧菜单结束 -->
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <div class="layui-form xbs" >
+                <div class="layui-form-pane" style="text-align: center;">
+                    <div class="layui-form-item" style="display: inline-block;">
+                        <label class="layui-form-label xbs768">日期范围</label>
+                        <div class="layui-input-inline xbs768">
+                            <input class="layui-input" placeholder="开始日" id="startTime">
+                        </div>
+                        <div class="layui-input-inline xbs768">
+                            <input class="layui-input" placeholder="截止日" id="endTime">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="text" name="orderCode"id="orderCode" placeholder="请输入订单编号" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="text" name="userName" id="userBuyName" placeholder="请输入购货人名字" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="text" name="userPhone" id="userPhone" placeholder="请输入购货人手机号" autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        <label class="layui-form-label xbs768">支付方式</label>
+                        <div class="layui-input-inline" style="width:100px;">
+                            <select name="payType" id="payType" lay-verify="" lay-search="" >
+                                <option value="">请选择...</option>
+                                <option value="0">到货付款</option>
+                                <option value="1">支付宝支付</option>
+                                <option value="2">微信支付</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline" style="width:80px">
+                            <button class="layui-btn"  data-type="reload" ><i class="layui-icon">&#xe615;</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <xblock>
+                <button class="layui-btn layui-btn-danger" data-type="delAll" ><i class="layui-icon">&#xe640;</i>批量删除
+                </button>
+                <!--<button class="layui-btn" onclick="member_add('添加用户','member-add.html','600','500')"><i
+                        class="layui-icon">&#xe608;</i>添加
+                </button>-->
+                <span class="x-right" style="line-height:40px" id="count"></span>
+            </xblock>
+            <table class="layui-table" id="order" lay-filter="orderTable"></table>
+            <script type="text/html" id="barDemo">
+                {{# if(d.orderType ===0 && ${session_manage_token.getUserRole()} ==1 ){ }}
+                <a  title="详情" lay-event="detail"><i class="layui-icon">&#xe60b;</i></a>
+                <a  title="修改" lay-event="modify"><i class="layui-icon">&#xe642;</i></a>
+                <a  title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+                <a  title="发货" lay-event="fahuo"><i class="layui-icon">&#x1005;</i></a>
+                {{# }else if(d.orderType ===1 && ${session_manage_token.getUserRole()} ==1) { }}
+                <a  title="详情" lay-event="detail"><i class="layui-icon">&#xe60b;</i></a>
+                <a  title="修改" lay-event="modify"><i class="layui-icon">&#xe642;</i></a>
+                <a  title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+                {{# }else if(d.orderType ===2 && ${session_manage_token.getUserRole()} ==1) { }}
+                <a  title="详情" lay-event="detail"><i class="layui-icon">&#xe60b;</i></a>
+                <a  title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+                {{# }else if(d.orderType ===3 && ${session_manage_token.getUserRole()} ==1) { }}
+                <a  title="详情" lay-event="detail"><i class="layui-icon">&#xe60b;</i></a>
+                <a  title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+                {{# }else if(d.orderType ===0 && ${session_manage_token.getUserRole()} ==2) { }}
+                <a  title="详情" lay-event="detail"><i class="layui-icon">&#xe60b;</i></a>
+                <a  title="修改" lay-event="modify"><i class="layui-icon">&#xe642;</i></a>
+                <a  title="退货" lay-event="tuihuo"><i class="layui-icon">&#x1006;</i></a>
+                {{# }else if(d.orderType ===1 && ${session_manage_token.getUserRole()} ==2) { }}
+                <a  title="详情" lay-event="detail"><i class="layui-icon">&#xe60b;</i></a>
+                <a  title="修改" lay-event="modify"><i class="layui-icon">&#xe642;</i></a>
+                <a  title="确认收货" lay-event="queren"><i class="layui-icon">&#xe60c;</i></a>
+                {{# }else if(d.orderType ===2 && ${session_manage_token.getUserRole()} ==2) { }}
+                <a  title="详情" lay-event="detail"><i class="layui-icon">&#xe60b;</i></a>
+                {{# }else if(d.orderType ===3 && ${session_manage_token.getUserRole()} ==2) { }}
+                <a  title="详情" lay-event="detail"><i class="layui-icon">&#xe60b;</i></a>
+                {{# }else { }}
+                <a  title="详情" lay-event="detail"><i class="layui-icon">&#xe60b;</i></a>
+                {{# }
+                }}
+            </script>
+
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+        <!-- 中部结束 -->
+        <!-- 底部开始 -->
+        <div class="footer">
+            <div class="copyright">学校：江苏师范大学 学号：15090167 本后台系统由朱利敏提供技术支持</div>
+        </div>
+        <!-- 底部结束 -->
+        <!-- 背景切换开始 -->
+        <div class="bg-changer">
+            <div class="swiper-container changer-list">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/a.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/b.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/c.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/d.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/e.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/f.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/g.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/h.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/i.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/j.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/k.jpg" alt=""></div>
+                    <div class="swiper-slide"><span class="reset">初始化</span></div>
+                </div>
+            </div>
+            <div class="bg-out"></div>
+            <div id="changer-set"><i class="iconfont">&#xe696;</i></div>
+        </div>
+        <!-- 背景切换结束 -->
+        <link rel="stylesheet" href="../../../x-admin/lib/layui/css/modules/layer/default/layer.css">
+        <!--
+                <link rel="stylesheet" href="../../../layui/css/layui.css">
+        -->
+
+        <script src="../../../x-admin/lib/layui/layui.js" charset="utf-8"></script>
+        <script type="text/javascript" src="../../../layui/layui.js"></script>
+        <script type="text/javascript" src="../../../x-admin/js/xadmin.js"></script>
+
+        <script>
+            var userName = '${session_manage_token.getUserName()}';
+            var userRole = '${session_manage_token.getUserRole()}';
+            var menuHtml = "";
+            if (userRole == 1) {
+                menuHtml += '<ul id="nav">'
+                menuHtml += '    <li class="list" current>'
+                menuHtml += '  <a id="shouye">'
+                menuHtml += '      <i class="iconfont">&#xe761;</i>'
+                menuHtml += ' 后台首页'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += ' <li class="list">'
+                menuHtml += '      <a href="javascript:;">'
+                menuHtml += '   <i class="layui-icon">&#xe60a;</i>\n'
+                menuHtml += '  订单管理'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += ' </a>'
+                menuHtml += ' <ul class="sub-menu">'
+                menuHtml += '      <li>'
+                menuHtml += '      <a href="/manage/order/jumpOrderList.html">'
+                menuHtml += '       <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   订单列表'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += '   <li>'
+                menuHtml += '  <a href="/manage/order/jumpOrderListUnshipped.html">'
+                menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   未发货订单'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += '   <li>'
+                menuHtml += '  <a href="/manage/order/jumpOrderListShipped.html">'
+                menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '  已发货订单'
+                menuHtml += '   </a>'
+                menuHtml += '   </li>'
+                menuHtml += '   <li>'
+                menuHtml += '   <a href="/manage/order/jumpOrderListDelivery.html">'
+                menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '  配送完成'
+                menuHtml += '   </a>'
+                menuHtml += '   </li>'
+                menuHtml += '  <li>'
+                menuHtml += '   <a href="/manage/order/jumpOrderListReturn.html">'
+                menuHtml += '       <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   退货单'
+                menuHtml += '   </a>'
+                menuHtml += ' </li>'
+                menuHtml += '   </ul>'
+                menuHtml += '   </li>'
+                menuHtml += '   <li class="list">'
+                menuHtml += '      <a href="javascript:;">'
+                menuHtml += '      <i class="layui-icon">&#xe62b;</i>'
+                menuHtml += '  商品管理'
+                menuHtml += '   <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '   </a>'
+                menuHtml += '  <ul class="sub-menu">'
+                menuHtml += '       <li>'
+                menuHtml += '        <a href="/manage/goods/jumpGoodsList.html">'
+                menuHtml += '        <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   商品列表'
+                menuHtml += '   </a>'
+                menuHtml += '   </li>'
+                menuHtml += '   <li>'
+                menuHtml += '  <a href="/manage/goods/jumpGoodsAdd.html">'
+                menuHtml += '        <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   添加商品'
+                menuHtml += '   </a>'
+                menuHtml += '   </li>'
+                menuHtml += '  </ul>'
+                menuHtml += '   </li>'
+                menuHtml += '   <li class="list">'
+                menuHtml += '       <a href="javascript:;">'
+                menuHtml += '        <i class="layui-icon">&#xe613;</i>'
+                menuHtml += '    用户管理'
+                menuHtml += '    <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '    </a>'
+                menuHtml += '    <ul class="sub-menu" style="display:none">'
+                menuHtml += '       <li>'
+                menuHtml += '        <a href="/manage/user/jumpUserList.html">'
+                menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '    用户列表'
+                menuHtml += '     </a>'
+                menuHtml += '    </li>'
+                menuHtml += '   </ul>'
+                menuHtml += '   </li>'
+                menuHtml += '  <li class="list">'
+                menuHtml += '     <a href="javascript:;">'
+                menuHtml += '      <i class="iconfont">&#xe6a3;</i>'
+                menuHtml += '  系统统计'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '   </a>'
+                menuHtml += '    <ul class="sub-menu" style="display:none">'
+                menuHtml += '        <li>'
+                menuHtml += '       <a href="/manage/count/jumpEchartBrokenLine.html">'
+                menuHtml += '        <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '    拆线图'
+                menuHtml += '    </a>'
+                menuHtml += '    </li>'
+                // menuHtml += '    <li>'
+                // menuHtml += '    <a href="./echarts2.html">'
+                // menuHtml += '          <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '      柱状图'
+                // menuHtml += '     </a>'
+                // menuHtml += '    </li>'
+                // menuHtml += '    <li>'
+                // menuHtml += '    <a href="./echarts3.html">'
+                // menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '     地图'
+                // menuHtml += '     </a>'
+                // menuHtml += '      </li>'
+                menuHtml += '      <li>'
+                menuHtml += '    <a href="/manage/count/jumpEchartPieChart.html">'
+                menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '     饼图'
+                menuHtml += '      </a>'
+                menuHtml += '     </li>'
+                // menuHtml += '      <li>'
+                // menuHtml += '      <a href="./echarts5.html">'
+                // menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '     k线图'
+                // menuHtml += '      </a>'
+                // menuHtml += '      </li>'
+                // menuHtml += '      <li>'
+                // menuHtml += '      <a href="./echarts6.html">'
+                // menuHtml += '          <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '      仪表图'
+                // menuHtml += '     </a>'
+                // menuHtml += '     </li>'
+                // menuHtml += '    <li>'
+                // menuHtml += '      <a href="http://echarts.baidu.com/examples.html">'
+                // menuHtml += '           <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '      利润分析'
+                // menuHtml += '      </a>'
+                // menuHtml += '      </li>'
+                // menuHtml += '       </ul>'
+                // menuHtml += '       </li>'
+                menuHtml += '      </ul>'
+                $("#side-nav").html(menuHtml);
+            }else if (userRole == 2)
+            {
+                menuHtml += '<ul id="nav">'
+                menuHtml += '    <li class="list" current>'
+                menuHtml += '  <a id="shouye">'
+                menuHtml += '      <i class="iconfont">&#xe761;</i>'
+                menuHtml += ' 后台首页'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += ' <li class="list">'
+                menuHtml += '      <a href="javascript:;">'
+                menuHtml += '      <i class="iconfont">&#xe70b;</i>'
+                menuHtml += '  订单管理'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += ' </a>'
+                menuHtml += ' <ul class="sub-menu">'
+                menuHtml += '      <li>'
+                menuHtml += '      <a href="/manage/order/jumpOrderList.html">'
+                menuHtml += '       <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   订单列表'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += '   <li>'
+                menuHtml += '  <a href="/manage/order/jumpOrderListUnshipped.html">'
+                menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   未发货订单'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += '   <li>'
+                menuHtml += '  <a href="/manage/order/jumpOrderListShipped.html">'
+                menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '  已发货订单'
+                menuHtml += '   </a>'
+                menuHtml += '   </li>'
+                menuHtml += '   <li>'
+                menuHtml += '   <a href="/manage/order/jumpOrderListDelivery.html">'
+                menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '  配送完成'
+                menuHtml += '   </a>'
+                menuHtml += '   </li>'
+                menuHtml += '  <li>'
+                menuHtml += '   <a href="/manage/order/jumpOrderListReturn.html">'
+                menuHtml += '       <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   退货单'
+                menuHtml += '   </a>'
+                menuHtml += ' </li>'
+                menuHtml += '   </ul>'
+                menuHtml += '   </li>'
+                menuHtml += '      </ul>'
+
+                $("#side-nav").html(menuHtml);
+            }
+            else {
+                menuHtml += '<ul id="nav">'
+                menuHtml += '    <li class="list" current>'
+                menuHtml += '  <a id="shouye">'
+                menuHtml += '      <i class="iconfont">&#xe761;</i>'
+                menuHtml += ' 后台首页'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += '  <li class="list">'
+                menuHtml += '     <a href="javascript:;">'
+                menuHtml += '      <i class="iconfont">&#xe6a3;</i>'
+                menuHtml += '  系统统计'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '   </a>'
+                menuHtml += '    <ul class="sub-menu" style="display:none">'
+                menuHtml += '        <li>'
+                menuHtml += '       <a href="/manage/count/jumpEchartBrokenLine.html">'
+                menuHtml += '        <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '    拆线图'
+                menuHtml += '    </a>'
+                menuHtml += '    </li>'
+                // menuHtml += '    <li>'
+                // menuHtml += '    <a href="./echarts2.html">'
+                // menuHtml += '          <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '      柱状图'
+                // menuHtml += '     </a>'
+                // menuHtml += '    </li>'
+                // menuHtml += '    <li>'
+                // menuHtml += '    <a href="./echarts3.html">'
+                // menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '     地图'
+                // menuHtml += '     </a>'
+                // menuHtml += '      </li>'
+                menuHtml += '      <li>'
+                menuHtml += '    <a href="/manage/count/jumpEchartPieChart.html">'
+                menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '     饼图'
+                menuHtml += '      </a>'
+                menuHtml += '     </li>'
+                // menuHtml += '      <li>'
+                // menuHtml += '      <a href="./echarts5.html">'
+                // menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '     k线图'
+                // menuHtml += '      </a>'
+                // menuHtml += '      </li>'
+                // menuHtml += '      <li>'
+                // menuHtml += '      <a href="./echarts6.html">'
+                // menuHtml += '          <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '      仪表图'
+                // menuHtml += '     </a>'
+                // menuHtml += '     </li>'
+                // menuHtml += '    <li>'
+                // menuHtml += '      <a href="http://echarts.baidu.com/examples.html">'
+                // menuHtml += '           <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '      利润分析'
+                // menuHtml += '      </a>'
+                // menuHtml += '      </li>'
+                // menuHtml += '       </ul>'
+                // menuHtml += '       </li>'
+                menuHtml += '      </ul>'
+                $("#side-nav").html(menuHtml);
+            }
+
+
+            $("#userName").html(userName);
+            $("#shouye").attr("href", "/manage/user/jumpUserBackStageIndex.html?userRole=" + userRole);
+        </script>
+        <script>
+
+            layui.use(['table','laydate','layer'], function(){
+                $ = layui.jquery;
+                var table = layui.table,
+                    laydate = layui.laydate,
+                    layer = layui.layer;
+
+                //渲染
+                table.render({
+                    elem: '#order'
+                    ,id : 'testReload'
+                    ,url: '/manage/order/findOrderByRoleAndDelivery'//数据接口
+                    ,cols: [[
+                        {type: 'checkbox'}
+                        , {field: 'orderCode',width: '10%', title: '订单号'}
+                        , {field: 'orderCreateTime',width: '10%', title: '下单时间',
+                            templet :function (row){
+                                return createTime(row.orderCreateTime);
+                            } }
+                        , {field: 'userName' ,width: '6%', title: '购货人'}
+                        , {field: 'userPhone',width: '6%', align: 'center', title: '手机号'}
+                        , {field: 'orderMoney',width: '4%',align: 'center',  title: '应付金额',
+                            templet:function (row){
+                                return fixed(row.orderMoney);
+                            }}
+                        , {field: 'payType',width: '4%',align: 'center',  title: '支付方式'}
+                        , {field: 'orderType',width: '4%', title: '订单状态'}
+                        , {field: 'address',width:'10%',  title: '详细地址'}
+                        , {fixed: 'right',width:'10%',  align: 'center', title: '操作', toolbar: '#barDemo'}
+                    ]]
+                    ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                        layout: ['limit', 'count', 'prev', 'page', 'next'] //自定义分页布局
+                        ,curr: 1 //设定初始在第 1 页
+                        ,groups: 1 //只显示 1 个连续页码
+                        ,limit: 10
+                        ,limits: [5,10,15,20]
+                    }  //true表示分页
+                    ,done: function(res, curr, count){
+                        //如果是异步请求数据方式，res即为你接口返回的信息。
+                        //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                        console.log(res);
+                        //得到当前页码
+                        console.log(curr);
+                        //得到数据总量
+                        console.log(count);
+                        $("#count").text("共有数据：" + count+"条");
+                        $("[data-field='payType']").children().each(function(){
+                            if($(this).text()=='0'){
+                                $(this).text("到货付款")
+                            }else if($(this).text()=='1') {
+                                $(this).text("支付宝支付")
+                            } else if($(this).text()=='2') {
+                                $(this).text("微信支付")
+                            }
+                        })
+                        $("[data-field='orderType']").children().each(function(){
+                            if($(this).text()=='0'){
+                                $(this).text("未发货")
+                            }else if($(this).text()=='1') {
+                                $(this).text("已发货")
+                            }
+                            else if($(this).text()=='2') {
+                                $(this).text("已配送")
+                            }
+                            else if($(this).text()=='3') {
+                                $(this).text("退货")
+                            }
+                        })
+                    }
+
+                })
+                table.on('tool(orderTable)', function(obj){
+                    var data = obj.data;
+                    if (obj.event === 'detail') {
+                        localStorage.setItem("orderId", data.orderId);
+                        x_admin_show('订单详情', '/manage/order/jumpOrderDetail.html', 1500, 800);
+                    }else if(obj.event === 'modify'){
+                        localStorage.setItem("orderId",data.orderId);
+                        x_admin_show('订单修改','/manage/order/jumpOrderModify.html',800,800);
+                    }else if(obj.event === 'del'){
+                        layer.confirm('确定删除此订单么？', function(index){
+                            $.ajax({
+                                type: 'post',
+                                url: '/manage/order/deleteOrder',
+                                data:{
+                                    orderId:data.orderId,
+                                },
+                                dataType: 'json',
+                                success : function (data) {
+                                    if (data.msg == "删除成功") {
+                                        layer.msg("删除成功！", {
+                                            icon: 6, time: 1500, end: function () {
+                                                window.location.reload();
+                                            }
+                                        })
+                                    } else {
+                                        layer.msg("删除失败！");
+                                    }
+                                },
+                                error : function () {
+                                    layer.msg('删除失败');
+                                }
+                            });
+                        });
+                    }
+                    else if (obj.event === 'fahuo') {
+                        layer.confirm('确定发货？', function(index){
+                            $.ajax({
+                                type: 'post',
+                                url: '/manage/order/sendOrder',
+                                data:{
+                                    orderId:data.orderId,
+                                },
+                                dataType: 'json',
+                                success : function (data) {
+                                    if (data.status == 0) {
+                                        layer.msg("发货成功！", {
+                                            icon: 6, time: 1500, end: function () {
+                                                window.location.reload();
+                                            }
+                                        })
+                                    } else {
+                                        layer.msg("发货失败！");
+                                    }
+                                },
+                                error : function () {
+                                    layer.msg('发货失败');
+                                }
+                            });
+                        });
+                    }else if (obj.event === 'tuihuo') {
+                        layer.confirm('确定退货？不要这些商品？', function(index){
+                            $.ajax({
+                                type: 'post',
+                                url: '/manage/order/rebackOrder',
+                                data:{
+                                    orderId:data.orderId,
+                                },
+                                dataType: 'json',
+                                success : function (data) {
+                                    if (data.status == 0) {
+                                        layer.msg("退货成功！", {
+                                            icon: 6, time: 1500, end: function () {
+                                                window.location.reload();
+                                            }
+                                        })
+                                    } else {
+                                        layer.msg("退货失败！");
+                                    }
+                                },
+                                error : function () {
+                                    layer.msg('退货失败');
+                                }
+                            });
+                        });
+                    }
+                });
+
+
+                var $ = layui.jquery, active = {
+                    reload: function(){
+                        var orderCode = $("#orderCode").val();
+                        var userPhone = $("#userPhone").val();
+                        var userName = $("#userBuyName").val();
+                        var endTime = $("#endTime").val();
+                        var startTime = $("#startTime").val();
+                        var payType = $("#payType option:selected").val();
+                        console.log(userName);
+                        console.log("asfbnkjasbnf:" + orderCode);
+                        console.log("payType:"+payType);
+                        table.reload('testReload', {
+                            method:'post',
+                            where:{orderCode:orderCode,startTime:startTime,endTime:endTime,userName:userName,userPhone:userPhone,payType:payType}
+                        });
+                    },
+                    delAll: function () {
+                        //获取选中的数据
+                        var checkStatus = table.checkStatus('testReload')
+                            , data = checkStatus.data;
+                        var ids1 = new Array();
+                        for (var i in data) {
+                            ids1.push(data[i].orderId);
+                        }
+                        if (ids1 != '') {
+                            var ids = JSON.stringify(eval(ids1));
+                            layer.confirm('确定删除这些订单么？', function (index) {
+                                $.ajax({
+                                    url: "/manage/order/someDeleteOrder",
+                                    type: "post",
+                                    dataType: "json",
+                                    data:{
+                                        ids:ids
+                                    },
+                                    success: function (data) {
+                                        if (data.status == 0) {
+                                            layer.msg('删除成功!', {
+                                                icon: 6,
+                                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                            }, function(){
+                                                window.location.reload();
+                                            });
+                                        } else {
+                                            layer.msg("删除失败");
+                                        }
+                                    }
+                                })
+                            });
+                        } else {
+                            layer.msg('请选择需要删除的行');
+                        }
+
+
+                    }
+                };
+                laydate.render({
+                    elem: '#startTime'
+                    ,type: 'datetime'
+                });
+                laydate.render({
+                    elem: '#endTime'
+                    ,type: 'datetime'
+                });
+                $('.content .layui-btn').on('click', function(){
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+
+            });
+
+
+            //金额转换
+            function fixed(str) {
+                if (!str) str = '0.00';
+                var ret = Math.round(parseFloat(str) * 100) / 100;
+                var decimal = ret.toString().split('.');
+                if (decimal.length === 1) {
+                    return ret.toString() + '.00'
+                };
+                if (decimal.length > 1) {
+                    if (decimal[1].length < 2) {
+                        return ret.toString() + '0'
+                    }
+                    return ret
+                };
+                return ret;
+            }
+            //数字时间转DATE时间类型
+            function createTime(v){
+                var date = new Date(v);
+                var y = date.getFullYear();
+                var m = date.getMonth()+1;
+                m = m<10?'0'+m:m;
+                var d = date.getDate();
+                d = d<10?("0"+d):d;
+                var h = date.getHours();
+                h = h<10?("0"+h):h;
+                var M = date.getMinutes();
+                M = M<10?("0"+M):M;
+                var S = date.getSeconds();
+                S = S<10?("0"+S):S;
+                var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+                return str;
+            }
+        </script>
+        <script>
+            //百度统计可去掉
+            var _hmt = _hmt || [];
+            (function () {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+
+</body>
+</html>

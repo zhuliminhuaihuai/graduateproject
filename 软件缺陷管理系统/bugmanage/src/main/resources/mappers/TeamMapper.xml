@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.TeamMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Team" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="team_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="team_position" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="project_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, team_name, team_position, create_time, end_time, remark, project_id, user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from sd_team
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sd_team
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Team" >
+    insert into sd_team (id, team_name, team_position,
+      create_time, end_time, remark,
+      project_id, user_id)
+    values (#{id,jdbcType=INTEGER}, #{teamName,jdbcType=VARCHAR}, #{teamPosition,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR},
+      #{projectId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Team" >
+    insert into sd_team
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="teamName != null" >
+        team_name,
+      </if>
+      <if test="teamPosition != null" >
+        team_position,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="teamName != null" >
+        #{teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamPosition != null" >
+        #{teamPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Team" >
+    update sd_team
+    <set >
+      <if test="teamName != null" >
+        team_name = #{teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamPosition != null" >
+        team_position = #{teamPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Team" >
+    update sd_team
+    set team_name = #{teamName,jdbcType=VARCHAR},
+      team_position = #{teamPosition,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <insert id="insertTeams" parameterType="java.util.Set" >
+    insert into  sd_team (user_id,project_id)
+    values
+    <foreach collection="teamVoSet" item="item" separator=",">
+      (#{item.userId},#{item.projectId})
+    </foreach>
+  </insert>
+  <select id="teamList" resultType="int" parameterType="java.lang.Integer" >
+    select
+    user_id
+    from sd_team
+    where project_id = #{projectId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByProjectId" parameterType="java.lang.Integer" >
+    delete from sd_team
+    where project_id = #{projectId,jdbcType=INTEGER}
+  </delete>
+  <select id="projectIdList" resultType="int" parameterType="java.lang.Integer" >
+    select
+    project_id
+    from sd_team
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectTeamByProjectId" resultType="int" parameterType="int" >
+    select
+    count(1)
+    from sd_team
+    where project_id = #{id,jdbcType=INTEGER}
+  </select>
+</mapper>

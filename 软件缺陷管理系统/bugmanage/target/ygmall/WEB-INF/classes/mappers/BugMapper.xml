@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.BugMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Bug" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bug_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="type_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bug_describe" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="performance" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="expected_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="project_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="project_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="technology_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="technology_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bug_word" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bug_result" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="withdraw_reason" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, bug_title, status, type_id, bug_describe, performance, expected_time, create_time,
+    end_time, user_id, project_id, project_name, technology_id, technology_name, bug_word,
+    bug_result, withdraw_reason
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from sd_bug
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sd_bug
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Bug" >
+    insert into sd_bug (id, bug_title, status,
+      type_id, bug_describe, performance,
+      expected_time, create_time, end_time,
+      user_id, project_id, project_name,
+      technology_id, technology_name, bug_word,
+      bug_result, withdraw_reason)
+    values (#{id,jdbcType=INTEGER}, #{bugTitle,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{typeId,jdbcType=INTEGER}, #{bugDescribe,jdbcType=VARCHAR}, #{performance,jdbcType=INTEGER},
+      #{expectedTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},
+      #{userId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR},
+      #{technologyId,jdbcType=INTEGER}, #{technologyName,jdbcType=VARCHAR}, #{bugWord,jdbcType=VARCHAR},
+      #{bugResult,jdbcType=VARCHAR}, #{withdrawReason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Bug" >
+    insert into sd_bug
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bugTitle != null" >
+        bug_title,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="bugDescribe != null" >
+        bug_describe,
+      </if>
+      <if test="performance != null" >
+        performance,
+      </if>
+      <if test="expectedTime != null" >
+        expected_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="technologyId != null" >
+        technology_id,
+      </if>
+      <if test="technologyName != null" >
+        technology_name,
+      </if>
+      <if test="bugWord != null" >
+        bug_word,
+      </if>
+      <if test="bugResult != null" >
+        bug_result,
+      </if>
+      <if test="withdrawReason != null" >
+        withdraw_reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bugTitle != null" >
+        #{bugTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="bugDescribe != null" >
+        #{bugDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="performance != null" >
+        #{performance,jdbcType=INTEGER},
+      </if>
+      <if test="expectedTime != null" >
+        #{expectedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="technologyId != null" >
+        #{technologyId,jdbcType=INTEGER},
+      </if>
+      <if test="technologyName != null" >
+        #{technologyName,jdbcType=VARCHAR},
+      </if>
+      <if test="bugWord != null" >
+        #{bugWord,jdbcType=VARCHAR},
+      </if>
+      <if test="bugResult != null" >
+        #{bugResult,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawReason != null" >
+        #{withdrawReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Bug" >
+    update sd_bug
+    <set >
+      <if test="bugTitle != null" >
+        bug_title = #{bugTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="bugDescribe != null" >
+        bug_describe = #{bugDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="performance != null" >
+        performance = #{performance,jdbcType=INTEGER},
+      </if>
+      <if test="expectedTime != null" >
+        expected_time = #{expectedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="technologyId != null" >
+        technology_id = #{technologyId,jdbcType=INTEGER},
+      </if>
+      <if test="technologyName != null" >
+        technology_name = #{technologyName,jdbcType=VARCHAR},
+      </if>
+      <if test="bugWord != null" >
+        bug_word = #{bugWord,jdbcType=VARCHAR},
+      </if>
+      <if test="bugResult != null" >
+        bug_result = #{bugResult,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawReason != null" >
+        withdraw_reason = #{withdrawReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Bug" >
+    update sd_bug
+    set bug_title = #{bugTitle,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      type_id = #{typeId,jdbcType=INTEGER},
+      bug_describe = #{bugDescribe,jdbcType=VARCHAR},
+      performance = #{performance,jdbcType=INTEGER},
+      expected_time = #{expectedTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      project_id = #{projectId,jdbcType=INTEGER},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      technology_id = #{technologyId,jdbcType=INTEGER},
+      technology_name = #{technologyName,jdbcType=VARCHAR},
+      bug_word = #{bugWord,jdbcType=VARCHAR},
+      bug_result = #{bugResult,jdbcType=VARCHAR},
+      withdraw_reason = #{withdrawReason,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="bugList" resultType="com.project.vo.BugVo" parameterType="com.project.vo.CommonVo" >
+    SELECT distinct
+    a.*,b.bug_name,u.real_name
+    from sd_bug as a
+    left join sd_bug_classification as b on  a.type_id = b.id
+    left join sd_user as u on  a.user_id = u.user_id
+    left join sd_project as p on  a.project_id = p.id
+    <where>
+     <if test="role!=null">
+        <if test="role==1">
+          and p.user_id = #{userId}
+          and a.status !=1
+        </if>
+        <if test="role==2">
+          and a.technology_id = #{userId}
+        </if>
+        <if test="role==3">
+          and a.user_id = #{userId}
+        </if>
+      </if>
+      <if test="bugTitle!=null and bugTitle!=''">
+        and a.bug_title like "%"#{bugTitle}"%"
+      </if>
+      <if test="status!=null and status!=''">
+        and a.status = #{status}
+      </if>
+      <if test="typeId!=null and typeId!=''">
+        and a.type_id =#{typeId}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ a.create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ a.create_time <= #{endTime}]]>
+        </if>
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ a.create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ a.create_time <= #{endTime}]]>
+          </if>
+        </if>
+      </if>
+    </where>
+    order by  a.id desc
+  </select>
+  <select id="selectById" resultType="com.project.vo.BugVo" parameterType="int" >
+    select
+    a.*,b.user_name,c.real_name,d.bug_name
+    from sd_bug as a
+    left join sd_project as b on  a.project_id = b.id
+    left join sd_user as c on  a.user_id = c.user_id
+    left join sd_bug_classification as d on  a.type_id = d.id
+    where a.id = #{id}
+  </select>
+</mapper>

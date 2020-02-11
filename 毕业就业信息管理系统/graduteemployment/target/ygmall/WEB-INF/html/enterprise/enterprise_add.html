@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<base href="<%=basePath%>">
+	<meta charset="UTF-8">
+	<title>企业添加</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		  content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="../../../layui/css/layui.css">
+	<link rel="stylesheet" href="../../../css/news.css">
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="../../../layui/layui.js" charset="utf-8"></script>
+	<script src="../../../js/xcity.js" charset="utf-8"></script>
+</head>
+<body>
+<div class="childrenBody">
+	<div class="layui-form">
+		<div class="layui-form-item">
+			<label for="enterpriseName" class="layui-form-label"> <span
+					class="x-red">*</span>企业名称
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" id="enterpriseName" name="enterpriseName" required=""
+					   lay-verify="enterpriseName" autocomplete="off"
+					   class="layui-input" placeholder="请输入企业名称"><!--onblur="regist()"-->
+			</div>
+			<label for="email" class="layui-form-label"> <span
+					class="x-red">*</span>企业邮箱
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" id="email" name="email" required=""
+					   lay-verify="email" autocomplete="off"
+					   class="layui-input" placeholder="请输入企业邮箱"><!--onblur="regist()"-->
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> <span
+					class="x-red">*</span>企业类型
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" id="enterpriseType" name="enterpriseType" required=""
+					   lay-verify="enterpriseType" autocomplete="off" class="layui-input"  placeholder="请输入企业类型">
+			</div>
+			<label class="layui-form-label"> <span
+					class="x-red">*</span>企业联系人
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" id="enterpriseContacts" name="enterpriseContacts" required=""
+					   lay-verify="enterpriseType" autocomplete="off" class="layui-input"  placeholder="请输入企业联系人">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span
+					class="x-red">*</span> 法人代表
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="legralPerson" id="legralPerson"
+					   required="" lay-verify="legralPerson" autocomplete="off"
+					   class="layui-input" placeholder="请输入法人代表">
+			</div>
+			<label class="layui-form-label"> <span
+					class="x-red">*</span>企业联系方式
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="mobilePhone" id="mobilePhone"
+					   required="" lay-verify="mobilePhone" autocomplete="off"
+					   class="layui-input" placeholder="请输入企业联系方式">
+			</div>
+		</div>
+		<div class="layui-form-item" id="x-city">
+			<label class="layui-form-label"><span
+					class="x-red">*</span> 企业地址</label>
+			<div class="layui-input-inline">
+				<select name="province" id="province" lay-filter="province">
+					<option value="">请选择省</option>
+				</select>
+			</div>
+			<div class="layui-input-inline">
+				<select name="city" id="city" lay-filter="city">
+					<option value="">请选择市</option>
+				</select>
+			</div>
+			<div class="layui-input-inline">
+				<select name="district" id="district" lay-filter="area">
+					<option value="">请选择县/区</option>
+				</select>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span
+					class="x-red">*</span> 详细地址</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" id="address" name="address"
+					   required="" autocomplete="off" lay-verify="address"
+					   class="layui-input" style="width: 590px" placeholder="请输入详细地址">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span
+					class="x-red">*</span>企业简介</label>
+			<div class="layui-input-block">
+				<textarea placeholder="请输入企业简介" name="introduction" id="introduction" lay-verify="introduction" class="layui-textarea linksDesc"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> </label>
+			<button class="layui-btn" lay-filter="add" lay-submit="">
+				确定
+			</button>
+		</div>
+
+	</div>
+
+</div>
+
+<script>
+    layui.use(['form','code'], function(){
+        form = layui.form;
+        layui.code();
+        $('#x-city').xcity('江苏', '徐州市', '鼓楼区');
+
+    });
+</script>
+<script>
+        layui.use([ 'form', 'layer','laydate','code'], function() {
+            $ = layui.jquery;
+            var form = layui.form
+                ,layer = layui.layer
+                ,laydate = layui.laydate;
+
+            laydate.render({
+                elem: '#birthday'
+            });
+            var s = $("#jobType option:selected").val();
+            form.verify({
+                enterpriseName : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '企业名称不能为空';
+                    }
+                },
+                enterpriseType : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '企业类型不能为空';
+                    }
+                },
+                enterpriseContacts : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '企业联系人不能为空';
+                    }
+                },
+                legralPerson : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '企业法人不能为空';
+                    }
+                },
+
+                mobilePhone : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '企业联系方式不能为空';
+                    }
+                },
+
+                address : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '详细地址不能为空';
+                    }
+                },
+                introduction : function(value) {
+                    if (value=="-1" ) {
+                        return '企业简介不能为空';
+                    }
+                },
+
+
+
+            });
+
+            form.on('submit(add)', function(data) {
+                var enterpriseName= $("#enterpriseName").val();
+                var email= $("#email").val();
+                var enterpriseType= $("#enterpriseType").val();
+                var legralPerson= $("#legralPerson").val();
+                var mobilePhone= $("#mobilePhone").val();
+                var introduction= $("#introduction").val();
+                var address= $("#address").val();
+                var province= $("#province").val();
+                var city= $("#city").val();
+                var district= $("#district").val();
+                $.ajax({
+                    type: 'post',
+                    url: '/manage/enterprise/addEnterprise',
+                    data: {
+                        enterpriseName:enterpriseName,
+                        email:email,
+                        enterpriseType:enterpriseType,
+                        legralPerson:legralPerson,
+                        mobilePhone:mobilePhone,
+                        introduction:introduction,
+                        address:address,
+                        province:province,
+                        city:city,
+                        district:district,
+					},
+                    dataType: 'json',
+                    async:false,
+                    success: function (data) {
+                        console.log(data.msg);
+                        if (data.msg=="注册成功") {
+                            layer.msg("添加成功！", {
+                                icon: 6, time: 1000, end: function () {
+                                    parent.location.reload();
+                                }
+                            });
+                        }else if(data.msg=="企业已存在"){
+                            layer.msg("该企业已注册")
+						}
+                    },
+                    error: function () {
+                        layer.msg('请求失败，检查后台接口');
+                    }
+                })
+
+            })
+        });
+</script>
+</body>
+</html>

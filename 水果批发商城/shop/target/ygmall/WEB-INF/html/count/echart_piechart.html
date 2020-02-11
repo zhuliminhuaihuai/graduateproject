@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>饼图</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../x-admin/css/font.css">
+    <link rel="stylesheet" href="../../../x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+
+</head>
+<body>
+<!-- 顶部开始 -->
+<div class="container">
+    <div class="logo"><a href="">水果批发商城后台管理</a></div>
+    <div class="open-nav"><i class="iconfont">&#xe699;</i></div>
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;" id="userName"></a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                <dd><a onclick="x_admin_show('个人信息','/manage/user/openUserInfo.html',600,400)">个人信息</a></dd>
+                <dd><a href="/manage/user/jumpUserBackStageLogin.html">切换帐号</a></dd>
+                <dd><a href="/manage/user/jumpShop.html">退出</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a href="/manage/user/jumpUserShop.html">前台首页</a></li>
+    </ul>
+</div>
+<!-- 顶部结束 -->
+<!-- 中部开始 -->
+<div class="wrapper">
+    <!-- 左侧菜单开始 -->
+    <div class="left-nav">
+        <div id="side-nav">
+
+        </div>
+    </div>
+    <!-- 左侧菜单结束 -->
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <blockquote class="layui-elem-quote">
+                特别声明：这是5天内交易额的扇形统计，点击左侧的按钮，可以去掉该天的统计，扇形重新分配面积，将鼠标放置在扇形上面可以查看一定的基本数据详情以及占比
+            </blockquote>
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="main" style="width: 100%;height:400px;"></div>
+            <!--<blockquote class="layui-elem-quote">-->
+                <!--注意：本案例的Echarts图表库由cdn引入，需要在线才能正常使用，如想离想，请至Echarts官网下载。-->
+            <!--</blockquote>-->
+
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+        <!-- 中部结束 -->
+        <!-- 底部开始 -->
+        <div class="footer">
+            <div class="copyright">学校：江苏师范大学 学号：15090167 本后台系统由朱利敏提供技术支持</div>
+        </div>
+        <!-- 底部结束 -->
+        <!-- 背景切换开始 -->
+        <div class="bg-changer">
+            <div class="swiper-container changer-list">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/a.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/b.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/c.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/d.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/e.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/f.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/g.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/h.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/i.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/j.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="item" src="../../../x-admin/images/k.jpg" alt=""></div>
+                    <div class="swiper-slide"><span class="reset">初始化</span></div>
+                </div>
+            </div>
+            <div class="bg-out"></div>
+            <div id="changer-set"><i class="iconfont">&#xe696;</i></div>
+        </div>
+        <!-- 背景切换结束 -->
+        <link rel="stylesheet" href="../../../x-admin/lib/layui/css/modules/layer/default/layer.css">
+        <!--
+                <link rel="stylesheet" href="../../../layui/css/layui.css">
+        -->
+
+        <script src="../../../x-admin/lib/layui/layui.js" charset="utf-8"></script>
+        <script type="text/javascript" src="../../../layui/layui.js"></script>
+        <script type="text/javascript" src="../../../x-admin/js/xadmin.js"></script>
+        <script type="text/javascript" src="../../../js/echarts.min.js"></script>
+
+        <script>
+            var userName = '${session_manage_token.getUserName()}';
+
+            var userRole = '${session_manage_token.getUserRole()}';
+            var menuHtml = "";
+            if (userRole == 1) {
+                menuHtml += '<ul id="nav">'
+                menuHtml += '    <li class="list" current>'
+                menuHtml += '  <a id="shouye">'
+                menuHtml += '      <i class="iconfont">&#xe761;</i>'
+                menuHtml += ' 后台首页'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += ' <li class="list">'
+                menuHtml += '      <a href="javascript:;">'
+                menuHtml += '   <i class="layui-icon">&#xe60a;</i>\n'
+                menuHtml += '  订单管理'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += ' </a>'
+                menuHtml += ' <ul class="sub-menu">'
+                menuHtml += '      <li>'
+                menuHtml += '      <a href="/manage/order/jumpOrderList.html">'
+                menuHtml += '       <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   订单列表'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += '   <li>'
+                menuHtml += '  <a href="/manage/order/jumpOrderListUnshipped.html">'
+                menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   未发货订单'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += '   <li>'
+                menuHtml += '  <a href="/manage/order/jumpOrderListShipped.html">'
+                menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '  已发货订单'
+                menuHtml += '   </a>'
+                menuHtml += '   </li>'
+                menuHtml += '   <li>'
+                menuHtml += '   <a href="/manage/order/jumpOrderListDelivery.html">'
+                menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '  配送完成'
+                menuHtml += '   </a>'
+                menuHtml += '   </li>'
+                menuHtml += '  <li>'
+                menuHtml += '   <a href="/manage/order/jumpOrderListReturn.html">'
+                menuHtml += '       <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   退货单'
+                menuHtml += '   </a>'
+                menuHtml += ' </li>'
+                menuHtml += '   </ul>'
+                menuHtml += '   </li>'
+                menuHtml += '   <li class="list">'
+                menuHtml += '      <a href="javascript:;">'
+                menuHtml += '      <i class="layui-icon">&#xe62b;</i>'
+                menuHtml += '  商品管理'
+                menuHtml += '   <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '   </a>'
+                menuHtml += '  <ul class="sub-menu">'
+                menuHtml += '       <li>'
+                menuHtml += '        <a href="/manage/goods/jumpGoodsList.html">'
+                menuHtml += '        <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   商品列表'
+                menuHtml += '   </a>'
+                menuHtml += '   </li>'
+                menuHtml += '   <li>'
+                menuHtml += '  <a href="/manage/goods/jumpGoodsAdd.html">'
+                menuHtml += '        <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   添加商品'
+                menuHtml += '   </a>'
+                menuHtml += '   </li>'
+                menuHtml += '  </ul>'
+                menuHtml += '   </li>'
+                menuHtml += '   <li class="list">'
+                menuHtml += '       <a href="javascript:;">'
+                menuHtml += '        <i class="layui-icon">&#xe613;</i>'
+                menuHtml += '    用户管理'
+                menuHtml += '    <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '    </a>'
+                menuHtml += '    <ul class="sub-menu" style="display:none">'
+                menuHtml += '       <li>'
+                menuHtml += '        <a href="/manage/user/jumpUserList.html">'
+                menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '    用户列表'
+                menuHtml += '     </a>'
+                menuHtml += '    </li>'
+                menuHtml += '   </ul>'
+                menuHtml += '   </li>'
+                menuHtml += '  <li class="list">'
+                menuHtml += '     <a href="javascript:;">'
+                menuHtml += '      <i class="iconfont">&#xe6a3;</i>'
+                menuHtml += '  系统统计'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '   </a>'
+                menuHtml += '    <ul class="sub-menu" style="display:none">'
+                menuHtml += '        <li>'
+                menuHtml += '       <a href="/manage/count/jumpEchartBrokenLine.html">'
+                menuHtml += '        <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '    拆线图'
+                menuHtml += '    </a>'
+                menuHtml += '    </li>'
+                // menuHtml += '    <li>'
+                // menuHtml += '    <a href="./echarts2.html">'
+                // menuHtml += '          <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '      柱状图'
+                // menuHtml += '     </a>'
+                // menuHtml += '    </li>'
+                // menuHtml += '    <li>'
+                // menuHtml += '    <a href="./echarts3.html">'
+                // menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '     地图'
+                // menuHtml += '     </a>'
+                // menuHtml += '      </li>'
+                menuHtml += '      <li>'
+                menuHtml += '    <a href="/manage/count/jumpEchartPieChart.html">'
+                menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '     饼图'
+                menuHtml += '      </a>'
+                menuHtml += '     </li>'
+                // menuHtml += '      <li>'
+                // menuHtml += '      <a href="./echarts5.html">'
+                // menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '     k线图'
+                // menuHtml += '      </a>'
+                // menuHtml += '      </li>'
+                // menuHtml += '      <li>'
+                // menuHtml += '      <a href="./echarts6.html">'
+                // menuHtml += '          <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '      仪表图'
+                // menuHtml += '     </a>'
+                // menuHtml += '     </li>'
+                // menuHtml += '    <li>'
+                // menuHtml += '      <a href="http://echarts.baidu.com/examples.html">'
+                // menuHtml += '           <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '      利润分析'
+                // menuHtml += '      </a>'
+                // menuHtml += '      </li>'
+                // menuHtml += '       </ul>'
+                // menuHtml += '       </li>'
+                menuHtml += '      </ul>'
+                $("#side-nav").html(menuHtml);
+            } else if (userRole == 2) {
+                menuHtml += '<ul id="nav">'
+                menuHtml += '    <li class="list" current>'
+                menuHtml += '  <a id="shouye">'
+                menuHtml += '      <i class="iconfont">&#xe761;</i>'
+                menuHtml += ' 后台首页'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += ' <li class="list">'
+                menuHtml += '      <a href="javascript:;">'
+                menuHtml += '      <i class="iconfont">&#xe70b;</i>'
+                menuHtml += '  订单管理'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += ' </a>'
+                menuHtml += ' <ul class="sub-menu">'
+                menuHtml += '      <li>'
+                menuHtml += '      <a href="/manage/order/jumpOrderList.html">'
+                menuHtml += '       <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   订单列表'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += '   <li>'
+                menuHtml += '  <a href="/manage/order/jumpOrderListUnshipped.html">'
+                menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   未发货订单'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += '   <li>'
+                menuHtml += '  <a href="/manage/order/jumpOrderListShipped.html">'
+                menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '  已发货订单'
+                menuHtml += '   </a>'
+                menuHtml += '   </li>'
+                menuHtml += '   <li>'
+                menuHtml += '   <a href="/manage/order/jumpOrderListDelivery.html">'
+                menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '  配送完成'
+                menuHtml += '   </a>'
+                menuHtml += '   </li>'
+                menuHtml += '  <li>'
+                menuHtml += '   <a href="/manage/order/jumpOrderListReturn.html">'
+                menuHtml += '       <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '   退货单'
+                menuHtml += '   </a>'
+                menuHtml += ' </li>'
+                menuHtml += '   </ul>'
+                menuHtml += '   </li>'
+                menuHtml += '      </ul>'
+
+                $("#side-nav").html(menuHtml);
+            }
+            else {
+                menuHtml += '<ul id="nav">'
+                menuHtml += '    <li class="list" current>'
+                menuHtml += '  <a id="shouye">'
+                menuHtml += '      <i class="iconfont">&#xe761;</i>'
+                menuHtml += ' 后台首页'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '  </a>'
+                menuHtml += '  </li>'
+                menuHtml += '  <li class="list">'
+                menuHtml += '     <a href="javascript:;">'
+                menuHtml += '      <i class="iconfont">&#xe6a3;</i>'
+                menuHtml += '  系统统计'
+                menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+                menuHtml += '   </a>'
+                menuHtml += '    <ul class="sub-menu" style="display:none">'
+                menuHtml += '        <li>'
+                menuHtml += '       <a href="/manage/count/jumpEchartBrokenLine.html">'
+                menuHtml += '        <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '    拆线图'
+                menuHtml += '    </a>'
+                menuHtml += '    </li>'
+                // menuHtml += '    <li>'
+                // menuHtml += '    <a href="./echarts2.html">'
+                // menuHtml += '          <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '      柱状图'
+                // menuHtml += '     </a>'
+                // menuHtml += '    </li>'
+                // menuHtml += '    <li>'
+                // menuHtml += '    <a href="./echarts3.html">'
+                // menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '     地图'
+                // menuHtml += '     </a>'
+                // menuHtml += '      </li>'
+                menuHtml += '      <li>'
+                menuHtml += '    <a href="/manage/count/jumpEchartPieChart.html">'
+                menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                menuHtml += '     饼图'
+                menuHtml += '      </a>'
+                menuHtml += '     </li>'
+                // menuHtml += '      <li>'
+                // menuHtml += '      <a href="./echarts5.html">'
+                // menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '     k线图'
+                // menuHtml += '      </a>'
+                // menuHtml += '      </li>'
+                // menuHtml += '      <li>'
+                // menuHtml += '      <a href="./echarts6.html">'
+                // menuHtml += '          <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '      仪表图'
+                // menuHtml += '     </a>'
+                // menuHtml += '     </li>'
+                // menuHtml += '    <li>'
+                // menuHtml += '      <a href="http://echarts.baidu.com/examples.html">'
+                // menuHtml += '           <i class="iconfont">&#xe6a7;</i>'
+                // menuHtml += '      利润分析'
+                // menuHtml += '      </a>'
+                // menuHtml += '      </li>'
+                // menuHtml += '       </ul>'
+                // menuHtml += '       </li>'
+                menuHtml += '      </ul>'
+                $("#side-nav").html(menuHtml);
+            }
+            $("#userName").html(userName);
+
+            $("#shouye").attr("href", "/manage/user/jumpUserBackStageIndex.html?userRole=" + userRole);
+        </script>
+        <script type="text/javascript">
+            //折线图
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'), 'echarts-for-x-admin');
+
+            // 指定图表的配置项和数据
+            option = {
+                title:{
+                    text:"交易额",
+                    subtext: '',
+                    x:'center'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data:[]
+                },
+                series: [
+                    {
+                        name:'查看数据',
+                        type:'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data:[]
+
+                    }
+                ]
+            };
+
+
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+            //动态赋值饼状图
+            $(function () {
+                $.ajax({
+                    url: '/manage/count/getFiveDaysOrderMoney',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (data) {
+                        var DATA = data.data;
+                        console.log("data:" + JSON.stringify(DATA));
+                        var nameList = ['今天订单额', '昨天订单额', '两天前订单额', '三天前订单额', '四天前订单额'];
+                        var valueArray=[];
+                        for (var i=0;i<DATA.length;i++)
+                        {
+                            valueArray.push({
+                                name:nameList[i],
+                                value:DATA[i].transactionMoney
+                            });
+                        }
+                        myChart.setOption({ //加载数据图表
+                            legend: {
+                                data:nameList
+                            },
+                            series: {
+                                // 根据名字对应到相应的系列
+                                data: valueArray
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+</body>
+</html>

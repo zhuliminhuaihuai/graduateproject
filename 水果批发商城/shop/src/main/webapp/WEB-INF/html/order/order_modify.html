@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单修改</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../x-admin/css/font.css">
+    <link rel="stylesheet" href="../../../x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/xcity.js"></script>
+
+
+</head>
+<body>
+<!-- 中部开始 -->
+<div class="wrapper">
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <label for="userName" class="layui-form-label">
+                        收货人
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="userName" name="userName" required lay-verify="userName"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        如果您本人无法收货，可更改收货人姓名
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="userPhone" class="layui-form-label">
+                        手机号
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="userPhone" name="userPhone" required lay-verify="userPhone"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        如果您更改了手机号，需要修改手机号否则联系不上您本人
+                    </div>
+
+                </div>
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                        支付方式
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="link" id="link1" lay-filter="filter" value="0" title="到货付款"><span>到货付款</span>
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="link" id="link2" lay-filter="filter" value="1" title="支付宝或微信转账"><span>支付宝或微信转账</span>
+                    </div>
+
+                </div>
+                <div class="layui-form-item" id="x-city">
+                    <label  class="layui-form-label">
+                        省市区/县
+                    </label>
+                    <div class="layui-input-inline">
+                        <select lay-filter="province" name="province" id="province" lay-verify="province">
+                            <option value="">请选择省</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline">
+                        <select lay-filter="city" name="city" id="city" lay-verify="city">
+                            <option value="">请选择市</option>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline">
+                        <select lay-filter="area" name="district" id="district" lay-verify="district">
+                            <option value="">请选择县/区</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label for="address" class="layui-form-label">
+                        详细地址
+                    </label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="" id="address" lay-verify="address" name="address" autocomplete="off"
+                                  class="layui-textarea" style="height: 80px;"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="address" class="layui-form-label">
+                    </label>
+                    <button class="layui-btn" key="set-mine" lay-filter="save" lay-submit>
+                        保存
+                    </button>
+                </div>
+            </div>
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<!-- 中部结束 -->
+<link rel="stylesheet" href="../../../x-admin/lib/layui/css/modules/layer/default/layer.css">
+
+<script src="../../../x-admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../x-admin/js/xadmin.js"></script>
+<script>
+    layui.use(['form', 'code'], function () {
+        form = layui.form;
+        layui.code();
+        $('#x-city').xcity('福建', '福州市', '鼓楼区');
+    });
+</script>
+<script>
+    var orderId = localStorage.getItem("orderId");
+    localStorage.removeItem("orderId");
+    layui.use(['form', 'layer',  'code', ], function () {
+        $ = layui.jquery;
+        var form = layui.form,
+            layer = layui.layer,
+            code = layui.code;
+        form.verify({
+            userName : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '收货人不能为空';
+                }
+            },
+            userPhone : function(value) {
+                if(!/^1\d{10}$/.test(value)){
+                    return "请输入正确的手机号";
+                }
+                if (value.length ==null ||value.length =="") {
+                    return '手机号不能为空';
+                }
+            },
+            address : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '详细地址不能为空';
+                }
+            },
+            province : function(value) {
+                if (value=="" ) {
+                    return '请选择省份';
+                }
+            },
+            city : function(value) {
+                if (value=="" ) {
+                    return '请选择省份';
+                }
+            },
+            district : function(value) {
+                if (value=="" ) {
+                    return '请选择省份';
+                }
+            },
+        });
+        $.ajax({
+            url: "/manage/order/modifyOrder",
+            type: "post",
+            dataType: "json",
+            data:{
+                orderId:orderId
+            },
+            success: function (data) {
+                console.log(JSON.stringify(data));
+                var data = data.data;
+                if (data.payType == 0) {
+                    $("#link1").attr('checked', 'true');
+                } else {
+                    $("#link2").attr('checked', 'true');
+                }
+                $("#userName").val(data.userName);
+                $("#userPhone").val(data.userPhone);
+                $("#province").val(data.province);
+                $("#city").val(data.city);
+                $("#district").val(data.district);
+                $("#address").val(data.address);
+                form.render();
+
+
+            }
+        })
+        form.on('submit(save)', function(data) {
+            var userName =  $("#userName").val();
+            var userPhone =  $("#userPhone").val();
+            var address =  $("#address").val();
+            var province = $("#province option:selected").val();
+            var city = $("#city option:selected").val();
+            var district = $("#district option:selected").val();
+            var payType = $("input[name='link']:checked").val();
+
+            $.ajax({
+                url: "/manage/order/saveOrder",
+                type: "post",
+                dataType: "json",
+                data:{
+                    orderId:orderId,
+                    userName:userName,
+                    userPhone:userPhone,
+                    address:address,
+                    province:province,
+                    city:city,
+                    district:district,
+                    payType:payType
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg('保存成功!', {
+                            icon: 6,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            parent.location.reload();
+                        });
+                    }else  {
+                        layer.msg('保存失败!', {
+                            icon: 5,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            return false;
+                        });
+                    }
+
+
+                }
+
+            });
+
+        });
+    });
+</script>
+</body>
+</html>

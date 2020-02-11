@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>角色权限列表</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../../../layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../js/xadmin.js"></script>
+</head>
+<body class="layui-anim layui-anim-up">
+<div  class="x-body">
+    <xblock>
+        <div class="demoTable">
+            &nbsp
+            <div class="layui-input-inline">
+                <label>关键词</label>&nbsp
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" name="userCode" id="userCode" placeholder="用户编号" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" name="userName" id="userName" placeholder="名称" autocomplete="off" class="layui-input">
+            </div>
+            &nbsp
+            &nbsp
+            <button class="layui-btn" data-type="reload" ><i class="layui-icon">&#xe615;</i></button>
+        </div>
+    </xblock>
+    <xblock>
+        <button class="layui-btn" onclick="x_admin_show('添加管理员','/manage/role/jumpAddUserPermissions.html')"><i class="layui-icon"></i>添加</button>
+    </xblock>
+    <table class="layui-hide" id="permissions" lay-filter="test"></table>
+    <script type="text/html" id="barDemo">
+        <a href="javascript:;" class=""  lay-event="shou"><img src="../../../images/menu.png" title="授权菜单" width="25" height="25"></a>
+        <a href="javascript:;" class=""  lay-event="del"><img src="../../../images/shanchu.png" title="删除权限" width="25" height="25"></a>
+    </script>
+</div>
+<script>
+    layui.use(['table'], function () {
+
+        var table = layui.table;
+        //渲染
+        table.render({
+            elem: '#permissions',
+            id:'testReload',
+            url:'/manage/role/getRolePermissionsList',
+            cols:[[
+                {type:'checkbox'}
+                , {field: 'usercode', width:'20%', title: '用户编号',sort: true}
+                , {field: 'name', width:'10%', title: '名称'}
+                , {field: 'roletype', width:'15%' , title: '角色类型'}
+                , {field: 'createTime', width:'20%', title: '创建时间',
+                    templet :function (row){
+                        return createTime(row.createTime);
+                    }}
+                , {field: 'remark', width:'15%' , title: '备注'}
+                , {fixed: 'right', width: '17%', align: 'center', title: '操作-授权菜单', toolbar: '#barDemo'}
+            ]]
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                ,curr: 1 //设定初始在第 1 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit: 10
+                ,limits: [5,10,15,20]
+            }  //true表示分页
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+                $("[data-field='roletype']").children().each(function(){
+                    if($(this).text()=='0'){
+                        $(this).text("App客户")
+                    }else if($(this).text()=='2'){
+                        $(this).text("客服人员")
+                    }else if($(this).text()=='3') {
+                        $(this).text("技术人员")
+                    }
+                })
+            }
+
+        });
+        //表格数据操作-查看详情和删除
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'shou'){
+                localStorage.setItem("userCode",data.usercode);
+                x_admin_show('授权菜单','/manage/role/jumpModifyUserPermissions.html',700,600);
+            }else if(obj.event==='del'){
+                $.ajax({
+                    url:'/manage/role/deleteUserRole',
+                    data:{
+                        id:data.id,
+                        userCode:data.usercode,
+                    },
+                    success : function (data) {
+                        if(data.status==0){
+                            layer.msg("权限删除成功")
+                            window.location.reload();
+                        }else {
+                            layer.msg("权限删除失败")
+                            window.location.reload();
+                        }
+                    },error :function () {
+
+                    }
+                })
+            }
+        });
+        var $ = layui.jquery, active = {
+            reload: function () {
+                var userName = $("#userName").val();
+                var userCode = $("#userCode").val();
+                table.reload('testReload', {
+                    method: 'post',
+                    where: {userName: userName ,userCode :userCode }
+                });
+            }
+
+
+        }
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+
+    });
+
+
+
+
+
+
+    //数字时间转DATE时间类型
+    function createTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+        return str;
+    }
+</script>
+
+
+
+
+</body>
+</html>

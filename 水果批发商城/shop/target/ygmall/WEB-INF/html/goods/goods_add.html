@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加商品</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../x-admin/css/font.css">
+    <link rel="stylesheet" href="../../../x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/xcity.js"></script>
+
+
+</head>
+<body>
+<!-- 顶部开始 -->
+<div class="container">
+    <div class="logo"><a href="">水果批发商城后台管理</a></div>
+    <div class="open-nav"><i class="iconfont">&#xe699;</i></div>
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;" id="userName"></a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                <dd><a onclick="x_admin_show('个人信息','/manage/user/openUserInfo.html',600,400)">个人信息</a></dd>
+                <dd><a href="/manage/user/jumpUserBackStageLogin.html">切换帐号</a></dd>
+                <dd><a href="/manage/user/jumpShop.html">退出</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a href="/manage/user/jumpUserShop.html">前台首页</a></li>
+    </ul>
+</div>
+<!-- 顶部结束 -->
+<!-- 中部开始 -->
+<div class="wrapper">
+    <!-- 左侧菜单开始 -->
+    <div class="left-nav">
+        <div id="side-nav" >
+
+        </div>
+    </div>
+    <!-- 左侧菜单结束 -->
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <label for="goodsTitle" class="layui-form-label">
+                        商品标题
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="goodsTitle" name="goodsTitle" required lay-verify="goodsTitle"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        商城前端展示的商品名
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="goodsBigType" class="layui-form-label">
+                        水果大分类
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="goodsBigType" id="goodsBigType" lay-verify="goodsBigType" lay-search="" >
+                            <option value="">请选择...</option>
+                            <option value="1">常见水果</option>
+                            <option value="2">进口水果</option>
+                        </select>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        水果属于哪个大类
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="goodsType" class="layui-form-label">
+                        水果小分类
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="goodsType" id="goodsType" lay-verify="goodsType" lay-search="" >
+                            <option value="">请选择...</option>
+                            <option value="1">寒性水果</option>
+                            <option value="2">温性水果</option>
+                            <option value="3">中性水果</option>
+                        </select>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        水果属于哪个小类
+                    </div>
+
+                </div>
+                <input type="text" style="display: none" name="headimg" id="headimg" lay-verify="headimg" >
+                <div class="layui-form-item" >
+                    <label  class="layui-form-label"> 商品照片
+                    </label>
+                    <div class="layui-upload" >
+                        <div class="layui-upload-list" id="demo3" >
+                            <img class="layui-upload-img " id="demo2" width="250px" height="250px"  >
+                        </div>
+                        <button type="button" class="layui-btn" id="test2">上传照片</button>
+                        <div class="layui-form-mid layui-word-aux">
+                            修改商品的照片
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item" >
+                    <label for="goodsPrice" class="layui-form-label">
+                        参考价
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="goodsPrice" name="goodsPrice" required lay-verify="goodsPrice"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        商城前端给用户看到参考价
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="goodsCostPrice" class="layui-form-label">
+                        成本价
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="goodsCostPrice" name="goodsCostPrice" required lay-verify="goodsCostPrice"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        商品的成交价 只有你自己知道
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="goodsRelPrice" class="layui-form-label">
+                        交易价
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="goodsRelPrice" name="goodsRelPrice" required lay-verify="goodsRelPrice"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        商品交易的价格
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="goodsInventory" class="layui-form-label">
+                        库存量
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="goodsInventory" name="goodsInventory" required lay-verify="number"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        商品的库存量
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label for="goodsRenark" class="layui-form-label">
+                        商品详情
+                    </label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="" id="goodsRenark" name="goodsRenark" autocomplete="off"
+                                  class="layui-textarea" style="height: 80px;" lay-verify="goodsRenark"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                    </label>
+                    <button class="layui-btn" key="set-mine" lay-filter="save" lay-submit>
+                        添加商品
+                    </button>
+                </div>
+            </div>
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<!-- 中部结束 -->
+<!-- 底部开始 -->
+<div class="footer">
+    <div class="copyright">学校：江苏师范大学 学号：15090167 本后台系统由朱利敏提供技术支持</div>
+</div>
+<!-- 底部结束 -->
+<!-- 背景切换开始 -->
+<div class="bg-changer">
+    <div class="swiper-container changer-list">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/a.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/b.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/c.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/d.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/e.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/f.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/g.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/h.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/i.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/j.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/k.jpg" alt=""></div>
+            <div class="swiper-slide"><span class="reset">初始化</span></div>
+        </div>
+    </div>
+    <div class="bg-out"></div>
+    <div id="changer-set"><i class="iconfont">&#xe696;</i></div>
+</div>
+<!-- 背景切换结束 -->
+<link rel="stylesheet" href="../../../x-admin/lib/layui/css/modules/layer/default/layer.css">
+
+<script src="../../../x-admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../x-admin/js/xadmin.js"></script>
+<script>
+    var userName = '${session_manage_token.getUserName()}';
+
+    var userRole = '${session_manage_token.getUserRole()}';
+    var menuHtml = "";
+    if (userRole == 1) {
+        menuHtml += '<ul id="nav">'
+        menuHtml += '    <li class="list" current>'
+        menuHtml += '  <a id="shouye">'
+        menuHtml += '      <i class="iconfont">&#xe761;</i>'
+        menuHtml += ' 后台首页'
+        menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+        menuHtml += '  </a>'
+        menuHtml += '  </li>'
+        menuHtml += ' <li class="list">'
+        menuHtml += '      <a href="javascript:;">'
+        menuHtml += '   <i class="layui-icon">&#xe60a;</i>\n'
+        menuHtml += '  订单管理'
+        menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+        menuHtml += ' </a>'
+        menuHtml += ' <ul class="sub-menu">'
+        menuHtml += '      <li>'
+        menuHtml += '      <a href="/manage/order/jumpOrderList.html">'
+        menuHtml += '       <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '   订单列表'
+        menuHtml += '  </a>'
+        menuHtml += '  </li>'
+        menuHtml += '   <li>'
+        menuHtml += '  <a href="/manage/order/jumpOrderListUnshipped.html">'
+        menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '   未发货订单'
+        menuHtml += '  </a>'
+        menuHtml += '  </li>'
+        menuHtml += '   <li>'
+        menuHtml += '  <a href="/manage/order/jumpOrderListShipped.html">'
+        menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '  已发货订单'
+        menuHtml += '   </a>'
+        menuHtml += '   </li>'
+        menuHtml += '   <li>'
+        menuHtml += '   <a href="/manage/order/jumpOrderListDelivery.html">'
+        menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '  配送完成'
+        menuHtml += '   </a>'
+        menuHtml += '   </li>'
+        menuHtml += '  <li>'
+        menuHtml += '   <a href="/manage/order/jumpOrderListReturn.html">'
+        menuHtml += '       <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '   退货单'
+        menuHtml += '   </a>'
+        menuHtml += ' </li>'
+        menuHtml += '   </ul>'
+        menuHtml += '   </li>'
+        menuHtml += '   <li class="list">'
+        menuHtml += '      <a href="javascript:;">'
+        menuHtml += '      <i class="layui-icon">&#xe62b;</i>'
+        menuHtml += '  商品管理'
+        menuHtml += '   <i class="iconfont nav_right">&#xe697;</i>'
+        menuHtml += '   </a>'
+        menuHtml += '  <ul class="sub-menu">'
+        menuHtml += '       <li>'
+        menuHtml += '        <a href="/manage/goods/jumpGoodsList.html">'
+        menuHtml += '        <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '   商品列表'
+        menuHtml += '   </a>'
+        menuHtml += '   </li>'
+        menuHtml += '   <li>'
+        menuHtml += '  <a href="/manage/goods/jumpGoodsAdd.html">'
+        menuHtml += '        <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '   添加商品'
+        menuHtml += '   </a>'
+        menuHtml += '   </li>'
+        menuHtml += '  </ul>'
+        menuHtml += '   </li>'
+        menuHtml += '   <li class="list">'
+        menuHtml += '       <a href="javascript:;">'
+        menuHtml += '        <i class="layui-icon">&#xe613;</i>'
+        menuHtml += '    用户管理'
+        menuHtml += '    <i class="iconfont nav_right">&#xe697;</i>'
+        menuHtml += '    </a>'
+        menuHtml += '    <ul class="sub-menu" style="display:none">'
+        menuHtml += '       <li>'
+        menuHtml += '        <a href="/manage/user/jumpUserList.html">'
+        menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '    用户列表'
+        menuHtml += '     </a>'
+        menuHtml += '    </li>'
+        menuHtml += '   </ul>'
+        menuHtml += '   </li>'
+        menuHtml += '  <li class="list">'
+        menuHtml += '     <a href="javascript:;">'
+        menuHtml += '      <i class="iconfont">&#xe6a3;</i>'
+        menuHtml += '  系统统计'
+        menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+        menuHtml += '   </a>'
+        menuHtml += '    <ul class="sub-menu" style="display:none">'
+        menuHtml += '        <li>'
+        menuHtml += '       <a href="/manage/count/jumpEchartBrokenLine.html">'
+        menuHtml += '        <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '    拆线图'
+        menuHtml += '    </a>'
+        menuHtml += '    </li>'
+        // menuHtml += '    <li>'
+        // menuHtml += '    <a href="./echarts2.html">'
+        // menuHtml += '          <i class="iconfont">&#xe6a7;</i>'
+        // menuHtml += '      柱状图'
+        // menuHtml += '     </a>'
+        // menuHtml += '    </li>'
+        // menuHtml += '    <li>'
+        // menuHtml += '    <a href="./echarts3.html">'
+        // menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+        // menuHtml += '     地图'
+        // menuHtml += '     </a>'
+        // menuHtml += '      </li>'
+        menuHtml += '      <li>'
+        menuHtml += '    <a href="/manage/count/jumpEchartPieChart.html">'
+        menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '     饼图'
+        menuHtml += '      </a>'
+        menuHtml += '     </li>'
+        // menuHtml += '      <li>'
+        // menuHtml += '      <a href="./echarts5.html">'
+        // menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+        // menuHtml += '     k线图'
+        // menuHtml += '      </a>'
+        // menuHtml += '      </li>'
+        // menuHtml += '      <li>'
+        // menuHtml += '      <a href="./echarts6.html">'
+        // menuHtml += '          <i class="iconfont">&#xe6a7;</i>'
+        // menuHtml += '      仪表图'
+        // menuHtml += '     </a>'
+        // menuHtml += '     </li>'
+        // menuHtml += '    <li>'
+        // menuHtml += '      <a href="http://echarts.baidu.com/examples.html">'
+        // menuHtml += '           <i class="iconfont">&#xe6a7;</i>'
+        // menuHtml += '      利润分析'
+        // menuHtml += '      </a>'
+        // menuHtml += '      </li>'
+        // menuHtml += '       </ul>'
+        // menuHtml += '       </li>'
+        menuHtml += '      </ul>'
+        $("#side-nav").html(menuHtml);
+    }else if (userRole == 2)
+    {
+        menuHtml += '<ul id="nav">'
+        menuHtml += '    <li class="list" current>'
+        menuHtml += '  <a id="shouye">'
+        menuHtml += '      <i class="iconfont">&#xe761;</i>'
+        menuHtml += ' 后台首页'
+        menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+        menuHtml += '  </a>'
+        menuHtml += '  </li>'
+        menuHtml += ' <li class="list">'
+        menuHtml += '      <a href="javascript:;">'
+        menuHtml += '      <i class="iconfont">&#xe70b;</i>'
+        menuHtml += '  订单管理'
+        menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+        menuHtml += ' </a>'
+        menuHtml += ' <ul class="sub-menu">'
+        menuHtml += '      <li>'
+        menuHtml += '      <a href="/manage/order/jumpOrderList.html">'
+        menuHtml += '       <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '   订单列表'
+        menuHtml += '  </a>'
+        menuHtml += '  </li>'
+        menuHtml += '   <li>'
+        menuHtml += '  <a href="/manage/order/jumpOrderListUnshipped.html">'
+        menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '   未发货订单'
+        menuHtml += '  </a>'
+        menuHtml += '  </li>'
+        menuHtml += '   <li>'
+        menuHtml += '  <a href="/manage/order/jumpOrderListShipped.html">'
+        menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '  已发货订单'
+        menuHtml += '   </a>'
+        menuHtml += '   </li>'
+        menuHtml += '   <li>'
+        menuHtml += '   <a href="/manage/order/jumpOrderListDelivery.html">'
+        menuHtml += '      <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '  配送完成'
+        menuHtml += '   </a>'
+        menuHtml += '   </li>'
+        menuHtml += '  <li>'
+        menuHtml += '   <a href="/manage/order/jumpOrderListReturn.html">'
+        menuHtml += '       <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '   退货单'
+        menuHtml += '   </a>'
+        menuHtml += ' </li>'
+        menuHtml += '   </ul>'
+        menuHtml += '   </li>'
+        menuHtml += '      </ul>'
+
+        $("#side-nav").html(menuHtml);
+    }
+    else {
+        menuHtml += '<ul id="nav">'
+        menuHtml += '    <li class="list" current>'
+        menuHtml += '  <a id="shouye">'
+        menuHtml += '      <i class="iconfont">&#xe761;</i>'
+        menuHtml += ' 后台首页'
+        menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+        menuHtml += '  </a>'
+        menuHtml += '  </li>'
+        menuHtml += '  <li class="list">'
+        menuHtml += '     <a href="javascript:;">'
+        menuHtml += '      <i class="iconfont">&#xe6a3;</i>'
+        menuHtml += '  系统统计'
+        menuHtml += '  <i class="iconfont nav_right">&#xe697;</i>'
+        menuHtml += '   </a>'
+        menuHtml += '    <ul class="sub-menu" style="display:none">'
+        menuHtml += '        <li>'
+        menuHtml += '       <a href="/manage/count/jumpEchartBrokenLine.html">'
+        menuHtml += '        <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '    拆线图'
+        menuHtml += '    </a>'
+        menuHtml += '    </li>'
+        // menuHtml += '    <li>'
+        // menuHtml += '    <a href="./echarts2.html">'
+        // menuHtml += '          <i class="iconfont">&#xe6a7;</i>'
+        // menuHtml += '      柱状图'
+        // menuHtml += '     </a>'
+        // menuHtml += '    </li>'
+        // menuHtml += '    <li>'
+        // menuHtml += '    <a href="./echarts3.html">'
+        // menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+        // menuHtml += '     地图'
+        // menuHtml += '     </a>'
+        // menuHtml += '      </li>'
+        menuHtml += '      <li>'
+        menuHtml += '    <a href="/manage/count/jumpEchartPieChart.html">'
+        menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+        menuHtml += '     饼图'
+        menuHtml += '      </a>'
+        menuHtml += '     </li>'
+        // menuHtml += '      <li>'
+        // menuHtml += '      <a href="./echarts5.html">'
+        // menuHtml += '         <i class="iconfont">&#xe6a7;</i>'
+        // menuHtml += '     k线图'
+        // menuHtml += '      </a>'
+        // menuHtml += '      </li>'
+        // menuHtml += '      <li>'
+        // menuHtml += '      <a href="./echarts6.html">'
+        // menuHtml += '          <i class="iconfont">&#xe6a7;</i>'
+        // menuHtml += '      仪表图'
+        // menuHtml += '     </a>'
+        // menuHtml += '     </li>'
+        // menuHtml += '    <li>'
+        // menuHtml += '      <a href="http://echarts.baidu.com/examples.html">'
+        // menuHtml += '           <i class="iconfont">&#xe6a7;</i>'
+        // menuHtml += '      利润分析'
+        // menuHtml += '      </a>'
+        // menuHtml += '      </li>'
+        // menuHtml += '       </ul>'
+        // menuHtml += '       </li>'
+        menuHtml += '      </ul>'
+        $("#side-nav").html(menuHtml);
+    }
+    $("#userName").html(userName);
+
+    $("#shouye").attr("href", "/manage/user/jumpUserBackStageIndex.html?userRole=" + userRole);
+</script>
+<script>
+    layui.use(['form', 'layer',  'code','upload' ], function () {
+        $ = layui.jquery;
+        var form = layui.form,
+            layer = layui.layer,
+            code = layui.code,
+            upload = layui.upload;
+        form.verify({
+            goodsTitle : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '商品标题不能为空！';
+                }
+            },
+            goodsBigType : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '给水果添加个大分类！';
+                }
+            },
+            goodsType : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '给水果添加个小分类！';
+                }
+            },
+
+            goodsPrice : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '参考价不能为空！';
+                }
+            },
+            headimg: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '商品照片不能为空!';
+                }
+
+            },
+            goodsCostPrice : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '成本价不能为空！';
+                }
+                if (fixed(value) > fixed($("#goodsRelPrice").val())) {
+                    return '成本价不能高于交易价';
+                }
+            },
+            goodsRelPrice: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '交易价不能为空！';
+                }
+                if (fixed(value) > fixed($("#goodsPrice").val)) {
+
+                    return '交易价不能高于参考价';
+                }
+            },
+            goodsRenark : function (value) {
+                if (value.length == null || value.length == "") {
+                    return '给商品做个详情简介！';
+                }
+            },
+
+
+        });
+        //图片上传
+        upload.render({
+            elem: '#test2'
+            , url: '/manage/goods/uploadImg'
+            , multiple: false
+            , size: 2048
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    //console.log(file);
+                    $('#demo2').remove();
+                    $('#demo3').append('<img width="250px" height="250px" id="demo2" src="' + result + '" alt="' + file.name + '" class="layui-upload-img">');
+                });
+            }
+            , done: function (res) {
+                var img = res.data.uri;
+                $("#headimg").val(img);
+                s=img;
+                layer.msg("上传完成", {icon: 6, time: 5000,});
+            }
+
+        });
+        form.on('submit(save)', function(data) {
+            var goodsTitle =  $("#goodsTitle").val();
+            var goodsPrice = $("#goodsPrice").val();
+            var goodsCostPrice =  $("#goodsCostPrice").val();
+            var goodsRelPrice = $("#goodsRelPrice").val();
+            var goodsBigType = $("#goodsBigType option:selected").val();
+            var goodsType = $("#goodsType option:selected").val();
+            var goodsRenark = $("#goodsRenark").val();
+            var headimg= $("#headimg").val();
+            var goodsInventory = $("#goodsInventory").val();
+
+            $.ajax({
+                url: "/manage/goods/addGoods",
+                type: "post",
+                dataType: "json",
+                data:{
+                    goodsTitle:goodsTitle,
+                    goodsPrice1:goodsPrice,
+                    goodsCostPrice1:goodsCostPrice,
+                    goodsRelPrice1:goodsRelPrice,
+                    goodsBigType:goodsBigType,
+                    goodsType:goodsType,
+                    goodsRenark:goodsRenark,
+                    goodsImg:headimg,
+                    goodsInventory:goodsInventory,
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg('添加成功!', {
+                            icon: 6,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            window.location.reload();
+                        });
+                    }else  {
+                        layer.msg('添加失败!', {
+                            icon: 5,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            return false;
+                        });
+                    }
+
+
+                }
+
+            });
+
+        });
+        //金额转换
+        function fixed(str) {
+            if (!str) str = '0.00';
+            var ret = Math.round(parseFloat(str) * 100) / 100;
+            var decimal = ret.toString().split('.');
+            if (decimal.length === 1) {
+                return ret.toString() + '.00'
+            };
+            if (decimal.length > 1) {
+                if (decimal[1].length < 2) {
+                    return ret.toString() + '0'
+                }
+                return ret
+            };
+            return ret;
+        }
+    });
+</script>
+</body>
+</html>

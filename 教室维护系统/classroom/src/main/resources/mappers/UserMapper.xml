@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.User" >
+    <constructor >
+      <idArg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_real_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_sex" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_role" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="user_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="user_college" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_classroom" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_name, user_password, user_real_name, user_code, user_sex, user_phone, 
+    user_role, user_create_time, user_update_time, user_college, user_classroom
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from classroom_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from classroom_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.User" >
+    insert into classroom_user (user_id, user_name, user_password, 
+      user_real_name, user_code, user_sex, 
+      user_phone, user_role, user_create_time, 
+      user_update_time, user_college, user_classroom
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+      #{userRealName,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, #{userSex,jdbcType=VARCHAR}, 
+      #{userPhone,jdbcType=VARCHAR}, #{userRole,jdbcType=INTEGER}, #{userCreateTime,jdbcType=TIMESTAMP}, 
+      #{userUpdateTime,jdbcType=TIMESTAMP}, #{userCollege,jdbcType=VARCHAR}, #{userClassroom,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.User" >
+    insert into classroom_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPassword != null" >
+        user_password,
+      </if>
+      <if test="userRealName != null" >
+        user_real_name,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="userSex != null" >
+        user_sex,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="userRole != null" >
+        user_role,
+      </if>
+      <if test="userCreateTime != null" >
+        user_create_time,
+      </if>
+      <if test="userUpdateTime != null" >
+        user_update_time,
+      </if>
+      <if test="userCollege != null" >
+        user_college,
+      </if>
+      <if test="userClassroom != null" >
+        user_classroom,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userRealName != null" >
+        #{userRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        #{userSex,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userRole != null" >
+        #{userRole,jdbcType=INTEGER},
+      </if>
+      <if test="userCreateTime != null" >
+        #{userCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userUpdateTime != null" >
+        #{userUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userCollege != null" >
+        #{userCollege,jdbcType=VARCHAR},
+      </if>
+      <if test="userClassroom != null" >
+        #{userClassroom,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.User" >
+    update classroom_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userRealName != null" >
+        user_real_name = #{userRealName,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        user_sex = #{userSex,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userRole != null" >
+        user_role = #{userRole,jdbcType=INTEGER},
+      </if>
+      <if test="userCreateTime != null" >
+        user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userUpdateTime != null" >
+        user_update_time = #{userUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userCollege != null" >
+        user_college = #{userCollege,jdbcType=VARCHAR},
+      </if>
+      <if test="userClassroom != null" >
+        user_classroom = #{userClassroom,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.User" >
+    update classroom_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_real_name = #{userRealName,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      user_sex = #{userSex,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_role = #{userRole,jdbcType=INTEGER},
+      user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+      user_update_time = #{userUpdateTime,jdbcType=TIMESTAMP},
+      user_college = #{userCollege,jdbcType=VARCHAR},
+      user_classroom = #{userClassroom,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <select id="checkUserName" parameterType="java.lang.String" resultType="int">
+    select count(1)
+    from classroom_user
+    where user_name = #{userName}
+  </select>
+  <select id="login" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List"></include>
+    from classroom_user
+    where user_name = #{userName} and user_password = #{password}
+  </select>
+  <select id="getUserListByCondition" resultMap="BaseResultMap" parameterType="com.project.vo.UserQueryVo">
+    select <include refid="Base_Column_List"></include>
+    from classroom_user
+    <where>
+      <if test="userCode!=null and userCode!=''">
+        and user_code = #{userCode}
+      </if>
+      <if test="userName!=null and userName!=''">
+        and user_name like "%"#{userName}"%"
+      </if>
+      <if test="userRealName!=null and userRealName!=''">
+        and user_real_name like "%"#{userRealName}"%"
+      </if>
+      <if test="userPhone!=null and userPhone!=''">
+        and user_phone like "%"#{userPhone}"%"
+      </if>
+      <if test="userSex!=null and userSex!=''">
+        and user_sex = #{userSex}
+      </if>
+      <if test="userCollege!=null and userCollege!=''">
+        and user_college = #{userCollege}
+      </if>
+      <if test="userClassroom!=null and userClassroom!=''">
+        and user_classroom like "%"#{userClassroom}"%"
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ user_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ user_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ user_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ user_create_time <= #{endTime}]]>
+        </if>
+      </if>
+      and user_role !=0
+    </where>
+  </select>
+  <update id="reSetAgainPassword" parameterType="int">
+    update classroom_user
+    set user_password = "202cb962ac59075b964b07152d234b70"
+    where user_id = #{userId}
+  </update>
+  <select id="checkPassword" resultType="int" parameterType="map">
+    select count(1)
+    from classroom_user
+    where user_id = #{userId} and user_password = #{userPassword}
+  </select>
+  <update id="updatePassword" parameterType="map">
+    update classroom_user
+    set user_password = #{userPassword}
+    where user_id = #{userId}
+  </update>
+</mapper>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="../../../layui/css/layui.css">
+	<link rel="stylesheet" href="../../../css/view.css"/>
+	<link rel="icon" href="/favicon.ico">
+	<title>用户列表</title>
+</head>
+<body class="layui-view-body">
+<div class="layui-content">
+	<div class="layui-page-header">
+		<div class="pagewrap">
+			<h2 class="title">用户列表</h2>
+		</div>
+	</div>
+	<div class="layui-row">
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<div class="form-box">
+					<div class="layui-form layui-form-item">
+						<div class="demoTable">
+							<div class="layui-inline">
+								<div class="layui-form-mid">用户名:</div>
+								<div class="layui-input-inline" style="width: 160px;">
+									<input type="text" autocomplete="off" id="userName" class="layui-input" placeholder="请输入用户名">
+								</div>
+								<div class="layui-form-mid">姓名:</div>
+								<div class="layui-input-inline" style="width: 160px;">
+									<input type="text" autocomplete="off" id="realName" class="layui-input"  placeholder="请输入姓名">
+								</div>
+								<div class="layui-form-mid">职位:</div>
+								<div class="layui-input-inline" style="width: 160px;">
+									<select name="sex" id="role" >
+										<option value="">请选择职位</option>
+										<option value="1">项目经理</option>
+										<option value="2">研发人员</option>
+										<option value="3">测试人员</option>
+									</select>
+								</div>
+								<button class="layui-btn layui-btn-blue" data-type="reload"><i class="layui-icon">&#xe615;</i>查询</button>
+							</div>
+						</div>
+					</div>
+					<button class="layui-btn layui-btn-blue " onclick="x_admin_show('新增用户','/manage/user/user_add',800,600)"><i class="layui-icon">&#xe654;</i>新增用户</button>
+					<table class="layui-hide" id="demo" lay-filter="test"></table>
+					<script type="text/html" id="barDemo" >
+						<a class="layui-btn layui-btn-xs" lay-event="detail">查看详情</a>
+						<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="resetPass">重置密码</a>
+						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="../../../js/jquery-3.3.1.min.js"></script>
+<script src="../../../layui/layui.all.js"></script>
+<script src="../../../js/formate.js"></script>
+<script src="../../../js/xadmin.js"></script>
+<script>
+    var element = layui.element;
+    var table = layui.table;
+    var form = layui.form;
+
+    //展示已知数据
+    table.render({
+        elem: '#demo'
+        ,url:'/manage/user/userList'
+        ,id : 'testReload'
+        ,cols: [[ //标题栏
+            {field: 'userId', title: 'ID', width: 80, sort: true}
+            , {field: 'userCode', width:'12%' , title: '用户编号',sort: true}
+            , {field: 'createTime', width:'12%' , title: '创建时间',
+                templet :function (row){
+                    return editTime(row.createTime);
+                } }
+            , {field: 'userName', width:'15%' , title: '用户名'}
+            , {field: 'realName', width:'15%' , title: '姓名'}
+            , {field: 'mobilePhone', width:'10%' , title: '手机号'}
+            , {field: 'role', width:'10%' , title: '职位'}
+            , {fixed: 'right', width: '20%', align: 'center', title: '操作', toolbar: '#barDemo'}
+        ]]
+        ,skin: 'line' //表格风格
+        ,even: true
+        ,page: true //是否显示分页
+        ,limits: [10, 20, 50]
+        ,limit: 10 //每页默认显示的数量
+        ,done: function(res, curr, count){
+            //如果是异步请求数据方式，res即为你接口返回的信息。
+            //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+            console.log(res);
+            //得到当前页码
+            console.log(curr);
+            //得到数据总量
+            console.log(count);
+            $("[data-field='role']").children().each(function(){
+                if($(this).text()==1){
+                    $(this).text("项目经理")
+                }else if($(this).text()==2){
+                    $(this).text("研发人员")
+                }else if($(this).text()==3){
+                    $(this).text("测试人员")
+                }else if($(this).text()==0){
+                    $(this).text("管理员")
+                }
+            })
+            $("[data-field='sex']").children().each(function(){
+                if($(this).text()=='0'){
+                    $(this).text("保密")
+                }else if($(this).text()=='1'){
+                    $(this).text("男")
+                }else if($(this).text()=='2'){
+                    $(this).text("女")
+                }
+            })
+        }
+    });
+    //表格数据操作-查看详情和删除
+    table.on('tool(test)', function(obj){
+        console.log("sss");
+        var data = obj.data;
+        if(obj.event === 'detail'){
+            localStorage.setItem("userId",data.userId);
+            x_admin_show('修改角色','/manage/user/user_edit',800,500)
+        }else if(obj.event === 'del'){
+            layer.confirm('真的删除行么', function(index){
+                $.ajax({
+                    type: 'post',
+                    url: '/manage/user/deleteUser',
+                    data:{
+                        id:data.userId,
+                    },
+                    dataType: 'json',
+                    success : function (data) {
+                        if(data.status==0){
+                            layer.msg("删除成功！",
+								{icon: 6,time:1000,end:function () {
+                                    $(".layui-laypage-btn").click();
+                                }});
+                        }
+                    },
+                    error : function () {
+                        layer.msg('删除失败');
+                    }
+                });
+            });
+        }else if(obj.event === 'resetPass'){
+            layer.confirm('重置密码统一为123456', function(index){
+                $.ajax({
+                    url : '/manage/user/resetPass',
+                    type: 'post',
+                    data:{
+                        id: data.userId,
+                    } ,
+                    dataType : 'json',
+                    success:function (data) {
+                        if(data.status==0) {
+                            layer.msg("重置成功！", {
+                                icon: 6, time: 1000, end: function () {
+                                    $(".layui-laypage-btn").click();
+                                }
+                            });
+                        }
+                    }
+                })
+            });
+        }
+    });
+    $('.demoTable .layui-btn').on('click', function(){
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+    var $ = layui.jquery, active = {
+        reload: function(){
+            var userName = $("#userName").val();
+            var realName = $("#realName").val();
+            var role = $("#role option:selected").val();
+            console.log(userName);
+            console.log("role:"+role);
+            table.reload('testReload', {
+                method:'post',
+                where:{realName:realName,userName:userName,role:role}
+            });
+        }
+    };
+</script>
+</body>
+</html>

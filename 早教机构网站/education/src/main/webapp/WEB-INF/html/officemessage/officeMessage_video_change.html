@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>视频简介管理</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../../css/user.css" media="all" />
+</head>
+<body>
+<fieldset class="layui-elem-field" style="width:60%;margin-left: 20%;margin-top: 1% ">
+    <div class="layui-form">
+        <tbody>
+        <tr>
+            <th colspan="2" style="text-align:left;background-color: #eee"><h2 style="font-family: 黑体">机构视频简介</h2>
+            </th>
+        <tr>
+        </tbody>
+        <input type="hidden"  name="officeVideo" id="officeVideo" lay-verify="officeVideo"  >
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="ayui-upload-drag layui-input-inline" style="border: 1px;">
+                <div class="layui-upload-list" id="demo5" >
+                    <embed width="320" height="240" controls="controls"  id="demo4"/>
+                </div>
+                <button type="button" class="layui-btn" id="test3">上传新视频</button>
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center">
+            <button class="layui-btn layui-btn-danger" lay-filter="change" lay-submit="">更换</button>
+        </div>
+    </div>
+</fieldset>
+
+
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../js/main.js"></script>
+<script type="text/javascript" src="../../../js/index.js"></script>
+<script type="text/javascript" src="../../../js/xadmin.js"></script>
+<script>
+    var messageId = localStorage.getItem("messageId");
+    localStorage.removeItem("messageId");
+    layui.use(['form', 'layer', 'laydate', 'code', 'upload'], function () {
+        $ = layui.jquery;
+        form = layui.form,
+            layer = layui.layer,
+            laydate = layui.laydate,
+            upload = layui.upload;
+        form.verify({
+            officeVideo : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '视频简介不能为空';
+                }
+            },
+        });
+
+
+        $.ajax({
+            type: 'post',
+            url: '/manage/office/getOfficeVideo',
+            dataType: 'json',
+            success: function (res) {
+                if (res.status == 0) {
+                    $("#demo4").attr("src", "http://127.0.0.1:8080/upload/" + res.data.messageVideo);
+                } else {
+                    var index = layer.load(3, {time: 30*1000});
+                    layer.msg('请求失败，检查后台接口');
+                }
+            },
+            error: function () {
+                var index = layer.load(3, {time: 10*1000});
+                layer.msg('请求失败，检查后台接口');
+            }
+        })
+
+        //视频上传
+        upload.render({
+            elem: '#test3'
+            , url: '/manage/office/uploadVideo'
+            , multiple: false
+            , size: 151200//最多上传150M大小的视频
+            ,accept: 'video'
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo4').remove();
+                    $('#demo5').append('<embed width="320px"  height="240px" id="demo4" autostart="true" src="' + result + '" alt="' + file.name + '" />');
+                });
+                indexOpen = layer.load(3, {time: 60*1000});
+            }
+            , done: function (res) {
+                layer.close(indexOpen);
+                var video = res.data.uri;
+                $("#officeVideo").val(video);
+                layer.msg("上传视频成功", {icon: 6, time: 2000,});
+            }
+
+        });
+        form.on('submit(change)', function(data) {
+            var officeVideo= $("#officeVideo").val();
+            $.ajax({
+                url: "/manage/office/updateOfficeVideo",
+                type: "post",
+                dataType: "json",
+                data:{
+                    officeVideo:officeVideo,
+                },
+                success: function (data) {
+                    if (data.status == 0) {
+                        layer.msg(data.msg, {
+                            icon: 6,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            window.location.reload();
+                        });
+                    }else  {
+                        layer.msg(data.msg, {
+                            icon: 5,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        })
+                    }
+                }
+
+            });
+
+        });
+
+    });
+
+    function goback() {
+        window.location.href = "/manage/office/jumpOfficeMessageAll.html";
+
+    }
+    //数字时间转DATE时间类型
+    function editTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d;
+        if (str == "1970-01-01") {
+            return "";
+        }
+        return str;
+    }
+
+</script>
+</body>
+</html>

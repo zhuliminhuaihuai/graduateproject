@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>后台主页</title>
+    <link rel="stylesheet" type="text/css" href="../../layuiv1.0.9/css/layui.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/admin.css"/>
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+
+    <style>
+        .vintage4 {
+            color: rgba(31, 242, 255, 0.76);
+            letter-spacing: 0;
+            text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135
+        }
+
+        .m-logo {
+            display: table-cell;
+
+            vertical-align: middle;
+
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="main-layout" id='main-layout'>
+    <!--侧边栏-->
+    <div class="main-layout-side">
+        <div class="m-logo" style="background: #f5f5f5">
+            <span class="vintage4" style="font-size: 33px">教室维护系统</span>
+        </div>
+        <ul class="layui-nav layui-nav-tree" lay-filter="leftNav">
+            <li class="layui-nav-item layui-nav-itemed" id="system">
+                <a href="javascript:;"><i class="layui-icon">&#xe716;</i>  系统管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" data-url="/manage/user/jumpUserList.html" data-id='1'
+                           data-text="用户管理"><span class="l-line"></span>用户管理</a></dd>
+                    <!--<dd><a href="javascript:;" data-url="" data-id='2'
+                           data-text="视频简介管理"><span class="l-line"></span>视频简介管理</a></dd>
+                    <dd><a href="javascript:;" data-url="" data-id='3'
+                           data-text="用户管理"><span class="l-line"></span>用户管理</a></dd>-->
+                </dl>
+            </li>
+            <li class="layui-nav-item" id="room">
+                <a href="javascript:;"><i class="layui-icon">&#xe705;</i>   教室管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" data-url="/manage/room/jumpAddRoom.html" data-id='2' data-text="添加教室"><span
+                            class="l-line"></span>添加教室</a></dd>
+                    <dd><a href="javascript:;" data-url="/manage/room/jumpRoomList.html" data-id='3' data-text="教室列表"><span
+                            class="l-line"></span>教室列表 </a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" id="inspect">
+                <a href="javascript:;"><i class="layui-icon">&#xe64c;</i>  教室检查管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" data-url="/manage/check/jumpCheckHtml.html" data-id='6'
+                                  data-text="检查单列表"><span class="l-line"></span>检查单列表</a></dd>
+                    <!--<dd><a href="javascript:;" data-url="/manage/order/jumpExamineOrderList.html" data-id='7'-->
+                                  <!--data-text="教室审核"><span class="l-line"></span>教室审核</a></dd>-->
+                    <!--<dd><a href="javascript:;" data-url="/manage/order/jumpOrderHistory.html" data-id='4'-->
+                                  <!--data-text="历史记录"><span class="l-line"></span>历史记录</a></dd>-->
+                </dl>
+            </li>
+            <li class="layui-nav-item" id="defend">
+                <a href="javascript:;"><i class="layui-icon">&#xe64c;</i>  教室维护管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" data-url="/manage/defend/jumpDefendListHtml.html" data-id='7'
+                           data-text="维护单列表"><span class="l-line"></span>维护单列表</a></dd>
+                    <!--<dd><a href="javascript:;" data-url="/manage/order/jumpExamineOrderList.html" data-id='7'-->
+                    <!--data-text="教室审核"><span class="l-line"></span>教室审核</a></dd>-->
+                    <!--<dd><a href="javascript:;" data-url="/manage/order/jumpOrderHistory.html" data-id='4'-->
+                    <!--data-text="历史记录"><span class="l-line"></span>历史记录</a></dd>-->
+                </dl>
+            </li>
+            <li class="layui-nav-item" id="clean">
+                <a href="javascript:;"><i class="layui-icon">&#xe64c;</i>  教室打扫管理</a>
+                <dl class="layui-nav-child">
+                    <dd id="4"><a href="javascript:;" data-url="/manage/clean/jumpCleanHtml.html" data-id='8'
+                                  data-text="打扫列表"><span class="l-line"></span>打扫列表</a></dd>
+                    <!--<dd id="5"><a href="javascript:;" data-url="/manage/order/jumpExamineOrderList.html" data-id='7'-->
+                                  <!--data-text="教室审核"><span class="l-line"></span>教室审核</a></dd>-->
+                    <!--<dd id="8"><a href="javascript:;" data-url="/manage/order/jumpOrderHistory.html" data-id='4'-->
+                                  <!--data-text="历史记录"><span class="l-line"></span>历史记录</a></dd>-->
+                </dl>
+            </li>
+            <!--<li class="layui-nav-item" id="student">
+                <a href="javascript:;"><i class="iconfont">&#xe606;</i>学生管理</a>
+                <dl class="layui-nav-child">
+                    <dd id="6"><a href="javascript:;" data-url="/manage/user/jumpUserStudentList.html" data-id='8'
+                                  data-text="学生列表"><span class="l-line"></span>学生列表</a></dd>
+                    <dd id="7"><a href="javascript:;" data-url="/manage/timetable/jumpTimeTableSelectList.html" data-id='9'
+                                  data-text="选课列表"><span class="l-line"></span>选课列表</a></dd>
+
+                </dl>
+            </li>-->
+        </ul>
+    </div>
+    <!--右侧内容-->
+    <div class="main-layout-container">
+        <!--头部-->
+        <div class="main-layout-header">
+            <div class="menu-btn" id="hideBtn">
+                <a href="javascript:;">
+                    <span class="iconfont">&#xe60e;</span>
+                </a>
+            </div>
+            <ul class="layui-nav" lay-filter="rightNav">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" data-url="" data-id='5' data-text="个人信息"
+                       style="color: #2ec5ff"><span id="realName"></span></a>
+                </li>
+                <!--<li class="layui-nav-item">
+                    <a href="/manage/user/jumpHomePage1.html" style="color: green">返回网站首页</a>
+                </li>-->
+                <li class="layui-nav-item"><a href="/manage/user/jumpLogin.html" style="color: #ff2621">退出</a></li>
+            </ul>
+        </div>
+        <!--主体内容-->
+        <div class="main-layout-body">
+            <!--tab 切换-->
+            <div class="layui-tab layui-tab-brief main-layout-tab" lay-filter="tab" lay-allowClose="true">
+                <ul class="layui-tab-title">
+                    <li class="layui-this welcome">后台主页</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show" style="background: #f5f5f5;">
+                        <!--1-->
+                        <iframe src="/manage/user/openMain.html" width="100%" height="100%" name="iframe"
+                                scrolling="auto" class="iframe" framborder="0"></iframe>
+                        <!--1end-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--遮罩-->
+    <div class="main-mask">
+
+    </div>
+</div>
+<script type="text/javascript">
+    var scope = {
+        link: './welcome.html'
+    }
+</script>
+<script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+
+<script src="../../layuiv1.0.9/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var realName = '${session_manage_token.getUserRealName()}';
+    $("#realName").html(realName);
+    var role = '${session_manage_token.getUserRole()}';
+    //管理员可以看全部
+    if (role == 1) {//系统管理员 除了用户管理
+        $("#system").hide();
+    }
+
+</script>
+</body>
+</html>

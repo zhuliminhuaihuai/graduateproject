@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.CleanMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Clean" >
+    <constructor >
+      <idArg column="clean_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="clean_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="clean_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="clean_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="clean_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="clean_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    clean_id, clean_code, clean_create_time, clean_update_time, clean_time, clean_state, 
+    room_id, room_code
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from classroom_clean
+    where clean_id = #{cleanId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from classroom_clean
+    where clean_id = #{cleanId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Clean" >
+    insert into classroom_clean (clean_id, clean_code, clean_create_time, 
+      clean_update_time, clean_time, clean_state, 
+      room_id, room_code)
+    values (#{cleanId,jdbcType=INTEGER}, #{cleanCode,jdbcType=VARCHAR}, #{cleanCreateTime,jdbcType=TIMESTAMP}, 
+      #{cleanUpdateTime,jdbcType=TIMESTAMP}, #{cleanTime,jdbcType=TIMESTAMP}, #{cleanState,jdbcType=INTEGER}, 
+      #{roomId,jdbcType=INTEGER}, #{roomCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Clean" >
+    insert into classroom_clean
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cleanId != null" >
+        clean_id,
+      </if>
+      <if test="cleanCode != null" >
+        clean_code,
+      </if>
+      <if test="cleanCreateTime != null" >
+        clean_create_time,
+      </if>
+      <if test="cleanUpdateTime != null" >
+        clean_update_time,
+      </if>
+      <if test="cleanTime != null" >
+        clean_time,
+      </if>
+      <if test="cleanState != null" >
+        clean_state,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cleanId != null" >
+        #{cleanId,jdbcType=INTEGER},
+      </if>
+      <if test="cleanCode != null" >
+        #{cleanCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cleanCreateTime != null" >
+        #{cleanCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cleanUpdateTime != null" >
+        #{cleanUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cleanTime != null" >
+        #{cleanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cleanState != null" >
+        #{cleanState,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Clean" >
+    update classroom_clean
+    <set >
+      <if test="cleanCode != null" >
+        clean_code = #{cleanCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cleanCreateTime != null" >
+        clean_create_time = #{cleanCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cleanUpdateTime != null" >
+        clean_update_time = #{cleanUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cleanTime != null" >
+        clean_time = #{cleanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cleanState != null" >
+        clean_state = #{cleanState,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where clean_id = #{cleanId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Clean" >
+    update classroom_clean
+    set clean_code = #{cleanCode,jdbcType=VARCHAR},
+      clean_create_time = #{cleanCreateTime,jdbcType=TIMESTAMP},
+      clean_update_time = #{cleanUpdateTime,jdbcType=TIMESTAMP},
+      clean_time = #{cleanTime,jdbcType=TIMESTAMP},
+      clean_state = #{cleanState,jdbcType=INTEGER},
+      room_id = #{roomId,jdbcType=INTEGER},
+      room_code = #{roomCode,jdbcType=VARCHAR}
+    where clean_id = #{cleanId,jdbcType=INTEGER}
+  </update>
+  <select id="getCleanList" resultMap="BaseResultMap" parameterType="com.project.vo.CleanQueryVo">
+    select
+    <include refid="Base_Column_List"></include>
+    from classroom_clean
+    <where>
+      <if test="cleanCode!=null and cleanCode!=''">
+        and clean_code = #{cleanCode}
+      </if>
+      <if test="cleanState!=null and cleanState!=''">
+        and clean_state = #{cleanState}
+      </if>
+      <if test="roomCode!=null and roomCode!=''">
+        and room_code = #{roomCode}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ clean_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ clean_create_time<= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ clean_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ clean_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByRoomId" parameterType="int">
+    delete from classroom_clean
+    where room_id = #{roomId}
+  </delete>
+</mapper>

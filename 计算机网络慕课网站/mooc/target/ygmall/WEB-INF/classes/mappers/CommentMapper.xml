@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Comment" >
+    <constructor >
+      <idArg column="education_comment_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="education_comment_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="education_comment_par_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="education_comment_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="education_comment_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="courses_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="courses_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="studenr_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="student_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tercher_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tercher_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.project.pojo.Comment" >
+    <constructor >
+      <idArg column="education_comment_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="education_comment_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="education_comment_par_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="education_comment_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="education_comment_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="courses_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="courses_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="studenr_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="student_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tercher_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tercher_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="education_comment_text" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    education_comment_id, education_comment_code, education_comment_par_code, education_comment_create_time, 
+    education_comment_update_time, courses_code, courses_title, studenr_code, student_name, 
+    tercher_code, tercher_name
+  </sql>
+  <sql id="Blob_Column_List" >
+    education_comment_text
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from education_comment
+    where education_comment_id = #{educationCommentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from education_comment
+    where education_comment_id = #{educationCommentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Comment" >
+    insert into education_comment (education_comment_id, education_comment_code, 
+      education_comment_par_code, education_comment_create_time, 
+      education_comment_update_time, courses_code, 
+      courses_title, studenr_code, student_name, 
+      tercher_code, tercher_name, education_comment_text
+      )
+    values (#{educationCommentId,jdbcType=INTEGER}, #{educationCommentCode,jdbcType=VARCHAR}, 
+      #{educationCommentParCode,jdbcType=VARCHAR}, #{educationCommentCreateTime,jdbcType=TIMESTAMP}, 
+      #{educationCommentUpdateTime,jdbcType=TIMESTAMP}, #{coursesCode,jdbcType=VARCHAR}, 
+      #{coursesTitle,jdbcType=VARCHAR}, #{studenrCode,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, 
+      #{tercherCode,jdbcType=VARCHAR}, #{tercherName,jdbcType=VARCHAR}, #{educationCommentText,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Comment" >
+    insert into education_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="educationCommentId != null" >
+        education_comment_id,
+      </if>
+      <if test="educationCommentCode != null" >
+        education_comment_code,
+      </if>
+      <if test="educationCommentParCode != null" >
+        education_comment_par_code,
+      </if>
+      <if test="educationCommentCreateTime != null" >
+        education_comment_create_time,
+      </if>
+      <if test="educationCommentUpdateTime != null" >
+        education_comment_update_time,
+      </if>
+      <if test="coursesCode != null" >
+        courses_code,
+      </if>
+      <if test="coursesTitle != null" >
+        courses_title,
+      </if>
+      <if test="studenrCode != null" >
+        studenr_code,
+      </if>
+      <if test="studentName != null" >
+        student_name,
+      </if>
+      <if test="tercherCode != null" >
+        tercher_code,
+      </if>
+      <if test="tercherName != null" >
+        tercher_name,
+      </if>
+      <if test="educationCommentText != null" >
+        education_comment_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="educationCommentId != null" >
+        #{educationCommentId,jdbcType=INTEGER},
+      </if>
+      <if test="educationCommentCode != null" >
+        #{educationCommentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="educationCommentParCode != null" >
+        #{educationCommentParCode,jdbcType=VARCHAR},
+      </if>
+      <if test="educationCommentCreateTime != null" >
+        #{educationCommentCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="educationCommentUpdateTime != null" >
+        #{educationCommentUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coursesCode != null" >
+        #{coursesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesTitle != null" >
+        #{coursesTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="studenrCode != null" >
+        #{studenrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null" >
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherCode != null" >
+        #{tercherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherName != null" >
+        #{tercherName,jdbcType=VARCHAR},
+      </if>
+      <if test="educationCommentText != null" >
+        #{educationCommentText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Comment" >
+    update education_comment
+    <set >
+      <if test="educationCommentCode != null" >
+        education_comment_code = #{educationCommentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="educationCommentParCode != null" >
+        education_comment_par_code = #{educationCommentParCode,jdbcType=VARCHAR},
+      </if>
+      <if test="educationCommentCreateTime != null" >
+        education_comment_create_time = #{educationCommentCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="educationCommentUpdateTime != null" >
+        education_comment_update_time = #{educationCommentUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coursesCode != null" >
+        courses_code = #{coursesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesTitle != null" >
+        courses_title = #{coursesTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="studenrCode != null" >
+        studenr_code = #{studenrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null" >
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherCode != null" >
+        tercher_code = #{tercherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherName != null" >
+        tercher_name = #{tercherName,jdbcType=VARCHAR},
+      </if>
+      <if test="educationCommentText != null" >
+        education_comment_text = #{educationCommentText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where education_comment_id = #{educationCommentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.project.pojo.Comment" >
+    update education_comment
+    set education_comment_code = #{educationCommentCode,jdbcType=VARCHAR},
+      education_comment_par_code = #{educationCommentParCode,jdbcType=VARCHAR},
+      education_comment_create_time = #{educationCommentCreateTime,jdbcType=TIMESTAMP},
+      education_comment_update_time = #{educationCommentUpdateTime,jdbcType=TIMESTAMP},
+      courses_code = #{coursesCode,jdbcType=VARCHAR},
+      courses_title = #{coursesTitle,jdbcType=VARCHAR},
+      studenr_code = #{studenrCode,jdbcType=VARCHAR},
+      student_name = #{studentName,jdbcType=VARCHAR},
+      tercher_code = #{tercherCode,jdbcType=VARCHAR},
+      tercher_name = #{tercherName,jdbcType=VARCHAR},
+      education_comment_text = #{educationCommentText,jdbcType=LONGVARCHAR}
+    where education_comment_id = #{educationCommentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Comment" >
+    update education_comment
+    set education_comment_code = #{educationCommentCode,jdbcType=VARCHAR},
+      education_comment_par_code = #{educationCommentParCode,jdbcType=VARCHAR},
+      education_comment_create_time = #{educationCommentCreateTime,jdbcType=TIMESTAMP},
+      education_comment_update_time = #{educationCommentUpdateTime,jdbcType=TIMESTAMP},
+      courses_code = #{coursesCode,jdbcType=VARCHAR},
+      courses_title = #{coursesTitle,jdbcType=VARCHAR},
+      studenr_code = #{studenrCode,jdbcType=VARCHAR},
+      student_name = #{studentName,jdbcType=VARCHAR},
+      tercher_code = #{tercherCode,jdbcType=VARCHAR},
+      tercher_name = #{tercherName,jdbcType=VARCHAR}
+    where education_comment_id = #{educationCommentId,jdbcType=INTEGER}
+  </update>
+  <select id="getCommentList" resultMap="ResultMapWithBLOBs" parameterType="com.project.vo.CommentQueryVo" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from education_comment
+    <where>
+      <if test="educationCommentCode!=null and educationCommentCode!=''">
+        and education_comment_code = #{educationCommentCode}
+      </if>
+      <if test="coursesCode!=null and coursesCode!=''">
+        and courses_code = #{coursesCode}
+      </if>
+      <if test="coursesTitle!=null and coursesTitle!=''">
+        and courses_title like "%"#{coursesTitle}"%"
+      </if>
+      <if test="studenrCode!=null and studenrCode!=''">
+        and studenr_code = #{studenrCode}
+      </if>
+      <if test="studentName!=null and studentName!=''">
+        and student_name like "%"#{studentName}"%"
+      </if>
+      <if test="tercherCode!=null and tercherCode!=''">
+        and tercher_code = #{tercherCode}
+      </if>
+      <if test="tercherName!=null and tercherName!=''">
+        and tercher_name like "%"#{tercherName}"%"
+      </if>
+      <if test="educationCommentText!=null and educationCommentText!=''">
+        and education_comment_text like "%"#{educationCommentText}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ education_comment_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ education_comment_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ education_comment_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ education_comment_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+</mapper>

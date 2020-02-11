@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>用户详情</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../../css/user.css" media="all" />
+</head>
+<body>
+<fieldset class="layui-elem-field" style="width:60%;margin-left: 20%;margin-top: 1% ">
+    <div class="layui-form-item">
+        <div class="layui-field-box">
+            <table class="layui-table">
+                <tbody>
+                <tr>
+                    <th colspan="2" style="text-align:left;background-color: #eee"><h2 style="font-family: 黑体">用户信息</h2>
+                    </th>
+                <tr>
+                <tr>
+                    <th width="25%">用户名称</th>
+                    <td id="userName"></td>
+                </tr>
+                <tr>
+                    <th>用户编号</th>
+                    <td id="userCode"></td>
+                </tr>
+                <tr>
+                    <th>角色类型</th>
+                    <td id="userRole"></td>
+                </tr>
+                <tr>
+                    <th>联系电话</th>
+                    <td id="userPhone"></td>
+                </tr>
+                <tr>
+                    <th>出生日期</th>
+                    <td id="userBirthday"></td>
+                </tr>
+                <tr>
+                    <th>注册日期</th>
+                    <td id="userCreateTime"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="user_right">
+        <!--	<label class="layui-form-label" >用户头像</label>
+            <input type="file" name="dddd" class="layui-upload-file" lay-title="掐指一算，我要换一个头像了">
+            <img src="../../../images/face.jpg" class="layui-circle" id="userFace">-->
+        <input type="text" style="display: none" name="headimg" id="headimg" lay-verify="" >
+        <div class="layui-form-item" >
+            <label  class="layui-form-label"> 用户头像
+            </label>
+            <div class="layui-upload" style="padding-left: 130px;">
+                <div class="layui-upload-list" id="demo3" >
+                    <img class="layui-upload-img layui-circle" id="demo2" width="250px" height="250px"  >
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<div class="layui-form-item" style="text-align: center">
+    <label class="layui-form-label"> </label>
+    <button class="layui-btn layui-btn-warm" onclick="goback()">
+        返回
+    </button>
+</div>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../js/main.js"></script>
+<script type="text/javascript" src="../../../js/index.js"></script>
+<script type="text/javascript" src="../../../js/xadmin.js"></script>
+<script>
+    var userId = localStorage.getItem("userId");
+    localStorage.removeItem("userId");
+    console.log("userId:" + userId);
+    $.ajax({
+        url: "/manage/user/userDetail",
+        type: "post",
+        dataType: "json",
+        data:{
+            userId:userId
+        },
+        success: function (data) {
+            console.log(JSON.stringify(data));
+            var data = data.data;
+            $("#userName").html(data.userName);
+            $("#userCode").html(data.userCode);
+            if (data.userRole == 0) {
+                $("#userRole").html("客户");
+            } else {
+                $("#userRole").html("摄影师");
+            }
+            $("#userPhone").html(data.userPhone);
+            $("#userBirthday").html(editTime(data.userBirthday));
+            $("#userCreateTime").html(editTime(data.userCreateTime));
+            var upload_file = data.headimg;
+            if(upload_file!=null&&upload_file!=""){
+                $("#demo2").attr("src","http://127.0.0.1:8080/upload/"+upload_file);
+            }else {
+                $("#demo2").attr("src","../../../images/face.jpg");
+            }
+            $("#headimg").val(upload_file);
+
+
+        }
+    })
+
+    function goback() {
+        parent.location.href = "/manage/user/jumpUserManage.html";
+
+    }
+    //数字时间转DATE时间类型
+    function editTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+        return str;
+    }
+
+</script>
+</body>
+</html>

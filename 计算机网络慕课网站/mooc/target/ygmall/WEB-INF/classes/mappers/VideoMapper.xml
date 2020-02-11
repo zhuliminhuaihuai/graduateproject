@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.VideoMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Video" >
+    <constructor >
+      <idArg column="education_video_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="education_video_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="education_video_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="education_video_path" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="education_video_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="education_video_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="education_video_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="courses_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="courses_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="upload_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="upload_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tercher_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tercher_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    education_video_id, education_video_code, education_video_name, education_video_path, 
+    education_video_create_time, education_video_update_time, education_video_state, 
+    courses_code, courses_name, upload_name, upload_code, tercher_name, tercher_code
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from education_video
+    where education_video_id = #{educationVideoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from education_video
+    where education_video_id = #{educationVideoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Video" >
+    insert into education_video (education_video_id, education_video_code, 
+      education_video_name, education_video_path, 
+      education_video_create_time, education_video_update_time, 
+      education_video_state, courses_code, courses_name, 
+      upload_name, upload_code, tercher_name, 
+      tercher_code)
+    values (#{educationVideoId,jdbcType=INTEGER}, #{educationVideoCode,jdbcType=VARCHAR}, 
+      #{educationVideoName,jdbcType=VARCHAR}, #{educationVideoPath,jdbcType=VARCHAR}, 
+      #{educationVideoCreateTime,jdbcType=TIMESTAMP}, #{educationVideoUpdateTime,jdbcType=TIMESTAMP}, 
+      #{educationVideoState,jdbcType=INTEGER}, #{coursesCode,jdbcType=VARCHAR}, #{coursesName,jdbcType=VARCHAR}, 
+      #{uploadName,jdbcType=VARCHAR}, #{uploadCode,jdbcType=VARCHAR}, #{tercherName,jdbcType=VARCHAR}, 
+      #{tercherCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Video" >
+    insert into education_video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="educationVideoId != null" >
+        education_video_id,
+      </if>
+      <if test="educationVideoCode != null" >
+        education_video_code,
+      </if>
+      <if test="educationVideoName != null" >
+        education_video_name,
+      </if>
+      <if test="educationVideoPath != null" >
+        education_video_path,
+      </if>
+      <if test="educationVideoCreateTime != null" >
+        education_video_create_time,
+      </if>
+      <if test="educationVideoUpdateTime != null" >
+        education_video_update_time,
+      </if>
+      <if test="educationVideoState != null" >
+        education_video_state,
+      </if>
+      <if test="coursesCode != null" >
+        courses_code,
+      </if>
+      <if test="coursesName != null" >
+        courses_name,
+      </if>
+      <if test="uploadName != null" >
+        upload_name,
+      </if>
+      <if test="uploadCode != null" >
+        upload_code,
+      </if>
+      <if test="tercherName != null" >
+        tercher_name,
+      </if>
+      <if test="tercherCode != null" >
+        tercher_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="educationVideoId != null" >
+        #{educationVideoId,jdbcType=INTEGER},
+      </if>
+      <if test="educationVideoCode != null" >
+        #{educationVideoCode,jdbcType=VARCHAR},
+      </if>
+      <if test="educationVideoName != null" >
+        #{educationVideoName,jdbcType=VARCHAR},
+      </if>
+      <if test="educationVideoPath != null" >
+        #{educationVideoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="educationVideoCreateTime != null" >
+        #{educationVideoCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="educationVideoUpdateTime != null" >
+        #{educationVideoUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="educationVideoState != null" >
+        #{educationVideoState,jdbcType=INTEGER},
+      </if>
+      <if test="coursesCode != null" >
+        #{coursesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesName != null" >
+        #{coursesName,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadName != null" >
+        #{uploadName,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadCode != null" >
+        #{uploadCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherName != null" >
+        #{tercherName,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherCode != null" >
+        #{tercherCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Video" >
+    update education_video
+    <set >
+      <if test="educationVideoCode != null" >
+        education_video_code = #{educationVideoCode,jdbcType=VARCHAR},
+      </if>
+      <if test="educationVideoName != null" >
+        education_video_name = #{educationVideoName,jdbcType=VARCHAR},
+      </if>
+      <if test="educationVideoPath != null" >
+        education_video_path = #{educationVideoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="educationVideoCreateTime != null" >
+        education_video_create_time = #{educationVideoCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="educationVideoUpdateTime != null" >
+        education_video_update_time = #{educationVideoUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="educationVideoState != null" >
+        education_video_state = #{educationVideoState,jdbcType=INTEGER},
+      </if>
+      <if test="coursesCode != null" >
+        courses_code = #{coursesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesName != null" >
+        courses_name = #{coursesName,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadName != null" >
+        upload_name = #{uploadName,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadCode != null" >
+        upload_code = #{uploadCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherName != null" >
+        tercher_name = #{tercherName,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherCode != null" >
+        tercher_code = #{tercherCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where education_video_id = #{educationVideoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Video" >
+    update education_video
+    set education_video_code = #{educationVideoCode,jdbcType=VARCHAR},
+      education_video_name = #{educationVideoName,jdbcType=VARCHAR},
+      education_video_path = #{educationVideoPath,jdbcType=VARCHAR},
+      education_video_create_time = #{educationVideoCreateTime,jdbcType=TIMESTAMP},
+      education_video_update_time = #{educationVideoUpdateTime,jdbcType=TIMESTAMP},
+      education_video_state = #{educationVideoState,jdbcType=INTEGER},
+      courses_code = #{coursesCode,jdbcType=VARCHAR},
+      courses_name = #{coursesName,jdbcType=VARCHAR},
+      upload_name = #{uploadName,jdbcType=VARCHAR},
+      upload_code = #{uploadCode,jdbcType=VARCHAR},
+      tercher_name = #{tercherName,jdbcType=VARCHAR},
+      tercher_code = #{tercherCode,jdbcType=VARCHAR}
+    where education_video_id = #{educationVideoId,jdbcType=INTEGER}
+  </update>
+  <select id="getVideoList" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from education_video
+    <where>
+      <if test="coursesCode!=null and coursesCode!=''">
+        and courses_code = #{coursesCode}
+      </if>
+      <if test="educationVideoName!=null and educationVideoName!=''">
+        and education_video_name like "%"#{educationVideoName}"%"
+      </if>
+    </where>
+  </select>
+</mapper>

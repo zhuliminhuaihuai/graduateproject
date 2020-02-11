@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" href="css/reg.css">
+    <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body>
+<div id="ajax-hook"></div>
+<div class="wrap" >
+    <h1 style="text-align: center;font-family: 楷体;font-size: 85px;color: white">毕业生就业管理系统</h1>
+    <div class="wpn" >
+        <div class="form-data " >
+            <a href=""><img src="images/logo.png" class="head-logo"></a>
+            <div class="change-login">
+                <p class="account_number on">账号登录</p>
+                <p class="message">用户注册</p>
+            </div>
+            <div class="form1" >
+                <p class="p-input pos">
+                    <label for="userName">用户名/手机号</label>
+                    <input type="text" id="userName" onfocus="displayUserName()">
+                    <span class="tel-warn num-err hide"><em></em><i class="icon-warn"></i></span>
+                </p>
+                <p class="p-input pos">
+                    <label for="password">请输入密码</label>
+                    <input type="password" id="password" autocomplete="new-password" onfocus="displayPassword()">
+                    <span class="tel-warn pass-err hide"><em></em><i class="icon-warn"></i></span>
+                </p>
+                <button class="lang-btn off log-btn" type="button" onclick="login()">登录</button>
+                <span id="s" class="" style="display: none;margin-left: 35%;color: red">登录账户或密码错误</span>
+                <span id="success" class="" style="display: none;margin-left: 45%;color: green">登录成功</span>
+               <!-- <br><div><span class="tel-success login_success hide" id="login_success"><em></em><i class="icon-succ"></i></span></div>
+                <br><div><span class="tel-success login_error hide" id="login_error" ><em></em><i class="icon-warn"></i></span></div>-->
+            </div>
+            <div class="form2 hide  ">
+                <p class="p-select pos">
+                    <select id="role" class="layui-select" lay-search=""  onfocus="displayRole()" style="">
+                        <option value="">请选择注册角色类型</option>
+                        <option value="1">学生</option>
+                        <option value="2">企业</option>
+                    </select>
+                    <span class="tel-warn role-err hide" ><em ></em><i class="icon-warn"></i></span>
+                </p>
+                <p class="p-input pos">
+                    <label for="registerName">用户名</label>
+                    <input type="text" id="registerName" onfocus="displayRegisterName()">
+                    <span class="tel-warn registerName-err hide"><em></em><i class="icon-warn"></i></span>
+                </p>
+                <p class="p-input pos">
+                    <label for="pass">密码</label>
+                    <input type="password" id="pass" onfocus="displayPass()">
+                    <span class="tel-warn rpass-err hide"><em></em><i class="icon-warn"></i></span>
+                </p>
+                <p class="p-input pos">
+                    <label for="newPass">再次输入密码</label>
+                    <input type="password" id="newPass" onfocus="displayNewPass()">
+                    <span class="tel-warn newPass-err hide"><em></em><i class="icon-warn"></i></span>
+                </p>
+                <p class="p-input pos">
+                    <label for="mobilePhone">联系手机号</label>
+                    <input type="text" id="mobilePhone" onfocus="displayMobilePhone()">
+                    <span class="tel-warn mobilePhone-err hide"><em></em><i class="icon-warn"></i></span>
+                </p>
+                <button class="lang-btn off log-btn" type="button" onclick="registerUser()">注册</button>
+                <span id="resuccess" style="display: none;margin-left: 40%;color: green">注册成功</span>
+            </div>
+           <!-- <div class="r-forget cl">
+                <a href="./reg.html" class="z">账号注册</a>
+                <a href="./getpass.html" class="y">忘记密码</a>
+            </div>-->
+
+        </div>
+    </div>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/agree.js"></script>
+<script src="js/login.js"></script>
+<div style="text-align:center;">
+</div>
+</body>
+<script>
+    //登录
+    function login() {
+        var userName = $("#userName").val();
+        var password = $("#password").val();
+        if (userName == '') {
+            $('.num-err').removeClass('hide').find("em").text('请输入用户名/手机号');
+            return false;
+        }
+        if (password == '') {
+            $('.pass-err').removeClass('hide').find("em").text('请输入密码');
+            return false;
+        }
+        //登录请求
+        $.ajax({
+            url:'/manage/user/loginUser',
+            type:'post',
+            data:{
+                userName:userName,
+                password:password,
+            },
+            async:false,
+            dataType:'json',
+            success:function (data) {
+                if(data.msg=="登录成功"){
+                   /* $('#login_success').removeClass('hide').find("em").text('登录成功');*/
+                    $("#success").show();
+                    setTimeout(function(){//注册成功延时2秒 刷新页面
+                        window.location.href="/manage/user/toIndex";
+                    },1500);
+                }else if(data.msg=="登录账户或密码错误"){
+                  /*  $('#login_error').removeClass('hide').find("em").text('登录账户或密码错误');*/
+                    $("#s").show();
+                    return false;
+                }
+            },
+            error:function (data) {
+                alert("进入错误")
+            }
+        });
+    }
+    //填写时隐藏右边红色提示
+    function displayUserName() {
+        $('.num-err').addClass('hide');
+       /* $("#s").style.display ="none !important";
+        document.getElementById('s').style.display ="none ;"*/
+        $('#s').addClass('hide');
+    }
+    function displayPassword() {
+        $('.pass-err').addClass('hide');
+        $('#s').addClass('hide');
+    }
+    function displayRole() {
+        $('.role-err').addClass('hide');
+    }
+    function displayRegisterName() {
+        $('.registerName-err').addClass('hide');
+    }
+    function displayPass() {
+        $('.rpass-err').addClass('hide');
+    }
+    function displayNewPass() {
+        $('.newPass-err').addClass('hide');
+    }
+    function displayMobilePhone() {
+        $('.mobilePhone-err').addClass('hide');
+    }
+
+    //注册
+    var s=true;
+    function registerUser() {
+        var registerName = $("#registerName").val();
+        var pass = $("#pass").val();
+        var newPass = $("#newPass").val();
+        var mobilePhone = $("#mobilePhone").val();
+        var role = $("#role option:selected").val();
+        if (role == ''||role==null) {
+            $('.role-err').removeClass('hide').find("em").text('请选择注册角色类型');
+            return false;
+        }
+        if (registerName == '') {
+            $('.registerName-err').removeClass('hide').find("em").text('请输入用户名');
+            return false;
+        }
+        if (pass == '') {
+            $('.rpass-err').removeClass('hide').find("em").text('请输入密码');
+            return false;
+        }
+        if (pass.length<6||pass.length>12 ) {
+            $('.rpass-err').removeClass('hide').find("em").text('密码长度在6-12位');
+            return false;
+        }
+        if (newPass == '') {
+            $('.newPass-err').removeClass('hide').find("em").text('请再次输入密码');
+            return false;
+        }
+        if (newPass !=pass) {
+            $('.newPass-err').removeClass('hide').find("em").text('第二次输入密码与第一次不符');
+            return false;
+        }
+        if (mobilePhone == '') {
+            $('.mobilePhone-err').removeClass('hide').find("em").text('请输入联系人手机');
+            return false;
+        }
+        var param = /^1[34578]\d{9}$/;
+        if (!param.test(mobilePhone)) {
+            $('.mobilePhone-err').removeClass('hide');
+            $('.mobilePhone-err').text('手机号不合法，请重新输入标准为11位');
+            return false;
+        }
+
+        //提交注册数据
+        if(s==true){//防多次点击
+            s=false;
+            $.ajax({
+                url:'/manage/user/registerUser',
+                type:'post',
+                data:{
+                    role:role,
+                    userName:registerName,
+                    password:pass,
+                    mobilePhone:mobilePhone,
+                },
+                async:false,
+                dataType:'json',
+                success:function (data) {
+                    console.log("data"+data.msg);
+                    if(data.msg=="添加成功"){
+                       /* $('.re_success').removeClass('hide').find("em").text('注册成功,请登录');*/
+                        $("#resuccess").show();
+                        setTimeout(function(){//注册成功延时2秒 刷新页面
+                            window.location.reload();
+                         },1500);
+                    }else if(data.msg=="用户名已存在"){
+                        $('.registerName-err').removeClass('hide').find("em").text('用户名已存在');
+                        return false;
+                    }else if(data.msg=="手机已存在"){
+                        $('.mobilePhone-err').removeClass('hide').find("em").text('手机号已存在');
+                        return false;
+                    }
+                },
+                error:function (data) {
+                    alert("进入错误")
+                }
+            });
+        }
+    }
+</script>
+</html>

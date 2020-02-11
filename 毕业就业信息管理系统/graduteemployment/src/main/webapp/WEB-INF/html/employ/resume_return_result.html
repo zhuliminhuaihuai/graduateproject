@@ -1,0 +1,85 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+	<base href="<%=basePath%>">
+	<meta charset="UTF-8">
+	<title>回馈面试意见信息</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../layui/css/layui.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../../../layui/layui.js" charset="utf-8"></script>
+	<style>
+		.layui-table th{
+			font-weight:bold;
+			text-align:center;
+		}
+	</style>
+</head>
+<body>
+	<fieldset class="layui-elem-field">
+            <div class="layui-field-box">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">回馈面试意见信息</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入处理结果信息内容" class="layui-textarea" id="hireResult" name="hireResult"  lay-filter="hireResult"></textarea>
+                    </div>
+                </div>
+                 <div style="text-align:center">
+		 		 &nbsp
+	          		<button class="layui-btn layui-btn-sm"  lay-submit="" lay-filter="edit"><i class="layui-icon">确定</i></button>
+     			</div>
+            </div>
+            </div>
+        </fieldset>
+		
+</body>
+<script>
+    var id = localStorage.getItem("id");
+    localStorage.removeItem(id);
+    var hireStatus = localStorage.getItem("hireStatus");
+    localStorage.removeItem(hireStatus)
+    layui.use(['form', 'layedit', 'laydate','upload'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate
+            ,upload = layui.upload;
+        form.verify({
+            hireStatus : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '反馈审核结果信息不能为空 ';
+                }
+            },
+        });
+        form.on('submit(edit)', function(data) {
+            var hireResult = $("#hireResult").val();
+            $.ajax({
+                url: '/manage/resume/editStatus',
+                type: 'post',
+                data: {
+                    id:id,
+                    hireStatus:hireStatus,
+                    hireResult:hireResult,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if(data.status==0){
+                        layer.msg("已审核成功！",{icon: 6,time:500,end:function () {
+                                parent.location.reload();
+                            }});
+                    }
+                },
+            });
+        });
+
+    });
+
+</script>
+</html>

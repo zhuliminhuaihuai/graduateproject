@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>后台首页</title>
+    <link rel="stylesheet" type="text/css" href="/../../layui/css/layui.css"/>
+    <link rel="stylesheet" type="text/css" href="/../../css/admin.css"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/../../css/xadmin.css">
+    <link rel="stylesheet" href="/../../layui/css/layui.css" media="all" />
+</head>
+<body>
+<div class="layui-tab page-content-wrap">
+    <ul class="layui-tab-title">
+        <li class="layui-this">待审核</li>
+        <li>个人资料</li>
+        <li>修改密码</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <!--<form class="layui-form" style="width: 100%;padding-top: 20px;">-->
+                <!--<table class="layui-hide" id="user" lay-filter="userTable"></table>-->
+            <!--</form>-->
+            <!--<button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>-->
+            <blockquote class="layui-elem-quote news_search layui-form">
+                <div class="demoTable">
+                    <div class="layui-inline">
+                        <label>检查单编号</label>&nbsp
+                        <div class="layui-input-inline">
+                            <input type="text" id="checkCode" placeholder="检查单编号" class="layui-input search_input">
+                        </div>
+                        <label>检查状态</label>
+                        <div class="layui-input-inline">
+                            <select name="checkState" id="checkState" lay-verify="checkState" lay-filter="" lay-search="" >
+                                <option     value="">请选择...</option>
+                                <option value="1">待反馈</option>
+                                <option value="2">反馈完毕</option>
+                            </select>
+                        </div>
+                        <label>教室编号</label>&nbsp
+                        <div class="layui-input-inline">
+                            <input type="text" id="roomCode" placeholder="教室编号" class="layui-input search_input">
+                        </div>
+                        <label>窗户损坏</label>
+                        <div class="layui-input-inline">
+                            <select name="roomIsDamageWindow" id="roomIsDamageWindow" lay-verify="roomIsDamageWindow" lay-filter="" lay-search="" >
+                                <option value="">请选择</option>
+                                <option value="1">有损坏</option>
+                                <option value="0">无损坏</option>
+                            </select>
+                        </div>
+                        <label>座椅损坏</label>
+                        <div class="layui-input-inline">
+                            <select name="roomIsDamageChair" id="roomIsDamageChair" lay-verify="roomIsDamageChair" lay-filter="" lay-search="" >
+                                <option value="">请选择</option>
+                                <option value="1">有损坏</option>
+                                <option value="0">无损坏</option>
+                            </select>
+                        </div>
+                        <label>粉笔需要</label>
+                        <div class="layui-input-inline">
+                            <select name="roomIsNeedChalk" id="roomIsNeedChalk" lay-verify="roomIsNeedChalk" lay-filter="" lay-search="" >
+                                <option value="">请选择</option>
+                                <option value="1">需要</option>
+                                <option value="0">不需要</option>
+                            </select>
+                        </div>
+                        <label>讲台损坏</label>
+                        <div class="layui-input-inline">
+                            <select name="roomIsDamagePlatform" id="roomIsDamagePlatform" lay-verify="roomIsDamagePlatform" lay-filter="" lay-search="" >
+                                <option value="">请选择</option>
+                                <option value="1">有损坏</option>
+                                <option value="0">无损坏</option>
+                            </select>
+                        </div>
+                        <label>黑板损坏</label>
+                        <div class="layui-input-inline">
+                            <select name="roomIsDamageBlackboard" id="roomIsDamageBlackboard" lay-verify="roomIsDamageBlackboard" lay-filter="" lay-search="" >
+                                <option value="">请选择</option>
+                                <option value="1">有损坏</option>
+                                <option value="0">无损坏</option>
+                            </select>
+                        </div>
+                        <label>多媒体损坏</label>
+                        <div class="layui-input-inline">
+                            <select name="roomIsDamageMedia" id="roomIsDamageMedia" lay-verify="roomIsDamageMedia" lay-filter="" lay-search="" >
+                                <option value="">请选择</option>
+                                <option value="1">有损坏</option>
+                                <option value="0">无损坏</option>
+                            </select>
+                        </div>
+                        <label>麦克风损坏</label>
+                        <div class="layui-input-inline">
+                            <select name="roomIsDamageMicrophone" id="roomIsDamageMicrophone" lay-verify="roomIsDamageMicrophone" lay-filter="" lay-search="" >
+                                <option value="">请选择</option>
+                                <option value="1">有损坏</option>
+                                <option value="0">无损坏</option>
+                            </select>
+                        </div>
+                        <label>门损坏</label>
+                        <div class="layui-input-inline">
+                            <select name="roomIsDamageDoor" id="roomIsDamageDoor" lay-verify="roomIsDamageDoor" lay-filter="" lay-search="" >
+                                <option value="">请选择</option>
+                                <option value="1">有损坏</option>
+                                <option value="0">无损坏</option>
+                            </select>
+                        </div>
+                        <label>音响损坏</label>
+                        <div class="layui-input-inline">
+                            <select name="roomIsDamageSound" id="roomIsDamageSound" lay-verify="roomIsDamageSound" lay-filter="" lay-search="" >
+                                <option value="">请选择</option>
+                                <option value="1">有损坏</option>
+                                <option value="0">无损坏</option>
+                            </select>
+                        </div>
+                        <label>窗帘损坏</label>
+                        <div class="layui-input-inline">
+                            <select name="roomIsDamageCurtains" id="roomIsDamageCurtains" lay-verify="roomIsDamageCurtains" lay-filter="" lay-search="" >
+                                <option value="">请选择</option>
+                                <option value="1">有损坏</option>
+                                <option value="0">无损坏</option>
+                            </select>
+                        </div>
+                        <label>创建时间范围</label>&nbsp
+                        <div class="layui-input-inline">
+                            <input type="text" name="startTime" id="startTime" lay-verify="date" placeholder="创建时间"
+                                   class="layui-input">
+                        </div>
+                        ~
+                        <div class="layui-input-inline">
+                            <input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="创建时间" class="layui-input">
+                        </div>
+                        <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+                        <!--
+                                    <button class="layui-btn" onclick="x_admin_show('添加新学生','/manage/user/openAddUser.html',60,97)"><i class="layui-icon"></i>添加新学生</button>
+                        -->
+                    </div>
+                </div>
+            </blockquote>
+            <table class="layui-hide" id="user" lay-filter="userTable"></table>
+        </div>
+
+
+        <div class="layui-tab-item">
+            <div class="layui-form" style="width: 90%;padding-top: 20px;">
+
+
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户编号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="userCode" disabled="disabled" name="userCode" required=""
+                               lay-verify="userCode" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="userName" class="layui-form-label">
+                        <span class="x-red">*</span>用户名
+                    </label>
+                    <div class="layui-input-inline">
+                        <input class="layui-input" type="text" id="userName" name="userName"
+                               lay-verify="userName" autocomplete="off" value="">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        <span class="x-red">*</span>用来登录系统的用户名
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="userRealName" class="layui-form-label">
+                        <span class="x-red">*</span>真实姓名
+                    </label>
+                    <div class="layui-input-inline">
+                        <input class="layui-input" type="text" id="userRealName" name="userRealName"
+                               lay-verify="userRealName" autocomplete="off" value="">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        <span class="x-red">*</span>你的真实姓名（上课的人）ps：务必真实 方便管理
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="userPhone" class="layui-form-label">
+                        <span class="x-red">*</span>手机号
+                    </label>
+                    <div class="layui-input-inline">
+                        <input class="layui-input" type="text" id="userPhone" name="userPhone"
+                               lay-verify="userPhone" placeholder="" autocomplete="off" value="">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        <span class="x-red">*</span>用于联系
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="x-red">*</span>性别
+                    </label>
+                    <div class="layui-form">
+                        <input type="radio" name="userSex" id="userSex1" lay-filter="filter" required="required"
+                               lay-verify="userSex" value="男生" title="男生">
+                        <input type="radio" name="userSex" id="userSex2" lay-filter="filter" required="required"
+                               lay-verify="userSex" value="女生" title="女生">
+                        <input type="radio" name="userSex" id="userSex3" lay-filter="filter" required="required"
+                               lay-verify="userSex" value="保密" title="保密">
+                    </div>
+                    <input id="distributionmode" style="display: none;">
+                    <div class="layui-form-mid layui-word-aux">
+                        <span class="x-red">*</span>性别选择不想公开那就选择保密
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveUser">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-tab-item">
+            <div class="layui-form" style="width: 90%;padding-top: 20px;">
+                <!--<div class="layui-form-item">
+                    <label class="layui-form-label">用户名：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="userName1" id="userName1" disabled autocomplete="off" class="layui-input layui-disabled" >
+                    </div>
+                </div>-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">旧密码：</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="oldPssword" id="oldPssword" lay-verify="oldPssword"
+                               placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">新密码：</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="newPassword" id="newPassword" lay-verify="newPassword"
+                               placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">重复密码：</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="againPassword" id="againPassword" lay-verify="againPassword"
+                               placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="modifyPassword">修改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script type="text/html" id="barDemo">-->
+    <!--{{# if(${session_manage_token.getUserRole()} ==0 && d.orderState ===1 ){ }}-->
+    <!--<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">申请详情</a>-->
+    <!--<a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="withdraw">撤回</a>-->
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="pass">审核通过</a>-->
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="nopass">审核不通过</a>-->
+    <!--{{# }else-->
+    <!--if(${session_manage_token.getUserRole()} ==1 && d.orderState ===2) { }}-->
+    <!--<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">申请详情</a>-->
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>-->
+    <!--{{# }else-->
+    <!--if(${session_manage_token.getUserRole()} ==1 && d.orderState ===1) { }}-->
+    <!--<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">申请详情</a>-->
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="">审核中</a>-->
+    <!--<a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="withdraw">撤回</a>-->
+    <!--{{# }else-->
+    <!--if(${session_manage_token.getUserRole()} ==0 && d.orderState ===2) { }}-->
+    <!--<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">申请详情</a>-->
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>-->
+    <!--{{# }else { }}-->
+    <!--<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">申请详情</a>-->
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>-->
+    <!--{{# }-->
+    <!--}}-->
+
+<!--</script>-->
+<script type="text/html" id="barDemo">
+    {{# if(d.checkState ===1){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">详情</a>
+    <!--<a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="clear">打扫</a>-->
+    <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="feedback">反馈</a>
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>-->
+    {{# }else { }}
+    <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">详情</a>
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>-->
+    {{# }
+    }}
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../js/xadmin.js"></script>
+<script>
+    var userId = '${session_manage_token.getUserId()}';
+    var userRole = '${session_manage_token.getUserRole()}';
+    var userCode = '${session_manage_token.getUserCode()}';
+
+    function delcommafy(num) {
+        if (num != undefined) {
+            num = num.toString();
+            num = num.replace(/[ ]/g, ""); //去除空格
+            num = num.replace(/,/gi, '');
+            return Number(num);
+        }
+    }
+
+
+    //Demo
+    layui.use(['form', 'element', 'laydate', 'table'], function () {
+        var form = layui.form;
+        var element = layui.element;
+        var laydate = layui.laydate;
+        var table = layui.table;
+
+        laydate.render({
+            elem: '#birthday'
+        });
+        form.verify({
+            // facultyList: function (value) {
+            //     if (value.length == null || value.length == "") {
+            //         return '所属院系选择不能为空';
+            //     }
+            // },
+            userName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '用户名不能为空';
+                }
+            },
+            userRealName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '真实姓名不能为空';
+                }
+            },
+            userPhone: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '手机号不能为空';
+                }
+                var isPhone = /^1[0-9]{10}$/;
+                var flag = isPhone.test(value);
+                if (flag == false)
+                    return '手机号格式错误';
+            },
+            userClassroom: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '所处班级不能为空';
+                }
+            },
+            oldPssword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '原密码不能为空';
+                }
+            },
+            newPassword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '新密码不能为空';
+                }
+                if (value.length < 3 || value.length > 12) {
+                    return '新密码必须3到12位';
+                }
+
+            },
+            againPassword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '确认密码不能为空';
+                }
+                if ($('#newPassword').val() != $('#againPassword').val()) {
+                    return '两次密码不一致';
+                }
+            },
+        });
+
+        //渲染
+        table.render({
+            elem: '#user'
+            ,id : 'testReload'
+            ,url: '/manage/check/getCheckList'//数据接口
+            ,cols: [[
+                // {type: 'checkbox'}
+                {field: 'checkCode', width:'11%' , align: 'center',title: '检查单编号'}
+                , {field: 'checkCreateTime',width:'10%',sort: true,align: 'center', title: '创建时间',
+                    templet :function (row){
+                        return createTime(row.checkCreateTime);
+                    }}
+                , {field: 'checkTime',width:'10%',sort: true,align: 'center', title: '反馈时间',
+                    templet :function (row){
+                        return createTime(row.checkTime);
+                    }}
+                , {field: 'checkState', width:'7%' , align: 'center',title: '检查单状态',templet:"#statecolor"}
+                , {field: 'roomCode', width:'9%' , align: 'center',title: '教室编号'}
+                , {field: 'roomIsDamageWindow', width:'9%' , align: 'center',title: '窗户损坏'}
+                , {field: 'roomIsDamageChair', width:'9%' , align: 'center',title: '座椅损坏'}
+                , {field: 'roomIsNeedChalk', width:'9%' , align: 'center',title: '粉笔需要'}
+                , {field: 'roomIsDamagePlatform', width:'9%' , align: 'center',title: '讲台损坏'}
+                , {field: 'roomIsDamageBlackboard', width:'9%' , align: 'center',title: '黑板损坏'}
+                , {field: 'roomIsDamageMedia', width:'9%' , align: 'center',title: '多媒体损坏'}
+                , {field: 'roomIsDamageMicrophone', width:'9%' , align: 'center',title: '麦克风损坏'}
+                , {field: 'roomIsDamageDoor', width:'9%' , align: 'center',title: '门损坏'}
+                , {field: 'roomIsDamageSound', width:'9%' , align: 'center',title: '音响损坏'}
+                , {field: 'roomIsDamageCurtains', width:'9%' , align: 'center',title: '窗帘损坏'}
+
+                // , {field: 'roomAddress', width:'5%' , align: 'center',title: '地理位置'}
+                // , {field: 'roomCheckState', width:'8%' , align: 'center',title: '检查状态',templet:"#statecolor"}
+                // , {field: 'roomCheckNumber', width:'8%' , align: 'center',title: '检查次数',sort: true}
+                // , {field: 'roomDefendNumber', width:'8%' , align: 'center',title: '维护次数',sort: true}
+                // , {field: 'roomClearState', width:'8%' , align: 'center',title: '打扫状态',templet:"#statecolor1"}
+                // , {field: 'roomClearNumber', width:'8%' , align: 'center',title: '打扫次数',sort: true}
+                // , {field: 'roomSections1', width:'8%' , align: 'center',title: '1-2节状态'}
+                // , {field: 'roomSections2', width:'8%' , align: 'center',title: '3-4节状态'}
+                // , {field: 'roomSections3', width:'8%' , align: 'center',title: '5-6节状态'}
+                // , {field: 'roomSections4', width:'8%' , align: 'center',title: '7-8节状态'}
+                // , {field: 'roomPeople', width:'8%' , align: 'center',title: '容纳人数'}
+                // , {field: 'roomPurpose', width:'8%' , align: 'center', title: '用途'}
+                // , {field: 'roomState', width:'8%' , align: 'center', title: '教室状态',templet:"#switchTpl5"}
+                , {fixed: 'right', width: '15%', align: 'center', title: '操作', toolbar: '#barDemo'}
+            ]]
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                ,curr: 1 //设定初始在第 1 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit: 10
+                ,limits: [5,10,15,20]
+            }  //true表示分页
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+                // $("[data-field='roomCheckState']").children().each(function(){
+                //     if($(this).text()=='1'){
+                //         $(this).text("检查完毕")
+                //     }else if($(this).text()=='2'){
+                //         $(this).text("检查中")
+                //     }
+                // })
+                // $("[data-field='roomClearState']").children().each(function(){
+                //     if($(this).text()=='1'){
+                //         $(this).text("打扫完毕")
+                //     }else if($(this).text()=='2'){
+                //         $(this).text("打扫中")
+                //     }
+                // })
+                $("[data-field='roomIsDamageWindow']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageChair']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsNeedChalk']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("需要")
+                    }else if($(this).text()=='0'){
+                        $(this).text("不需要")
+                    }
+                })
+                $("[data-field='roomIsDamagePlatform']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageBlackboard']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageMedia']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageMicrophone']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageDoor']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageSound']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageCurtains']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                hoverOpenImg();//显示大图 鼠标悬浮时显示大图
+
+            }
+
+        })
+        var $ = layui.jquery, active = {
+            reload: function(){
+                var checkCode = $("#checkCode").val();
+                var checkState = $("#checkState option:selected").val();
+                var roomCode = $("#roomCode").val();
+                var roomIsDamageWindow = $("#roomIsDamageWindow option:selected").val();
+                var roomIsDamageChair = $("#roomIsDamageChair option:selected").val();
+                var roomIsNeedChalk = $("#roomIsNeedChalk option:selected").val();
+                var roomIsDamagePlatform = $("#roomIsDamagePlatform option:selected").val();
+                var roomIsDamageBlackboard = $("#roomIsDamageBlackboard option:selected").val();
+                var roomIsDamageMedia = $("#roomIsDamageMedia option:selected").val();
+                var roomIsDamageMicrophone = $("#roomIsDamageMicrophone option:selected").val();
+                var roomIsDamageDoor = $("#roomIsDamageDoor option:selected").val();
+                var roomIsDamageSound = $("#roomIsDamageSound option:selected").val();
+                var roomIsDamageCurtains = $("#roomIsDamageCurtains option:selected").val();
+                var startTime = $("#startTime").val();
+                var endTime = $("#endTime").val();
+
+                table.reload('testReload', {
+                    method:'post',
+                    where:{roomCode:roomCode,startTime:startTime,endTime:endTime,checkCode:checkCode,checkState:checkState,
+                        roomIsDamageWindow:roomIsDamageWindow,roomIsDamageChair:roomIsDamageChair,roomIsNeedChalk:roomIsNeedChalk,roomIsDamagePlatform:roomIsDamagePlatform,
+                        roomIsDamageBlackboard:roomIsDamageBlackboard,roomIsDamageMedia:roomIsDamageMedia,roomIsDamageMicrophone:roomIsDamageMicrophone,roomIsDamageDoor:roomIsDamageDoor,
+                        roomIsDamageDoor:roomIsDamageDoor,
+                        roomIsDamageSound:roomIsDamageSound,roomIsDamageCurtains:roomIsDamageCurtains}
+                });
+            }
+        };
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        //表格数据操作-查看详情和删除
+        table.on('tool(userTable)', function(obj){
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                localStorage.setItem("cleanId", data.cleanId);
+                x_admin_show('打扫单详情','/manage/clean/jumpCleanDetailHtml.html',60,97);
+            }else if(obj.event === 'feedback'){
+                localStorage.setItem("checkId", data.checkId);
+                x_admin_show('检查单反馈','/manage/check/openCheckFeedBackHtml.html',60,97);
+            }else if(obj.event === 'cleanOver'){
+                layer.confirm('确定打扫完毕了么？', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/clean/cleanOver',
+                        data:{
+                            cleanId:data.cleanId
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.status == 0) {
+                                layer.msg(data.msg, {
+                                    icon: 6,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        },
+                        error : function () {
+                            layer.msg('检查失败！');
+                        }
+                    });
+                });
+            }else if(obj.event === 'del'){
+                layer.confirm('确定删除教室？', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/room/deleteRoom',
+                        data:{
+                            roomId:data.roomId,
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.status == 0) {
+                                layer.msg(data.msg, {
+                                    icon: 6,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        },
+                        error : function () {
+                            layer.msg('删除失败');
+                        }
+                    });
+                });
+            }
+        });
+
+        //请求数据 用户的个人信息
+        $.ajax({
+            url: '/manage/user/detailUser',
+            type: 'post',
+            data: {
+                userId: delcommafy(userId),
+            },
+            dataType: 'json',
+            success: function (res) {
+                if (res.status == 0) {
+                    var data = res.data;
+                    // $("#facultyList").val(data.userCollege);
+                    // $("#userClassroom").val(data.userClassroom);
+
+                    $("#userCode").val(data.userCode);
+                    $("#userName").val(data.userName);
+                    $("#userRealName").val(data.userRealName);
+                    $("#userPhone").val(data.userPhone);
+                    if (data.userSex == "男生") {
+                        $("#userSex1").attr('checked', 'true');
+                    } else if (data.userSex == "女生") {
+                        $("#userSex2").attr('checked', 'true');
+                    } else {
+                        $("#userSex3").attr('checked', 'true');
+                    }
+                    form.render();
+                }
+            }
+        })
+        //监听信息提交
+        form.on('submit(saveUser)', function (data) {
+            var userSex = $("input[name='userSex']:checked").val();
+            var userRealName = $("#userRealName").val();
+            var userName = $("#userName").val();
+            var userPhone = $("#userPhone").val();
+            if (userSex == null || userSex == '') {
+                layer.msg("性别选择不能为空！", {icon: 5, time: 1000});
+                return false;
+            }
+            $.ajax({
+                type: 'post',
+                url: '/manage/user/saveUser',
+                dataType: 'json',
+                data: {
+                    userId: delcommafy(userId),
+                    userSex: userSex,
+                    userName: userName,
+                    userRealName: userRealName,
+                    userPhone: userPhone,
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg("保存成功！信息更新需要重登系统", {
+                            icon: 6,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            return false;
+                        });
+                    } else {
+                        layer.msg(data.msg, {
+                            icon: 5,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            return false;
+                        });
+                    }
+                },
+                error: function (XMLHttpResponse, textStatus, errorThrown, data) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                }
+            });
+        });
+        //监听密码提交
+        form.on('submit(modifyPassword)', function (data) {
+            var oldPssword = $("#oldPssword").val();
+            var newPassword = $("#newPassword").val();
+            $.ajax({
+                type: 'post',
+                url: '/manage/user/modifyUserPassword',
+                dataType: 'json',
+                data: {
+                    userId: delcommafy(userId),
+                    oldPssword: oldPssword,
+                    newPassword: newPassword,
+                },
+                async: false,
+                success: function (data) {
+                    if (data.status == 0) {
+                        layer.msg(data.msg, {
+                            icon: 6, time: 2000, end: function () {
+                                parent.location.href = "/manage/user/jumpLogin.html";
+                            }
+                        })
+                    } else {
+                        layer.msg(data.msg, {icon: 5, time: 2000});
+                        return false;
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            })
+        });
+    });
+
+    //数字时间转DATE时间类型
+    function createTime(v) {
+        if (v == null) {
+            return "";
+        } else {
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? '0' + m : m;
+            var d = date.getDate();
+            d = d < 10 ? ("0" + d) : d;
+            var h = date.getHours();
+            h = h < 10 ? ("0" + h) : h;
+            var M = date.getMinutes();
+            M = M < 10 ? ("0" + M) : M;
+            var S = date.getSeconds();
+            S = S < 10 ? ("0" + S) : S;
+            var str = y + "-" + m + "-" + d + " " + h + ":" + M + ":" + S;
+            return str;
+        }
+    }
+
+    //数字时间转DATE时间类型
+    function createTime1(v) {
+        if (v == null) {
+            return "";
+        } else {
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? '0' + m : m;
+            var d = date.getDate();
+            d = d < 10 ? ("0" + d) : d;
+            var str = y + "-" + m + "-" + d;
+            return str;
+        }
+    }
+</script>
+</body>
+</html>

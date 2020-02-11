@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>充值订单列表</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+<div class="childrenBody">
+    <blockquote class="layui-elem-quote news_search layui-form">
+        <div class="demoTable">
+            <div class="layui-inline">
+                <label>订单编号</label>&nbsp
+                <div class="layui-input-inline">
+                    <input type="text" id="orderCode" placeholder="订单编号" class="layui-input search_input">
+                </div>
+                <label>学生姓名</label>&nbsp
+                <div class="layui-input-inline">
+                    <input type="text" id="userName" placeholder="学生姓名" class="layui-input search_input">
+                </div>
+                <label> 受理状态</label>
+                <div class="layui-input-inline">
+                    <select name="orderState" id="orderState" lay-verify="orderState" lay-search="">
+                        <option value="">请选择状态...</option>
+                        <option value="1">未受理</option>
+                        <option value="2">已受理</option>
+                    </select>
+
+                </div>
+                <label>下单时间范围</label>&nbsp
+                <div class="layui-input-inline">
+                    <input type="text" name="startTime" id="startTime" lay-verify="date" placeholder="下单时间"
+                           class="layui-input">
+                </div>
+                ~
+                <div class="layui-input-inline">
+                    <input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="下单时间" class="layui-input">
+                </div>
+                &nbsp
+                <!-- <label>角色</label>&nbsp
+                 <div class="layui-input-inline" style="width:100px;">
+                     <select name="userRole" id="userRole" lay-verify="required" lay-search="" >
+                         <option value="">请选择</option>
+                         <option value="0">客户</option>
+                         <option value="2">摄影师</option>
+                     </select>
+                 </div>-->
+                <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+                <!--<button class="layui-btn" onclick="x_admin_show('添加新管理员','/manage/user/jumpManageAdd.html',60,97)"><i class="layui-icon"></i>添加新管理员</button>-->
+            </div>
+        </div>
+    </blockquote>
+    <table class="layui-hide" id="user" lay-filter="userTable"></table>
+    <script type="text/html" id="barDemo">
+
+        {{# if(d.orderState ===1 && (${session_manage_token.getUserRole()} === 1 || ${session_manage_token.getUserRole()} === 2) ) { }}
+        <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="shenhe">受理</a>
+        {{# }else if(d.orderState ===1 && ${session_manage_token.getUserRole()} === 0)  { }}
+        <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="">等待受理</a>
+        {{# }else  { }}
+
+        {{# }
+        }}
+    </script>
+</div>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../js/main.js"></script>
+<script type="text/javascript" src="../../../js/index.js"></script>
+<script type="text/javascript" src="../../../js/xadmin.js"></script>
+<script>
+
+    var userRole = '${session_manage_token.getUserRole()}';
+    var userCode='${session_manage_token.getUserCode()}';
+    layui.use(['table','laydate','layer'], function(){
+        $ = layui.jquery;
+        var table = layui.table,
+            laydate = layui.laydate,
+            layer = layui.layer;
+        //渲染
+        table.render({
+            elem: '#user'
+            ,id : 'testReload'
+            ,url: '/manage/order/rechargeOrderList?userCode='+userCode+'&userRole='+userRole//数据接口
+            ,cols: [[
+                {type: 'checkbox'}
+                , {field: 'orderCode', width:'13%' , align: 'center',title: '订单编号'}
+                , {field: 'userCode', width:'13%' , align: 'center',title: '学生编号',sort: true}
+                , {field: 'userName', width:'10%' ,align: 'center', title: '学生姓名'}
+                , {field: 'orderCreateTime', width:'12%' ,align: 'center', title: '下单时间',
+                    templet :function (row){
+                        return createTime(row.orderCreateTime);
+                    }}
+                , {field: 'userFaculty', width:'10%' , align: 'center',title: '所属院系'}
+                , {field: 'buildingName', width:'10%' , align: 'center',title: '宿舍大楼'}
+                , {field: 'bedroomName', width:'10%' , align: 'center',title: '房间门牌号'}
+                , {field: 'orderMoney', width:'10%' , align: 'center',title: '充值金额',
+                        templet:function (row){
+                            return fixed(row.orderMoney);
+                        }}
+                , {field: 'orderState', width:'10%' , align: 'center',title: '受理状态'}
+                , {fixed: 'right', width: '20%', align: 'center', title: '操作', toolbar: '#barDemo'}
+            ]]
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                ,curr: 1 //设定初始在第 1 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit: 10
+                ,limits: [5,10,15,20]
+            }  //true表示分页
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+                $("[data-field='orderState']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("未受理")
+                    }else if ($(this).text() == '2') {
+                        $(this).text("已受理")
+                    }
+                })
+            }
+        })
+        //表格数据操作-查看详情和删除
+        table.on('tool(userTable)', function(obj){
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                localStorage.setItem("userId", data.userId);
+                x_admin_show('用户详情', '/manage/user/openUserDetail.html', 80, 100);
+            }else if(obj.event === 'modify'){
+                localStorage.setItem("userId",data.userId);
+                x_admin_show('管理员修改','/manage/user/jumpManageModify.html',80,100);
+            }else if(obj.event === 'shenhe'){
+                layer.confirm('确定充值款项已到?', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/order/shenheRechargeOrder',
+                        data:{
+                            orderId:data.orderId,
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.status == 0) {
+                                layer.msg('受理成功', {
+                                    icon: 6,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function () {
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg("受理失败！");
+                            }
+                        },
+                        error : function () {
+                            layer.msg('受理失败');
+                        }
+                    });
+                });
+            }else if(obj.event === 'czpassword'){
+                layer.confirm('确定重置密码？', function (index) {
+                    console.log("asfkbjhbrjwebrubwejrbwejh:" + data.userId);
+                    $.ajax({
+                        url: '/manage/user/rePasswordManageUser',
+                        type: 'post',
+                        data: {
+                            userId: data.userId,
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.msg == "重置成功") {
+                                layer.msg('重置成功!默认密码为123', {
+                                    icon: 6,
+                                    time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function () {
+                                    return false;
+                                    // window.location.reload();
+                                });
+                            }
+                            else {
+                                layer.msg("重置失败！");
+                            }
+                        }
+                    });
+                });
+            }
+        });
+        var $ = layui.jquery, active = {
+            reload: function(){
+                var orderCode = $("#orderCode").val();
+                var userName = $("#userName").val();
+                var endTime = $("#endTime").val();
+                var startTime = $("#startTime").val();
+                var orderState = $("#orderState option:selected").val();
+                table.reload('testReload', {
+                    method:'post',
+                    where:{orderCode:orderCode,startTime:startTime,endTime:endTime,userName:userName,orderState:orderState}
+                });
+            }
+        };
+        laydate.render({
+            elem: '#startTime'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#endTime'
+            ,type: 'datetime'
+        });
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+    //金额转换
+    function fixed(str) {
+        if (!str) str = '0.00';
+        var ret = Math.round(parseFloat(str) * 100) / 100;
+        var decimal = ret.toString().split('.');
+        if (decimal.length === 1) {
+            return ret.toString() + '.00'
+        };
+        if (decimal.length > 1) {
+            if (decimal[1].length < 2) {
+                return ret.toString() + '0'
+            }
+            return ret
+        };
+        return ret;
+    }
+    //数字时间转DATE时间类型
+    function createTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+        return str;
+    }
+
+</script>
+</body>
+</html>

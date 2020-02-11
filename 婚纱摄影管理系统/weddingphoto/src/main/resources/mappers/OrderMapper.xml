@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.managesystem.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.managesystem.pojo.Order" >
+    <constructor >
+      <idArg column="order_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_customer_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_customer_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_customer_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_photographer_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_photographer_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_photographer_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_photo_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_photo_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_photo_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="order_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, order_code, order_customer_name, order_customer_phone, order_customer_code, 
+    order_photographer_name, order_photographer_phone, order_photographer_code, order_photo_code, 
+    order_photo_img, order_photo_title, order_state, order_remark, order_create_time, 
+    order_update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from wedding_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from wedding_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.managesystem.pojo.Order" >
+    insert into wedding_order (order_id, order_code, order_customer_name, 
+      order_customer_phone, order_customer_code, 
+      order_photographer_name, order_photographer_phone, 
+      order_photographer_code, order_photo_code, 
+      order_photo_img, order_photo_title, order_state, 
+      order_remark, order_create_time, order_update_time
+      )
+    values (#{orderId,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{orderCustomerName,jdbcType=VARCHAR}, 
+      #{orderCustomerPhone,jdbcType=VARCHAR}, #{orderCustomerCode,jdbcType=VARCHAR}, 
+      #{orderPhotographerName,jdbcType=VARCHAR}, #{orderPhotographerPhone,jdbcType=VARCHAR}, 
+      #{orderPhotographerCode,jdbcType=VARCHAR}, #{orderPhotoCode,jdbcType=VARCHAR}, 
+      #{orderPhotoImg,jdbcType=VARCHAR}, #{orderPhotoTitle,jdbcType=VARCHAR}, #{orderState,jdbcType=INTEGER}, 
+      #{orderRemark,jdbcType=VARCHAR}, #{orderCreateTime,jdbcType=TIMESTAMP}, #{orderUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.managesystem.pojo.Order" >
+    insert into wedding_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderCode != null" >
+        order_code,
+      </if>
+      <if test="orderCustomerName != null" >
+        order_customer_name,
+      </if>
+      <if test="orderCustomerPhone != null" >
+        order_customer_phone,
+      </if>
+      <if test="orderCustomerCode != null" >
+        order_customer_code,
+      </if>
+      <if test="orderPhotographerName != null" >
+        order_photographer_name,
+      </if>
+      <if test="orderPhotographerPhone != null" >
+        order_photographer_phone,
+      </if>
+      <if test="orderPhotographerCode != null" >
+        order_photographer_code,
+      </if>
+      <if test="orderPhotoCode != null" >
+        order_photo_code,
+      </if>
+      <if test="orderPhotoImg != null" >
+        order_photo_img,
+      </if>
+      <if test="orderPhotoTitle != null" >
+        order_photo_title,
+      </if>
+      <if test="orderState != null" >
+        order_state,
+      </if>
+      <if test="orderRemark != null" >
+        order_remark,
+      </if>
+      <if test="orderCreateTime != null" >
+        order_create_time,
+      </if>
+      <if test="orderUpdateTime != null" >
+        order_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderCode != null" >
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCustomerName != null" >
+        #{orderCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCustomerPhone != null" >
+        #{orderCustomerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCustomerCode != null" >
+        #{orderCustomerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPhotographerName != null" >
+        #{orderPhotographerName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPhotographerPhone != null" >
+        #{orderPhotographerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPhotographerCode != null" >
+        #{orderPhotographerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPhotoCode != null" >
+        #{orderPhotoCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPhotoImg != null" >
+        #{orderPhotoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPhotoTitle != null" >
+        #{orderPhotoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null" >
+        #{orderState,jdbcType=INTEGER},
+      </if>
+      <if test="orderRemark != null" >
+        #{orderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreateTime != null" >
+        #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUpdateTime != null" >
+        #{orderUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.managesystem.pojo.Order" >
+    update wedding_order
+    <set >
+      <if test="orderCode != null" >
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCustomerName != null" >
+        order_customer_name = #{orderCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCustomerPhone != null" >
+        order_customer_phone = #{orderCustomerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCustomerCode != null" >
+        order_customer_code = #{orderCustomerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPhotographerName != null" >
+        order_photographer_name = #{orderPhotographerName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPhotographerPhone != null" >
+        order_photographer_phone = #{orderPhotographerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPhotographerCode != null" >
+        order_photographer_code = #{orderPhotographerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPhotoCode != null" >
+        order_photo_code = #{orderPhotoCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPhotoImg != null" >
+        order_photo_img = #{orderPhotoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPhotoTitle != null" >
+        order_photo_title = #{orderPhotoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null" >
+        order_state = #{orderState,jdbcType=INTEGER},
+      </if>
+      <if test="orderRemark != null" >
+        order_remark = #{orderRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreateTime != null" >
+        order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUpdateTime != null" >
+        order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.managesystem.pojo.Order" >
+    update wedding_order
+    set order_code = #{orderCode,jdbcType=VARCHAR},
+      order_customer_name = #{orderCustomerName,jdbcType=VARCHAR},
+      order_customer_phone = #{orderCustomerPhone,jdbcType=VARCHAR},
+      order_customer_code = #{orderCustomerCode,jdbcType=VARCHAR},
+      order_photographer_name = #{orderPhotographerName,jdbcType=VARCHAR},
+      order_photographer_phone = #{orderPhotographerPhone,jdbcType=VARCHAR},
+      order_photographer_code = #{orderPhotographerCode,jdbcType=VARCHAR},
+      order_photo_code = #{orderPhotoCode,jdbcType=VARCHAR},
+      order_photo_img = #{orderPhotoImg,jdbcType=VARCHAR},
+      order_photo_title = #{orderPhotoTitle,jdbcType=VARCHAR},
+      order_state = #{orderState,jdbcType=INTEGER},
+      order_remark = #{orderRemark,jdbcType=VARCHAR},
+      order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <select id="pendingOrderList" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from wedding_order
+    <where>
+      <if test="order.orderCustomerCode !=null and order.orderCustomerCode !=''">
+        and order_customer_code = #{order.orderCustomerCode} and order_state = 0
+      </if>
+      <if test="order.orderCode !=null and order.orderCode !=''">
+        and order_code like "%" #{order.orderCode} "%"
+      </if>
+      <if test="order.orderPhotographerName !=null and order.orderPhotographerName !=''">
+        and order_photographer_name like "%"#{order.orderPhotographerName}"%"
+      </if>
+      <if test="order.orderPhotographerPhone !=null and order.orderPhotographerPhone !=''">
+        and order_photographer_phone like "%"#{order.orderPhotographerPhone}"%"
+      </if>
+      <if test="order.orderPhotoCode !=null and order.orderPhotoCode !=''">
+        and order_photo_code like "%"#{order.orderPhotoCode}"%"
+      </if>
+      <if test="order.orderPhotoTitle !=null and order.orderPhotoTitle !=''">
+        and order_photo_title like "%"#{order.orderPhotoTitle}"%"
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ order_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ order_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ order_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ order_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+  <select id="shootingingOrderList" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from wedding_order
+    <where>
+      <if test="order.orderCustomerCode !=null and order.orderCustomerCode !=''">
+        and order_customer_code = #{order.orderCustomerCode} and (order_state = 1 or order_state =6)
+      </if>
+      <if test="order.orderCode !=null and order.orderCode !=''">
+        and order_code like "%" #{order.orderCode} "%"
+      </if>
+      <if test="order.orderPhotographerName !=null and order.orderPhotographerName !=''">
+        and order_photographer_name like "%"#{order.orderPhotographerName}"%"
+      </if>
+      <if test="order.orderPhotographerPhone !=null and order.orderPhotographerPhone !=''">
+        and order_photographer_phone like "%"#{order.orderPhotographerPhone}"%"
+      </if>
+      <if test="order.orderPhotoCode !=null and order.orderPhotoCode !=''">
+        and order_photo_code like "%"#{order.orderPhotoCode}"%"
+      </if>
+      <if test="order.orderPhotoTitle !=null and order.orderPhotoTitle !=''">
+        and order_photo_title like "%"#{order.orderPhotoTitle}"%"
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ order_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ order_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ order_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ order_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+  <select id="alreadyingOrderList" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from wedding_order
+    <where>
+      <if test="order.orderCustomerCode !=null and order.orderCustomerCode !=''">
+        and order_customer_code = #{order.orderCustomerCode} and order_state = 2
+      </if>
+      <if test="order.orderCode !=null and order.orderCode !=''">
+        and order_code like "%" #{order.orderCode} "%"
+      </if>
+      <if test="order.orderPhotographerName !=null and order.orderPhotographerName !=''">
+        and order_photographer_name like "%"#{order.orderPhotographerName}"%"
+      </if>
+      <if test="order.orderPhotographerPhone !=null and order.orderPhotographerPhone !=''">
+        and order_photographer_phone like "%"#{order.orderPhotographerPhone}"%"
+      </if>
+      <if test="order.orderPhotoCode !=null and order.orderPhotoCode !=''">
+        and order_photo_code like "%"#{order.orderPhotoCode}"%"
+      </if>
+      <if test="order.orderPhotoTitle !=null and order.orderPhotoTitle !=''">
+        and order_photo_title like "%"#{order.orderPhotoTitle}"%"
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ order_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ order_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ order_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ order_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+  <select id="photographerPendingOrderList" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from wedding_order
+    <where>
+      <if test="1==1">
+        and order_state = 0
+      </if>
+      <if test="order.orderPhotographerCode !=null and order.orderPhotographerCode !=''">
+        and (order_photographer_code = #{order.orderPhotographerCode} or order_photographer_code is null)
+      </if>
+      <if test="order.orderCode !=null and order.orderCode !=''">
+        and order_code like "%" #{order.orderCode} "%"
+      </if>
+      <if test="order.orderPhotographerName !=null and order.orderPhotographerName !=''">
+        and order_photographer_name like "%"#{order.orderPhotographerName}"%"
+      </if>
+      <if test="order.orderPhotographerPhone !=null and order.orderPhotographerPhone !=''">
+        and order_photographer_phone like "%"#{order.orderPhotographerPhone}"%"
+      </if>
+      <if test="order.orderPhotoCode !=null and order.orderPhotoCode !=''">
+        and order_photo_code like "%"#{order.orderPhotoCode}"%"
+      </if>
+      <if test="order.orderPhotoTitle !=null and order.orderPhotoTitle !=''">
+        and order_photo_title like "%"#{order.orderPhotoTitle}"%"
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ order_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ order_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ order_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ order_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+  <select id="photographerShootingOrderList" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from wedding_order
+    <where>
+      <if test="1==1">
+        and order_state = 1 or order_state = 6
+      </if>
+      <if test="order.orderPhotographerCode !=null and order.orderPhotographerCode !=''">
+        and order_photographer_code = #{order.orderPhotographerCode}
+      </if>
+      <if test="order.orderCode !=null and order.orderCode !=''">
+        and order_code like "%" #{order.orderCode} "%"
+      </if>
+      <if test="order.orderPhotographerName !=null and order.orderPhotographerName !=''">
+        and order_photographer_name like "%"#{order.orderPhotographerName}"%"
+      </if>
+      <if test="order.orderPhotographerPhone !=null and order.orderPhotographerPhone !=''">
+        and order_photographer_phone like "%"#{order.orderPhotographerPhone}"%"
+      </if>
+      <if test="order.orderPhotoCode !=null and order.orderPhotoCode !=''">
+        and order_photo_code like "%"#{order.orderPhotoCode}"%"
+      </if>
+      <if test="order.orderPhotoTitle !=null and order.orderPhotoTitle !=''">
+        and order_photo_title like "%"#{order.orderPhotoTitle}"%"
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ order_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ order_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ order_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ order_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+  <select id="photographerAlreadyOrderList" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from wedding_order
+    <where>
+      <if test="1==1">
+        and order_state = 2
+      </if>
+      <if test="order.orderPhotographerCode !=null and order.orderPhotographerCode !=''">
+        and order_photographer_code = #{order.orderPhotographerCode}
+      </if>
+      <if test="order.orderCode !=null and order.orderCode !=''">
+        and order_code like "%" #{order.orderCode} "%"
+      </if>
+      <if test="order.orderPhotographerName !=null and order.orderPhotographerName !=''">
+        and order_photographer_name like "%"#{order.orderPhotographerName}"%"
+      </if>
+      <if test="order.orderPhotographerPhone !=null and order.orderPhotographerPhone !=''">
+        and order_photographer_phone like "%"#{order.orderPhotographerPhone}"%"
+      </if>
+      <if test="order.orderPhotoCode !=null and order.orderPhotoCode !=''">
+        and order_photo_code like "%"#{order.orderPhotoCode}"%"
+      </if>
+      <if test="order.orderPhotoTitle !=null and order.orderPhotoTitle !=''">
+        and order_photo_title like "%"#{order.orderPhotoTitle}"%"
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ order_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ order_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ order_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ order_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+  <update id="withdrawWedOrder" parameterType="int">
+    update wedding_order
+    set order_state = 8;
+    where order_id = #{orderId}
+  </update>
+</mapper>

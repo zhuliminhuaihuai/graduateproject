@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../x-admin/css/font.css">
+    <link rel="stylesheet" href="../../../x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/xcity.js"></script>
+
+
+</head>
+<body>
+<!-- 中部开始 -->
+<div class="wrapper">
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <xblock>
+               <span id=""></span>
+            </xblock>
+            <table class="layui-table" id="order"style="align-items: center" lay-filter="orderTable"></table>
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<!-- 中部结束 -->
+<link rel="stylesheet" href="../../../x-admin/lib/layui/css/modules/layer/default/layer.css">
+
+<script src="../../../x-admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../x-admin/js/xadmin.js"></script>
+<style>
+    .laytable-cell-1-0-4 img{ /*最后的pic为字段的field*/
+        height: 40px;
+        width: 40px !important;
+    }
+</style>
+<script>
+    var orderId = localStorage.getItem("orderId");
+    localStorage.removeItem("orderId");
+    layui.use(['table','laydate','layer'], function(){
+        $ = layui.jquery;
+        var table = layui.table,
+            laydate = layui.laydate,
+            layer = layui.layer;
+
+        //渲染
+        table.render({
+            elem: '#order'
+            ,id : 'testReload'
+            ,url: '/manage/order/detailOrder?orderId='+orderId//数据接口
+            ,cols: [[
+                 {field: 'goodsCode',width: '10%', title: '商品编号'}
+                , {field: 'goodsTitle',width: '10%', align: 'center', title: '商品名'}
+                , {field: 'goodsRelPrice' ,width: '6%', align: 'center', title: '商品金额',
+                    templet:function (row){
+                        return fixed(row.goodsRelPrice);
+                    }}
+                , {field: 'goodsBuyNum',width: '6%', align: 'center', title: '购买数量'}
+                , {field: 'goodsImg',width: '4%',align: 'center',  title: '商品照片',templet:'<div><img  src="{{ d.goodsImg}}"></div>'}
+                , {field: 'goodsBigType',width: '5%',align: 'center',  title: '分类1'}
+                , {field: 'goodsSmallType',width: '5%',align: 'center', title: '分类2'}
+            ]]
+           /* ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next'] //自定义分页布局
+                ,curr: 1 //设定初始在第 1 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit: 10
+                ,limits: [5,10,15,20]
+            }  //true表示分页*/
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+                hoverOpenImg();//显示大图 鼠标悬浮时显示大图
+                $("#count").text("共有数据：" + count+"条");
+                $("[data-field='goodsBigType']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("常见水果")
+                    }else if($(this).text()=='2') {
+                        $(this).text("进口水果")
+                    }
+                })
+                $("[data-field='goodsSmallType']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("寒性水果")
+                    }else if($(this).text()=='2') {
+                        $(this).text("温性水果")
+                    } else if($(this).text()=='3') {
+                        $(this).text("中性水果")
+                    }
+
+                })
+            }
+
+        })
+    });
+    function hoverOpenImg(){
+        var img_show = null; // tips提示
+        $('td img').hover(function(){
+            var kd=$(this).width();
+            kd1=kd*6;          //图片放大倍数
+            kd2=kd*6+30;       //图片放大倍数
+            var img = "<img class='img_msg' src='"+$(this).attr('src')+"' style='width:"+kd1+"px;' />";
+            img_show = layer.tips(img, this,{
+                tips:[2, 'rgba(41,41,41,.5)']
+                ,area: [kd2+'px']
+            });
+        },function(){
+            layer.close(img_show);
+        });
+        $('td img').attr('style','max-width:70px;display:block!important');
+    }
+    //金额转换
+    function fixed(str) {
+        if (!str) str = '0.00';
+        var ret = Math.round(parseFloat(str) * 100) / 100;
+        var decimal = ret.toString().split('.');
+        if (decimal.length === 1) {
+            return ret.toString() + '.00'
+        };
+        if (decimal.length > 1) {
+            if (decimal[1].length < 2) {
+                return ret.toString() + '0'
+            }
+            return ret
+        };
+        return ret;
+    }
+    //数字时间转DATE时间类型
+    function createTime(v) {
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var M = date.getMinutes();
+        M = M < 10 ? ("0" + M) : M;
+        var S = date.getSeconds();
+        S = S < 10 ? ("0" + S) : S;
+        var str = y + "-" + m + "-" + d + " " + h + ":" + M + ":" + S;
+        return str;
+    }
+   
+</script>
+</body>
+</html>

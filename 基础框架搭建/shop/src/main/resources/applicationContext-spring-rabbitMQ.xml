@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+    <description>rabbitmq 连接服务配置</description>
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="2"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:spring-rabbitMQ.properties</value>
+            </list>
+        </property>
+        <property name="fileEncoding" value="utf-8"/>
+    </bean>
+
+
+    <!-- 连接配置 -->
+    <rabbit:connection-factory id="connectionFactory01" host="${mq.host}" username="${mq.username}" password="${mq.password}" port="${mq.port}"  virtual-host="${mq.vhost}"/>
+    <rabbit:admin connection-factory="connectionFactory01"/>
+
+
+
+    <!-- 消息对象json转换类 -->
+    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter" />
+
+    <!-- durable是否持久化-->
+    <rabbit:queue id="queue_key" name="${mq.queue}" durable="true" auto-delete="false" exclusive="false" />
+
+    <rabbit:direct-exchange name="${mq.exchange}" durable="true" auto-delete="false" id="mq-exchange">
+        <rabbit:bindings>
+            <rabbit:binding queue="queue_key" key="${mq.queue_key}"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <!-- spring template声明-->
+    <rabbit:template exchange="${mq.exchange}" id="amqpTemplate"  connection-factory="connectionFactory01"  message-converter="jsonMessageConverter" />
+
+    <bean id="queueListenter" class="com.project.MQ.RabbitConsumor"/>
+    <rabbit:listener-container connection-factory="connectionFactory01" acknowledge="auto">
+        <rabbit:listener queues="queue_key" ref="queueListenter"/>
+    </rabbit:listener-container>
+</beans>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>课程列表</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+
+
+</head>
+<body>
+<blockquote class="layui-elem-quote news_search layui-form">
+    <div class="demoTable">
+        <div class="layui-inline">
+            <label>课程编号</label>&nbsp
+            <div class="layui-input-inline">
+                <input type="text" id="coursesCode" placeholder="课程编号" class="layui-input search_input">
+            </div>
+            <label>课程名</label>
+            <div class="layui-input-inline" >
+                <select name="coursesTitle" id="coursesTitle" lay-verify="coursesTitle" lay-filter="coursesTitle" lay-search="" >
+                    <option value="">请选择...</option>
+                    <option value="C编程">C编程</option>
+                    <option value="Python编程">Python编程</option>
+                    <option value="Java编程">Java编程</option>
+                    <option value="C++编程">C++编程</option>
+                    <option value=".NET编程">.NET编程</option>
+                    <option value="JavaScript编程">JavaScript编程</option>
+                    <option value="C#编程">C#编程</option>
+                    <option value="PHP编程">PHP编程</option>
+                    <option value="SQL编程">SQL编程</option>
+                    <option value="Objecttive-C编程">Objecttive-C编程</option>
+                    <option value="MATLAB编程">MATLAB编程</option>
+                    <option value="R编程">R编程</option>
+                    <option value="Perl编程">Perl编程</option>
+                    <option value="Swift编程">Swift编程</option>
+                    <option value="Go编程">Go编程</option>
+                    <option value="PL/SQL编程">PL/SQL编程</option>
+                    <option value="Visual Basic编程">Visual Basic编程</option>
+                    <option value="A编程">A编程</option>
+                </select>
+            </div>
+            <label>授课老师</label>&nbsp
+            <div class="layui-input-inline">
+                <input type="text" id="userRelName" placeholder="讲课老师真实姓名" class="layui-input search_input">
+            </div>
+            <label>创建时间范围</label>&nbsp
+            <div class="layui-input-inline">
+                <input type="text" name="startTime" id="startTime" lay-verify="date" placeholder="创建时间"
+                       class="layui-input">
+            </div>
+            ~
+            <div class="layui-input-inline">
+                <input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="创建时间" class="layui-input">
+            </div>
+            &nbsp
+            <label>课程启用</label>&nbsp
+            <div class="layui-input-inline" style="width:100px;">
+                <select name="coursesState" id="coursesState" lay-verify="required" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="2">未启用</option>
+                    <option value="1">已启用</option>
+                </select>
+            </div>
+            <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+        </div>
+    </div>
+</blockquote>
+<table class="layui-hide" id="courses" lay-filter="coursesTable"></table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="upload">上传视频</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="see">查看视频</a>
+    <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">详情</a>
+    <!--<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="modify">修改</a>-->
+    <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../js/main.js"></script>
+<script type="text/javascript" src="../../../js/index.js"></script>
+<script type="text/javascript" src="../../../js/xadmin.js"></script>
+<script type="text/html" id="switchTpl" lay-filter="test1">
+    <input type="checkbox" name="isShow" id="isShow" value="{{d.coursesId}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="isShow" {{ d.coursesState == 1 ?'checked' : '' }}>
+</script>
+<style>
+    .laytable-cell-1-0-4 { /*最后的pic为字段的field*/
+        height: 60%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-2-0-4 { /*最后的pic为字段的field*/
+        height: 60%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-3-0-4 { /*最后的pic为字段的field*/
+        height: 60%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-4-0-4 { /*最后的pic为字段的field*/
+        height: 60%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-5-0-4 { /*最后的pic为字段的field*/
+        height: 60%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-6-0-4 { /*最后的pic为字段的field*/
+        height: 60%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-7-0-4 { /*最后的pic为字段的field*/
+        height: 60%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-8-0-4 { /*最后的pic为字段的field*/
+        height: 60%;
+        max-width: 100%;
+    }
+</style>
+<script>
+    layui.use(['table','laydate','layer','form'], function(){
+        $ = layui.jquery;
+        var table = layui.table,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            form = layui.form;
+
+        //渲染
+        table.render({
+            elem: '#courses'
+            ,id : 'testReload'
+            ,url: '/manage/courses/getCoursesList'//数据接口
+            ,cols: [[
+                {type: 'checkbox'}
+                , {field: 'coursesCode', width:'15%' , align: 'center',title: '课程编号'}
+                , {field: 'coursesCreateTime',width:'16%',sort: true,align: 'center', title: '创建时间',
+                    templet :function (row){
+                        return createTime(row.coursesCreateTime);
+                    } }
+                , {field: 'coursesTitle', width:'8%' , align: 'center',title: '课程名'}
+                , {field: 'coursesImg', width:'10%' , align: 'center',title: '封面照片',templet:'<div><img  src="{{ d.coursesImg}}"></div>'}
+                , {field: 'userRelName', width:'10%' , align: 'center',title: '授课老师'}
+                , {field: 'coursesState', width:'10%' , align: 'center',title: '是否启用',templet:"#switchTpl"}
+                , {fixed: 'right', width: '20%', align: 'center', title: '操作', toolbar: '#barDemo'}
+            ]]
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                ,curr: 1 //设定初始在第 1 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit: 10
+                ,limits: [5,10,15,20]
+            }  //true表示分页
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+
+                hoverOpenImg();//显示大图 鼠标悬浮时显示大图
+                $("[data-field='userRole']").children().each(function(){
+                    if($(this).text()=='0'){
+                        $(this).text("客户")
+                    }else if($(this).text()=='2') {
+                        $(this).text("摄影师")
+                    }
+                })
+            }
+
+        })
+        //监听是否显示操作
+        form.on('switch(isShow)', function(obj){
+            var data = obj.data;
+            console.log("主键Id："+this.value);
+            var coursesId = this.value;
+            console.log("status："+ obj.elem.checked);
+            var coursesState="";
+            if(obj.elem.checked==true){
+                coursesState=1;
+            }else {
+                coursesState=2;
+            }
+            layer.confirm('确定修改该机构信息资料状态？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){//客户
+                $.ajax({
+                    url:'/manage/courses/updateCoursesState',
+                    type:'post',
+                    data:{
+                        coursesId:coursesId,
+                        coursesState:coursesState
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        if(data.status==0){
+                            layer.msg("状态修改成功！");
+                        }else {
+                            layer.msg("状态修改失败！");
+                        }
+                    },
+                    error: function () {
+                        layer.msg("报出异常！")
+                    }
+                });
+            },function () {
+                if (messageState == 1) {
+                    obj.elem.checked = false;
+                    form.render();
+                } else {
+                    obj.elem.checked = true;
+                    form.render();
+                }
+            })
+        });
+        //表格数据操作-查看详情和删除
+        table.on('tool(coursesTable)', function(obj){
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                localStorage.setItem("coursesId", data.coursesId);
+                x_admin_show('课程查看','/manage/courses/jumpCoursesDetail.html',60,80);
+            }else if(obj.event === 'del'){
+                layer.confirm('确定删除此课程？', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/courses/deleteCourses',
+                        data:{
+                            coursesId:data.coursesId,
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.status == 0) {
+                                layer.msg('删除成功', {
+                                    icon: 6,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg("删除失败！");
+                            }
+                        },
+                        error : function () {
+                            layer.msg('删除失败');
+                        }
+                    });
+                });
+            }else if (obj.event === 'upload') {
+                localStorage.setItem("coursesId", data.coursesId);
+                localStorage.setItem("coursesTitle", data.coursesTitle);
+                x_admin_show('视频上传','/manage/video/openVideoAdd.html',60,97);
+            }else if(obj.event === 'see'){
+                localStorage.setItem("coursesId", data.coursesId);
+                x_admin_show('视频查看','/manage/video/openVideoList.html',97,97);
+
+            }
+        });
+        var $ = layui.jquery, active = {
+            reload: function(){
+                var coursesCode = $("#coursesCode").val();
+                var coursesTitle = $("#coursesTitle option:selected").val();
+                var startTime = $("#startTime").val();
+                var endTime = $("#endTime").val();
+                var userRelName = $("#userRelName").val();
+                var coursesState = $("#coursesState option:selected").val();
+                table.reload('testReload', {
+                    method:'post',
+                    where:{coursesCode:coursesCode,startTime:startTime,endTime:endTime,coursesTitle:coursesTitle,userRelName:userRelName,coursesState:coursesState}
+                });
+            }
+        };
+        laydate.render({
+            elem: '#startTime'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#endTime'
+            ,type: 'datetime'
+        });
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        function hoverOpenImg(){
+            var img_show = null; // tips提示
+            $('td img').hover(function(){
+                var kd=$(this).width();
+                kd1=kd*6;          //图片放大倍数
+                kd2=kd*6+30;       //图片放大倍数
+                var img = "<img class='img_msg' src='"+$(this).attr('src')+"' style='width:"+kd1+"px;' />";
+                img_show = layer.tips(img, this,{
+                    tips:[2, 'rgba(41,41,41,.5)']
+                    ,area: [kd2+'px']
+                });
+            },function(){
+                layer.close(img_show);
+            });
+            $('td img').attr('style','max-width:70px;display:block!important');
+        }
+    });
+
+
+    //数字时间转DATE时间类型
+    function createTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+        return str;
+    }
+
+</script>
+
+</body>
+</html>

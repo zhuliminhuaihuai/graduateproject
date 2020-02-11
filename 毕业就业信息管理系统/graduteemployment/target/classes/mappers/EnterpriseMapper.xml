@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.EnterpriseMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Enterprise" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="enterprise_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enterprise_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="mobile_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enterprise_contacts" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="province" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="city" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="district" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enterprise_logo" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="enterprise_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="is_check" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="check_result" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="legral_person" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enter_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.project.pojo.Enterprise" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="enterprise_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enterprise_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="mobile_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enterprise_contacts" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="province" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="city" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="district" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enterprise_logo" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="enterprise_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="is_check" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="check_result" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="legral_person" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enter_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="introduction" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, enterprise_code, email, enterprise_name, mobile_phone, enterprise_contacts, province,
+    city, district, address, enterprise_logo, create_time, enterprise_type, update_time,
+    user_code, is_check, check_result, legral_person, enter_create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    introduction
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ecs_enterprise
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ecs_enterprise
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Enterprise" >
+    insert into ecs_enterprise (id, enterprise_code, email,
+      enterprise_name, mobile_phone, enterprise_contacts,
+      province, city, district,
+      address, enterprise_logo, create_time,
+      enterprise_type, update_time, user_code,
+      is_check, check_result, legral_person,
+      enter_create_time, introduction)
+    values (#{id,jdbcType=INTEGER}, #{enterpriseCode,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+      #{enterpriseName,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, #{enterpriseContacts,jdbcType=VARCHAR},
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{enterpriseLogo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{enterpriseType,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{userCode,jdbcType=VARCHAR},
+      #{isCheck,jdbcType=INTEGER}, #{checkResult,jdbcType=VARCHAR}, #{legralPerson,jdbcType=VARCHAR},
+      #{enterCreateTime,jdbcType=TIMESTAMP}, #{introduction,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Enterprise" >
+    insert into ecs_enterprise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="enterpriseCode != null" >
+        enterprise_code,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="enterpriseName != null" >
+        enterprise_name,
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone,
+      </if>
+      <if test="enterpriseContacts != null" >
+        enterprise_contacts,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="enterpriseLogo != null" >
+        enterprise_logo,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="enterpriseType != null" >
+        enterprise_type,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="isCheck != null" >
+        is_check,
+      </if>
+      <if test="checkResult != null" >
+        check_result,
+      </if>
+      <if test="legralPerson != null" >
+        legral_person,
+      </if>
+      <if test="enterCreateTime != null" >
+        enter_create_time,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseCode != null" >
+        #{enterpriseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseName != null" >
+        #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseContacts != null" >
+        #{enterpriseContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseLogo != null" >
+        #{enterpriseLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterpriseType != null" >
+        #{enterpriseType,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isCheck != null" >
+        #{isCheck,jdbcType=INTEGER},
+      </if>
+      <if test="checkResult != null" >
+        #{checkResult,jdbcType=VARCHAR},
+      </if>
+      <if test="legralPerson != null" >
+        #{legralPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="enterCreateTime != null" >
+        #{enterCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Enterprise" >
+    update ecs_enterprise
+    <set >
+      <if test="enterpriseCode != null" >
+        enterprise_code = #{enterpriseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseName != null" >
+        enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseContacts != null" >
+        enterprise_contacts = #{enterpriseContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseLogo != null" >
+        enterprise_logo = #{enterpriseLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterpriseType != null" >
+        enterprise_type = #{enterpriseType,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isCheck != null" >
+        is_check = #{isCheck,jdbcType=INTEGER},
+      </if>
+      <if test="checkResult != null" >
+        check_result = #{checkResult,jdbcType=VARCHAR},
+      </if>
+      <if test="legralPerson != null" >
+        legral_person = #{legralPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="enterCreateTime != null" >
+        enter_create_time = #{enterCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.project.pojo.Enterprise" >
+    update ecs_enterprise
+    set enterprise_code = #{enterpriseCode,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      enterprise_contacts = #{enterpriseContacts,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      enterprise_logo = #{enterpriseLogo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      enterprise_type = #{enterpriseType,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      is_check = #{isCheck,jdbcType=INTEGER},
+      check_result = #{checkResult,jdbcType=VARCHAR},
+      legral_person = #{legralPerson,jdbcType=VARCHAR},
+      enter_create_time = #{enterCreateTime,jdbcType=TIMESTAMP},
+      introduction = #{introduction,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Enterprise" >
+    update ecs_enterprise
+    set enterprise_code = #{enterpriseCode,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      enterprise_contacts = #{enterpriseContacts,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      enterprise_logo = #{enterpriseLogo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      enterprise_type = #{enterpriseType,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      is_check = #{isCheck,jdbcType=INTEGER},
+      check_result = #{checkResult,jdbcType=VARCHAR},
+      legral_person = #{legralPerson,jdbcType=VARCHAR},
+      enter_create_time = #{enterCreateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="enterpriseList" parameterType="map" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ecs_enterprise
+    <where>
+      <if test="role==2">
+        and user_code = #{userCode}
+      </if>
+      <if test="userName!=null and userName!=''">
+        and (enterprise_code like "%"#{userName}"%" or enterprise_name like "%"#{userName}"%"  or mobile_phone like "%"#{userName}"%"
+        or email like "%"#{userName}"%"  or legral_person like  "%"#{userName}"%" )
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ create_time <= #{endTime}]]>
+        </if>
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ create_time <= #{endTime}]]>
+          </if>
+        </if>
+      </if>
+    </where>
+    order by id desc
+  </select>
+    <select id="chekcEName" resultType="int" parameterType="String" >
+        select
+        count(1)
+        from ecs_enterprise
+        where enterprise_name = #{enterpriseName}
+    </select>
+  <select id="enterpriseByUserCode" parameterType="map" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ecs_enterprise
+    where user_code = #{userCode} and is_check in(1,2)
+  </select>
+  <select id="enterpriseInfoByUserCode" parameterType="map" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ecs_enterprise
+    where user_code = #{userCode} and is_check = 2
+  </select>
+  <select id="checkEnter" parameterType="map" resultType="int">
+    select
+    count(1)
+    from ecs_enterprise
+    where user_code = #{userCode} and is_check = 2
+  </select>
+</mapper>

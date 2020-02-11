@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.JobMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Job" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="job_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_place" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enterprise_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="enterprise_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_salary" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enterprise_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_welfare" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_skill" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="is_on" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="job_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="job_create_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_create_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.project.pojo.JobWithBLOBs" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="job_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_place" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enterprise_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="enterprise_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_salary" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enterprise_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_welfare" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_skill" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="is_on" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="job_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="job_create_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_create_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_detail" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="remark" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, job_name, job_place, enterprise_id, enterprise_code, job_salary, enterprise_name,
+    job_welfare, job_skill, create_time, update_time, is_on, job_type, job_num, job_create_user,
+    job_create_code
+  </sql>
+  <sql id="Blob_Column_List" >
+    job_detail, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ecs_job
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ecs_job
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.JobWithBLOBs" >
+    insert into ecs_job (id, job_name, job_place,
+      enterprise_id, enterprise_code, job_salary,
+      enterprise_name, job_welfare, job_skill,
+      create_time, update_time, is_on,
+      job_type, job_num, job_create_user,
+      job_create_code, job_detail, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{jobName,jdbcType=VARCHAR}, #{jobPlace,jdbcType=VARCHAR},
+      #{enterpriseId,jdbcType=INTEGER}, #{enterpriseCode,jdbcType=VARCHAR}, #{jobSalary,jdbcType=VARCHAR},
+      #{enterpriseName,jdbcType=VARCHAR}, #{jobWelfare,jdbcType=VARCHAR}, #{jobSkill,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isOn,jdbcType=INTEGER},
+      #{jobType,jdbcType=VARCHAR}, #{jobNum,jdbcType=INTEGER}, #{jobCreateUser,jdbcType=VARCHAR},
+      #{jobCreateCode,jdbcType=VARCHAR}, #{jobDetail,jdbcType=LONGVARCHAR}, #{remark,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.JobWithBLOBs" >
+    insert into ecs_job
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="jobName != null" >
+        job_name,
+      </if>
+      <if test="jobPlace != null" >
+        job_place,
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id,
+      </if>
+      <if test="enterpriseCode != null" >
+        enterprise_code,
+      </if>
+      <if test="jobSalary != null" >
+        job_salary,
+      </if>
+      <if test="enterpriseName != null" >
+        enterprise_name,
+      </if>
+      <if test="jobWelfare != null" >
+        job_welfare,
+      </if>
+      <if test="jobSkill != null" >
+        job_skill,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isOn != null" >
+        is_on,
+      </if>
+      <if test="jobType != null" >
+        job_type,
+      </if>
+      <if test="jobNum != null" >
+        job_num,
+      </if>
+      <if test="jobCreateUser != null" >
+        job_create_user,
+      </if>
+      <if test="jobCreateCode != null" >
+        job_create_code,
+      </if>
+      <if test="jobDetail != null" >
+        job_detail,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobPlace != null" >
+        #{jobPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseId != null" >
+        #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseCode != null" >
+        #{enterpriseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobSalary != null" >
+        #{jobSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseName != null" >
+        #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobWelfare != null" >
+        #{jobWelfare,jdbcType=VARCHAR},
+      </if>
+      <if test="jobSkill != null" >
+        #{jobSkill,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isOn != null" >
+        #{isOn,jdbcType=INTEGER},
+      </if>
+      <if test="jobType != null" >
+        #{jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNum != null" >
+        #{jobNum,jdbcType=INTEGER},
+      </if>
+      <if test="jobCreateUser != null" >
+        #{jobCreateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCreateCode != null" >
+        #{jobCreateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDetail != null" >
+        #{jobDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.JobWithBLOBs" >
+    update ecs_job
+    <set >
+      <if test="jobName != null" >
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobPlace != null" >
+        job_place = #{jobPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseId != null" >
+        enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      </if>
+      <if test="enterpriseCode != null" >
+        enterprise_code = #{enterpriseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobSalary != null" >
+        job_salary = #{jobSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseName != null" >
+        enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobWelfare != null" >
+        job_welfare = #{jobWelfare,jdbcType=VARCHAR},
+      </if>
+      <if test="jobSkill != null" >
+        job_skill = #{jobSkill,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isOn != null" >
+        is_on = #{isOn,jdbcType=INTEGER},
+      </if>
+      <if test="jobType != null" >
+        job_type = #{jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNum != null" >
+        job_num = #{jobNum,jdbcType=INTEGER},
+      </if>
+      <if test="jobCreateUser != null" >
+        job_create_user = #{jobCreateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCreateCode != null" >
+        job_create_code = #{jobCreateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDetail != null" >
+        job_detail = #{jobDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.project.pojo.JobWithBLOBs" >
+    update ecs_job
+    set job_name = #{jobName,jdbcType=VARCHAR},
+      job_place = #{jobPlace,jdbcType=VARCHAR},
+      enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      enterprise_code = #{enterpriseCode,jdbcType=VARCHAR},
+      job_salary = #{jobSalary,jdbcType=VARCHAR},
+      enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      job_welfare = #{jobWelfare,jdbcType=VARCHAR},
+      job_skill = #{jobSkill,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_on = #{isOn,jdbcType=INTEGER},
+      job_type = #{jobType,jdbcType=VARCHAR},
+      job_num = #{jobNum,jdbcType=INTEGER},
+      job_create_user = #{jobCreateUser,jdbcType=VARCHAR},
+      job_create_code = #{jobCreateCode,jdbcType=VARCHAR},
+      job_detail = #{jobDetail,jdbcType=LONGVARCHAR},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Job" >
+    update ecs_job
+    set job_name = #{jobName,jdbcType=VARCHAR},
+      job_place = #{jobPlace,jdbcType=VARCHAR},
+      enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      enterprise_code = #{enterpriseCode,jdbcType=VARCHAR},
+      job_salary = #{jobSalary,jdbcType=VARCHAR},
+      enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      job_welfare = #{jobWelfare,jdbcType=VARCHAR},
+      job_skill = #{jobSkill,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_on = #{isOn,jdbcType=INTEGER},
+      job_type = #{jobType,jdbcType=VARCHAR},
+      job_num = #{jobNum,jdbcType=INTEGER},
+      job_create_user = #{jobCreateUser,jdbcType=VARCHAR},
+      job_create_code = #{jobCreateCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="jobList" parameterType="map" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from  ecs_job
+    <where>
+      <if test="role==2">
+        and job_create_code = #{userCode}
+      </if>
+      <if test="userName!=null and userName!=''">
+        and (job_name like "%"#{userName}"%" or job_place like "%"#{userName}"%"  )
+      </if>
+      <if test="enterpriseCode!=null and enterpriseCode!=''">
+        and enterprise_code  = #{enterpriseCode}
+      </if>
+      <if test="jobSalary!=null and jobSalary!=''">
+        and job_salary  = #{jobSalary}
+      </if>
+      <if test="isOn!=null and isOn!=''">
+        and is_on  = #{isOn}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ create_time <= #{endTime}]]>
+        </if>
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ create_time <= #{endTime}]]>
+          </if>
+        </if>
+      </if>
+    </where>
+    order by id desc
+  </select>
+  <select id="jobListMain" parameterType="map" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from  ecs_job
+    <where>
+      <if test="userName!=null and userName!=''">
+        and (job_name like "%"#{userName}"%" or job_place like "%"#{userName}"%" or job_salary like "%"#{userName}"%"  )
+      </if>
+      <if test="enterpriseCode!=null and enterpriseCode!=''">
+        and enterprise_code  = #{enterpriseCode}
+      </if>
+        and is_on  = 1
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ create_time <= #{endTime}]]>
+        </if>
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ create_time <= #{endTime}]]>
+          </if>
+        </if>
+      </if>
+    </where>
+    order by id desc
+  </select>
+</mapper>

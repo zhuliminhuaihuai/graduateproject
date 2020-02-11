@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manage.dao.RoomImgMapper">
+    <resultMap id="BaseResultMap" type="com.manage.pojo.RoomImg">
+        <constructor>
+            <idArg column="img_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="img_code" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="room_code" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    img_id, img_code, room_code
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from hotel_room_img
+        where img_id = #{imgId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hotel_room_img
+    where img_id = #{imgId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.manage.pojo.RoomImg">
+    insert into hotel_room_img (img_id, img_code, room_code
+      )
+    values (#{imgId,jdbcType=INTEGER}, #{imgCode,jdbcType=VARCHAR}, #{roomCode,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.manage.pojo.RoomImg">
+        insert into hotel_room_img
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="imgId != null">
+                img_id,
+            </if>
+            <if test="imgCode != null">
+                img_code,
+            </if>
+            <if test="roomCode != null">
+                room_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="imgId != null">
+                #{imgId,jdbcType=INTEGER},
+            </if>
+            <if test="imgCode != null">
+                #{imgCode,jdbcType=VARCHAR},
+            </if>
+            <if test="roomCode != null">
+                #{roomCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.manage.pojo.RoomImg">
+        update hotel_room_img
+        <set>
+            <if test="imgCode != null">
+                img_code = #{imgCode,jdbcType=VARCHAR},
+            </if>
+            <if test="roomCode != null">
+                room_code = #{roomCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where img_id = #{imgId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.manage.pojo.RoomImg">
+    update hotel_room_img
+    set img_code = #{imgCode,jdbcType=VARCHAR},
+      room_code = #{roomCode,jdbcType=VARCHAR}
+    where img_id = #{imgId,jdbcType=INTEGER}
+    </update>
+
+    <select id="findRoomImg" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include>
+        from hotel_room_img
+        where room_code = #{roomCode}
+    </select>
+    <delete id="deleteManyRoomImg" parameterType="list">
+        delete from hotel_room_img
+        where img_id in
+        <foreach collection="idList" item="photoId" open="(" close=")" separator=",">
+            #{photoId}
+        </foreach>
+    </delete>
+</mapper>

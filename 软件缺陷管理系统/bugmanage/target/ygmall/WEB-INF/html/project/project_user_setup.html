@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>项目成员设置</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all"/>
+</head>
+
+<body>
+<div class="x-body">
+    <div id="form" class="layui-form">
+        <div id="xtree4" style="height:400px;overflow:auto;" class="xtree_contianer"></div>
+        <div class="div-btns">
+            <input type="button" id="modify" value="设置" class="layui-btn" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="../../../layui/layui.js" charset="utf-8"></script>
+<script src="../../../layui/lay/modules/layui-xtree.js"></script>
+<script>
+    var projectId = localStorage.getItem("id");
+    localStorage.removeItem("id");
+    //layui 的 form 模块是必须的
+    layui.use(['form'], function () {
+        var form = layui.form;
+        var xtree4 = new layuiXtree({
+            elem: 'xtree4'                  //必填三兄弟之老大
+            , form: form                    //必填三兄弟之这才是真老大
+            , data: '/manage/project/projectUserList?projectId='+projectId //必填三兄弟之这也算是老大
+            , isopen: true  //加载完毕后的展开状态，默认值：true
+            , ckall: true    //启用全选功能，默认值：false
+            , ckallback: function () { } //全选框状态改变后执行的回调函数
+            , icon: {        //三种图标样式，更改几个都可以，用的是layui的图标
+                open: "&#xe7a0;"       //节点打开的图标
+                , close: "&#xe622;"    //节点关闭的图标
+                , end: "&#xe621;"      //末尾节点的图标
+            }
+            , color: {       //三种图标颜色，独立配色，更改几个都可以
+                open: "#EE9A00"        //节点图标打开的颜色
+                , close: "#EEC591"     //节点图标关闭的颜色
+                , end: "#828282"       //末级节点图标的颜色
+            }
+            , click: function (data) {  //节点选中状态改变事件监听，全选框有自己的监听事件
+                console.log(data.elem); //得到checkbox原始DOM对象
+                console.log(data.elem.checked); //开关是否开启，true或者false
+                console.log(data.value); //开关value值，也可以通过data.elem.value得到
+                console.log(data.othis); //得到美化后的DOM对象
+            }
+        });
+        document.getElementById('modify').onclick = function () {
+
+        /*    var oCks = xtree4.GetAllCheckBox(); //这是方法*! 获取所有子菜单和父菜单/!*!/*/
+            var oCks = xtree4.GetChecked(); //这是方法*! 获取所有子菜单/*/
+            var ids1 = new Array();
+            for (var i = 0; i < oCks.length; i++) {
+                ids1.push(oCks[i].value);
+            }
+            $.ajax({
+                url: '/manage/project/projectUserAdd',
+                type: 'post',
+                traditional:true,
+                data: {
+                    userIds: ids1,
+                    projectId: projectId,
+                },
+                async:false,
+                dataType: 'json',
+                success: function (data) {
+                    if(data.status==0){
+                        layer.msg("成员设置成功！",{icon: 6,time:500,end:function () {
+                                parent.location.reload();
+                            }});
+                    }
+                },
+                error: function (data) {
+                    console.log(2);
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

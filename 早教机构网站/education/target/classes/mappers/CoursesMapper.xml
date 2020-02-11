@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.CoursesMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Courses" >
+    <constructor >
+      <idArg column="courses_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="courses_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="courses_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="courses_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="courses_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="courses_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="courses_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="user_rel_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    courses_id, courses_code, courses_title, courses_img, courses_state, courses_create_time, 
+    courses_update_time, user_rel_name, user_code
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from education_courses
+    where courses_id = #{coursesId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from education_courses
+    where courses_id = #{coursesId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Courses" >
+    insert into education_courses (courses_id, courses_code, courses_title, 
+      courses_img, courses_state, courses_create_time, 
+      courses_update_time, user_rel_name, user_code
+      )
+    values (#{coursesId,jdbcType=INTEGER}, #{coursesCode,jdbcType=VARCHAR}, #{coursesTitle,jdbcType=VARCHAR}, 
+      #{coursesImg,jdbcType=VARCHAR}, #{coursesState,jdbcType=INTEGER}, #{coursesCreateTime,jdbcType=TIMESTAMP}, 
+      #{coursesUpdateTime,jdbcType=TIMESTAMP}, #{userRelName,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Courses" >
+    insert into education_courses
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="coursesId != null" >
+        courses_id,
+      </if>
+      <if test="coursesCode != null" >
+        courses_code,
+      </if>
+      <if test="coursesTitle != null" >
+        courses_title,
+      </if>
+      <if test="coursesImg != null" >
+        courses_img,
+      </if>
+      <if test="coursesState != null" >
+        courses_state,
+      </if>
+      <if test="coursesCreateTime != null" >
+        courses_create_time,
+      </if>
+      <if test="coursesUpdateTime != null" >
+        courses_update_time,
+      </if>
+      <if test="userRelName != null" >
+        user_rel_name,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="coursesId != null" >
+        #{coursesId,jdbcType=INTEGER},
+      </if>
+      <if test="coursesCode != null" >
+        #{coursesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesTitle != null" >
+        #{coursesTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesImg != null" >
+        #{coursesImg,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesState != null" >
+        #{coursesState,jdbcType=INTEGER},
+      </if>
+      <if test="coursesCreateTime != null" >
+        #{coursesCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coursesUpdateTime != null" >
+        #{coursesUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userRelName != null" >
+        #{userRelName,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Courses" >
+    update education_courses
+    <set >
+      <if test="coursesCode != null" >
+        courses_code = #{coursesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesTitle != null" >
+        courses_title = #{coursesTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesImg != null" >
+        courses_img = #{coursesImg,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesState != null" >
+        courses_state = #{coursesState,jdbcType=INTEGER},
+      </if>
+      <if test="coursesCreateTime != null" >
+        courses_create_time = #{coursesCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coursesUpdateTime != null" >
+        courses_update_time = #{coursesUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userRelName != null" >
+        user_rel_name = #{userRelName,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where courses_id = #{coursesId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Courses" >
+    update education_courses
+    set courses_code = #{coursesCode,jdbcType=VARCHAR},
+      courses_title = #{coursesTitle,jdbcType=VARCHAR},
+      courses_img = #{coursesImg,jdbcType=VARCHAR},
+      courses_state = #{coursesState,jdbcType=INTEGER},
+      courses_create_time = #{coursesCreateTime,jdbcType=TIMESTAMP},
+      courses_update_time = #{coursesUpdateTime,jdbcType=TIMESTAMP},
+      user_rel_name = #{userRelName,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR}
+    where courses_id = #{coursesId,jdbcType=INTEGER}
+  </update>
+  <select id="getCoursesListAndSee" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from education_courses
+    where courses_state = 1
+  </select>
+  <delete id="deleteCoursesByUserCode" parameterType="java.lang.String">
+    delete from education_courses
+    where user_code = #{userCode}
+  </delete>
+  <select id="getAllCoursesList" resultMap="BaseResultMap" parameterType="com.project.vo.CoursesQueryVo">
+    select <include refid="Base_Column_List"></include>
+    from education_courses
+    <where>
+      <if test="coursesCode!=null and coursesCode!=''">
+        and courses_code =#{coursesCode}
+      </if>
+      <if test="coursesTitle!=null and coursesTitle!=''">
+        and courses_title like "%"#{coursesTitle}"%"
+      </if>
+      <if test="userRelName!=null and userRelName!=''">
+        and user_rel_name like "%"#{userRelName}"%"
+      </if>
+      <if test="coursesState!=null and coursesState!=''">
+        and courses_state = #{coursesState}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ courses_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ courses_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ courses_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ courses_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+    <select id="checkCoursesIsExit" resultType="int" parameterType="java.lang.String">
+        select count(1)
+        from education_courses
+        where courses_title = #{coursesTitle} and user_code = #{userCode}
+    </select>
+  <select id="getCoursesListBycoursesTitle" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List"></include>
+    from education_courses
+    where courses_title = #{coursesTitle}
+  </select>
+  <!--<select id="getCoursesByUserCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List"></include>
+    from education_courses
+    where user_code = #{userCode}
+  </select>-->
+</mapper>

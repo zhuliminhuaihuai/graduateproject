@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>添加管理员</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+
+<div class="x-body">
+    <div class="layui-form" id="form">
+        <!--<fieldset class="layui-elem-field" style="margin-left: 10%;margin-right:10%;box-shadow: 5px 5px 5px #ddd;margin-bottom: 30px;padding-left: 10%">-->
+        <legend>管理员信息设定</legend>
+        <div class="layui-form-item">
+            <label  for="userRole" class="layui-form-label">
+                <span class="x-red">*</span>管理类型
+            </label>
+            <div class="layui-input-inline">
+                <select name="userRole" id="userRole" lay-verify="userRole" lay-search="" lay-filter="role">
+                    <option value="">请选择</option>
+                    <option value="2">宿舍管理员</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>选择您的管理类型
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="facultyList" class="layui-form-label"> <span
+                    class="x-red">*</span>管理院系
+            </label>
+            <div class="layui-input-inline">
+                <select name="facultyList" id="facultyList" lay-verify="facultyList" lay-search="">
+                    <option value="">请选择学院...</option>
+                    <option value="智慧教育学院">智慧教育学院</option>
+                    <option value="哲学与公共管理学院">哲学与公共管理学院</option>
+                    <option value="文学院">文学院</option>
+                    <option value="语言科学与艺术学院">语言科学与艺术学院</option>
+                    <option value="历史文化与旅游学院">历史文化与旅游学院</option>
+                    <option value="法律政治学院">法律政治学院</option>
+                    <option value="外国语学院">外国语学院</option>
+                    <option value="商学院">商学院</option>
+                    <option value="教育科学学院">教育科学学院</option>
+                    <option value="物理与电子工程学院">物理与电子工程学院</option>
+                    <option value="化学化工学院">化学化工学院</option>
+                    <option value="生命科学学院">生命科学学院</option>
+                    <option value="马克思主义学院">马克思主义学院</option>
+                    <option value="体育学院">体育学院</option>
+                    <option value="音乐学院">音乐学院</option>
+                    <option value="美术学院">美术学院</option>
+                    <option value="传媒与影视学院">传媒与影视学院</option>
+                    <option value="机电工程学院">机电工程学院</option>
+                    <option value="中俄学院">中俄学院</option>
+                    <option value="电气工程及自动化学院">电气工程及自动化学院</option>
+                    <option value="地理测绘与城乡规划学院">地理测绘与城乡规划学院</option>
+                    <option value="科文学院">科文学院</option>
+                    <option value="教育研究院">教育研究院</option>
+                    <option value="继续教育学院">继续教育学院</option>
+                    <option value="敬文书院">敬文书院</option>
+                    <option value="圣彼得堡彼得大帝理工大学联合工程学院">圣彼得堡彼得大帝理工大学联合工程学院</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>管理员所管理的院系
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userName" class="layui-form-label">
+                <span class="x-red">*</span>管理员名称
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="userName" name="userName"
+                       lay-verify="userName" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>管理员的名字
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userPassword" class="layui-form-label">
+                <span class="x-red">*</span>登陆密码
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="password" id="userPassword" name="userPassword"
+                       lay-verify="userPassword" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>将用来登陆系统时的密码
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userPasswordAgain" class="layui-form-label">
+                <span class="x-red">*</span>确认密码
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="password" id="userPasswordAgain" name="userPasswordAgain"
+                       lay-verify="userPasswordAgain" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>请再确认一遍您的登录密码
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userPhone" class="layui-form-label">
+                <span class="x-red">*</span>手机号
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="userPhone" name="userPhone"
+                       lay-verify="userPhone" placeholder="" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>用于联系
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+            <label class="layui-form-label"> </label>
+            <button class="layui-btn" lay-filter="addUser" lay-submit="">
+                添加
+            </button>
+            <button class="layui-btn layui-btn-danger" class="layui-btn layui-btn-primary" onclick="resetmessage()">
+                重置
+            </button>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+
+<script>
+    layui.use(['form','laydate','layer'],function () {
+        $ = layui.jquery;
+        var form = layui.form
+            ,layer = layui.layer
+            ,laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#userBirthday',
+            type: 'date'
+        });
+
+        form.verify({
+            userRole: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '角色类型不能为空';
+                }
+            },
+            userName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '用户名不能为空';
+                }
+            },
+            userPassword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '登录密码不能为空';
+                }
+            },
+            userPasswordAgain: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '确认密码不能为空';
+                }
+                if ($("#userPasswordAgain").val() != $("#userPassword").val()) {
+                    return '两次密码不一致！';
+                }
+            },
+            userPhone: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '手机号不能为空';
+                }
+                var isPhone=/^1[0-9]{10}$/;
+                var flag=isPhone.test(value);
+                if(flag==false)
+                    return '手机号格式错误';
+            },
+            facultyList: function (value) {
+                if (value.length ==null ||value.length =="") {
+                    return '院系管理不能为空!';
+                }
+            }
+        });
+        form.on('submit(addUser)', function () {
+
+            var userRole = $("#userRole option:selected").val();
+            var userFaculty = $("#facultyList option:selected").val();
+            var userName = $("#userName").val();
+            var userPassword = $("#userPassword").val();
+            var userPhone = $("#userPhone").val();
+            $.ajax({
+                type: 'post',
+                url: '/manage/user/manageAdd',
+                dataType: 'json',
+                data: {
+                    userRole: userRole,
+                    userName: userName,
+                    userPassword: userPassword,
+                    userFaculty: userFaculty,
+                    userPhone: userPhone,
+                },
+                async: false,
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg("用户添加成功！",{
+                            icon :6,time:1000,end:function () {
+                                parent.location.reload();
+                            }
+                        });
+                    }else if (data.msg == "用户名已存在") {
+                        layer.msg("该用户名已被人注册，请重新选一个！");
+                    } else {
+                        layer.msg("添加失败！");
+                    }
+                },
+                error :function (XMLHttpResponse, textStatus, errorThrown, data) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                }
+            });
+
+        });
+
+
+    });
+
+    function resetmessage() {
+        window.location.reload();
+    }
+
+
+</script>
+
+</body>
+
+
+</html>

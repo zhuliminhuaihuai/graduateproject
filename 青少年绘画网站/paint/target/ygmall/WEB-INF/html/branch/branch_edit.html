@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<base href="<%=basePath%>">
+	<meta charset="UTF-8">
+	<title>添加</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		  content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="../../../layui/css/layui.css">
+	<link rel="stylesheet" href="../../../css/news.css">
+	<link rel="stylesheet" href="../../../css/user.css" media="all" />
+	<style>
+		.x-red{
+			color: red;
+		}
+	</style>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="../../../layui/layui.js" charset="utf-8"></script>
+	<script src="../../../js/common.js" charset="utf-8"></script>
+
+</head>
+<body>
+<div class="childrenBody" style="padding-top: 2%">
+	<div class="layui-form">
+		<div class="layui-form-item">
+			<label  class="layui-form-label"> <span
+					class="x-red">*</span>机构名称
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" id="branchName" name="branchName" required=""
+					   lay-verify="branchName" autocomplete="off"
+					   class="layui-input" placeholder="请输入机构名称"><!--onblur="regist()"-->
+			</div>
+			<label class="layui-form-label">  <span
+					class="x-red">*</span>成立时间
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="branchCreateTime" id="branchCreateTime"
+					   required="" lay-verify="branchCreateTime" autocomplete="off"
+					   class="layui-input" placeholder="请输入机构成立时间">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> <span
+					class="x-red">*</span>联系方式
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" id="branchPhone" name="branchPhone" required=""
+					   lay-verify="branchPhone" autocomplete="off"
+					   class="layui-input" placeholder="请输入机构联系方式"><!--onblur="regist()"-->
+			</div>
+			<label class="layui-form-label">  <span
+					class="x-red">*</span>机构座机
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="branchTel" id="branchTel"
+					   required="" lay-verify="branchTel" autocomplete="off"
+					   class="layui-input" placeholder="请输入机构座机">
+			</div>
+		</div>
+		<input type="text" style="display: none" name="branchImg" id="branchImg" lay-verify="branchImg"  >
+		<div class="layui-form-item">
+			<label  class="layui-form-label"><span
+					class="x-red">*</span> 机构图片
+			</label>
+			<div class="layui-upload layui-input-inline" style="">
+				<button type="button" class="layui-btn" id="test2">上传图片</button>
+				<div class="layui-upload-list" id="demo3" >
+					<img class="layui-upload-img" id="demo2" width="150px"  height="150px">
+
+				</div>
+			</div>
+			<label class="layui-form-label"><span
+					class="x-red">*</span> 机构邮箱
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="branchEmail" id="branchEmail"
+					   required="" lay-verify="branchEmail" autocomplete="off"
+					   class="layui-input" placeholder="请输入机构邮箱">
+			</div>
+		</div>
+		<div class="layui-form-item" id="x-city">
+			<label class="layui-form-label"><span
+					class="x-red">*</span>机构地址</label>
+			<div class="layui-input-inline">
+				<select name="province" id="province" lay-filter="province">
+					<option value="">请选择省</option>
+				</select>
+			</div>
+			<div class="layui-input-inline">
+				<select name="city" id="city" lay-filter="city">
+					<option value="">请选择市</option>
+				</select>
+			</div>
+			<div class="layui-input-inline">
+				<select name="district" id="district" lay-filter="area">
+					<option value="">请选择县/区</option>
+				</select>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span
+					class="x-red">*</span>详细地址</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" id="address" name="address"
+					   required="" lay-verify="address" autocomplete="off"
+					   class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span
+					class="x-red">*</span>服务宗旨</label>
+			<div class="layui-input-block">
+				<textarea placeholder="请输入机构服务宗旨" name="branchService" id="branchService" lay-verify="branchService" class="layui-textarea linksDesc"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span
+					class="x-red">*</span>机构荣誉</label>
+			<div class="layui-input-block">
+				<textarea placeholder="请输入机构荣誉" name="branchHonor" id="branchHonor" lay-verify="branchHonor"  class="layui-textarea linksDesc"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span
+					class="x-red">*</span>机构介绍</label>
+			<div class="layui-input-block">
+				<textarea placeholder="请输入机构介绍" name="branchIntroduce" id="branchIntroduce" lay-verify="branchIntroduce"  class="layui-textarea linksDesc"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> </label>
+			<button class="layui-btn" lay-filter="edit" lay-submit="">
+				确定
+			</button>
+		</div>
+
+	</div>
+
+</div>
+<script type="text/javascript" src="../../../js/xcity.js"></script>
+
+<script>
+		var id = localStorage.getItem("id");
+		localStorage.removeItem("id");
+		var province = localStorage.getItem("province");
+		localStorage.removeItem("province");
+		var city = localStorage.getItem("city");
+		localStorage.removeItem("city");
+		var area = localStorage.getItem("area");
+		localStorage.removeItem("area");
+        layui.use(['form','code'], function(){
+            form = layui.form;
+            layui.code();
+            $('#x-city').xcity(province, city, area);
+
+        });
+        //请求机构详情
+		$.ajax({
+			url:'/manage/branch/getBranchInfo',
+			type:'post',
+			data:{
+			    id:id,
+			},
+			dataType:'json',
+			success:function (data) {
+				if(data.status==0){
+				    $("#branchName").val(data.data.branchName);
+				    $("#branchCreateTime").val(data.data.branchCreateTime);
+				    $("#branchPhone").val(data.data.branchPhone);
+				    $("#branchTel").val(data.data.branchTel);
+				    $("#branchImg").val(data.data.branchImg);
+				    $("#branchEmail").val(data.data.branchEmail);
+				    $("#province").val(data.data.province);
+				    $("#city").val(data.data.city);
+				    $("#area").val(data.data.area);
+				    $("#address").val(data.data.address);
+				    $("#branchService").val(data.data.branchService);
+				    $("#branchHonor").val(data.data.branchHonor);
+				    $("#branchIntroduce").val(data.data.branchIntroduce);
+
+                    $("#demo2").attr("src","http://127.0.0.1:8080/upload/"+data.data.branchImg);
+				}
+            }
+
+		});
+        layui.use([ 'form', 'layer','laydate','code','upload'], function() {
+            $ = layui.jquery;
+            var form = layui.form
+                ,layer = layui.layer
+                ,laydate = layui.laydate
+                ,upload = layui.upload;
+
+            laydate.render({
+                elem: '#birthday'
+            });
+            laydate.render({
+                elem: '#branchCreateTime'
+            });
+            form.verify({
+                branchName : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '机构名称不能为空';
+                    }
+                },
+                branchCreateTime : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '机构成立日期不能为空';
+                    }
+                },
+                branchPhone : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '机构联系方式不能为空';
+                    }
+                },
+                branchTel : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '机构座机不能为空';
+                    }
+                },
+                address : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '机构详细地址不能为空';
+                    }
+                },
+                branchEmail : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '机构邮箱不能为空';
+                    }
+                },
+                branchImg : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '机构图片不能为空';
+                    }
+                },
+                branchHonor : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '机构荣誉不能为空';
+                    }
+                },
+                branchService : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '机构服务宗旨不能为空';
+                    }
+                },
+                branchIntroduce : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '机构介绍不能为空';
+                    }
+                },
+
+            });
+            //图片上传
+            upload.render({
+                elem: '#test2'
+                , url: '/manage/branch/uploadImg'
+                , multiple: false
+                , size: 4096
+                , before: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        //console.log(file);
+                        $('#demo2').remove();
+                        $('#demo3').append('<img width="150px" height="150px" src="' + result + '" alt="' + file.name + '" class="layui-upload-img">');
+                        layer.msg("正在上传请稍等待3秒！", {icon: 6, time: 1000});
+                    });
+                }
+                , done: function (res) {
+                    var img = res.data.uri;
+                    $("#branchImg").val(img);
+                    s=img;
+                    layer.msg("上传完成", {icon: 6, time: 5000,});
+                }
+
+            });
+            form.on('submit(edit)', function(data) {
+                var branchName= $("#branchName").val();
+                var branchCreateTime= $("#branchCreateTime").val();
+                var branchPhone= $("#branchPhone").val();
+                var branchTel= $("#branchTel").val();
+                var branchEmail= $("#branchEmail").val();
+                var branchImg= $("#branchImg").val();
+                var province= $("#province").val();
+                var city= $("#city").val();
+                var area= $("#district").val();
+                var address= $("#address").val();
+                var branchHonor= $("#branchHonor").val();
+                var branchService= $("#branchService").val();
+                var branchIntroduce= $("#branchIntroduce").val();
+
+
+                $.ajax({
+                    type: 'post',
+                    url: '/manage/branch/editBranch',
+                    data: {
+                        id:id,
+                        branchName:branchName,
+                        branchCreateTimes:branchCreateTime,
+                        branchPhone:branchPhone,
+                        branchTel:branchTel,
+                        branchEmail:branchEmail,
+                        branchImg:branchImg,
+                        province:province,
+                        city:city,
+                        area:area,
+                        address:address,
+                        branchHonor:branchHonor,
+                        branchService:branchService,
+                        branchIntroduce:branchIntroduce,
+
+					},
+                    dataType: 'json',
+                    async:false,
+                    success: function (data) {
+                        console.log(data.msg);
+                        if (data.status == 0) {
+                            layer.msg("修改成功", {
+                                icon: 6, time: 1000, end: function () {
+                                    parent.location.reload();
+                                }
+                            });
+                        } else {
+                            layer.msg("修改失败");
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        layer.msg('请求失败，检查后台接口');
+                    }
+                })
+
+            })
+        });
+        function returnTop() {
+			window.location.href="/manage/branch/branch_list"
+        }
+</script>
+</body>
+</html>

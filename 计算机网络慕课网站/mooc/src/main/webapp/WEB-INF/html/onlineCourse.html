@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>在线选课</title>
+    <link rel="shortcut icon" href="../../images/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="../../layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <link rel="stylesheet" type="text/css" href="../../css/login.css" />
+    <link rel="stylesheet" href="../../css/font.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+    <style type="text/css">
+        .title1{
+            display: block;
+            animation: star 1s linear infinite;
+        }
+        @keyframes star {
+            0% {
+                transform: rotate(0);
+            }
+            50% {
+                transform: rotate(6deg);
+            }
+            100% {
+                transform: rotate(-6deg);
+            }
+        }
+    </style>
+    <!--加载meta IE兼容文件-->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="header">
+    <div class="menu-btn">
+        <div class="menu"></div>
+    </div>
+    <h1 class="logo">
+        <a href="/manage/user/jumpHomePage.html">
+            <span>MYBLOG</span>
+            <img src="../../images/logo.jpg" style="margin-bottom: 20px;">
+        </a>
+    </h1>
+    <div class="nav">
+        <a href="/manage/user/jumpHomePage.html" >首页</a>
+        <a href="/manage/user/jumpVideoIntroduce.html" >视频简介</a>
+        <a href="/manage/user/jumpOnlineApplication.html" >在线报名</a>
+        <a href="/manage/user/jumpOnlineCourse.html" class="active">在线选课</a>
+        <!--<a href="">关于</a>-->
+    </div>
+    <p class="welcome-text">
+        欢迎，<a href="javascript:;" onclick="toLogin()" >
+        <span class="name" style="color: #800c19" id="realName">请登录</span>
+    </a>
+        <span class="name" id="userName1" style="display: none" style="color: #800c19"></span>
+        <a href="javascript:;" onclick="toIndex()" id="center" style="display: none">
+            <span class="name" style="color: #800c19">个人中心</span>
+        </a>
+        <a href="javascript:;" onclick="logout()" id="logout" style="display: none" >
+            <span class="name" style="color: red" >退出</span>
+        </a>
+    </p>
+</div>
+<div class="album-content w1000"  id="layer-photos-demo" class="layer-photos-demo">
+
+    <div class="img-list">
+        <div class="layui-fluid" style="padding:0">
+            <div class="layui-row layui-col-space30 space" id="sss">
+
+            </div>
+        </div>
+        <div style="text-align: center">
+            <div id="demo3"></div>
+        </div>
+    </div>
+
+</div>
+<div class="footer-wrap">
+    <div class="footer w1000">
+        <div class="qrcode">
+            <p><span class="WeChat" style="font-size: 30px">官网微信公众号</span></p>
+            <p><span class="WeChat" style="font-size: 30px">&nbsp;&nbsp</span></p>
+            <img src="../../images/erweima.jpg">
+        </div>
+        <div class="practice-mode">
+            <img src="../../images/down_img.jpg">
+            <div class="text">
+                <h4 class="title">官网的联系方式</h4>
+                <p>微信<span class="WeChat">1234567890</span></p>
+                <p>手机<span class="iphone">1234567890</span></p>
+                <p>邮箱<span class="email">1234567890@qq.com</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../js/formate.js"></script>
+
+<script type="text/javascript">
+    layui.config({
+        base: '../res/js/util/'
+    }).use(['element','laypage','form','layer','menu'],function(){
+        element = layui.element,laypage = layui.laypage,form = layui.form,layer = layui.layer,menu = layui.menu;
+        laypage.render({
+            elem: 'demo'
+            ,count: 60 //数据总数，从服务端得到
+        });
+        layer.photos({
+            photos: '#layer-photos-demo'
+            ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+            ,tab:function(pic,layero){
+                console.log(pic,layero)
+            }
+        });
+        menu.init();
+    })
+    layui.use('layer','form', function(){ //独立版的layer无需执行这一句
+        var $ = layui.jquery, layer = layui.layer,form = layui.form; //独立版的layer无需执行这一句
+
+        form.on('submit(login)', function(data) {//
+            $(document).ready(function () {
+                $(".idv").click()
+            })
+
+        })
+
+        $('#layerDemo .layui-btn').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+    });
+    //弹出登录页
+    function toLogin() {
+        layer.open({
+            type: 1
+            ,title: '登录网站' //显示标题栏
+            ,closeBtn: true//关闭按钮键
+            ,area: ['450px','270px']
+            ,shade: 0.8
+            ,shadeClose:true
+            ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+            /*  ,btn: ['登录', '取消']*/
+            ,btnAlign: 'c'
+            ,moveType: 0 //拖拽模式，0或者1
+            ,content: '<div class="m-login-warp">\n' +
+                '\t\t\t\t\t<div class="layui-form">\n' +
+                '\t\t\t\t\t\t<div class="layui-form-item">\n' +
+                '\t\t\t\t\t\t\t<input type="text" id="userName"   lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input">\n' +
+                '\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t\t<div class="layui-form-item">\n' +
+                '\t\t\t\t\t\t\t<input type="password" id="password"  lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">\n' +
+                '\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t\t<div class="layui-form-item m-login-btn">\n' +
+                '\t\t\t\t\t\t\t<div class="layui-inline">\n' +
+                '\t\t\t\t\t\t\t\t<button class="layui-btn layui-btn-normal" type="button" lay-submit="" onclick="login()" lay-filter="login">登录</button>\n' +
+                '\t\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t</div>\n' +
+                '\t\t\t\t</div>\n'
+
+        });
+    }
+    //验证登录
+    function login() {
+        var userName = $("#userName").val();
+        var password = $("#password").val();
+        if (userName == ''||userName == null) {
+            layer.msg("请输入用户名！", {icon: 5, time: 1000});
+            return false;
+        }
+        if (password == ''||password == null) {
+            layer.msg("请输入密码！", {icon: 5, time: 1000});
+            return false;
+        }
+        //登录请求
+        $.ajax({
+            url:'/manage/user/login',
+            type:'post',
+            data:{
+                userName:userName,
+                password:password,
+            },
+            async:false,
+            dataType:'json',
+            success:function (data) {
+                if(data.status==0){//status==0 说明登录成功
+                    layer.msg(data.msg, {icon: 6, time: 1000});
+                    setTimeout(function(){//
+                        parent.layer.closeAll();
+                        window.location.href="/manage/user/jumpOnlineCourses1.html";
+                    },1500);
+                }else{//status!=0 说明登录失败 可能密码错误/用户名不存在
+                    layer.msg(data.msg, {icon: 5, time: 1000});
+                    return false;
+                }
+            },
+            error:function (data) {
+                alert("进入错误")
+            }
+        });
+    }
+    $(function () {
+        initLayPage();
+    });
+
+    function initLayPage(pageConf) {
+        if(!pageConf){
+            pageConf ={};
+            pageConf.pageSize = 12;
+            pageConf.currentPage = 1;
+
+        }
+
+        $.post("/manage/courses/getCoursesListAndSee", pageConf, function (data) {
+            console.log("JSON:"+JSON.stringify(data))
+            layui.use(['laypage', 'layer'], function () {
+                var laypage = layui.laypage;
+                laypage.render({
+                    elem: 'demo3'
+                    ,count: data.total
+                    ,curr: pageConf.currentPage
+                    ,limit:pageConf.pageSize
+                    ,first: '首页'
+                    ,last: '尾页'
+                    ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    ,limits: [6,12,100],
+                    jump: function (obj, first) {
+                        if (!first) {
+                            pageConf.currentPage = obj.curr;
+                            pageConf.pageSize = obj.limit;
+                            initLayPage(pageConf);
+                        }
+                    }
+                });
+                fillTable(data.data,(pageConf.currentPage-1) * pageConf.pageSize); //页面填充
+            })
+        });
+    }
+    function fillTable(data,num) {
+        var info = '';
+        $.each(data, function (index, obj) {
+            // id 很多时候并不是连续的，如果为了显示比较连续的记录数，可以这样根据当前页和每页条数动态的计算记录序号
+            index = index +num+1;
+            info+= '<div class="layui-col-xs12 layui-col-sm4 layui-col-md4">'
+                +'<div class="item">'
+                +'<a href=javascript:;" id="c" title="点击报名"  data-set="'+obj.coursesId+'" class="go-icon"><img src="http://127.0.0.1:8080/upload/'+obj.coursesImg+'" width="233.33px" height="200.55px;"></a>'
+                +'<div class="cont-text">'
+               /* +'<div class="data">'+editTime1(obj.createTimes)+'</div>'*/
+                +' <p class="address"><span style="color: red">课程名:</span>'+obj.coursesTitle+'</p>'
+                +' <p class="briefly"><span style="color: red">授课老师:</span>'+obj.userRelName+'</p>'
+                +' </div>'
+                +' </div>'
+                +' </div>'
+        });
+        $("#sss").html(info);
+
+
+    }
+    $(document).on('click','#c',function detailQuestion() {//进入详情页
+        var coursesId = $(this).attr('data-set');
+        layer.msg("您还未登录！请先登录", {icon: 5, time: 1500});
+
+        /*window.location.href="/manage/user/toDetails";*/
+    })
+    function logout() {
+        window.location.href="/manage/user/jumpNoLoginHomePage.html"
+    }
+    function toIndex() {
+        window.location.href="/manage/user/toIndex"
+    }
+</script>
+
+</body>
+</html>

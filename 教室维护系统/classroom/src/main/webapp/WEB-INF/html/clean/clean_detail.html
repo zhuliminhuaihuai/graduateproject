@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>打扫单详情</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+
+<div class="x-body">
+    <div class="layui-form" id="form">
+
+        <legend>打扫单信息</legend>
+        <div class="layui-form-item">
+            <label for="cleanCode" class="layui-form-label">
+                <span class="x-red">*</span>打扫单编号
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" disabled="disabled" type="text" id="cleanCode" name="cleanCode"
+                       lay-verify="cleanCode" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="cleanCreateTime" class="layui-form-label">
+                <span class="x-red">*</span>打扫单创建时间
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" disabled="disabled" type="text" id="cleanCreateTime" name="cleanCreateTime"
+                       lay-verify="cleanCreateTime" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="cleanUpdateTime" class="layui-form-label">
+                <span class="x-red">*</span>打扫单修改时间
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" disabled="disabled" type="text" id="cleanUpdateTime" name="cleanUpdateTime"
+                       lay-verify="cleanUpdateTime" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="cleanTime" class="layui-form-label">
+                <span class="x-red">*</span>打扫时间
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" disabled="disabled" type="text" id="cleanTime" name="cleanTime"
+                       lay-verify="cleanTime" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="cleanState" class="layui-form-label">
+                <span class="x-red">*</span>打扫状态
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" disabled="disabled" type="text" id="cleanState" name="cleanState"
+                       lay-verify="cleanState" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>教室编号
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" disabled="disabled" type="text" id="roomCode" name="roomCode"
+                       lay-verify="roomCode" autocomplete="off" value="">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+            <label class="layui-form-label"> </label>
+            <!--<button class="layui-btn" lay-filter="save" lay-submit="">-->
+                <!--保存-->
+            <!--</button>-->
+            <button class="layui-btn layui-btn-danger" class="layui-btn layui-btn-primary" onclick="goback()">
+                返回
+            </button>
+        </div>
+    </div>
+</div>
+
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+
+<script type="text/javascript">
+    var $;
+    var cleanId = localStorage.getItem("cleanId");
+    localStorage.removeItem("cleanId");
+    layui.use(['form', 'laydate', 'layer'], function () {
+        $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , laydate = layui.laydate;
+
+        form.verify({
+            // roomBuilding: function (value) {
+            //     if (value.length == null || value.length == "") {
+            //         return '大楼名称不能为空';
+            //     }
+            // },
+            // roomNumber: function (value) {
+            //     if (value.length == null || value.length == "") {
+            //         return '教室门牌号不能为空';
+            //     }
+            //     var reg = /^[0-9]+.?[0-9]*$/;
+            //     var flag = reg.test(value);
+            //     if (flag == false)
+            //         return '非法字符，请重新输入（纯数字）';
+            // },
+            // roomPeople: function (value) {
+            //     if (value.length == null || value.length == "") {
+            //         return '容纳人数不能为空';
+            //     }
+            // },
+            // roomRemark: function (value) {
+            //     if (value.length == null || value.length == "") {
+            //         return '教室备注不能为空';
+            //     }
+            //
+            // },
+        });
+        $.ajax({
+            url: "/manage/clean/cleanDetail",
+            type: "post",
+            dateType: "json",
+            data:{
+                cleanId:cleanId
+            },
+            success: function (res) {
+                var data = res.data;
+                $("#cleanCode").val(data.cleanCode);
+                $("#cleanCreateTime").val(createTime(data.cleanCreateTime));
+                $("#cleanUpdateTime").val(createTime(data.cleanUpdateTime));
+                $("#cleanTime").val(createTime(data.cleanTime));
+                $("#roomCode").val(data.roomCode);
+                if (data.cleanState == 1) {
+                    $("#cleanState").val("打扫中");
+                }else if (data.cleanState == 2) {
+                    $("#cleanState").val("打扫完毕");
+                }
+                form.render();
+            }
+        })
+        //监听教室时间空闲状态
+        form.on('switch(roomSections1)', function (obj) {
+            if (obj.elem.checked == true) {
+                roomSections1 = 1;
+            } else {
+                roomSections1 = 0;
+            }
+        });
+        form.on('switch(roomSections2)', function (obj) {
+            if (obj.elem.checked == true) {
+                roomSections2 = 1;
+            } else {
+                roomSections2 = 0;
+            }
+        });
+        form.on('switch(roomSections3)', function (obj) {
+            if (obj.elem.checked == true) {
+                roomSections3 = 1;
+            } else {
+                roomSections3 = 0;
+            }
+        });
+        form.on('switch(roomSections4)', function (obj) {
+            if (obj.elem.checked == true) {
+                roomSections4 = 1;
+            } else {
+                roomSections4 = 0;
+            }
+        });
+
+        form.on('submit(save)', function (data) {
+            // var roomPeople = $("#roomPeople option:selected").val();
+            // var roomPurposeList = new Array();
+            //
+            // var child = $("input[type='checkbox']");
+            // child.each(function (index, item) {
+            //     if (item.checked == true && $(item).val() != "on") {
+            //         roomPurposeList.push($(item).val());
+            //     }
+            // });
+            // console.log("教师用途:" + roomPurposeList);
+            // if (roomPurposeList.length == 0) {
+            //     layer.msg("教室用途不能为空！", {icon: 5, time: 1000});
+            //     return false;
+            // }
+            // var roomPurpose = JSON.stringify(eval(roomPurposeList));
+            /*var userSex = $("input[name='userSex']:checked").val();*/
+            var roomRemark = $("#roomRemark").val();
+
+            $.ajax({
+                type: 'post',
+                url: '/manage/room/saveRoom',
+                dataType: 'json',
+                data: {
+                    roomId: roomId,
+                    roomRemark: roomRemark,
+                    roomSections1:roomSections1,
+                    roomSections2:roomSections2,
+                    roomSections3:roomSections3,
+                    roomSections4:roomSections4
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg(data.msg, {
+                            icon: 6, time: 1500, end: function () {
+                                parent.location.reload();
+                            }
+                        });
+                    } else {
+                        layer.msg(data.msg, {
+                            icon: 5, time: 1500, end: function () {
+                                return false;
+                            }
+                        });
+                    }
+                },
+                error: function (XMLHttpResponse, textStatus, errorThrown, data) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                }
+            });
+
+        });
+
+
+    });
+
+    $('.content .layui-btn').on('click', function(){
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+    function goback() {
+        parent.location.reload();
+    }
+    //数字时间转DATE时间类型
+    function createTime(v){
+        if (v == null) {
+            return "";
+        }
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+        return str;
+    }
+
+</script>
+
+</body>
+
+
+</html>

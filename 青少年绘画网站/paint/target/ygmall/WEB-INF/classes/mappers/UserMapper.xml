@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.User" >
+    <constructor >
+      <idArg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sex" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="birthday" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="mobile_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="real_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="role" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="user_sign" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="teacher_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="teacher_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="branch_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_code, email, user_name, password, sex, birthday, mobile_phone, real_name,
+    create_time, role, user_sign, teacher_id, teacher_name, branch_id, branch_name, branch_user
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from paint_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from paint_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.User" >
+    insert into paint_user (user_id, user_code, email,
+      user_name, password, sex,
+      birthday, mobile_phone, real_name,
+      create_time, role, user_sign,
+      teacher_id, teacher_name, branch_id,
+      branch_name, branch_user)
+    values (#{userId,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+      #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},
+      #{birthday,jdbcType=DATE}, #{mobilePhone,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{role,jdbcType=TINYINT}, #{userSign,jdbcType=VARCHAR},
+      #{teacherId,jdbcType=INTEGER}, #{teacherName,jdbcType=VARCHAR}, #{branchId,jdbcType=INTEGER},
+      #{branchName,jdbcType=VARCHAR}, #{branchUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.User" >
+    insert into paint_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="userSign != null" >
+        user_sign,
+      </if>
+      <if test="teacherId != null" >
+        teacher_id,
+      </if>
+      <if test="teacherName != null" >
+        teacher_name,
+      </if>
+      <if test="branchId != null" >
+        branch_id,
+      </if>
+      <if test="branchName != null" >
+        branch_name,
+      </if>
+      <if test="branchUser != null" >
+        branch_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="mobilePhone != null" >
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=TINYINT},
+      </if>
+      <if test="userSign != null" >
+        #{userSign,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherName != null" >
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="branchId != null" >
+        #{branchId,jdbcType=INTEGER},
+      </if>
+      <if test="branchName != null" >
+        #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test="branchUser != null" >
+        #{branchUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.User" >
+    update paint_user
+    <set >
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=TINYINT},
+      </if>
+      <if test="userSign != null" >
+        user_sign = #{userSign,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        teacher_id = #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherName != null" >
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="branchId != null" >
+        branch_id = #{branchId,jdbcType=INTEGER},
+      </if>
+      <if test="branchName != null" >
+        branch_name = #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test="branchUser != null" >
+        branch_user = #{branchUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.User" >
+    update paint_user
+    set user_code = #{userCode,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=DATE},
+      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      role = #{role,jdbcType=TINYINT},
+      user_sign = #{userSign,jdbcType=VARCHAR},
+      teacher_id = #{teacherId,jdbcType=INTEGER},
+      teacher_name = #{teacherName,jdbcType=VARCHAR},
+      branch_id = #{branchId,jdbcType=INTEGER},
+      branch_name = #{branchName,jdbcType=VARCHAR},
+      branch_user = #{branchUser,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List" />
+    from paint_user
+    where user_name = #{username}
+    and password = #{md5Password}
+  </select>
+  <select id="checkUserName" resultType="int" parameterType="java.lang.String" >
+    SELECT count(1) from paint_user
+    where user_name=#{username}
+  </select>
+  <select id="checkUserPhone"   resultType="int" parameterType="java.lang.String" >
+    SELECT
+    count(1)
+    from paint_user
+    where mobile_phone=#{mobile}
+  </select>
+  <select id="checkUserNameExSelf"  resultType="int"  parameterType="map" >
+    SELECT count(1) from paint_user
+    where user_name=#{username} and user_id !=#{userId}
+  </select>
+  <select id="checkUserPhoneExSelf"  resultType="int"  parameterType="map" >
+    SELECT count(1) from paint_user
+    where mobile_phone=#{mobile} and user_id !=#{userId}
+  </select>
+  <select id="userList" resultMap="BaseResultMap" parameterType="com.project.vo.CommonVo" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from paint_user
+    <where>
+      <if test="role!=null and role!=''">
+        and role = #{role}
+      </if>
+      <if test="userName!=null and userName!=''">
+        and (user_name like "%"#{userName}"%" or real_name like "%"#{userName}"%")
+      </if>
+      and role !=0
+    </where>
+    order by  user_id desc
+  </select>
+  <select id="checkUserPass"  resultType="int"  parameterType="map" >
+    SELECT count(1) from  paint_user
+    where password=#{oPass} and user_id =#{userId}
+  </select>
+  <select id="userListByROle" resultMap="BaseResultMap" parameterType="com.project.vo.CommonVo" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from paint_user
+    <where>
+      role = #{role}
+    </where>
+    order by  user_id
+  </select>
+  <select id="projectUserList" resultMap="BaseResultMap" parameterType="Map" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from paint_user
+    <where>
+      <if test="role!=null and role!=''">
+        and role = #{role}
+      </if>
+      <if test="userName!=null and userName!=''">
+        and user_name like "%"#{userName}"%"
+      </if>
+      <if test="realName!=null and realName!=''">
+        and real_name like "%"#{realName}"%"
+      </if>
+      and user_id in
+      <foreach collection="userIds" item="userId" separator="," close=")" open="(">
+        #{userId}
+      </foreach>
+    </where>
+    order by role
+  </select>
+  <select id="projectTechnologyList" resultMap="BaseResultMap" parameterType="Map" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from paint_user
+    <where>
+      and role = 2
+      and user_id in
+      <foreach collection="userIds" item="userId" separator="," close=")" open="(">
+        #{userId}
+      </foreach>
+    </where>
+  </select>
+  <delete id="deleteByUserCode" parameterType="java.lang.String" >
+    delete from paint_user
+    where user_code = #{userCode}
+  </delete>
+  <select id="selectByUserCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from paint_user
+    where user_code = #{userCode}
+  </select>
+  <select id="selectTeacherList" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from paint_user
+    where branch_id = #{branchId} and role = 3
+  </select>
+  <select id="selectAllTeacherAndStudentIdsByBranchId" resultType="integer" parameterType="java.lang.Integer" >
+    select
+    user_id
+    from paint_user
+    where branch_id = #{branchId}
+  </select>
+  <select id="selectAllStudentIdsByTeacherId" resultType="integer" parameterType="java.lang.Integer" >
+    select
+    user_id
+    from paint_user
+    where teacher_id = #{teacherId}
+  </select>
+</mapper>

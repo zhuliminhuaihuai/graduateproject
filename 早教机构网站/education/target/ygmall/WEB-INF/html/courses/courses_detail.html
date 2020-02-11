@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>课程详情</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+
+<div class="x-body">
+    <div class="layui-form" id="form">
+
+        <legend >课程信息设定</legend>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="x-red">*</span>课程</label>
+            <div class="layui-input-inline" >
+                <select name="coursesTitle" id="coursesTitle" disabled="disabled" lay-verify="coursesTitle" lay-filter="coursesTitle" lay-search="" >
+                    <option value="">请选择...</option>
+                    <option value="早教英语">早教英语</option>
+                    <option value="早教数学">早教数学</option>
+                    <option value="早教语文">早教语文</option>
+                    <option value="早教音乐">早教音乐</option>
+                    <option value="早教美术">早教美术</option>
+                    <option value="早教画画">早教画画</option>
+                    <option value="早教积木">早教积木</option>
+                    <option value="早教主持">早教主持</option>
+                    <option value="早教表演">早教表演</option>
+                    <option value="早教益智">早教益智</option>
+                    <option value="早教跳舞">早教跳舞</option>
+                    <option value="早教芭蕾">早教芭蕾</option>
+                    <option value="早教街舞">早教街舞</option>
+                    <option value="早教爵士">早教爵士</option>
+                    <option value="早教朗诵">早教朗诵</option>
+                    <option value="早教歌唱">早教歌唱</option>
+                    <option value="早教朗诵">早教朗诵</option>
+                    <option value="早教T台">早教T台</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>课程名
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userList" class="layui-form-label"> <span
+                    class="x-red">*</span>教师列表
+            </label>
+            <div class="layui-input-inline">
+                <select name="userList" id="userList" lay-verify="userList" lay-search="">
+                    <option value="">请选择教师...</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>授课老师
+            </div>
+        </div>
+        <div class="user_right">
+            <input type="text" style="display: none" name="coursesImg" id="coursesImg" lay-verify="coursesImg" >
+            <div class="layui-form-item" >
+                <label  class="layui-form-label"><span class="x-red">*</span>课程照片
+                </label>
+                <div class="layui-upload" style="padding-left: 130px;">
+                    <div class="layui-upload-list" id="demo3" >
+                        <img class="layui-upload-img " id="demo2" width="250px" height="250px"  >
+                    </div>
+                    <button type="button" class="layui-btn" id="test2">上传照片</button>
+                    <div class="layui-form-mid layui-word-aux">
+                        <span class="x-red">*</span>课程封面照
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+            <label class="layui-form-label"> </label>
+            <button class="layui-btn" lay-filter="save" lay-submit="">
+                保存
+            </button>
+            <button class="layui-btn layui-btn-danger" class="layui-btn layui-btn-primary" onclick="resetmessage()">
+                返回
+            </button>
+        </div>
+    </div>
+</div>
+
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+
+<script type="text/javascript">
+    var $;
+    var indexOpen;
+    var coursesId = localStorage.getItem("coursesId");
+    var coursesTitle = "";
+    localStorage.removeItem("coursesId");
+    layui.use(['form','laydate','layer','upload'],function () {
+        $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , laydate = layui.laydate
+            ,upload = layui.upload;
+
+        form.verify({
+            coursesTitle: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '课程名不能为空！';
+                }
+            },
+            userList: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '教师选择不能为空';
+                }
+            },
+            coursesImg: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '课程照片不能为空';
+                }
+            },
+        });
+        $.ajax({
+            url: "/manage/courses/detailCourses",
+            type: "post",
+            dataType: "json",
+            data:{
+                coursesId:coursesId
+            },
+            async:false,
+            success: function (res) {
+                coursesTitle = res.data.coursesTitle;
+                console.log("coursesTitle:" + coursesTitle);
+                $("#coursesTitle").val(res.data.coursesTitle);
+                var coursesImg = res.data.coursesImg;
+                $("#demo2").attr("src","http://127.0.0.1:8080/upload/"+coursesImg);
+                $("#coursesImg").val(coursesImg);
+                form.render();
+            }
+        })
+        $.ajax({
+            url: '/manage/user/findTeacherByCoursesTitle',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                coursesTitle: coursesTitle,
+            },
+            success: function (data) {
+                console.log(JSON.stringify(data));
+                var select = document.getElementById("userList");
+                if (data.status == 0) {
+                    for (var i = 0; i < data.data.length; i++) {
+                        var userName = data.data[i].userRealName;
+                        var userCode = data.data[i].userCode;
+                        select.add(new Option(userName, userCode));
+
+                    }
+                } else {
+                    select.add(new Option("暂无教师...", ""));
+                }
+                form.render();
+            }
+        });
+
+        //图片上传
+        upload.render({
+            elem: '#test2'
+            , url: '/manage/courses/uploadImg'
+            , multiple: false
+            , size: 2048
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    //console.log(file);
+                    $('#demo2').remove();
+                    $('#demo3').append('<img width="250px" height="250px" id="demo2" src="' + result + '" alt="' + file.name + '" class="layui-upload-img ">');
+                    indexOpen = layer.load(3, {time: 30*1000});
+                });
+            }
+            , done: function (res) {
+                var img = res.data.uri;
+                $("#coursesImg").val(img);
+                s = img;
+                layer.close(indexOpen);
+                layer.msg("上传完成", {icon: 6, time: 2000,});
+            }
+
+        });
+
+
+        form.on('submit(save)', function (data) {
+            var coursesImg = $("#coursesImg").val();
+            var userList = $("#userList option:selected").val();
+            $.ajax({
+                type: 'post',
+                url: '/manage/courses/saveCourses',
+                dataType: 'json',
+                data: {
+                    coursesId:coursesId,
+                    coursesImg: coursesImg,
+                    userCode: userList,
+                },
+                async: false,
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg(data.msg,{
+                            icon :6,time:1500,end:function () {
+                                parent.location.reload();
+                            }
+                        });
+                    }else {
+                        layer.msg(data.msg,{
+                            icon :5,time:1500,end:function () {
+                                return false;
+                            }
+                        });
+                    }
+                },
+                error :function (XMLHttpResponse, textStatus, errorThrown, data) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                }
+            });
+
+        });
+
+
+    });
+
+
+    function resetmessage() {
+        window.location.href="/manage/courses/jumpCoursesList.html";
+    }
+
+
+</script>
+
+</body>
+
+
+</html>

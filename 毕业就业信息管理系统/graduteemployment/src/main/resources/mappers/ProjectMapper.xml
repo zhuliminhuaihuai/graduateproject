@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.ProjectMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Project" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="project_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="project_date" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="project_harvest" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="resume_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.project.pojo.Project" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="project_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="project_date" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="project_harvest" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="resume_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="project_content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, project_name, project_date, create_time, project_harvest, resume_code
+  </sql>
+  <sql id="Blob_Column_List" >
+    project_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ecs_project
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ecs_project
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Project" >
+    insert into ecs_project (id, project_name, project_date, 
+      create_time, project_harvest, resume_code, 
+      project_content)
+    values (#{id,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, #{projectDate,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{projectHarvest,jdbcType=VARCHAR}, #{resumeCode,jdbcType=VARCHAR}, 
+      #{projectContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Project" >
+    insert into ecs_project
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="projectDate != null" >
+        project_date,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="projectHarvest != null" >
+        project_harvest,
+      </if>
+      <if test="resumeCode != null" >
+        resume_code,
+      </if>
+      <if test="projectContent != null" >
+        project_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDate != null" >
+        #{projectDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectHarvest != null" >
+        #{projectHarvest,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeCode != null" >
+        #{resumeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="projectContent != null" >
+        #{projectContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Project" >
+    update ecs_project
+    <set >
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDate != null" >
+        project_date = #{projectDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectHarvest != null" >
+        project_harvest = #{projectHarvest,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeCode != null" >
+        resume_code = #{resumeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="projectContent != null" >
+        project_content = #{projectContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.project.pojo.Project" >
+    update ecs_project
+    set project_name = #{projectName,jdbcType=VARCHAR},
+      project_date = #{projectDate,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      project_harvest = #{projectHarvest,jdbcType=VARCHAR},
+      resume_code = #{resumeCode,jdbcType=VARCHAR},
+      project_content = #{projectContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Project" >
+    update ecs_project
+    set project_name = #{projectName,jdbcType=VARCHAR},
+      project_date = #{projectDate,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      project_harvest = #{projectHarvest,jdbcType=VARCHAR},
+      resume_code = #{resumeCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="projectByResumeCode" resultMap="ResultMapWithBLOBs" parameterType="String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ecs_project
+    where resume_code = #{resumeCode} and project_name!=''
+  </select>
+</mapper>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/login.css">
+    <link rel="shortcut icon" href="../../images/logo.png" type="image/x-icon" />
+
+    <title>管理后台</title>
+    <style>
+        body{
+
+        }
+    </style>
+</head>
+<body class="login-wrap">
+    <div class="login-container">
+        <h1 style="text-align: center;font-family: 正楷;margin-bottom:7%;font-size: 85px;color: #4E5465;">软件缺陷管理系统</h1>
+        <form class="login-form">
+            <h1 style="text-align: center;font-family: 宋体;color:#6a7289;">登录</h1>
+            <div class="input-group">
+                <label for="userName" class="">
+                    <span class="label-title">用户名</span>
+                </label>
+                <input type="text" id="userName" class="layui-input">
+            </div>
+            <div class="input-group">
+                <label for="password" class="">
+                    <span class="label-title">密码</span>
+                </label>
+                <input type="password" id="password" class="layui-input">
+            </div>
+            <button type="button" class="login-button" lay-filter="login" lay-submit="" >登录<i class="ai ai-enter"></i></button>
+        </form>
+    </div>
+</body>
+<script src="../../layui/layui.js"></script>
+<script src="../../js/index.js"></script>
+<script src="../../js/jquery-3.3.1.min.js" ></script>
+<script>
+    layui.use(['table','laydate','layer'], function() {
+        $ = layui.jquery;
+        var table = layui.table,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            form = layui.form;
+
+        form.on('submit(login)', function(data) {
+            var userName = $("#userName").val();
+            var password = $("#password").val();
+            if (userName == '') {
+                layer.msg("请输入用户名！", {icon: 5, time: 1000});
+                return false;
+            }
+            if (password == '') {
+                layer.msg("请输入密码！", {icon: 5, time: 1000});
+                return false;
+            }
+            //登录请求
+            $.ajax({
+                url:'/manage/user/loginUser',
+                type:'post',
+                data:{
+                    userName:userName,
+                    password:password,
+                },
+                async:false,
+                dataType:'json',
+                success:function (data) {
+                    if(data.status==0){
+                        layer.msg("登录成功！", {icon: 6, time: 1000});
+                        setTimeout(function(){//
+                            window.location.href="/manage/user/toIndex";
+                        },1500);
+                    }else{
+                        layer.msg(data.msg, {icon: 5, time: 1000});
+                        return false;
+                    }
+                },
+                error:function (data) {
+                    alert("进入错误")
+                }
+            });
+        })
+    })
+    //绑定键盘enter键
+    $(document).keyup(function(event){
+        if(event.keyCode ==13){
+            $(".login-button").trigger("click");
+        }
+    });
+</script>
+</html>

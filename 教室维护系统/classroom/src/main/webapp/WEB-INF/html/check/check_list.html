@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>检查单列表</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+
+
+</head>
+<body>
+<blockquote class="layui-elem-quote news_search layui-form">
+    <div class="demoTable">
+        <div class="layui-inline">
+            <label>检查单编号</label>&nbsp
+            <div class="layui-input-inline">
+                <input type="text" id="checkCode" placeholder="检查单编号" class="layui-input search_input">
+            </div>
+            <label>检查状态</label>
+            <div class="layui-input-inline">
+                <select name="checkState" id="checkState" lay-verify="checkState" lay-filter="" lay-search="" >
+                    <option value="">请选择...</option>
+                    <option value="1">待反馈</option>
+                    <option value="2">反馈完毕</option>
+                </select>
+            </div>
+            <label>教室编号</label>&nbsp
+            <div class="layui-input-inline">
+                <input type="text" id="roomCode" placeholder="教室编号" class="layui-input search_input">
+            </div>
+            <label>窗户损坏</label>
+            <div class="layui-input-inline">
+                <select name="roomIsDamageWindow" id="roomIsDamageWindow" lay-verify="roomIsDamageWindow" lay-filter="" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="1">有损坏</option>
+                    <option value="0">无损坏</option>
+                </select>
+            </div>
+            <label>座椅损坏</label>
+            <div class="layui-input-inline">
+                <select name="roomIsDamageChair" id="roomIsDamageChair" lay-verify="roomIsDamageChair" lay-filter="" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="1">有损坏</option>
+                    <option value="0">无损坏</option>
+                </select>
+            </div>
+            <label>粉笔需要</label>
+            <div class="layui-input-inline">
+                <select name="roomIsNeedChalk" id="roomIsNeedChalk" lay-verify="roomIsNeedChalk" lay-filter="" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="1">需要</option>
+                    <option value="0">不需要</option>
+                </select>
+            </div>
+            <label>讲台损坏</label>
+            <div class="layui-input-inline">
+                <select name="roomIsDamagePlatform" id="roomIsDamagePlatform" lay-verify="roomIsDamagePlatform" lay-filter="" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="1">有损坏</option>
+                    <option value="0">无损坏</option>
+                </select>
+            </div>
+            <label>黑板损坏</label>
+            <div class="layui-input-inline">
+                <select name="roomIsDamageBlackboard" id="roomIsDamageBlackboard" lay-verify="roomIsDamageBlackboard" lay-filter="" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="1">有损坏</option>
+                    <option value="0">无损坏</option>
+                </select>
+            </div>
+            <label>多媒体损坏</label>
+            <div class="layui-input-inline">
+                <select name="roomIsDamageMedia" id="roomIsDamageMedia" lay-verify="roomIsDamageMedia" lay-filter="" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="1">有损坏</option>
+                    <option value="0">无损坏</option>
+                </select>
+            </div>
+            <label>麦克风损坏</label>
+            <div class="layui-input-inline">
+                <select name="roomIsDamageMicrophone" id="roomIsDamageMicrophone" lay-verify="roomIsDamageMicrophone" lay-filter="" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="1">有损坏</option>
+                    <option value="0">无损坏</option>
+                </select>
+            </div>
+            <label>门损坏</label>
+            <div class="layui-input-inline">
+                <select name="roomIsDamageDoor" id="roomIsDamageDoor" lay-verify="roomIsDamageDoor" lay-filter="" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="1">有损坏</option>
+                    <option value="0">无损坏</option>
+                </select>
+            </div>
+            <label>音响损坏</label>
+            <div class="layui-input-inline">
+                <select name="roomIsDamageSound" id="roomIsDamageSound" lay-verify="roomIsDamageSound" lay-filter="" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="1">有损坏</option>
+                    <option value="0">无损坏</option>
+                </select>
+            </div>
+            <label>窗帘损坏</label>
+            <div class="layui-input-inline">
+                <select name="roomIsDamageCurtains" id="roomIsDamageCurtains" lay-verify="roomIsDamageCurtains" lay-filter="" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="1">有损坏</option>
+                    <option value="0">无损坏</option>
+                </select>
+            </div>
+            <label>创建时间范围</label>&nbsp
+            <div class="layui-input-inline">
+                <input type="text" name="startTime" id="startTime" lay-verify="date" placeholder="创建时间"
+                       class="layui-input">
+            </div>
+            ~
+            <div class="layui-input-inline">
+                <input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="创建时间" class="layui-input">
+            </div>
+            <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+            <!--
+                        <button class="layui-btn" onclick="x_admin_show('添加新学生','/manage/user/openAddUser.html',60,97)"><i class="layui-icon"></i>添加新学生</button>
+            -->
+        </div>
+    </div>
+</blockquote>
+<table class="layui-hide" id="user" lay-filter="userTable"></table>
+<!--<script type="text/html" id="barDemo">-->
+<!--<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">详情</a>-->
+<!--<a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="detail">打扫</a>-->
+<!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="detail">检查</a>-->
+
+<!--&lt;!&ndash;<a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="czpassword">重置密码</a>&ndash;&gt;-->
+<!--&lt;!&ndash;<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="modify">修改</a>&ndash;&gt;-->
+<!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>-->
+<!--</script>-->
+<script type="text/html" id="barDemo">
+    {{# if(d.checkState ===1){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">详情</a>
+    <!--<a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="clear">打扫</a>-->
+    <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="feedback">反馈</a>
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>-->
+    {{# }else { }}
+    <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">详情</a>
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>-->
+    {{# }
+    }}
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../js/xadmin.js"></script>
+<!--<script type="text/html" id="switchTpl1" lay-filter="test1">-->
+<!--<input type="checkbox" name="isShow" id="isShow1" value="{{d.roomId}}" lay-skin="switch" lay-text="可使用|不可使用" lay-filter="isShow1" {{ d.roomSections1 == 1 ?'checked' : '' }}>-->
+<!--</script>-->
+<!--<script type="text/html" id="switchTpl2" lay-filter="test1">-->
+<!--<input type="checkbox" name="isShow" id="isShow2" value="{{d.roomId}}" lay-skin="switch" lay-text="可使用|不可使用" lay-filter="isShow2" {{ d.roomSections2 == 1 ?'checked' : '' }}>-->
+<!--</script>-->
+<!--<script type="text/html" id="switchTpl3" lay-filter="test1">-->
+<!--<input type="checkbox" name="isShow" id="isShow3" value="{{d.roomId}}" lay-skin="switch" lay-text="可使用|不可使用" lay-filter="isShow3" {{ d.roomSections3 == 1 ?'checked' : '' }}>-->
+<!--</script>-->
+<!--<script type="text/html" id="switchTpl4" lay-filter="test1">-->
+<!--<input type="checkbox" name="isShow" id="isShow4" value="{{d.roomId}}" lay-skin="switch" lay-text="可使用|不可使用" lay-filter="isShow4" {{ d.roomSections4 == 1 ?'checked' : '' }}>-->
+<!--</script>-->
+<script type="text/html" id="switchTpl5" lay-filter="test1">
+    <input type="checkbox" name="isShow" id="isShow5" value="{{d.roomId}}" lay-skin="switch" lay-text="启用|未启用" lay-filter="isShow5" {{ d.roomState == 1 ?'checked' : '' }}>
+</script>
+<script>
+    layui.use(['table','laydate','layer','form'], function(){
+        $ = layui.jquery;
+        var table = layui.table,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            form = layui.form;
+
+        //渲染
+        table.render({
+            elem: '#user'
+            ,id : 'testReload'
+            ,url: '/manage/check/getCheckList'//数据接口
+            ,cols: [[
+                // {type: 'checkbox'}
+                 {field: 'checkCode', width:'11%' , align: 'center',title: '检查单编号'}
+                , {field: 'checkCreateTime',width:'10%',sort: true,align: 'center', title: '创建时间',
+                    templet :function (row){
+                        return createTime(row.checkCreateTime);
+                    }}
+                , {field: 'checkTime',width:'10%',sort: true,align: 'center', title: '反馈时间',
+                    templet :function (row){
+                        return createTime(row.checkTime);
+                    }}
+                , {field: 'checkState', width:'7%' , align: 'center',title: '检查单状态',templet:"#statecolor"}
+                , {field: 'roomCode', width:'9%' , align: 'center',title: '教室编号'}
+                , {field: 'roomIsDamageWindow', width:'9%' , align: 'center',title: '窗户损坏'}
+                , {field: 'roomIsDamageChair', width:'9%' , align: 'center',title: '座椅损坏'}
+                , {field: 'roomIsNeedChalk', width:'9%' , align: 'center',title: '粉笔需要'}
+                , {field: 'roomIsDamagePlatform', width:'9%' , align: 'center',title: '讲台损坏'}
+                , {field: 'roomIsDamageBlackboard', width:'9%' , align: 'center',title: '黑板损坏'}
+                , {field: 'roomIsDamageMedia', width:'9%' , align: 'center',title: '多媒体损坏'}
+                , {field: 'roomIsDamageMicrophone', width:'9%' , align: 'center',title: '麦克风损坏'}
+                , {field: 'roomIsDamageDoor', width:'9%' , align: 'center',title: '门损坏'}
+                , {field: 'roomIsDamageSound', width:'9%' , align: 'center',title: '音响损坏'}
+                , {field: 'roomIsDamageCurtains', width:'9%' , align: 'center',title: '窗帘损坏'}
+
+                // , {field: 'roomAddress', width:'5%' , align: 'center',title: '地理位置'}
+                // , {field: 'roomCheckState', width:'8%' , align: 'center',title: '检查状态',templet:"#statecolor"}
+                // , {field: 'roomCheckNumber', width:'8%' , align: 'center',title: '检查次数',sort: true}
+                // , {field: 'roomDefendNumber', width:'8%' , align: 'center',title: '维护次数',sort: true}
+                // , {field: 'roomClearState', width:'8%' , align: 'center',title: '打扫状态',templet:"#statecolor1"}
+                // , {field: 'roomClearNumber', width:'8%' , align: 'center',title: '打扫次数',sort: true}
+                // , {field: 'roomSections1', width:'8%' , align: 'center',title: '1-2节状态'}
+                // , {field: 'roomSections2', width:'8%' , align: 'center',title: '3-4节状态'}
+                // , {field: 'roomSections3', width:'8%' , align: 'center',title: '5-6节状态'}
+                // , {field: 'roomSections4', width:'8%' , align: 'center',title: '7-8节状态'}
+                // , {field: 'roomPeople', width:'8%' , align: 'center',title: '容纳人数'}
+                // , {field: 'roomPurpose', width:'8%' , align: 'center', title: '用途'}
+                // , {field: 'roomState', width:'8%' , align: 'center', title: '教室状态',templet:"#switchTpl5"}
+                , {fixed: 'right', width: '15%', align: 'center', title: '操作', toolbar: '#barDemo'}
+            ]]
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                ,curr: 1 //设定初始在第 1 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit: 10
+                ,limits: [5,10,15,20]
+            }  //true表示分页
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+                // $("[data-field='roomCheckState']").children().each(function(){
+                //     if($(this).text()=='1'){
+                //         $(this).text("检查完毕")
+                //     }else if($(this).text()=='2'){
+                //         $(this).text("检查中")
+                //     }
+                // })
+                // $("[data-field='roomClearState']").children().each(function(){
+                //     if($(this).text()=='1'){
+                //         $(this).text("打扫完毕")
+                //     }else if($(this).text()=='2'){
+                //         $(this).text("打扫中")
+                //     }
+                // })
+                $("[data-field='roomIsDamageWindow']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageChair']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsNeedChalk']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("需要")
+                    }else if($(this).text()=='0'){
+                        $(this).text("不需要")
+                    }
+                })
+                $("[data-field='roomIsDamagePlatform']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageBlackboard']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageMedia']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageMicrophone']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageDoor']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageSound']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                $("[data-field='roomIsDamageCurtains']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("有")
+                    }else if($(this).text()=='0'){
+                        $(this).text("无")
+                    }
+                })
+                hoverOpenImg();//显示大图 鼠标悬浮时显示大图
+
+            }
+
+        })
+        //监听开关操作1-2节课
+        // form.on('switch(isShow1)', function(obj){
+        //     var data = obj.data;
+        //     console.log("主键Id："+this.value);
+        //     var roomId = this.value;
+        //     console.log("status："+ obj.elem.checked);
+        //     var roomSections1="";
+        //     if(obj.elem.checked==true){
+        //         roomSections1=1;
+        //     }else {
+        //         roomSections1=0;
+        //     }
+        //     layer.confirm('确定更改教室1-2节课状态？', {
+        //         btn: ['确定','取消'] //按钮
+        //     }, function(){//客户
+        //         $.ajax({
+        //             url:'/manage/room/updateRoomSelection1State',
+        //             type:'post',
+        //             data:{
+        //                 roomId:roomId,
+        //                 roomSections1:roomSections1
+        //             },
+        //             dataType:'json',
+        //             success:function (data) {
+        //                 if(data.status==0){
+        //                     layer.msg("状态修改成功！");
+        //                 }else {
+        //                     layer.msg("状态修改失败！");
+        //                 }
+        //             },
+        //             error: function () {
+        //                 layer.msg("报出异常！")
+        //             }
+        //         });
+        //     },function () {
+        //         if (roomSections1 == 1) {
+        //             obj.elem.checked = false;
+        //             form.render();
+        //         } else {
+        //             obj.elem.checked = true;
+        //             form.render();
+        //         }
+        //     })
+        // });
+        // //监听开关操作3-4节课
+        // form.on('switch(isShow2)', function(obj){
+        //     var data = obj.data;
+        //     console.log("主键Id："+this.value);
+        //     var roomId = this.value;
+        //     console.log("status："+ obj.elem.checked);
+        //     var roomSections2="";
+        //     if(obj.elem.checked==true){
+        //         roomSections2=1;
+        //     }else {
+        //         roomSections2=0;
+        //     }
+        //     layer.confirm('确定更改教室3-4节课状态？', {
+        //         btn: ['确定','取消'] //按钮
+        //     }, function(){//客户
+        //         $.ajax({
+        //             url:'/manage/room/updateRoomSelection2State',
+        //             type:'post',
+        //             data:{
+        //                 roomId:roomId,
+        //                 roomSections2:roomSections2
+        //             },
+        //             dataType:'json',
+        //             success:function (data) {
+        //                 if(data.status==0){
+        //                     layer.msg("状态修改成功！");
+        //                 }else {
+        //                     layer.msg("状态修改失败！");
+        //                 }
+        //             },
+        //             error: function () {
+        //                 layer.msg("报出异常！")
+        //             }
+        //         });
+        //     },function () {
+        //         if (roomSections2 == 1) {
+        //             obj.elem.checked = false;
+        //             form.render();
+        //         } else {
+        //             obj.elem.checked = true;
+        //             form.render();
+        //         }
+        //     })
+        // });
+        // //监听开关操作5-6节课
+        // form.on('switch(isShow3)', function(obj){
+        //     var data = obj.data;
+        //     console.log("主键Id："+this.value);
+        //     var roomId = this.value;
+        //     console.log("status："+ obj.elem.checked);
+        //     var roomSections3="";
+        //     if(obj.elem.checked==true){
+        //         roomSections3=1;
+        //     }else {
+        //         roomSections3=0;
+        //     }
+        //     layer.confirm('确定更改教室5-6节课状态？', {
+        //         btn: ['确定','取消'] //按钮
+        //     }, function(){//客户
+        //         $.ajax({
+        //             url:'/manage/room/updateRoomSelection3State',
+        //             type:'post',
+        //             data:{
+        //                 roomId:roomId,
+        //                 roomSections3:roomSections3
+        //             },
+        //             dataType:'json',
+        //             success:function (data) {
+        //                 if(data.status==0){
+        //                     layer.msg("状态修改成功！");
+        //                 }else {
+        //                     layer.msg("状态修改失败！");
+        //                 }
+        //             },
+        //             error: function () {
+        //                 layer.msg("报出异常！")
+        //             }
+        //         });
+        //     },function () {
+        //         if (roomSections3 == 1) {
+        //             obj.elem.checked = false;
+        //             form.render();
+        //         } else {
+        //             obj.elem.checked = true;
+        //             form.render();
+        //         }
+        //     })
+        // });
+        // //监听开关操作7-8节课
+        // form.on('switch(isShow4)', function(obj){
+        //     var data = obj.data;
+        //     console.log("主键Id："+this.value);
+        //     var roomId = this.value;
+        //     console.log("status："+ obj.elem.checked);
+        //     var roomSections4="";
+        //     if(obj.elem.checked==true){
+        //         roomSections4=1;
+        //     }else {
+        //         roomSections4=0;
+        //     }
+        //     layer.confirm('确定更改教室7-8节课状态？', {
+        //         btn: ['确定','取消'] //按钮
+        //     }, function(){//客户
+        //         $.ajax({
+        //             url:'/manage/room/updateRoomSelection4State',
+        //             type:'post',
+        //             data:{
+        //                 roomId:roomId,
+        //                 roomSections4:roomSections4
+        //             },
+        //             dataType:'json',
+        //             success:function (data) {
+        //                 if(data.status==0){
+        //                     layer.msg("状态修改成功！");
+        //                 }else {
+        //                     layer.msg("状态修改失败！");
+        //                 }
+        //             },
+        //             error: function () {
+        //                 layer.msg("报出异常！")
+        //             }
+        //         });
+        //     },function () {
+        //         if (roomSections4 == 1) {
+        //             obj.elem.checked = false;
+        //             form.render();
+        //         } else {
+        //             obj.elem.checked = true;
+        //             form.render();
+        //         }
+        //     })
+        // });
+        //监听开关教室状态
+        form.on('switch(isShow5)', function(obj){
+            var data = obj.data;
+            console.log("主键Id："+this.value);
+            var roomId = this.value;
+            console.log("status："+ obj.elem.checked);
+            var roomState="";
+            if(obj.elem.checked==true){
+                roomState=1;
+            }else {
+                roomState=0;
+            }
+            layer.confirm('确定更改教室状态？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){//客户
+                $.ajax({
+                    url:'/manage/room/updateRoomState',
+                    type:'post',
+                    data:{
+                        roomId:roomId,
+                        roomState:roomState
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        if(data.status==0){
+                            layer.msg("状态修改成功！");
+                        }else {
+                            layer.msg("状态修改失败！");
+                        }
+                    },
+                    error: function () {
+                        layer.msg("报出异常！")
+                    }
+                });
+            },function () {
+                if (roomState == 1) {
+                    obj.elem.checked = false;
+                    form.render();
+                } else {
+                    obj.elem.checked = true;
+                    form.render();
+                }
+            })
+        });
+        //表格数据操作-查看详情和删除
+        table.on('tool(userTable)', function(obj){
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                localStorage.setItem("checkId", data.checkId);
+                x_admin_show('检查单详情','/manage/check/openCheckDetailHtml.html',60,97);
+            }else if(obj.event === 'feedback'){
+                localStorage.setItem("checkId", data.checkId);
+                x_admin_show('检查单反馈','/manage/check/openCheckFeedBackHtml.html',60,97);
+                // layer.confirm('确定打扫么？', function(index){
+                //     $.ajax({
+                //         type: 'post',
+                //         url: '/manage//',
+                //         data:{
+                //             roomId:data.roomId,
+                //         },
+                //         dataType: 'json',
+                //         success : function (data) {
+                //             if (data.status == 0) {
+                //                 layer.msg(data.msg);
+                //             } else {
+                //                 layer.msg(data.msg);
+                //             }
+                //         },
+                //         error : function () {
+                //             layer.msg('打扫失败！');
+                //         }
+                //     });
+                // });
+            }else if(obj.event === 'check'){
+                layer.confirm('确定检查教室么？', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/check/addCheck',
+                        data:{
+                            roomId:data.roomId,
+                            roomCode:data.roomCode
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.status == 0) {
+                                layer.msg(data.msg, {
+                                    icon: 6,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        },
+                        error : function () {
+                            layer.msg('检查失败！');
+                        }
+                    });
+                });
+            }else if(obj.event === 'del'){
+                layer.confirm('确定删除教室？', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/room/deleteRoom',
+                        data:{
+                            roomId:data.roomId,
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.status == 0) {
+                                layer.msg(data.msg, {
+                                    icon: 6,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        },
+                        error : function () {
+                            layer.msg('删除失败');
+                        }
+                    });
+                });
+            }
+        });
+        var $ = layui.jquery, active = {
+            reload: function(){
+                var checkCode = $("#checkCode").val();
+                var checkState = $("#checkState option:selected").val();
+                var roomCode = $("#roomCode").val();
+                var roomIsDamageWindow = $("#roomIsDamageWindow option:selected").val();
+                var roomIsDamageChair = $("#roomIsDamageChair option:selected").val();
+                var roomIsNeedChalk = $("#roomIsNeedChalk option:selected").val();
+                var roomIsDamagePlatform = $("#roomIsDamagePlatform option:selected").val();
+                var roomIsDamageBlackboard = $("#roomIsDamageBlackboard option:selected").val();
+                var roomIsDamageMedia = $("#roomIsDamageMedia option:selected").val();
+                var roomIsDamageMicrophone = $("#roomIsDamageMicrophone option:selected").val();
+                var roomIsDamageDoor = $("#roomIsDamageDoor option:selected").val();
+                var roomIsDamageSound = $("#roomIsDamageSound option:selected").val();
+                var roomIsDamageCurtains = $("#roomIsDamageCurtains option:selected").val();
+                var startTime = $("#startTime").val();
+                var endTime = $("#endTime").val();
+                // var roomCheckNumber = $("#roomCheckNumber").val();
+                // var roomDefendNumber = $("#roomDefendNumber").val();
+                // var roomClearNumber = $("#roomClearNumber").val();
+
+                table.reload('testReload', {
+                    method:'post',
+                    where:{roomCode:roomCode,startTime:startTime,endTime:endTime,checkCode:checkCode,checkState:checkState,
+                        roomIsDamageWindow:roomIsDamageWindow,roomIsDamageChair:roomIsDamageChair,roomIsNeedChalk:roomIsNeedChalk,roomIsDamagePlatform:roomIsDamagePlatform,
+                        roomIsDamageBlackboard:roomIsDamageBlackboard,roomIsDamageMedia:roomIsDamageMedia,roomIsDamageMicrophone:roomIsDamageMicrophone,roomIsDamageDoor:roomIsDamageDoor,
+                        roomIsDamageDoor:roomIsDamageDoor,
+                        roomIsDamageSound:roomIsDamageSound,roomIsDamageCurtains:roomIsDamageCurtains}
+                });
+            }
+        };
+        laydate.render({
+            elem: '#startTime'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#endTime'
+            ,type: 'datetime'
+        });
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        function hoverOpenImg(){
+            var img_show = null; // tips提示
+            $('td img').hover(function(){
+                var kd=$(this).width();
+                kd1=kd*6;          //图片放大倍数
+                kd2=kd*6+30;       //图片放大倍数
+                var img = "<img class='img_msg' src='"+$(this).attr('src')+"' style='width:"+kd1+"px;' />";
+                img_show = layer.tips(img, this,{
+                    tips:[2, 'rgba(41,41,41,.5)']
+                    ,area: [kd2+'px']
+                });
+            },function(){
+                layer.close(img_show);
+            });
+            $('td img').attr('style','max-width:70px;display:block!important');
+        }
+    });
+
+
+    //数字时间转DATE时间类型
+    function createTime(v){
+        if (v == null) {
+            return "";
+        }
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+        return str;
+    }
+
+</script>
+<script type="text/html" id="statecolor">
+    {{#  if(d.checkState === 2){ }}
+    <span style="color: #1cff61;">{{ '反馈完毕'}}</span>
+    {{#  }else
+    if(d.checkState === 1){ }}
+    <span style="color: #ff2125;">{{ '待反馈' }}</span>
+    {{#  }
+    }}
+</script>
+<script type="text/html" id="statecolor1">
+    {{#  if(d.roomClearState === 1){ }}
+    <span style="color: #1cff61;">{{ '打扫完毕' }}</span>
+    {{#  }else
+    if(d.roomClearState === 2){ }}
+    <span style="color: #ff2125;">{{ '打扫中' }}</span>
+    {{#  }
+    }}
+</script>
+
+</body>
+</html>

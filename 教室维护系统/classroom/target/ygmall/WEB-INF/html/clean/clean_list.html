@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>打扫单列表</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+
+
+</head>
+<body>
+<blockquote class="layui-elem-quote news_search layui-form">
+    <div class="demoTable">
+        <div class="layui-inline">
+            <label>打扫单编号</label>&nbsp
+            <div class="layui-input-inline">
+                <input type="text" id="cleanCode" placeholder="检查单编号" class="layui-input search_input">
+            </div>
+            <label>打扫状态</label>
+            <div class="layui-input-inline">
+                <select name="cleanState" id="cleanState" lay-verify="cleanState" lay-filter="" lay-search="" >
+                    <option value="">请选择...</option>
+                    <option value="1">打扫中</option>
+                    <option value="2">打扫完毕</option>
+                </select>
+            </div>
+            <label>教室编号</label>&nbsp
+            <div class="layui-input-inline">
+                <input type="text" id="roomCode" placeholder="教室编号" class="layui-input search_input">
+            </div>
+            <label>创建时间范围</label>&nbsp
+            <div class="layui-input-inline">
+                <input type="text" name="startTime" id="startTime" lay-verify="date" placeholder="创建时间"
+                       class="layui-input">
+            </div>
+            ~
+            <div class="layui-input-inline">
+                <input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="创建时间" class="layui-input">
+            </div>
+            <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+            <!--
+                        <button class="layui-btn" onclick="x_admin_show('添加新学生','/manage/user/openAddUser.html',60,97)"><i class="layui-icon"></i>添加新学生</button>
+            -->
+        </div>
+    </div>
+</blockquote>
+<table class="layui-hide" id="user" lay-filter="userTable"></table>
+<!--<script type="text/html" id="barDemo">-->
+<!--<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">详情</a>-->
+<!--<a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="detail">打扫</a>-->
+<!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="detail">检查</a>-->
+
+<!--&lt;!&ndash;<a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="czpassword">重置密码</a>&ndash;&gt;-->
+<!--&lt;!&ndash;<a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="modify">修改</a>&ndash;&gt;-->
+<!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>-->
+<!--</script>-->
+<script type="text/html" id="barDemo">
+    {{# if(d.cleanState ===1){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">详情</a>
+    <!--<a class="layui-btn layui-btn-warm layui-btn-xs layui-btn-radius" lay-event="clear">打扫</a>-->
+    <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="cleanOver">打扫完毕</a>
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>-->
+    {{# }else { }}
+    <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">详情</a>
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>-->
+    {{# }
+    }}
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../js/xadmin.js"></script>
+<!--<script type="text/html" id="switchTpl1" lay-filter="test1">-->
+<!--<input type="checkbox" name="isShow" id="isShow1" value="{{d.roomId}}" lay-skin="switch" lay-text="可使用|不可使用" lay-filter="isShow1" {{ d.roomSections1 == 1 ?'checked' : '' }}>-->
+<!--</script>-->
+<!--<script type="text/html" id="switchTpl2" lay-filter="test1">-->
+<!--<input type="checkbox" name="isShow" id="isShow2" value="{{d.roomId}}" lay-skin="switch" lay-text="可使用|不可使用" lay-filter="isShow2" {{ d.roomSections2 == 1 ?'checked' : '' }}>-->
+<!--</script>-->
+<!--<script type="text/html" id="switchTpl3" lay-filter="test1">-->
+<!--<input type="checkbox" name="isShow" id="isShow3" value="{{d.roomId}}" lay-skin="switch" lay-text="可使用|不可使用" lay-filter="isShow3" {{ d.roomSections3 == 1 ?'checked' : '' }}>-->
+<!--</script>-->
+<!--<script type="text/html" id="switchTpl4" lay-filter="test1">-->
+<!--<input type="checkbox" name="isShow" id="isShow4" value="{{d.roomId}}" lay-skin="switch" lay-text="可使用|不可使用" lay-filter="isShow4" {{ d.roomSections4 == 1 ?'checked' : '' }}>-->
+<!--</script>-->
+<script type="text/html" id="switchTpl5" lay-filter="test1">
+    <input type="checkbox" name="isShow" id="isShow5" value="{{d.roomId}}" lay-skin="switch" lay-text="启用|未启用" lay-filter="isShow5" {{ d.roomState == 1 ?'checked' : '' }}>
+</script>
+<script>
+    layui.use(['table','laydate','layer','form'], function(){
+        $ = layui.jquery;
+        var table = layui.table,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            form = layui.form;
+
+        //渲染
+        table.render({
+            elem: '#user'
+            ,id : 'testReload'
+            ,url: '/manage/clean/cleanList'//数据接口
+            ,cols: [[
+                // {type: 'checkbox'}
+                {field: 'cleanCode', width:'11%' , align: 'center',title: '打扫单编号'}
+                , {field: 'cleanCreateTime',width:'10%',sort: true,align: 'center', title: '创建时间',
+                    templet :function (row){
+                        return createTime(row.cleanCreateTime);
+                    }}
+                , {field: 'cleanTime',width:'10%',sort: true,align: 'center', title: '打扫时间',
+                    templet :function (row){
+                        return createTime(row.cleanTime);
+                    }}
+                , {field: 'cleanState', width:'7%' , align: 'center',title: '打扫状态',templet:"#statecolor"}
+                , {field: 'roomCode', width:'11%' , align: 'center',title: '教室编号'}
+                , {fixed: 'right', width: '15%', align: 'center', title: '操作', toolbar: '#barDemo'}
+            ]]
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                ,curr: 1 //设定初始在第 1 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit: 10
+                ,limits: [5,10,15,20]
+            }  //true表示分页
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+                hoverOpenImg();//显示大图 鼠标悬浮时显示大图
+
+            }
+
+        })
+        //表格数据操作-查看详情和删除
+        table.on('tool(userTable)', function(obj){
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                localStorage.setItem("cleanId", data.cleanId);
+                x_admin_show('打扫单详情','/manage/clean/jumpCleanDetailHtml.html',60,97);
+            }else if(obj.event === 'feedback'){
+                localStorage.setItem("checkId", data.checkId);
+                x_admin_show('检查单反馈','/manage/check/openCheckFeedBackHtml.html',60,97);
+            }else if(obj.event === 'cleanOver'){
+                layer.confirm('确定打扫完毕了么？', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/clean/cleanOver',
+                        data:{
+                            cleanId:data.cleanId
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.status == 0) {
+                                layer.msg(data.msg, {
+                                    icon: 6,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        },
+                        error : function () {
+                            layer.msg('检查失败！');
+                        }
+                    });
+                });
+            }else if(obj.event === 'del'){
+                layer.confirm('确定删除教室？', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/room/deleteRoom',
+                        data:{
+                            roomId:data.roomId,
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.status == 0) {
+                                layer.msg(data.msg, {
+                                    icon: 6,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        },
+                        error : function () {
+                            layer.msg('删除失败');
+                        }
+                    });
+                });
+            }
+        });
+        var $ = layui.jquery, active = {
+            reload: function(){
+                var cleanCode = $("#cleanCode").val();
+                var cleanState = $("#cleanState option:selected").val();
+                var roomCode = $("#roomCode").val();
+                var startTime = $("#startTime").val();
+                var endTime = $("#endTime").val();
+
+                table.reload('testReload', {
+                    method:'post',
+                    where:{cleanCode:cleanCode,startTime:startTime,endTime:endTime,cleanState:cleanState,roomCode:roomCode}
+                });
+            }
+        };
+        laydate.render({
+            elem: '#startTime'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#endTime'
+            ,type: 'datetime'
+        });
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        function hoverOpenImg(){
+            var img_show = null; // tips提示
+            $('td img').hover(function(){
+                var kd=$(this).width();
+                kd1=kd*6;          //图片放大倍数
+                kd2=kd*6+30;       //图片放大倍数
+                var img = "<img class='img_msg' src='"+$(this).attr('src')+"' style='width:"+kd1+"px;' />";
+                img_show = layer.tips(img, this,{
+                    tips:[2, 'rgba(41,41,41,.5)']
+                    ,area: [kd2+'px']
+                });
+            },function(){
+                layer.close(img_show);
+            });
+            $('td img').attr('style','max-width:70px;display:block!important');
+        }
+    });
+
+
+    //数字时间转DATE时间类型
+    function createTime(v){
+        if (v == null) {
+            return "";
+        }
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+        return str;
+    }
+
+</script>
+<script type="text/html" id="statecolor">
+    {{#  if(d.cleanState === 2){ }}
+    <span style="color: #1cff61;">{{ '打扫完毕'}}</span>
+    {{#  }else
+    if(d.cleanState === 1){ }}
+    <span style="color: #ff2125;">{{ '打扫中' }}</span>
+    {{#  }
+    }}
+</script>
+<script type="text/html" id="statecolor1">
+    {{#  if(d.roomClearState === 1){ }}
+    <span style="color: #1cff61;">{{ '打扫完毕' }}</span>
+    {{#  }else
+    if(d.roomClearState === 2){ }}
+    <span style="color: #ff2125;">{{ '打扫中' }}</span>
+    {{#  }
+    }}
+</script>
+
+</body>
+</html>

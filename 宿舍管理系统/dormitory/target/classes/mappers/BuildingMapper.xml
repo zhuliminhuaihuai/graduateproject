@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.managesystem.dao.BuildingMapper" >
+    <resultMap id="BaseResultMap" type="com.managesystem.pojo.Building" >
+        <constructor >
+            <idArg column="building_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="building_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="building_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="building_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="building_adress" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="building_detail" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="building_sex" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="building_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="building_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+            <arg column="building_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List" >
+    building_id, building_code, building_title, building_name, building_adress, building_detail,
+    building_sex, building_img, building_create_time, building_update_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from dormitory_building
+        where building_id = #{buildingId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dormitory_building
+    where building_id = #{buildingId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.managesystem.pojo.Building" >
+    insert into dormitory_building (building_id, building_code, building_title,
+      building_name, building_adress, building_detail,
+      building_sex, building_img, building_create_time,
+      building_update_time)
+    values (#{buildingId,jdbcType=INTEGER}, #{buildingCode,jdbcType=VARCHAR}, #{buildingTitle,jdbcType=VARCHAR},
+      #{buildingName,jdbcType=VARCHAR}, #{buildingAdress,jdbcType=VARCHAR}, #{buildingDetail,jdbcType=VARCHAR},
+      #{buildingSex,jdbcType=INTEGER}, #{buildingImg,jdbcType=VARCHAR}, #{buildingCreateTime,jdbcType=TIMESTAMP},
+      #{buildingUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.managesystem.pojo.Building" >
+        insert into dormitory_building
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="buildingId != null" >
+                building_id,
+            </if>
+            <if test="buildingCode != null" >
+                building_code,
+            </if>
+            <if test="buildingTitle != null" >
+                building_title,
+            </if>
+            <if test="buildingName != null" >
+                building_name,
+            </if>
+            <if test="buildingAdress != null" >
+                building_adress,
+            </if>
+            <if test="buildingDetail != null" >
+                building_detail,
+            </if>
+            <if test="buildingSex != null" >
+                building_sex,
+            </if>
+            <if test="buildingImg != null" >
+                building_img,
+            </if>
+            <if test="buildingCreateTime != null" >
+                building_create_time,
+            </if>
+            <if test="buildingUpdateTime != null" >
+                building_update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="buildingId != null" >
+                #{buildingId,jdbcType=INTEGER},
+            </if>
+            <if test="buildingCode != null" >
+                #{buildingCode,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingTitle != null" >
+                #{buildingTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingName != null" >
+                #{buildingName,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingAdress != null" >
+                #{buildingAdress,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingDetail != null" >
+                #{buildingDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingSex != null" >
+                #{buildingSex,jdbcType=INTEGER},
+            </if>
+            <if test="buildingImg != null" >
+                #{buildingImg,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingCreateTime != null" >
+                #{buildingCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="buildingUpdateTime != null" >
+                #{buildingUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.managesystem.pojo.Building" >
+        update dormitory_building
+        <set >
+            <if test="buildingCode != null" >
+                building_code = #{buildingCode,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingTitle != null" >
+                building_title = #{buildingTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingName != null" >
+                building_name = #{buildingName,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingAdress != null" >
+                building_adress = #{buildingAdress,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingDetail != null" >
+                building_detail = #{buildingDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingSex != null" >
+                building_sex = #{buildingSex,jdbcType=INTEGER},
+            </if>
+            <if test="buildingImg != null" >
+                building_img = #{buildingImg,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingCreateTime != null" >
+                building_create_time = #{buildingCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="buildingUpdateTime != null" >
+                building_update_time = #{buildingUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where building_id = #{buildingId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.managesystem.pojo.Building" >
+    update dormitory_building
+    set building_code = #{buildingCode,jdbcType=VARCHAR},
+      building_title = #{buildingTitle,jdbcType=VARCHAR},
+      building_name = #{buildingName,jdbcType=VARCHAR},
+      building_adress = #{buildingAdress,jdbcType=VARCHAR},
+      building_detail = #{buildingDetail,jdbcType=VARCHAR},
+      building_sex = #{buildingSex,jdbcType=INTEGER},
+      building_img = #{buildingImg,jdbcType=VARCHAR},
+      building_create_time = #{buildingCreateTime,jdbcType=TIMESTAMP},
+      building_update_time = #{buildingUpdateTime,jdbcType=TIMESTAMP}
+    where building_id = #{buildingId,jdbcType=INTEGER}
+  </update>
+
+    <select id="getBuildingList" resultMap="BaseResultMap" parameterType="com.managesystem.vo.BuildingVo">
+        select
+        <include refid="Base_Column_List"></include>
+        from dormitory_building
+        <where>
+            <if test="buildingCode!=null and buildingCode!=''">
+                and building_code = #{buildingCode}
+            </if>
+            <if test="buildingName!=null and buildingName!=''">
+                and building_name like "%"#{buildingName}"%"
+            </if>
+            <if test="buildingTitle!=null and buildingTitle!=''">
+                and building_title like "%"#{buildingTitle}"%"
+            </if>
+            <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+                <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+                    <if test="startTime!=null and startTime!=''">
+                        and  <![CDATA[ building_create_time >= #{startTime}]]>
+                    </if>
+                    <if test="endTime!=null and endTime!=''">
+                        and <![CDATA[ building_create_time <= #{endTime}]]>
+                    </if>
+                </if>
+                <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+                    and  <![CDATA[ building_create_time >= #{startTime}]]>
+                </if>
+                <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+                    and <![CDATA[ building_create_time <= #{endTime}]]>
+                </if>
+            </if>
+        </where>
+    </select>
+    <select id="getAllBuilding" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include>
+        from dormitory_building
+    </select>
+    <select id="checkBuildingName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List"></include>
+        from dormitory_building
+        where building_name = #{buildingName}
+    </select>
+    <select id="fingBuildingByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from dormitory_building
+        where building_code = #{buildingCode}
+    </select>
+</mapper>

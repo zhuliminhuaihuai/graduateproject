@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>套餐列表</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+
+
+</head>
+<body>
+<blockquote class="layui-elem-quote news_search layui-form">
+    <div class="demoTable">
+        <div class="layui-inline">
+            <label>相册编号</label>&nbsp
+            <div class="layui-input-inline">
+                <input type="text" id="photoCode" placeholder="相册编号" class="layui-input search_input">
+            </div>
+            <label>相册标题</label>&nbsp
+            <div class="layui-input-inline">
+                <input type="text" id="photoTitle" placeholder="相册标题" class="layui-input search_input">
+            </div>
+            <label>创建时间范围</label>&nbsp
+            <div class="layui-input-inline">
+                <input type="text" name="startTime" id="startTime" lay-verify="date" placeholder="创建时间"
+                       class="layui-input">
+            </div>
+            ~
+            <div class="layui-input-inline">
+                <input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="创建时间" class="layui-input">
+            </div>
+            &nbsp
+            <label>相册启用</label>&nbsp
+            <div class="layui-input-inline" style="width:100px;">
+                <select name="photoState" id="photoState" lay-verify="required" lay-search="" >
+                    <option value="">请选择</option>
+                    <option value="0">未启用</option>
+                    <option value="1">已启用</option>
+                </select>
+            </div>
+            <button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+        </div>
+    </div>
+</blockquote>
+<table class="layui-hide" id="wedphoto" lay-filter="wedphotoTable"></table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="detail">详情</a>
+    <a class="layui-btn layui-btn-xs layui-btn-radius" lay-event="modify">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>
+</script>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../js/main.js"></script>
+<script type="text/javascript" src="../../../js/index.js"></script>
+<script type="text/javascript" src="../../../js/xadmin.js"></script>
+<script type="text/html" id="switchTpl" lay-filter="test1">
+    <input type="checkbox" name="isShow" id="isShow" value="{{d.photoId}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="isShow" {{ d.photoState == 1 ?'checked' : '' }}>
+</script>
+<style>
+    .laytable-cell-1-0-5 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-2-0-5 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-3-0-5 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-4-0-5 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-5-0-5 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-6-0-5 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-7-0-5 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+
+    .laytable-cell-8-0-5 { /*最后的pic为字段的field*/
+        height: 100%;
+        max-width: 100%;
+    }
+</style>
+<script>
+    layui.use(['table','laydate','layer','form'], function(){
+        $ = layui.jquery;
+        var table = layui.table,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            form = layui.form;
+
+        //渲染
+        table.render({
+            elem: '#wedphoto'
+            ,id : 'testReload'
+            ,url: '/manage/photo/getMontherPhotoList'//数据接口
+            ,cols: [[
+                {type: 'checkbox'}
+                , {field: 'photoCode', width:'15%' , align: 'center',title: '相册编号'}
+                , {field: 'photoCreateTime',width:'16%',sort: true,align: 'center', title: '创建时间',
+                    templet :function (row){
+                        return createTime(row.photoCreateTime);
+                    } }
+                , {field: 'photoDetail', width:'10%' , align: 'center',title: '套餐说明'}
+                , {field: 'photoTitle', width:'10%' , align: 'center',title: '相册标题'}
+                , {field: 'photoImg', width:'10%' , align: 'center',title: '封面照片',templet:'<div><img  src="{{ d.photoImg}}"></div>'}
+                , {field: 'photoState', width:'10%' , align: 'center',title: '是否启用',templet:"#switchTpl"}
+                , {fixed: 'right', width: '20%', align: 'center', title: '操作', toolbar: '#barDemo'}
+            ]]
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                ,curr: 1 //设定初始在第 1 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit: 10
+                ,limits: [5,10,15,20]
+            }  //true表示分页
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+
+                hoverOpenImg();//显示大图 鼠标悬浮时显示大图
+                $("[data-field='userRole']").children().each(function(){
+                    if($(this).text()=='0'){
+                        $(this).text("客户")
+                    }else if($(this).text()=='2') {
+                        $(this).text("摄影师")
+                    }
+                })
+            }
+
+        })
+        //监听是否显示操作
+        form.on('switch(isShow)', function(obj){
+            var data = obj.data;
+            console.log("主键Id："+this.value);
+            var photoId = this.value;
+            console.log("status："+ obj.elem.checked);
+            var photoState="";
+            if(obj.elem.checked==true){
+                photoState=1;
+            }else {
+                photoState=0;
+            }
+            layer.confirm('确定修改该套婚纱状态吗？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){//客户
+                $.ajax({
+                    url:'/manage/photo/modifyPhotoState',
+                    type:'post',
+                    data:{
+                        photoId:photoId,
+                        photoState:photoState
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        if(data.status==0){
+                            layer.msg("状态修改成功！");
+                        }else {
+                            layer.msg("状态修改失败！");
+                        }
+                    },
+                    error: function () {
+                        layer.msg("报出异常！")
+                    }
+                });
+            },function () {
+                if (photoState == 1) {
+                    obj.elem.checked = false;
+                    form.render();
+                } else {
+                    obj.elem.checked = true;
+                    form.render();
+                }
+            })
+        });
+        //表格数据操作-查看详情和删除
+        table.on('tool(wedphotoTable)', function(obj){
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                localStorage.setItem("photoId", data.photoId);
+                window.location.href = "/manage/photo/jumpPhotoDetail.html";
+            }else if(obj.event === 'modify'){
+                localStorage.setItem("photoId",data.photoId);
+                x_admin_show('用户修改','/manage/photo/openPhotoModify.html',70,80);
+            }else if(obj.event === 'del'){
+                layer.confirm('确定删除这一整套的相册（包含套餐照片）？', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/photo/deletePhoto',
+                        data:{
+                            photoCode:data.photoCode,
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.status == 0) {
+                                layer.msg('删除相册套餐成功', {
+                                    icon: 6,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function(){
+                                    window.location.reload();
+                                });
+                            } else {
+                                layer.msg("删除失败！");
+                            }
+                        },
+                        error : function () {
+                            layer.msg('删除失败');
+                        }
+                    });
+                });
+            }
+        });
+        var $ = layui.jquery, active = {
+            reload: function(){
+                var photoCode = $("#photoCode").val();
+                var photoTitle = $("#photoTitle").val();
+                var startTime = $("#startTime").val();
+                var endTime = $("#endTime").val();
+                var photoState = $("#photoState option:selected").val();
+                table.reload('testReload', {
+                    method:'post',
+                    where:{photoCode:photoCode,startTime:startTime,endTime:endTime,photoTitle:photoTitle,photoState:photoState}
+                });
+            }
+        };
+        laydate.render({
+            elem: '#startTime'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#endTime'
+            ,type: 'datetime'
+        });
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        function hoverOpenImg(){
+            var img_show = null; // tips提示
+            $('td img').hover(function(){
+                var kd=$(this).width();
+                kd1=kd*6;          //图片放大倍数
+                kd2=kd*6+30;       //图片放大倍数
+                var img = "<img class='img_msg' src='"+$(this).attr('src')+"' style='width:"+kd1+"px;' />";
+                img_show = layer.tips(img, this,{
+                    tips:[2, 'rgba(41,41,41,.5)']
+                    ,area: [kd2+'px']
+                });
+            },function(){
+                layer.close(img_show);
+            });
+            $('td img').attr('style','max-width:70px;display:block!important');
+        }
+    });
+
+
+    //数字时间转DATE时间类型
+    function createTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+        return str;
+    }
+
+</script>
+
+</body>
+</html>

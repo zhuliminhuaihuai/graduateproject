@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>生成房间</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+<div class="x-body">
+    <div class="layui-form" id="form">
+        <legend>房间生成信息设定</legend>
+        <div class="layui-form-item">
+            <label for="buildingList" class="layui-form-label"> <span
+                    class="x-red">*</span>宿舍楼列表
+            </label>
+            <div class="layui-input-inline">
+                <select name="buildingList" id="buildingList" lay-verify="buildingList" lay-search="">
+                    <option value="">请选择宿舍...</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>选择你要生成房间的大楼
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="floorList" class="layui-form-label"> <span
+                    class="x-red">*</span>宿舍楼层数
+            </label>
+            <div class="layui-input-inline">
+                <select name="floorList" id="floorList" lay-verify="floorList" lay-search="">
+                    <option value="">请选择层数...</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>这栋大楼有几楼
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="bedRoomList" class="layui-form-label"> <span
+                    class="x-red">*</span>每层房间数
+            </label>
+            <div class="layui-input-inline">
+                <select name="bedRoomList" id="bedRoomList" lay-verify="bedRoomList" lay-search="">
+                    <option value="">请选择房间数量...</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>每层有几间房间
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userList" class="layui-form-label"> <span
+                    class="x-red">*</span>房间人数
+            </label>
+            <div class="layui-input-inline">
+                <select name="userList" id="userList" lay-verify="userList" lay-search="">
+                    <option value="">请选择人数...</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>每间房间可住人数
+            </div>
+        </div>
+        <div class="user_right">
+            <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+                <label class="layui-form-label"> </label>
+                <button class="layui-btn" lay-filter="addBedRoom" lay-submit="">
+                    创建房间
+                </button>
+                <button class="layui-btn layui-btn-danger" class="layui-btn layui-btn-primary" onclick="resetmessage()">
+                    重置
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../layui/layui.js"></script>
+    <script type="text/javascript" src="../../../js/main.js"></script>
+    <script type="text/javascript" src="../../../js/index.js"></script>
+    <script type="text/javascript" src="../../../js/xadmin.js"></script>
+    <script>
+
+        layui.use(['form', 'layer', 'laydate', 'code', 'upload'], function () {
+            $ = layui.jquery;
+            form = layui.form,
+                layer = layui.layer,
+                laydate = layui.laydate,
+                upload = layui.upload;
+            $.ajax({
+                url: '/manage/building/getAllBuilding',
+                type: 'post',
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    var select = document.getElementById("buildingList");
+                    if (data.status==0)
+                    {
+                        for (var i = 0; i < data.data.length; i++) {
+                            var buildingName = data.data[i].buildingName;
+                            var buildingCode = data.data[i].buildingCode;
+                            select.add(new Option(buildingName, buildingCode));
+                        }
+                    }
+                    form.render();
+                }
+            });
+            //渲染层数
+            var select1 = document.getElementById("floorList");
+            for (var i = 1; i <=10; i++) {
+                select1.add(new Option(i, i));
+            }
+            form.render();
+            //渲染每层房间数
+            var select2 = document.getElementById("bedRoomList");
+            for (var i = 1; i <=30; i++) {
+                select2.add(new Option(i, i));
+            }
+            form.render();
+            //渲染房间人数
+            var select3 = document.getElementById("userList");
+            for (var i = 1; i <=8; i++) {
+                select3.add(new Option(i, i));
+            }
+            form.render();
+
+            form.verify({
+                buildingList: function (value) {
+                    if (value.length == null || value.length == "") {
+                        return '宿舍大楼不能为空!';
+                    }
+                },
+                floorList: function (value) {
+                    if (value.length == null || value.length == "") {
+                        return '楼层数不能为空!';
+                    }
+                },
+                bedRoomList: function (value) {
+                    if (value.length == null || value.length == "") {
+                        return '房间数不能不为空!';
+                    }
+                },
+                userList: function (value) {
+                    if (value.length == null || value.length == "") {
+                        return '房内人数不能不为空!';
+                    }
+                },
+            });
+
+            form.on('submit(addBedRoom)', function () {
+                var buildingCode = $("#buildingList option:selected").val();
+                var floorNumber = $("#floorList option:selected").val();
+                var bedRoomNumber = $("#bedRoomList option:selected").val();
+                var userNumber = $("#userList option:selected").val();
+                var index = layer.load(3, {time: 30*1000});
+                $.ajax({
+                    url: "/manage/bedroom/addManyBedRoom",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        buildingCode:buildingCode,
+                        floorNumber: floorNumber,
+                        bedRoomNumber: bedRoomNumber,
+                        userNumber: userNumber,
+                    },
+                    success: function (data) {
+                        layer.close(index);
+                        if (data.status == 0) {
+
+                            layer.msg("房间生成成功！", {
+                                icon: 6, time: 1000, end: function () {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            layer.msg("生成失败!",{icon:5,time:1500});
+                        }
+                    }
+
+                });
+
+            });
+
+
+        });
+
+        function resetmessage() {
+            window.location.reload();
+        }
+    </script>
+</div>
+</body>
+</html>

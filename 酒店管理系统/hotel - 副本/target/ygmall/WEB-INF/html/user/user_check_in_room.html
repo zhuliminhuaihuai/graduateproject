@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>客户入住</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../x-admin/css/font.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script type="text/javascript" src="../../../x-admin/js/xadmin.js"></script>
+
+</head>
+<body>
+<!-- 顶部开始 -->
+<div class="container">
+    <div class="logo"><a href="">小型酒店管理系统</a></div>
+    <div class="open-nav"><i class="iconfont">&#xe699;</i></div>
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;" id="userName"></a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                <dd><a href="">个人信息</a></dd>
+                <dd><a href="/manage/user/jumpUserLogin.html">切换帐号</a></dd>
+                <dd><a href="/manage/user/jumpUserLogin.html">退出</a></dd>
+            </dl>
+        </li>
+        <!--<li class="layui-nav-item"><a href="/manage/user/jumpUserShop.html">前台首页</a></li>-->
+    </ul>
+</div>
+<!-- 顶部结束 -->
+<!-- 中部开始 -->
+<div class="wrapper">
+    <!-- 左侧菜单开始 -->
+    <div class="left-nav">
+        <div id="side-nav">
+            <ul id="nav">
+                <li class="list" current>
+                    <a id="shouye">
+                        <i class="iconfont">&#xe761;</i>
+                        后台首页
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="javascript:;">
+                        <i class="layui-icon">&#xe60a;</i>
+                        房源管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="/manage/room/jumpRoomList.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                房源列表
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/manage/room/jumpRoomAdd.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                添加房源
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="layui-icon">&#xe62b;</i>
+                        入住管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="/manage/user/jumpUserCheckInRoom.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                客户入住
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="layui-icon">&#xe613;</i>
+                        用户管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu" style="display:none">
+                        <li>
+                            <a href="/manage/user/jumpUserList.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                客户列表
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 左侧菜单结束 -->
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="content">
+            <div class="layui-form xbs" >
+                <div class="layui-form-pane" style="text-align: center;">
+                    <div class="layui-form-item" style="display: inline-block;">
+                        <div class="layui-input-inline">
+                            <input type="text" name="roomTitle" id="roomTitle" placeholder="请输入房源标题..." autocomplete="off"
+                                   class="layui-input">
+                        </div>
+                        <div class="layui-input-inline" style="width:80px">
+                            <button class="layui-btn searchRoom" data-type="reload" ><i class="layui-icon">&#xe615;</i></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+           <!-- <xblock>
+                <div>
+                    <button class="layui-btn layui-btn-danger" data-type="delAll" ><i class="layui-icon">&#xe640;</i>批量删除
+                    </button>
+                    <span class="x-right" style="line-height:40px" id="count"></span>
+                </div>
+            </xblock>-->
+            <ul class="layer-photos-demo" id="Images"></ul>
+            <div class="layer-photos-demo" style="display: none" id="Images1"></div>
+
+
+            <!--<table class="layui-table" id="order" lay-filter="orderTable"></table>-->
+            <!--<script type="text/html" id="barDemo">
+                <a  title="房内照片" lay-event="photoDetail"><i class="layui-icon">&#xe64a;</i></a>
+                <a  title="房内基本设施" lay-event="messageDetail"><i class="layui-icon">&#xe639;</i></a>
+                <a  title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+            </script>-->
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<!-- 中部结束 -->
+<!-- 底部开始 -->
+<div class="footer">
+    <div class="copyright">学校：江苏师范大学 学号：  本后台系统由张帆提供技术支持</div>
+</div>
+<!-- 底部结束 -->
+<!-- 背景切换开始 -->
+<div class="bg-changer">
+    <div class="swiper-container changer-list">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/a.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/b.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/c.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/d.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/e.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/f.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/g.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/h.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/i.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/j.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/k.jpg" alt=""></div>
+            <div class="swiper-slide"><span class="reset">初始化</span></div>
+        </div>
+    </div>
+    <div class="bg-out"></div>
+    <div id="changer-set"><i class="iconfont">&#xe696;</i></div>
+</div>
+<!-- 背景切换结束 -->
+<link rel="stylesheet" href="../../../x-admin/lib/layui/css/modules/layer/default/layer.css">
+<link rel="stylesheet" href="../../../x-admin/css/xadmin.css">
+<link rel="stylesheet" href="../../../x-admin/lib/layui/css/layui.css">
+
+
+<script src="../../../x-admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script>
+    var userName = '${session_manage_token.getUserName()}';
+    $("#userName").html( userName);
+    var userRole = '${session_manage_token.getUserRole()}';
+    $("#shouye").attr("href", "/manage/user/jumpUserBackStageIndex.html?userRole=" + userRole);
+</script>
+<script type="text/html" id="switchTpl" lay-filter="test1">
+    <input type="checkbox" name="isShow" id="isShow" value="{{d.roomId}}" style="width: 80px" lay-skin="switch"  lay-filter="isShow" {{ d.roomIsUse == 1 ?'checked' : '' }}>
+</script>
+
+<style>
+    .layer-photos-demo li{
+        width: 270px;
+
+
+        height: 300px;
+        float: left!important;
+    }
+    .layer-photos-demo i {
+        width: 220px;
+        padding-left: 100px   !important;
+    }
+
+</style>
+<script>
+
+    var form;
+    layui.config({
+        base: "../../../js/"
+    }).use(['flow', 'form', 'layer', 'upload'], function () {
+        var flow = layui.flow,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            upload = layui.upload,
+            $ = layui.jquery;
+        form = layui.form;
+
+        //流加载图片
+        var imgNums = 15;  //单页显示图片数量
+        flow.load({
+            elem: '#Images', //流加载容器
+            done: function (page, next) { //加载下一页
+                $.get("/manage/user/findAllFreedomRoom", function (res) {
+                    //模拟插入
+                    var imgList = [];
+                    if (res.status == 0) {
+                        data = res.data;
+                        var maxPage = imgNums * page < data.length ? imgNums * page : data.length;
+
+                        setTimeout(function () {
+                            for (var i = imgNums * (page - 1); i < maxPage; i++) {
+                                imgList.push('<li><img width="250px" height="250px" layer-src="http://127.0.0.1:8080/upload/' + data[i].romImg + '" src="http://127.0.0.1:8080/upload/' + data[i].romImg + '" alt="' + data[i].roomId + '"><div class="operate"><div class="check" style="position: absolute"><input style="width: 100px" type="text" name="belle" lay-filter="choose" class="layui-input" lay-skin="primary"  value="' + data[i].roomTitle + '" ></div><div style="padding-left: 120px;padding-top: 4px;"><a title="房内详情"  class="layui-icon img_message" name="' + data[i].roomId + '"><img src="../../../images/fangnei.png" ></a><a title="我要入住" class="layui-icon img_sleep" name="' + data[i].roomId + '"><img src="../../../images/ruzhu.png"></a></div></div></li>');
+                            }
+                            next(imgList.join(''), page < (data.length / imgNums));
+                            form.render();
+                        }, 500);
+                    } else {
+                        layer.msg("暂无空闲房源!", {icon: 5, time: 2500});
+                    }
+                });
+            }
+        });
+
+        //设置图片的高度
+        $(window).resize(function () {
+            $("#Images li img").height($("#Images li img").width());
+        })
+        //搜索房间
+        $("body").on("click", ".searchRoom", function () {
+            //流加载图片
+            document.getElementById('Images').innerHTML = "";
+            var roomTitle = $("#roomTitle").val();
+            var imgNums = 15;  //单页显示图片数量
+            flow.load({
+                elem: '#Images', //流加载容器
+                done: function (page, next) { //加载下一页
+                    $.get("/manage/user/findAllFreedomRoom?roomTitle=" + roomTitle, function (res) {
+                        //模拟插入
+                        var imgList = [];
+                        if (res.status == 0) {
+                            data = res.data;
+                            var maxPage = imgNums * page < data.length ? imgNums * page : data.length;
+
+                            setTimeout(function () {
+                                for (var i = imgNums * (page - 1); i < maxPage; i++) {
+                                    imgList.push('<li><img width="250px" height="250px" layer-src="http://127.0.0.1:8080/upload/' + data[i].romImg + '" src="http://127.0.0.1:8080/upload/' + data[i].romImg + '" alt="' + data[i].roomId + '"><div class="operate"><div class="check" style="position: absolute"><input style="width: 100px" type="text" name="belle" lay-filter="choose" class="layui-input" lay-skin="primary"  value="' + data[i].roomTitle + '" ></div><div style="padding-left: 120px;padding-top: 4px;"><a title="房内详情"  class="layui-icon img_message" name="' + data[i].roomId + '"><img src="../../../images/fangnei.png" ></a><a title="我要入住" class="layui-icon img_sleep" name="' + data[i].roomId + '"><img src="../../../images/ruzhu.png"></a></div></div></li>');
+                                }
+                                next(imgList.join(''), page < (data.length / imgNums));
+                                form.render();
+                            }, 500);
+                        } else {
+                            layer.msg("暂无空闲房源!", {icon: 5, time: 2500});
+                        }
+                    });
+                }
+            });
+
+        })
+
+        //弹出层
+        $("body").on("click", "#Images img", function (res) {
+            document.getElementById('Images1').innerHTML = "";
+            var _this = $(this);
+            console.log(_this.attr("alt"));
+            var roomId = _this.attr("alt");
+            $.getJSON("/manage/room/roomPhotoCallBackData?roomId=" + roomId, function (json) {
+                console.log(JSON.stringify(json));
+                if (json.status == 0) {
+                    layer.photos({
+                        photos: json.data
+                        , anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                    });
+                } else {
+                    layer.msg("暂无房内照片!", {icon: 5, time: 2500});
+
+                }
+            });
+        });
+        //房内详情
+        $("body").on("click", ".img_message", function () {
+            var _this = $(this);
+            var roomId = _this.attr("name");
+            localStorage.setItem("roomId", roomId);
+            x_admin_show('房内基本设施', '/manage/user/jumpUserSeeRoomMessage.html', 1200, 800);
+
+        })
+        //入住
+        $("body").on("click", ".img_sleep", function () {
+            var _this = $(this);
+            var roomId = _this.attr("name");
+            localStorage.setItem("roomId", roomId);
+            x_admin_show('客户入住确认', '/manage/user/jumpUserCheckInRoomConfirm.html', 1200, 800);
+
+        })
+
+
+
+    });
+
+    function goback() {
+        parent.location.href = "/manage/room/jumpRoomList.html";
+    }
+    function reloadPage() {
+        window.location.href = "/manage/room/jumpRoomPhotoDetail.html";
+    }
+    //图片管理弹窗
+    function showImg(){
+        layer.photos({
+            photos: '#Images',
+            anim: 4
+        });
+    }
+    //图片管理弹窗1
+    function showImg1(){
+        layer.photos({
+            photos: '#Images1',
+            anim: 4
+        });
+    }
+    //数字时间转DATE时间类型
+    function editTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+        return str;
+    }
+
+</script>
+
+</body>
+</html>

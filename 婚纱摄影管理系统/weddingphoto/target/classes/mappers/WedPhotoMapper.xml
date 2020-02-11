@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.managesystem.dao.WedPhotoMapper" >
+  <resultMap id="BaseResultMap" type="com.managesystem.pojo.WedPhoto" >
+    <constructor >
+      <idArg column="photo_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="photo_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="photo_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="photo_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="photo_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="photo_parent_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="photo_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="photo_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="photo_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="photo_detail" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="photo_remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    photo_id, photo_code, photo_img, photo_create_time, photo_update_time, photo_parent_code, 
+    photo_state, photo_title, photo_name, photo_detail, photo_remarks
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from wedding_photo
+    where photo_id = #{photoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from wedding_photo
+    where photo_id = #{photoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.managesystem.pojo.WedPhoto" >
+    insert into wedding_photo (photo_id, photo_code, photo_img, 
+      photo_create_time, photo_update_time, photo_parent_code, 
+      photo_state, photo_title, photo_name, 
+      photo_detail, photo_remarks)
+    values (#{photoId,jdbcType=INTEGER}, #{photoCode,jdbcType=VARCHAR}, #{photoImg,jdbcType=VARCHAR}, 
+      #{photoCreateTime,jdbcType=TIMESTAMP}, #{photoUpdateTime,jdbcType=TIMESTAMP}, #{photoParentCode,jdbcType=VARCHAR}, 
+      #{photoState,jdbcType=INTEGER}, #{photoTitle,jdbcType=VARCHAR}, #{photoName,jdbcType=VARCHAR}, 
+      #{photoDetail,jdbcType=VARCHAR}, #{photoRemarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.managesystem.pojo.WedPhoto" >
+    insert into wedding_photo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="photoId != null" >
+        photo_id,
+      </if>
+      <if test="photoCode != null" >
+        photo_code,
+      </if>
+      <if test="photoImg != null" >
+        photo_img,
+      </if>
+      <if test="photoCreateTime != null" >
+        photo_create_time,
+      </if>
+      <if test="photoUpdateTime != null" >
+        photo_update_time,
+      </if>
+      <if test="photoParentCode != null" >
+        photo_parent_code,
+      </if>
+      <if test="photoState != null" >
+        photo_state,
+      </if>
+      <if test="photoTitle != null" >
+        photo_title,
+      </if>
+      <if test="photoName != null" >
+        photo_name,
+      </if>
+      <if test="photoDetail != null" >
+        photo_detail,
+      </if>
+      <if test="photoRemarks != null" >
+        photo_remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="photoId != null" >
+        #{photoId,jdbcType=INTEGER},
+      </if>
+      <if test="photoCode != null" >
+        #{photoCode,jdbcType=VARCHAR},
+      </if>
+      <if test="photoImg != null" >
+        #{photoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="photoCreateTime != null" >
+        #{photoCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="photoUpdateTime != null" >
+        #{photoUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="photoParentCode != null" >
+        #{photoParentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="photoState != null" >
+        #{photoState,jdbcType=INTEGER},
+      </if>
+      <if test="photoTitle != null" >
+        #{photoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="photoName != null" >
+        #{photoName,jdbcType=VARCHAR},
+      </if>
+      <if test="photoDetail != null" >
+        #{photoDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="photoRemarks != null" >
+        #{photoRemarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.managesystem.pojo.WedPhoto" >
+    update wedding_photo
+    <set >
+      <if test="photoCode != null" >
+        photo_code = #{photoCode,jdbcType=VARCHAR},
+      </if>
+      <if test="photoImg != null" >
+        photo_img = #{photoImg,jdbcType=VARCHAR},
+      </if>
+      <if test="photoCreateTime != null" >
+        photo_create_time = #{photoCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="photoUpdateTime != null" >
+        photo_update_time = #{photoUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="photoParentCode != null" >
+        photo_parent_code = #{photoParentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="photoState != null" >
+        photo_state = #{photoState,jdbcType=INTEGER},
+      </if>
+      <if test="photoTitle != null" >
+        photo_title = #{photoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="photoName != null" >
+        photo_name = #{photoName,jdbcType=VARCHAR},
+      </if>
+      <if test="photoDetail != null" >
+        photo_detail = #{photoDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="photoRemarks != null" >
+        photo_remarks = #{photoRemarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where photo_id = #{photoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.managesystem.pojo.WedPhoto" >
+    update wedding_photo
+    set photo_code = #{photoCode,jdbcType=VARCHAR},
+      photo_img = #{photoImg,jdbcType=VARCHAR},
+      photo_create_time = #{photoCreateTime,jdbcType=TIMESTAMP},
+      photo_update_time = #{photoUpdateTime,jdbcType=TIMESTAMP},
+      photo_parent_code = #{photoParentCode,jdbcType=VARCHAR},
+      photo_state = #{photoState,jdbcType=INTEGER},
+      photo_title = #{photoTitle,jdbcType=VARCHAR},
+      photo_name = #{photoName,jdbcType=VARCHAR},
+      photo_detail = #{photoDetail,jdbcType=VARCHAR},
+      photo_remarks = #{photoRemarks,jdbcType=VARCHAR}
+    where photo_id = #{photoId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getMotherPhoto" resultMap="BaseResultMap" parameterType="com.managesystem.vo.PhotoVo">
+    select
+    <include refid="Base_Column_List"></include>
+    from wedding_photo
+    <where>
+      <if test="1==1">
+        and photo_parent_code = "nullcode"
+      </if>
+      <if test="photoCode!=null and photoCode!=''">
+        and photo_code like "%"#{photoCode}"%"
+      </if>
+      <if test="photoTitle!=null and photoTitle!=''">
+        and photo_title like "%"#{photoTitle}"%"
+      </if>
+      <if test="photoState!=null and photoState!=''">
+        and photo_state = #{photoState}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ photo_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ photo_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ photo_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ photo_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+  <delete id="deletePhotoByPhotoCode" parameterType="java.lang.String">
+    delete from wedding_photo
+    where photo_code=#{photoCode} OR photo_parent_code=#{photoCode}
+  </delete>
+  <select id="getDownMotherPhoto" parameterType="java.lang.String" resultType="com.managesystem.vo.DetailPhotoVo">
+    select
+    <include refid="Base_Column_List"></include>
+    from  wedding_photo
+    where photo_parent_code = #{photoParentCode}
+  </select>
+  <select id="getphotographerphoto" parameterType="java.lang.String" resultType="com.managesystem.vo.DetailPhotoVo">
+    select
+    <include refid="Base_Column_List"></include>
+    from  wedding_photo
+    where photo_name = #{userCode}
+  </select>
+  <delete id="deleteManyPhotoChildren" parameterType="list">
+    delete from wedding_photo
+    where photo_id in
+    <foreach collection="idList" item="photoId" open="(" close=")" separator=",">
+      #{photoId}
+    </foreach>
+  </delete>
+  <select id="getMontherPhotoListAsCustonmer" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from wedding_photo
+    <where>
+      <if test="1==1">
+        and photo_parent_code = "nullcode" and photo_state = 1
+      </if>
+      <if test="photoCode !=null and photoCode !=''">
+        and photo_code = #{photoCode}
+      </if>
+      <if test="photoTitle !=null and photoTitle !=''">
+        and photo_title = #{photoTitle}
+      </if>
+    </where>
+  </select>
+</mapper>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>欢迎页面-X-admin2.0</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="../../css/xadmin.css">
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../../layui/layui.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../../js/xadmin.js"></script>
+	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+	<!--[if lt IE 9]>
+	<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a>
+			<cite><a>职位查询</a></cite>
+		</a>
+      </span>
+</div>
+<div class="x-body">
+	<blockquote class=" layui-form">
+		<div class="demoTable" style="text-align: center">
+			<div class="layui-inline">
+				<label>职位</label>&nbsp
+				<div class="layui-input-inline">
+					<input type="text" id="userName" placeholder="职位类型/名称/企业" class="layui-input search_input">
+				</div>
+				<label>发布时间</label>&nbsp
+				<div class="layui-input-inline">
+					<input type="text" name="startTime" id="startTime" lay-verify="date" placeholder=""
+						   class="layui-input">
+				</div>
+				~
+				<div class="layui-input-inline">
+					<input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="" class="layui-input">
+				</div>
+				<button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+
+			</div>
+		</div>
+	</blockquote>
+	<table class="layui-hide" id="work" lay-filter="test"></table>
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+		<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="del">投递</a>
+	</script>
+
+
+</div>
+<script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#end' //指定元素
+        });
+    });
+
+</script>
+<script>
+    layui.use(['table','laydate','layer'], function(){
+        $ = layui.jquery;
+        var table = layui.table,
+            laydate = layui.laydate,
+            layer = layui.layer;
+        var page=1;
+        var limit=5;
+
+        //渲染
+        table.render({
+            elem: '#work'
+            ,id : 'testReload'
+            ,url: '/manage/job/jobList'//数据接口
+            ,cols: [[
+                {type: 'checkbox'}
+                , {field: 'jobName', width:'20%' , title: '职位名称',sort: true}
+                , {field: 'createTime', width:'20%' , title: '职位发布时间',
+                    templet :function (row){
+                        return createTime(row.createTime);
+                    } }
+                , {field: 'enterpriseName', width:'15%' , title: '职位所属公司'}
+                , {field: 'isOn', width:'10%' , title: '职位是否开启',templet: '#switchTpl', unresize: true}
+                , {fixed: 'right', width: '20%', align: 'center', title: '操作', toolbar: '#barDemo'}
+            ]]
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                ,curr: 1 //设定初始在第 1 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit: 10
+                ,limits: [5,10,15,20]
+            }  //true表示分页
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+                $("[data-field='isOn']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("开启")
+                    }else if($(this).text()=='2'){
+                        $(this).text("关闭")
+                    }
+                })
+
+            }
+
+        })
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+                //layer.msg('查看操作');
+                localStorage.setItem("id",data.id);
+                x_admin_show('职位详情','/manage/job/job_edit',800,650)
+            }
+        });
+        var $ = layui.jquery, active = {
+            reload: function(){
+                var userName = $("#userName").val();
+                var endTime = $("#endTime").val();
+                var startTime = $("#startTime").val();
+                var role = $("#role option:selected").val();
+                console.log(userName);
+                console.log("role:"+role);
+                table.reload('testReload', {
+                    method:'post',
+                    where:{startTime:startTime,endTime:endTime,userName:userName,role:role}
+                });
+            }
+        };
+        laydate.render({
+            elem: '#startTime'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#endTime'
+            ,type: 'datetime'
+        });
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        $('i').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        $('.layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+
+    //数字时间转DATE时间类型
+    function createTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+        return str;
+    }
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.TimeTableMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.TimeTable" >
+    <constructor >
+      <idArg column="timetable_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="timetable_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="timetable_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="timetable_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="timetable_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="student_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="student_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tercher_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tercher_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="courses_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="courses_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    timetable_id, timetable_code, timetable_state, timetable_create_time, timetable_update_time, 
+    student_code, student_name, tercher_code, tercher_name, courses_code, courses_title
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from education_time_table
+    where timetable_id = #{timetableId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from education_time_table
+    where timetable_id = #{timetableId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.TimeTable" >
+    insert into education_time_table (timetable_id, timetable_code, timetable_state, 
+      timetable_create_time, timetable_update_time, 
+      student_code, student_name, tercher_code, 
+      tercher_name, courses_code, courses_title
+      )
+    values (#{timetableId,jdbcType=INTEGER}, #{timetableCode,jdbcType=VARCHAR}, #{timetableState,jdbcType=INTEGER}, 
+      #{timetableCreateTime,jdbcType=TIMESTAMP}, #{timetableUpdateTime,jdbcType=TIMESTAMP}, 
+      #{studentCode,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, #{tercherCode,jdbcType=VARCHAR}, 
+      #{tercherName,jdbcType=VARCHAR}, #{coursesCode,jdbcType=VARCHAR}, #{coursesTitle,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.TimeTable" >
+    insert into education_time_table
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="timetableId != null" >
+        timetable_id,
+      </if>
+      <if test="timetableCode != null" >
+        timetable_code,
+      </if>
+      <if test="timetableState != null" >
+        timetable_state,
+      </if>
+      <if test="timetableCreateTime != null" >
+        timetable_create_time,
+      </if>
+      <if test="timetableUpdateTime != null" >
+        timetable_update_time,
+      </if>
+      <if test="studentCode != null" >
+        student_code,
+      </if>
+      <if test="studentName != null" >
+        student_name,
+      </if>
+      <if test="tercherCode != null" >
+        tercher_code,
+      </if>
+      <if test="tercherName != null" >
+        tercher_name,
+      </if>
+      <if test="coursesCode != null" >
+        courses_code,
+      </if>
+      <if test="coursesTitle != null" >
+        courses_title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="timetableId != null" >
+        #{timetableId,jdbcType=INTEGER},
+      </if>
+      <if test="timetableCode != null" >
+        #{timetableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="timetableState != null" >
+        #{timetableState,jdbcType=INTEGER},
+      </if>
+      <if test="timetableCreateTime != null" >
+        #{timetableCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timetableUpdateTime != null" >
+        #{timetableUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="studentCode != null" >
+        #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null" >
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherCode != null" >
+        #{tercherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherName != null" >
+        #{tercherName,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesCode != null" >
+        #{coursesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesTitle != null" >
+        #{coursesTitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.TimeTable" >
+    update education_time_table
+    <set >
+      <if test="timetableCode != null" >
+        timetable_code = #{timetableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="timetableState != null" >
+        timetable_state = #{timetableState,jdbcType=INTEGER},
+      </if>
+      <if test="timetableCreateTime != null" >
+        timetable_create_time = #{timetableCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timetableUpdateTime != null" >
+        timetable_update_time = #{timetableUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="studentCode != null" >
+        student_code = #{studentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null" >
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherCode != null" >
+        tercher_code = #{tercherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tercherName != null" >
+        tercher_name = #{tercherName,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesCode != null" >
+        courses_code = #{coursesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursesTitle != null" >
+        courses_title = #{coursesTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where timetable_id = #{timetableId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.TimeTable" >
+    update education_time_table
+    set timetable_code = #{timetableCode,jdbcType=VARCHAR},
+      timetable_state = #{timetableState,jdbcType=INTEGER},
+      timetable_create_time = #{timetableCreateTime,jdbcType=TIMESTAMP},
+      timetable_update_time = #{timetableUpdateTime,jdbcType=TIMESTAMP},
+      student_code = #{studentCode,jdbcType=VARCHAR},
+      student_name = #{studentName,jdbcType=VARCHAR},
+      tercher_code = #{tercherCode,jdbcType=VARCHAR},
+      tercher_name = #{tercherName,jdbcType=VARCHAR},
+      courses_code = #{coursesCode,jdbcType=VARCHAR},
+      courses_title = #{coursesTitle,jdbcType=VARCHAR}
+    where timetable_id = #{timetableId,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteTimeTableByTercherCode" parameterType="java.lang.String">
+    delete from education_time_table
+    where tercher_code = #{tercherCode} or student_code = #{tercherCode}
+  </delete>
+  <update id="updateTercherMessageByCoursesCode" parameterType="java.lang.String">
+    update education_time_table
+    set tercher_name = #{terCherName},
+        tercher_code = #{tercherCode}
+    where courses_code = #{coursesCode}
+  </update>
+  <delete id="deleteTimeTableByCoursesCode" parameterType="java.lang.String">
+    delete from education_time_table
+    where courses_code = #{coursesCode}
+  </delete>
+  <select id="getTimeTableAllList" resultMap="BaseResultMap" parameterType="com.project.vo.TimeTableVo">
+    select <include refid="Base_Column_List"></include>
+    from education_time_table
+    <where>
+      <if test="timetableCode!=null and timetableCode!=''">
+        and timetable_code = #{timetableCode}
+      </if>
+      <if test="studentCode!=null and studentCode!=''">
+        and student_code = #{studentCode}
+      </if>
+      <if test="studentName!=null and studentName!=''">
+        and student_name like "%"#{studentName}"%"
+      </if>
+      <if test="coursesCode!=null and coursesCode!=''">
+        and courses_code = #{coursesCode}
+      </if>
+      <if test="coursesTitle!=null and coursesTitle!=''">
+        and courses_title = #{coursesTitle}
+      </if>
+      <if test="tercherCode!=null and tercherCode!=''">
+        and tercher_code = #{tercherCode}
+      </if>
+      <if test="tercherName!=null and tercherName!=''">
+        and tercher_name like "%"#{tercherName}"%"
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ room_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ room_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ room_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ room_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+  <select id="getStudentUnderTimeTable" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"></include>
+    from education_time_table
+    where student_code = #{studentCode}
+  </select>
+</mapper>

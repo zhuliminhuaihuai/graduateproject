@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manage.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.manage.pojo.Order" >
+    <constructor >
+      <idArg column="order_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cart_ids" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_money" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="order_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="pay_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="province" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="city" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="district" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="order_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, order_code, cart_ids, user_code, user_name, user_phone, order_money, order_type, 
+    pay_type, province, city, district, address, order_create_time, order_update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shop_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shop_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.manage.pojo.Order" >
+    insert into shop_order (order_id, order_code, cart_ids, 
+      user_code, user_name, user_phone, 
+      order_money, order_type, pay_type, 
+      province, city, district, 
+      address, order_create_time, order_update_time
+      )
+    values (#{orderId,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{cartIds,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
+      #{orderMoney,jdbcType=DOUBLE}, #{orderType,jdbcType=INTEGER}, #{payType,jdbcType=INTEGER}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{orderCreateTime,jdbcType=TIMESTAMP}, #{orderUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.manage.pojo.Order" >
+    insert into shop_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderCode != null" >
+        order_code,
+      </if>
+      <if test="cartIds != null" >
+        cart_ids,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="orderMoney != null" >
+        order_money,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="orderCreateTime != null" >
+        order_create_time,
+      </if>
+      <if test="orderUpdateTime != null" >
+        order_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderCode != null" >
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cartIds != null" >
+        #{cartIds,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderMoney != null" >
+        #{orderMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreateTime != null" >
+        #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUpdateTime != null" >
+        #{orderUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.manage.pojo.Order" >
+    update shop_order
+    <set >
+      <if test="orderCode != null" >
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cartIds != null" >
+        cart_ids = #{cartIds,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderMoney != null" >
+        order_money = #{orderMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreateTime != null" >
+        order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderUpdateTime != null" >
+        order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.manage.pojo.Order" >
+    update shop_order
+    set order_code = #{orderCode,jdbcType=VARCHAR},
+      cart_ids = #{cartIds,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      order_money = #{orderMoney,jdbcType=DOUBLE},
+      order_type = #{orderType,jdbcType=INTEGER},
+      pay_type = #{payType,jdbcType=INTEGER},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      order_create_time = #{orderCreateTime,jdbcType=TIMESTAMP},
+      order_update_time = #{orderUpdateTime,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <select id="findAllOrder" resultMap="BaseResultMap" parameterType="com.manage.vo.OrderVo">
+    select <include refid="Base_Column_List"></include>
+    from shop_order
+    <where>
+      <if test="userCode !='' and userCode!=null">
+        and user_code = #{userCode}
+      </if>
+      <if test="orderCode!='' and orderCode!=null">
+        and order_code = #{orderCode}
+      </if>
+      <if test="userPhone!='' and userPhone!=null">
+        and user_phone like "%"#{userPhone}"%"
+      </if>
+      <if test="userName!='' and userName!=null">
+        and user_name like "%"#{userName}"%"
+      </if>
+      <if test="payType!='' and payType!=null">
+        and pay_type = #{payType}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ order_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ order_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ order_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ order_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+    order by order_create_time desc
+  </select>
+  <select id="findOrderByRoleAndUnshippend" resultMap="BaseResultMap" parameterType="com.manage.vo.OrderVo">
+    select <include refid="Base_Column_List"></include>
+    from shop_order
+    <where>
+      <if test="1==1">
+        and order_type = 0
+      </if>
+      <if test="userCode !='' and userCode!=null">
+        and user_code = #{userCode}
+      </if>
+      <if test="orderCode!='' and orderCode!=null">
+        and order_code = #{orderCode}
+      </if>
+      <if test="userPhone!='' and userPhone!=null">
+        and user_phone like "%"#{userPhone}"%"
+      </if>
+      <if test="userName!='' and userName!=null">
+        and user_name like "%"#{userName}"%"
+      </if>
+      <if test="payType!='' and payType!=null">
+        and pay_type = #{payType}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ order_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ order_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ order_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ order_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+    order by order_create_time desc
+  </select>
+  <select id="findOrderByRoleAndShippend" resultMap="BaseResultMap" parameterType="com.manage.vo.OrderVo">
+    select <include refid="Base_Column_List"></include>
+    from shop_order
+    <where>
+      <if test="1==1">
+        and order_type = 1
+      </if>
+      <if test="userCode !='' and userCode!=null">
+        and user_code = #{userCode}
+      </if>
+      <if test="orderCode!='' and orderCode!=null">
+        and order_code = #{orderCode}
+      </if>
+      <if test="userPhone!='' and userPhone!=null">
+        and user_phone like "%"#{userPhone}"%"
+      </if>
+      <if test="userName!='' and userName!=null">
+        and user_name like "%"#{userName}"%"
+      </if>
+      <if test="payType!='' and payType!=null">
+        and pay_type = #{payType}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ order_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ order_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ order_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ order_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+    order by order_create_time desc
+  </select>
+  <select id="findOrderByRoleAndDelivery" resultMap="BaseResultMap" parameterType="com.manage.vo.OrderVo">
+    select <include refid="Base_Column_List"></include>
+    from shop_order
+    <where>
+      <if test="1==1">
+        and order_type = 2
+      </if>
+      <if test="userCode !='' and userCode!=null">
+        and user_code = #{userCode}
+      </if>
+      <if test="orderCode!='' and orderCode!=null">
+        and order_code = #{orderCode}
+      </if>
+      <if test="userPhone!='' and userPhone!=null">
+        and user_phone like "%"#{userPhone}"%"
+      </if>
+      <if test="userName!='' and userName!=null">
+        and user_name like "%"#{userName}"%"
+      </if>
+      <if test="payType!='' and payType!=null">
+        and pay_type = #{payType}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ order_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ order_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ order_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ order_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+    order by order_create_time desc
+  </select>
+  <select id="findOrderByRoleAndReturn" resultMap="BaseResultMap" parameterType="com.manage.vo.OrderVo">
+    select <include refid="Base_Column_List"></include>
+    from shop_order
+    <where>
+      <if test="1==1">
+        and order_type = 3
+      </if>
+      <if test="userCode !='' and userCode!=null">
+        and user_code = #{userCode}
+      </if>
+      <if test="orderCode!='' and orderCode!=null">
+        and order_code = #{orderCode}
+      </if>
+      <if test="userPhone!='' and userPhone!=null">
+        and user_phone like "%"#{userPhone}"%"
+      </if>
+      <if test="userName!='' and userName!=null">
+        and user_name like "%"#{userName}"%"
+      </if>
+      <if test="payType!='' and payType!=null">
+        and pay_type = #{payType}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ order_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ order_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ order_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ order_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+    order by order_create_time desc
+  </select>
+  <delete id="someDeleteOrder" parameterType="java.util.List">
+    delete from shop_order
+    where order_id in
+    <foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </delete>
+  <update id="sendOrder" parameterType="int">
+    update shop_order
+    set order_type = 1
+    where order_id = #{orderId}
+  </update>
+  <update id="rebackOrder" parameterType="int">
+     update shop_order
+    set order_type = 3
+    where order_id = #{orderId}
+  </update>
+  <select id="getOrderByOrderCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from shop_order
+    where order_code = #{orderCode}
+  </select>
+  <update id="confirmOrder" parameterType="int">
+     update shop_order
+    set order_type = 2
+    where order_id = #{orderId}
+  </update>
+  <select id="getOrderCountTotalAndMoney" resultType="com.manage.vo.TotalVo">
+    select count(1) orderCountTotal,sum(order_money) orderMoneyTotal
+    from shop_order
+    where order_type!=3
+  </select>
+  <select id="getTodayOrderCountAndMoney" resultType="com.manage.vo.TotalVo">
+    select count(1) orderCountTotal,sum(order_money) orderMoneyTotal
+    from shop_order
+    where DATE (order_create_time) = DATE (now()) and order_type!=3
+  </select>
+  <select id="getTotalOrder" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from shop_order
+    where order_type!=3
+  </select>
+  <select id="getTodayOrder" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from shop_order
+    where DATE (order_create_time) = DATE (now()) and order_type!=3
+  </select>
+  <select id="getYestodayOrderCountAndMoney" resultType="com.manage.vo.TotalVo">
+    select count(1) orderCountTotal,sum(order_money) orderMoneyTotal
+    from shop_order
+    where MONTH(order_create_time) = MONTH(NOW()) and	Day	(order_create_time) = Day (now())-1 and order_type!=3
+  </select>
+  <select id="getYesTodayOrder" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from shop_order
+    where MONTH(order_create_time) = MONTH(NOW()) and	Day	(order_create_time) = Day (now())-1 and order_type!=3
+  </select>
+  <select id="getWeekOrderCountAndMoney" resultType="com.manage.vo.TotalVo">
+    select count(1) orderCountTotal,sum(order_money) orderMoneyTotal
+    from shop_order
+    where YEARWEEK(date_format(order_create_time,'%Y-%m-%d')) = YEARWEEK(now()) and order_type!=3
+  </select>
+  <select id="getWeekOrder" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from shop_order
+    where YEARWEEK(date_format(order_create_time,'%Y-%m-%d')) = YEARWEEK(now()) and order_type!=3
+  </select>
+  <select id="getMonthOrderCountAndMoney" resultType="com.manage.vo.TotalVo">
+    select count(1) orderCountTotal,sum(order_money) orderMoneyTotal
+    from shop_order
+    where YEAR(order_create_time) = YEAR(NOW()) AND MONTH(order_create_time) = MONTH(NOW()) and order_type!=3
+  </select>
+  <select id="getMonthOrder" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from shop_order
+    where YEAR(order_create_time) = YEAR(NOW()) AND MONTH(order_create_time) = MONTH(NOW()) and order_type!=3
+  </select>
+  <select id="getMonthOrderNumAndMoney" resultType="com.manage.vo.SumOrderMoneyVo" >
+    SELECT
+    SUM(order_money) transactionMoney,COUNT(1) countOrder, DATE (order_create_time) orderdateTime
+    from shop_order
+        WHERE YEAR(order_create_time) = YEAR(NOW()) AND MONTH(order_create_time) = MONTH(NOW()) and order_type!=3
+    group by DATE (order_create_time)
+    order by order_create_time ASC
+  </select>
+  <select id="getFiveDaysOrderMoney" resultType="com.manage.vo.SumOrderMoneyVo">
+    SELECT
+    SUM(order_money) transactionMoney,DATE (order_create_time) orderdateTime
+    from shop_order
+    where order_type!=3
+    group by DATE (order_create_time)
+    order by order_create_time DESC
+    limit 0,5
+  </select>
+</mapper>

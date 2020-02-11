@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.DefendMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Defend" >
+    <constructor >
+      <idArg column="defend_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="defend_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="defend_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="defend_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="defend_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="defend_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="check_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="check_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="defend_object" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="defend_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="defend_reason" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    defend_id, defend_code, defend_create_time, defend_update_time, defend_state, defend_time,
+    check_id, check_code, room_id, room_code, defend_object, defend_number, defend_reason
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from classroom_defend
+    where defend_id = #{defendId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from classroom_defend
+    where defend_id = #{defendId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Defend" >
+    insert into classroom_defend (defend_id, defend_code, defend_create_time,
+      defend_update_time, defend_state, defend_time,
+      check_id, check_code, room_id,
+      room_code, defend_object, defend_number,
+      defend_reason)
+    values (#{defendId,jdbcType=INTEGER}, #{defendCode,jdbcType=VARCHAR}, #{defendCreateTime,jdbcType=TIMESTAMP},
+      #{defendUpdateTime,jdbcType=TIMESTAMP}, #{defendState,jdbcType=INTEGER}, #{defendTime,jdbcType=TIMESTAMP},
+      #{checkId,jdbcType=INTEGER}, #{checkCode,jdbcType=VARCHAR}, #{roomId,jdbcType=INTEGER},
+      #{roomCode,jdbcType=VARCHAR}, #{defendObject,jdbcType=VARCHAR}, #{defendNumber,jdbcType=INTEGER},
+      #{defendReason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Defend" >
+    insert into classroom_defend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="defendId != null" >
+        defend_id,
+      </if>
+      <if test="defendCode != null" >
+        defend_code,
+      </if>
+      <if test="defendCreateTime != null" >
+        defend_create_time,
+      </if>
+      <if test="defendUpdateTime != null" >
+        defend_update_time,
+      </if>
+      <if test="defendState != null" >
+        defend_state,
+      </if>
+      <if test="defendTime != null" >
+        defend_time,
+      </if>
+      <if test="checkId != null" >
+        check_id,
+      </if>
+      <if test="checkCode != null" >
+        check_code,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="defendObject != null" >
+        defend_object,
+      </if>
+      <if test="defendNumber != null" >
+        defend_number,
+      </if>
+      <if test="defendReason != null" >
+        defend_reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="defendId != null" >
+        #{defendId,jdbcType=INTEGER},
+      </if>
+      <if test="defendCode != null" >
+        #{defendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="defendCreateTime != null" >
+        #{defendCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defendUpdateTime != null" >
+        #{defendUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defendState != null" >
+        #{defendState,jdbcType=INTEGER},
+      </if>
+      <if test="defendTime != null" >
+        #{defendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkId != null" >
+        #{checkId,jdbcType=INTEGER},
+      </if>
+      <if test="checkCode != null" >
+        #{checkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="defendObject != null" >
+        #{defendObject,jdbcType=VARCHAR},
+      </if>
+      <if test="defendNumber != null" >
+        #{defendNumber,jdbcType=INTEGER},
+      </if>
+      <if test="defendReason != null" >
+        #{defendReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Defend" >
+    update classroom_defend
+    <set >
+      <if test="defendCode != null" >
+        defend_code = #{defendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="defendCreateTime != null" >
+        defend_create_time = #{defendCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defendUpdateTime != null" >
+        defend_update_time = #{defendUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defendState != null" >
+        defend_state = #{defendState,jdbcType=INTEGER},
+      </if>
+      <if test="defendTime != null" >
+        defend_time = #{defendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkId != null" >
+        check_id = #{checkId,jdbcType=INTEGER},
+      </if>
+      <if test="checkCode != null" >
+        check_code = #{checkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="defendObject != null" >
+        defend_object = #{defendObject,jdbcType=VARCHAR},
+      </if>
+      <if test="defendNumber != null" >
+        defend_number = #{defendNumber,jdbcType=INTEGER},
+      </if>
+      <if test="defendReason != null" >
+        defend_reason = #{defendReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where defend_id = #{defendId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Defend" >
+    update classroom_defend
+    set defend_code = #{defendCode,jdbcType=VARCHAR},
+      defend_create_time = #{defendCreateTime,jdbcType=TIMESTAMP},
+      defend_update_time = #{defendUpdateTime,jdbcType=TIMESTAMP},
+      defend_state = #{defendState,jdbcType=INTEGER},
+      defend_time = #{defendTime,jdbcType=TIMESTAMP},
+      check_id = #{checkId,jdbcType=INTEGER},
+      check_code = #{checkCode,jdbcType=VARCHAR},
+      room_id = #{roomId,jdbcType=INTEGER},
+      room_code = #{roomCode,jdbcType=VARCHAR},
+      defend_object = #{defendObject,jdbcType=VARCHAR},
+      defend_number = #{defendNumber,jdbcType=INTEGER},
+      defend_reason = #{defendReason,jdbcType=VARCHAR}
+    where defend_id = #{defendId,jdbcType=INTEGER}
+  </update>
+  <select id="getDefendList" resultMap="BaseResultMap" parameterType="com.project.vo.DefendQueryVo">
+    select <include refid="Base_Column_List"></include>
+    from classroom_defend
+    <where>
+      <if test="defendCode !=null and defendCode!=''">
+        and defend_code = #{defendCode}
+      </if>
+      <if test="defendState !=null and defendState!=''">
+        and defend_state =#{defendState}
+      </if>
+      <if test="checkCode !=null and checkCode !=''">
+        and check_code = #{checkCode}
+      </if>
+      <if test="roomCode !=null and roomCode !=''">
+        and room_code = #{roomCode}
+      </if>
+      <if test="defendObject !=null and defendObject !=''">
+        and defend_object = #{defendObject}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ defend_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ defend_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ defend_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ defend_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+  <select id="findDefendByRoomCodeAndDefendState" resultMap="BaseResultMap" parameterType="map">
+    select <include refid="Base_Column_List"></include>
+    from classroom_defend
+    where room_code = #{roomCode} and defend_state = #{defendState}
+  </select>
+  <delete id="deleteByRoomId" parameterType="int">
+    delete from  classroom_defend
+    where room_id = #{roomId}
+  </delete>
+</mapper>

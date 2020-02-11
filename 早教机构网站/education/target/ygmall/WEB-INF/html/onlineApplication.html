@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>在线报名</title>
+    <link rel="shortcut icon" href="../../images/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="../../layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <link rel="stylesheet" type="text/css" href="../../css/login.css" />
+    <link rel="stylesheet" href="../../css/font.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+    <style type="text/css">
+        .title1{
+            display: block;
+            animation: star 1s linear infinite;
+        }
+        @keyframes star {
+            0% {
+                transform: rotate(0);
+            }
+            50% {
+                transform: rotate(6deg);
+            }
+            100% {
+                transform: rotate(-6deg);
+            }
+        }
+    </style>
+    <!--加载meta IE兼容文件-->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="header">
+    <div class="menu-btn">
+        <div class="menu"></div>
+    </div>
+    <h1 class="logo">
+        <a href="/manage/user/jumpHomePage.html">
+            <span>MYBLOG</span>
+            <img src="../../images/logo.jpg" style="margin-bottom: 20px;">
+        </a>
+    </h1>
+    <div class="nav">
+        <a href="/manage/user/jumpHomePage.html" >首页</a>
+        <a href="/manage/user/jumpVideoIntroduce.html" >视频简介</a>
+        <a href="/manage/user/jumpOnlineApplication.html" class="active">在线报名</a>
+        <a href="/manage/user/jumpOnlineCourse.html">在线选课</a>
+        <!--<a href="">关于</a>-->
+    </div>
+    <p class="welcome-text">
+        欢迎，<a href="javascript:;" onclick="toLogin()" >
+        <span class="name" style="color: #800c19" id="realName">请登录</span>
+    </a>
+        <span class="name" id="userName1" style="display: none" style="color: #800c19"></span>
+        <a href="javascript:;" onclick="toIndex()" id="center" style="display: none">
+            <span class="name" style="color: #800c19">个人中心</span>
+        </a>
+        <a href="javascript:;" onclick="logout()" id="logout" style="display: none" >
+            <span class="name" style="color: red" >退出</span>
+        </a>
+    </p>
+</div>
+<div class="content whisper-content leacots-content details-content">
+    <div class="cont w1000">
+        <div class="whisper-list">
+            <div class="item-box">
+                <div class="review-version">
+                    <div class="form-box">
+                        <div class="article-cont">
+
+                            <div class="x-body">
+                                <div class="layui-form" id="form">
+                                    <!--<fieldset class="layui-elem-field" style="margin-left: 10%;margin-right:10%;box-shadow: 5px 5px 5px #ddd;margin-bottom: 30px;padding-left: 10%">-->
+                                    <legend>-------------------------学生信息设定-------------------------</legend>
+                                    <div class="layui-form-item">
+                                        <label for="userName" class="layui-form-label">
+                                            <span class="x-red">*</span>用户名
+                                        </label>
+                                        <div class="layui-input-inline">
+                                            <input class="layui-input" type="text" id="userName" name="userName"
+                                                   lay-verify="userName" autocomplete="off" value="">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">
+                                            <span class="x-red">*</span>用来登录网站的用户名
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label for="userPassword" class="layui-form-label">
+                                            <span class="x-red">*</span>登陆密码
+                                        </label>
+                                        <div class="layui-input-inline">
+                                            <input class="layui-input" type="password" id="userPassword" name="userPassword"
+                                                   lay-verify="userPassword" autocomplete="off" value="">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">
+                                            <span class="x-red">*</span>将用来登陆系统时的密码 ps:密码长度在3-12
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label for="rePassword" class="layui-form-label">
+                                            <span class="x-red">*</span>确认密码
+                                        </label>
+                                        <div class="layui-input-inline">
+                                            <input class="layui-input" type="password" id="rePassword" name="rePassword"
+                                                   lay-verify="rePassword" autocomplete="off" value="">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">
+                                            <span class="x-red">*</span>再输入一遍你的密码
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label for="userRealName" class="layui-form-label">
+                                            <span class="x-red">*</span>真实姓名
+                                        </label>
+                                        <div class="layui-input-inline">
+                                            <input class="layui-input" type="text" id="userRealName" name="userRealName"
+                                                   lay-verify="userRealName" autocomplete="off" value="">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">
+                                            <span class="x-red">*</span>你的真实姓名（上课的人）ps：务必真实 方便管理
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label for="userPhone" class="layui-form-label">
+                                            <span class="x-red">*</span>手机号
+                                        </label>
+                                        <div class="layui-input-inline">
+                                            <input class="layui-input" type="text" id="userPhone" name="userPhone"
+                                                   lay-verify="userPhone" placeholder="" autocomplete="off" value="">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">
+                                            <span class="x-red">*</span>用于联系
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label  class="layui-form-label">
+                                            <span class="x-red">*</span>性别
+                                        </label>
+                                        <div class="layui-form">
+                                            <input type="radio" name="userSex" id="userSex1" lay-filter="filter" required="required" lay-verify="userSex" value="男生" title="男生">
+                                            <input type="radio" name="userSex" id="userSex2" lay-filter="filter" required="required" lay-verify="userSex" value="女生" title="女生">
+                                            <input type="radio" name="userSex" id="userSex3" lay-filter="filter" required="required" lay-verify="userSex" value="保密" title="保密">
+                                        </div>
+                                        <input id="distributionmode" style="display: none;">
+                                        <div class="layui-form-mid layui-word-aux">
+                                            <span class="x-red">*</span>性别选择不想公开那就选择保密
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+                                        <label class="layui-form-label"> </label>
+                                        <button class="layui-btn" lay-filter="application" lay-submit="">
+                                            报名
+                                        </button>
+                                        <button class="layui-btn layui-btn-danger" class="layui-btn layui-btn-primary" onclick="resetmessage()">
+                                            重置
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="demo" style="text-align: center;"></div>
+    </div>
+</div>
+<div class="footer-wrap">
+    <div class="footer w1000">
+        <div class="qrcode">
+            <p><span class="WeChat" style="font-size: 30px">官网微信公众号</span></p>
+            <p><span class="WeChat" style="font-size: 30px">&nbsp;&nbsp</span></p>
+            <img src="../../images/erweima.jpg">
+        </div>
+        <div class="practice-mode">
+            <img src="../../images/down_img.jpg">
+            <div class="text">
+                <h4 class="title">官网的联系方式</h4>
+                <p>微信<span class="WeChat">1234567890</span></p>
+                <p>手机<span class="iphone">1234567890</span></p>
+                <p>邮箱<span class="email">1234567890@qq.com</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../js/formate.js"></script>
+<script type="text/javascript" src="../../layui/lay/modules/laypage.js"></script>
+
+<script type="text/javascript">
+    var $;
+    layui.use(['form','laydate','layer'],function () {
+        $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , laydate = layui.laydate;
+
+
+        form.verify({
+            userName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '用户名不能为空';
+                }
+            },
+            userRealName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '真实姓名不能为空';
+                }
+            },
+            userPassword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '登录密码不能为空';
+                }
+                if (value.length <3 ||value.length >12 ) {
+                    return '新密码必须3到12位';
+                }
+            },
+            rePassword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '确认密码不能为空';
+                }
+                if (value != $("#userPassword").val()) {
+                    return '两次输入的密码不同';
+                }
+            },
+            userPhone: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '手机号不能为空';
+                }
+                var isPhone=/^1[0-9]{10}$/;
+                var flag=isPhone.test(value);
+                if(flag==false)
+                    return '手机号格式错误';
+            },
+
+        });
+        form.on('submit(application)', function () {
+            var userSex = $("input[name='userSex']:checked").val();
+            var userRealName = $("#userRealName").val();
+            var userName = $("#userName").val();
+            var userPassword = $("#userPassword").val();
+            var userPhone = $("#userPhone").val();
+            if (userSex == null || userSex == '') {
+                layer.msg("性别选择不能为空！", {icon: 5, time: 1000});
+                return false;
+            }
+            $.ajax({
+                type: 'post',
+                url: '/manage/user/onlineApplication',
+                dataType: 'json',
+                data: {
+                    userSex:userSex,
+                    userName: userName,
+                    userRealName: userRealName,
+                    userPassword: userPassword,
+                    userPhone: userPhone,
+                },
+                async: false,
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg(data.msg,{
+                            icon :6,time:1500,end:function () {
+                                window.location.reload();
+                            }
+                        });
+                    }else {
+                        layer.msg(data.msg,{
+                            icon :5,time:1500,end:function () {
+                                return false;
+                            }
+                        });
+                    }
+                },
+                error :function (XMLHttpResponse, textStatus, errorThrown, data) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                }
+            });
+
+        });
+
+
+    });
+    //弹出登录页
+    function toLogin() {
+        layer.open({
+            type: 1
+            ,title: '登录网站' //显示标题栏
+            ,closeBtn: true//关闭按钮键
+            ,area: ['450px','270px']
+            ,shade: 0.8
+            ,shadeClose:true
+            ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+            /*  ,btn: ['登录', '取消']*/
+            ,btnAlign: 'c'
+            ,moveType: 0 //拖拽模式，0或者1
+            ,content: '<div class="m-login-warp">\n' +
+                '\t\t\t\t\t<div class="layui-form">\n' +
+                '\t\t\t\t\t\t<div class="layui-form-item">\n' +
+                '\t\t\t\t\t\t\t<input type="text" id="userName2"   lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input">\n' +
+                '\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t\t<div class="layui-form-item">\n' +
+                '\t\t\t\t\t\t\t<input type="password" id="password"  lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">\n' +
+                '\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t\t<div class="layui-form-item m-login-btn">\n' +
+                '\t\t\t\t\t\t\t<div class="layui-inline">\n' +
+                '\t\t\t\t\t\t\t\t<button class="layui-btn layui-btn-normal" type="button" lay-submit="" onclick="login()" lay-filter="login">登录</button>\n' +
+                '\t\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t\t</div>\n' +
+                '\t\t\t\t\t</div>\n' +
+                '\t\t\t\t</div>\n'
+
+        });
+    }
+    //验证登录
+    function login() {
+        var userName = $("#userName2").val();
+        console.log("asfbakjsfba:" + userName);
+        var password = $("#password").val();
+        if (userName == '' || userName == null) {
+            layer.msg("请输入用户名！", {icon: 5, time: 1000});
+            return false;
+        }
+        if (password == '' || password == null) {
+            layer.msg("请输入密码！", {icon: 5, time: 1000});
+            return false;
+        }
+        //登录请求
+        $.ajax({
+            url:'/manage/user/login',
+            type:'post',
+            data:{
+                userName:userName,
+                password:password,
+            },
+            async:false,
+            dataType:'json',
+            success:function (data) {
+                if(data.status==0){//status==0 说明登录成功
+                    layer.msg(data.msg, {icon: 6, time: 1000});
+                    setTimeout(function(){//
+                        parent.layer.closeAll();
+                        /* $("#userName1").html(data.data.realName);
+                         $("#userName1").show();
+                         $("#realName").hide();
+                         $("#center").show();
+                         $("#logout").show();*/
+
+                        window.location.href="/manage/user/jumpOnlineApplication1.html";
+                    },1500);
+                }else{//status!=0 说明登录失败 可能密码错误/用户名不存在
+                    layer.msg(data.msg, {icon: 5, time: 1000});
+                    return false;
+                }
+            },
+            error:function (data) {
+                alert("进入错误")
+            }
+        });
+    }
+    function resetmessage() {
+        window.location.reload();
+    }
+    function logout() {
+        window.location.href="/manage/user/jumpNoLoginHomePage.html"
+    }
+    function toIndex() {
+        window.location.href="/manage/user/toIndex"
+    }
+
+</script>
+
+</body>
+</html>

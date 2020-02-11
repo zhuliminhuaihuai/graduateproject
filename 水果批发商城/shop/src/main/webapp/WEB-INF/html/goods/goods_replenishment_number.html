@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品补货数量</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../x-admin/css/font.css">
+    <link rel="stylesheet" href="../../../x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script type="text/javascript" src="../../../js/xcity.js"></script>
+
+
+</head>
+<body>
+<!-- 中部开始 -->
+<div class="wrapper">
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <label for="goodsInventory" class="layui-form-label">
+                        补充数量
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="goodsInventory" name="goodsInventory" required lay-verify="number"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        补多少的货物
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                    </label>
+                    <button class="layui-btn" key="set-mine" lay-filter="save" lay-submit>
+                        补货
+                    </button>
+                </div>
+            </div>
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<!-- 中部结束 -->
+<link rel="stylesheet" href="../../../x-admin/lib/layui/css/modules/layer/default/layer.css">
+
+<script src="../../../x-admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../x-admin/js/xadmin.js"></script>
+
+<script>
+    var goodsId = localStorage.getItem("goodsId");
+    localStorage.removeItem("goodsId");
+    layui.use(['form', 'layer',  'code','upload' ], function () {
+        $ = layui.jquery;
+        var form = layui.form,
+            layer = layui.layer,
+            code = layui.code,
+            upload = layui.upload;
+
+
+        form.on('submit(save)', function(data) {
+            var goodsInventory =  $("#goodsInventory").val();
+
+
+            $.ajax({
+                url: "/manage/goods/addReplenishmentGoods",
+                type: "post",
+                dataType: "json",
+                data:{
+                    goodsId:goodsId,
+                    goodsInventory:goodsInventory,
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg('补货成功!', {
+                            icon: 6,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            parent.location.reload();
+                        });
+                    }else  {
+                        layer.msg('补货失败!', {
+                            icon: 5,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            return false;
+                        });
+                    }
+
+
+                }
+
+            });
+
+        });
+        //金额转换
+        function fixed(str) {
+            if (!str) str = '0.00';
+            var ret = Math.round(parseFloat(str) * 100) / 100;
+            var decimal = ret.toString().split('.');
+            if (decimal.length === 1) {
+                return ret.toString() + '.00'
+            };
+            if (decimal.length > 1) {
+                if (decimal[1].length < 2) {
+                    return ret.toString() + '0'
+                }
+                return ret
+            };
+            return ret;
+        }
+    });
+</script>
+</body>
+</html>

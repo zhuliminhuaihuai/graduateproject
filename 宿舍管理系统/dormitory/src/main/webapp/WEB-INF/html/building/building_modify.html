@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>修改宿舍楼</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+<div class="x-body">
+    <div class="layui-form" id="form">
+        <legend>宿舍楼信息</legend>
+        <div class="layui-form-item">
+            <label for="buildingName" class="layui-form-label">
+                <span class="x-red">*</span>宿舍楼名字
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="buildingName" name="buildingName"
+                       lay-verify="buildingName" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>就是宿舍楼的起名
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="buildingTitle" class="layui-form-label">
+                宿舍楼昵称
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="buildingTitle" name="buildingTitle"
+                       lay-verify="buildingTitle" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>就是宿舍楼的外称 如：田家炳大楼
+            </div>
+        </div>
+        <div class="user_right">
+            <input type="text" style="display: none" name="buildingImg" id="buildingImg" lay-verify="buildingImg">
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>宿舍楼正面照
+                </label>
+                <div class="layui-upload" style="padding-left: 130px;">
+                    <div class="layui-upload-list" id="demo3">
+                        <img class="layui-upload-img" id="demo2" width="250px" height="250px">
+                    </div>
+                    <button type="button" class="layui-btn" id="test2">修改图片</button>
+                    <div class="layui-form-mid layui-word-aux">
+                        <span class="x-red">*</span>照片大小不超过2M
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="buildingAdress" class="layui-form-label">
+                    <span class="x-red">*</span>宿舍楼地址
+                </label>
+                <div class="layui-input-inline">
+                    <input class="layui-input" type="text" id="buildingAdress" name="buildingAdress"
+                           lay-verify="buildingAdress" autocomplete="off" value="">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>宿舍楼的大致方位
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label  class="layui-form-label">
+                    <span class="x-red">*</span>宿舍性质
+                </label>
+                <div class="layui-form">
+                    <input type="radio" name="buildingSex" id="buildingSex1" lay-filter="filter" lay-verify="buildingSex" value="1" title="男生宿舍">
+                    <input type="radio" name="buildingSex" id="buildingSex2" lay-filter="filter" lay-verify="buildingSex" value="2" title="女生宿舍">
+                </div>
+                <input id="distributionmode" style="display: none;">
+                <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red">*</span>宿舍是男生宿舍还是女生宿舍
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="buildingDetail" class="layui-form-label">
+                    宿舍楼介绍
+                </label>
+                <div class="layui-input-block">
+                        <textarea placeholder="描述下这所宿舍楼..." id="buildingDetail" lay-verify="buildingDetail" name="buildingDetail" autocomplete="off"
+                                  class="layui-textarea" style="height: 80px;"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+                <label class="layui-form-label"> </label>
+                <button class="layui-btn" lay-filter="modifyDormitory" lay-submit="">
+                    修改宿舍楼
+                </button>
+                <!--<button class="layui-btn layui-btn-danger" class="layui-btn layui-btn-primary" onclick="resetmessage()">
+                    重置
+                </button>-->
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../layui/layui.js"></script>
+    <script type="text/javascript" src="../../../js/main.js"></script>
+    <script type="text/javascript" src="../../../js/index.js"></script>
+    <script type="text/javascript" src="../../../js/xadmin.js"></script>
+    <script>
+
+        var buildingId = localStorage.getItem("buildingId");
+        localStorage.removeItem("buildingId");
+        layui.use(['form', 'layer', 'laydate', 'code', 'upload'], function () {
+            $ = layui.jquery;
+            form = layui.form,
+                layer = layui.layer,
+                laydate = layui.laydate,
+                upload = layui.upload;
+
+            form.verify({
+                buildingName: function (value) {
+                    if (value.length == null || value.length == "") {
+                        if($("#buildingTitle").val() == null || $("#buildingTitle").val() == "")
+                        {
+                            return '宿舍楼昵称与名字两者不能都为空！';
+                        }
+                    }
+                },
+                buildingImg: function (value) {
+                    if (value.length == null || value.length == "") {
+                        return '宿舍楼正面照不能为空!';
+                    }
+                },
+                buildingAdress: function (value) {
+                    if (value.length == null || value.length == "") {
+                        return '宿舍地址不能不为空!';
+                    }
+                },
+
+            });
+            $.ajax({
+                url: '/manage/building/detailBuilding',
+                type: 'post',
+                dataType: 'json',
+                data:{
+                    buildingId:buildingId
+                },
+                success: function (res) {
+                    console.log(JSON.stringify(res));
+                    var data = res.data;
+                    $("#buildingName").val(data.buildingName);
+                    $("#buildingTitle").val(data.buildingTitle);
+                    $("#buildingImg").val(data.buildingImg);
+                    $("#buildingAdress").val(data.buildingAdress);
+                    $("#buildingDetail").val(data.buildingDetail);
+                    var buildingImg = data.buildingImg;
+                    $("#demo2").attr("src", "http://127.0.0.1:8080/upload" + buildingImg);
+                    if (data.buildingSex == 1) {
+                        $("#buildingSex1").attr('checked', 'true');
+                    } else {
+                        $("#buildingSex2").attr('checked', 'true');
+                    }
+                    form.render();
+                }
+            })
+            //图片上传
+            upload.render({
+                elem: '#test2'
+                , url: '/manage/building/uploadImg'
+                , multiple: false
+                , size: 2048
+                , before: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        //console.log(file);
+                        $('#demo2').remove();
+                        $('#demo3').append('<img width="250px" height="250px" id="demo2" src="' + result + '" alt="' + file.name + '" class="layui-upload-img ">');
+                    });
+                }
+                , done: function (res) {
+                    var img = res.data.uri;
+                    $("#buildingImg").val(img);
+                    s = img;
+                    layer.msg("上传完成", {icon: 6, time: 2000,});
+                }
+
+            });
+            form.on('submit(modifyDormitory)', function () {
+                var buildingSex = $("input[name='buildingSex']:checked").val();
+                var buildingName = $("#buildingName").val();
+                var buildingTitle = $("#buildingTitle").val();
+                var buildingImg = $("#buildingImg").val();
+                var buildingAdress = $("#buildingAdress").val();
+                var buildingDetail = $("#buildingDetail").val();
+                if (buildingSex == null || buildingSex == '') {
+                    layer.msg("宿舍性质不能为空！", {icon: 5, time: 1000});
+                    return false;
+                }
+                $.ajax({
+                    url: "/manage/building/modifyBuilding",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        buildingSex:buildingSex,
+                        buildingId:buildingId,
+                        buildingName: buildingName,
+                        buildingTitle: buildingTitle,
+                        buildingImg: buildingImg,
+                        buildingAdress: buildingAdress,
+                        buildingDetail: buildingDetail,
+                    },
+                    success: function (data) {
+                        if (data.status == 0) {
+                            layer.msg("宿舍楼信息修改成功！", {
+                                icon: 6, time: 1000, end: function () {
+                                    parent.location.reload();
+                                }
+                            });
+                        } else {
+                            layer.msg("修改失败!");
+                        }
+                    }
+
+                });
+
+            });
+
+
+        });
+
+        function resetmessage() {
+            window.location.reload();
+        }
+    </script>
+</div>
+</body>
+</html>

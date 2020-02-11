@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>添加新用户</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+
+<div class="x-body">
+    <div class="layui-form" id="form">
+        <!--<fieldset class="layui-elem-field" style="margin-left: 10%;margin-right:10%;box-shadow: 5px 5px 5px #ddd;margin-bottom: 30px;padding-left: 10%">-->
+        <legend>用户信息</legend>
+        <div class="layui-form-item">
+            <label  for="userRole" class="layui-form-label">
+                <span class="x-red">*</span>用户类型
+            </label>
+            <div class="layui-input-inline">
+                <select name="userRole" id="userRole" lay-verify="userRole" lay-search="" lay-filter="role">
+                    <option value="">请选择</option>
+                    <option value="0">客户</option>
+                    <option value="2">摄影师</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>选择您的角色类型
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userName" class="layui-form-label">
+                <span class="x-red">*</span>用户名
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="userName" name="userName"
+                       lay-verify="userName" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>这个将会作为登录系统的用户名
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userPassword" class="layui-form-label">
+                <span class="x-red">*</span>登陆密码
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="password" id="userPassword" name="userPassword"
+                       lay-verify="userPassword" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>将用来登陆系统时的密码
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userPasswordAgain" class="layui-form-label">
+                <span class="x-red">*</span>确认密码
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="password" id="userPasswordAgain" name="userPasswordAgain"
+                       lay-verify="userPasswordAgain" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>请再确认一遍您的登录密码
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userFindPassword" class="layui-form-label">
+                <span class="x-red">*</span>秘钥
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="userFindPassword" name="userFindPassword"
+                       lay-verify="userFindPassword" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>秘钥用来找回密码时用的（切记）
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userPhone" class="layui-form-label">
+                <span class="x-red">*</span>手机号
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="userPhone" name="userPhone"
+                       lay-verify="userPhone" placeholder="" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>便于摄影师联系您
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userBirthday" class="layui-form-label">
+                <span class="x-red">*</span>出生日期
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="userBirthday" name="userBirthday"
+                       lay-verify="userBirthday" placeholder="yyyy-MM-dd " autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>后期用来作为生日礼的验证
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+            <label class="layui-form-label"> </label>
+            <button class="layui-btn" lay-filter="addUser" lay-submit="">
+                增加
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary">
+                重置
+            </button>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+
+<script>
+    layui.use(['form','laydate','layer'],function () {
+        $ = layui.jquery;
+        var form = layui.form
+            ,layer = layui.layer
+            ,laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#userBirthday',
+            type: 'date',
+            min: "1919-01-01",
+            max:"2001-01-01"
+        });
+
+        form.verify({
+            userRole: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '角色类型不能为空';
+                }
+            },
+            userName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '用户名不能为空';
+                }
+            },
+            userPassword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '登录密码不能为空';
+                }
+            },
+            userPasswordAgain: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '确认密码不能为空';
+                }
+                if ($("#userPasswordAgain").val() != $("#userPassword").val()) {
+                    return '两次密码不一致！';
+                }
+            },
+            userFindPassword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '秘钥不能为空';
+                }
+            },
+            userPhone: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '手机号不能为空';
+                }
+                var isPhone=/^1[0-9]{10}$/;
+                var flag=isPhone.test(value);
+                if(flag==false)
+                    return '手机号格式错误';
+            }
+        });
+        form.on('submit(addUser)', function () {
+            var userRole = $("#userRole option:selected").val();
+            var userName = $("#userName").val();
+            var userPassword = $("#userPassword").val();
+            var userFindPassword = $("#userFindPassword").val();
+            var userPhone = $("#userPhone").val();
+            var userBirthday = $("#userBirthday").val();
+            console.log("userRole:" + userRole);
+            $.ajax({
+                type: 'post',
+                url: '/manage/user/addUser',
+                dataType: 'json',
+                data: {
+                    userRole: userRole,
+                    userName: userName,
+                    userPassword: userPassword,
+                    userFindPassword: userFindPassword,
+                    userPhone: userPhone,
+                    userBirthday1: userBirthday
+                },
+                async: false,
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg("用户添加成功！",{
+                            icon :6,time:1000,end:function () {
+                                parent.location.reload();
+                            }
+                        });
+                    }else if (data.msg == "用户名已存在") {
+                        layer.msg("该用户名已被人注册，请重新选一个！");
+                    } else {
+                        layer.msg("添加失败！");
+                    }
+                },
+                error :function (XMLHttpResponse, textStatus, errorThrown, data) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                }
+            });
+
+        });
+
+
+    });
+
+
+
+
+</script>
+
+</body>
+
+
+</html>

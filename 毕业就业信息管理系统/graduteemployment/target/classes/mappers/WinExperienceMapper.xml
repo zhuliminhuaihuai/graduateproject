@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.WinExperienceMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.WinExperience" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="win_time" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="resume_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.project.pojo.WinExperience" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="win_time" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="resume_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="win_contenr" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, win_time, create_time, resume_code
+  </sql>
+  <sql id="Blob_Column_List" >
+    win_contenr
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ecs_win_experience
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ecs_win_experience
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.WinExperience" >
+    insert into ecs_win_experience (id, win_time, create_time, 
+      resume_code, win_contenr)
+    values (#{id,jdbcType=INTEGER}, #{winTime,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{resumeCode,jdbcType=VARCHAR}, #{winContenr,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.WinExperience" >
+    insert into ecs_win_experience
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="winTime != null" >
+        win_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="resumeCode != null" >
+        resume_code,
+      </if>
+      <if test="winContenr != null" >
+        win_contenr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="winTime != null" >
+        #{winTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resumeCode != null" >
+        #{resumeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="winContenr != null" >
+        #{winContenr,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.WinExperience" >
+    update ecs_win_experience
+    <set >
+      <if test="winTime != null" >
+        win_time = #{winTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resumeCode != null" >
+        resume_code = #{resumeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="winContenr != null" >
+        win_contenr = #{winContenr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.project.pojo.WinExperience" >
+    update ecs_win_experience
+    set win_time = #{winTime,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      resume_code = #{resumeCode,jdbcType=VARCHAR},
+      win_contenr = #{winContenr,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.WinExperience" >
+    update ecs_win_experience
+    set win_time = #{winTime,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      resume_code = #{resumeCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="winExperienceList" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ecs_win_experience
+    where resume_code = #{resumeCode} and win_contenr!=''
+  </select>
+</mapper>

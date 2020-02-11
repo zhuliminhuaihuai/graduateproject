@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.ResumeMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Resume" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="resume_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="job_intention" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="expected_salary" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="expected_place" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="mastering_skills" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="is_default" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="resume_word" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="resume_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="personal_evaluation" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, resume_code, job_intention, expected_salary, expected_place, user_name, user_id,
+    user_code, mastering_skills, create_time, update_time, is_default, resume_word, resume_img,
+    personal_evaluation
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from ecs_resume
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ecs_resume
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Resume" >
+    insert into ecs_resume (id, resume_code, job_intention,
+      expected_salary, expected_place, user_name,
+      user_id, user_code, mastering_skills,
+      create_time, update_time, is_default,
+      resume_word, resume_img, personal_evaluation
+      )
+    values (#{id,jdbcType=INTEGER}, #{resumeCode,jdbcType=VARCHAR}, #{jobIntention,jdbcType=VARCHAR},
+      #{expectedSalary,jdbcType=VARCHAR}, #{expectedPlace,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+      #{userId,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR}, #{masteringSkills,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDefault,jdbcType=INTEGER},
+      #{resumeWord,jdbcType=VARCHAR}, #{resumeImg,jdbcType=VARCHAR}, #{personalEvaluation,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Resume" >
+    insert into ecs_resume
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="resumeCode != null" >
+        resume_code,
+      </if>
+      <if test="jobIntention != null" >
+        job_intention,
+      </if>
+      <if test="expectedSalary != null" >
+        expected_salary,
+      </if>
+      <if test="expectedPlace != null" >
+        expected_place,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="masteringSkills != null" >
+        mastering_skills,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDefault != null" >
+        is_default,
+      </if>
+      <if test="resumeWord != null" >
+        resume_word,
+      </if>
+      <if test="resumeImg != null" >
+        resume_img,
+      </if>
+      <if test="personalEvaluation != null" >
+        personal_evaluation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="resumeCode != null" >
+        #{resumeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobIntention != null" >
+        #{jobIntention,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedSalary != null" >
+        #{expectedSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedPlace != null" >
+        #{expectedPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="masteringSkills != null" >
+        #{masteringSkills,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=INTEGER},
+      </if>
+      <if test="resumeWord != null" >
+        #{resumeWord,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeImg != null" >
+        #{resumeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="personalEvaluation != null" >
+        #{personalEvaluation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Resume" >
+    update ecs_resume
+    <set >
+      <if test="resumeCode != null" >
+        resume_code = #{resumeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobIntention != null" >
+        job_intention = #{jobIntention,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedSalary != null" >
+        expected_salary = #{expectedSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedPlace != null" >
+        expected_place = #{expectedPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="masteringSkills != null" >
+        mastering_skills = #{masteringSkills,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDefault != null" >
+        is_default = #{isDefault,jdbcType=INTEGER},
+      </if>
+      <if test="resumeWord != null" >
+        resume_word = #{resumeWord,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeImg != null" >
+        resume_img = #{resumeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="personalEvaluation != null" >
+        personal_evaluation = #{personalEvaluation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Resume" >
+    update ecs_resume
+    set resume_code = #{resumeCode,jdbcType=VARCHAR},
+      job_intention = #{jobIntention,jdbcType=VARCHAR},
+      expected_salary = #{expectedSalary,jdbcType=VARCHAR},
+      expected_place = #{expectedPlace,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      mastering_skills = #{masteringSkills,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_default = #{isDefault,jdbcType=INTEGER},
+      resume_word = #{resumeWord,jdbcType=VARCHAR},
+      resume_img = #{resumeImg,jdbcType=VARCHAR},
+      personal_evaluation = #{personalEvaluation,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="resumeList" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ecs_resume
+    <where>
+      <if test="role==1">
+        and user_code  = #{userCode}
+      </if>
+      <if test="userName!=null and userName!=''">
+        and (job_intention like "%"#{userName}"%" or user_code like "%"#{userName}"%" or expected_place like "%"#{userName}"%"
+        or resume_code like "%"#{userName}"%")
+      </if>
+      <if test="isDefault!=null and isDefault!=''">
+        and is_default  = #{isDefault}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ create_time <= #{endTime}]]>
+        </if>
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ create_time <= #{endTime}]]>
+          </if>
+        </if>
+      </if>
+    </where>
+    order by id desc
+  </select>
+  <update id="updateByResumeCode" parameterType="com.project.pojo.Resume" >
+    update ecs_resume
+    <set >
+      <if test="jobIntention != null" >
+        job_intention = #{jobIntention,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedSalary != null" >
+        expected_salary = #{expectedSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedPlace != null" >
+        expected_place = #{expectedPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="masteringSkills != null" >
+        mastering_skills = #{masteringSkills,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDefault != null" >
+        is_default = #{isDefault,jdbcType=INTEGER},
+      </if>
+      <if test="resumeWord != ''" >
+        resume_word = #{resumeWord,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeImg != null" >
+        resume_img = #{resumeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="personalEvaluation != null" >
+        personal_evaluation = #{personalEvaluation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where resume_code = #{resumeCode}
+  </update>
+  <select id="resumeByUserCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ecs_resume
+    where user_code = #{userCode} and is_default = 1
+  </select>
+</mapper>

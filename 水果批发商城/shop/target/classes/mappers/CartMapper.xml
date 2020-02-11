@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manage.dao.CartMapper" >
+  <resultMap id="BaseResultMap" type="com.manage.pojo.Cart" >
+    <constructor >
+      <idArg column="cart_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="cart_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_buy_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_rel_price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="goods_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_big_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_small_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_one_sum_price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="goods_sum_price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="cart_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="cart_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="cart_buy_sum_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cart_id, goods_id, cart_code, user_code, goods_code, goods_buy_num, goods_rel_price, 
+    goods_img, goods_title, goods_big_type, goods_small_type, goods_one_sum_price, goods_sum_price, 
+    cart_create_time, cart_update_time, cart_buy_sum_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shop_cart
+    where cart_id = #{cartId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shop_cart
+    where cart_id = #{cartId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.manage.pojo.Cart" >
+    insert into shop_cart (cart_id, goods_id, cart_code, 
+      user_code, goods_code, goods_buy_num, 
+      goods_rel_price, goods_img, goods_title, 
+      goods_big_type, goods_small_type, goods_one_sum_price, 
+      goods_sum_price, cart_create_time, cart_update_time, 
+      cart_buy_sum_num)
+    values (#{cartId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{cartCode,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}, #{goodsBuyNum,jdbcType=INTEGER}, 
+      #{goodsRelPrice,jdbcType=DOUBLE}, #{goodsImg,jdbcType=VARCHAR}, #{goodsTitle,jdbcType=VARCHAR}, 
+      #{goodsBigType,jdbcType=INTEGER}, #{goodsSmallType,jdbcType=INTEGER}, #{goodsOneSumPrice,jdbcType=DOUBLE}, 
+      #{goodsSumPrice,jdbcType=DOUBLE}, #{cartCreateTime,jdbcType=TIMESTAMP}, #{cartUpdateTime,jdbcType=TIMESTAMP}, 
+      #{cartBuySumNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.manage.pojo.Cart" >
+    insert into shop_cart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cartId != null" >
+        cart_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="cartCode != null" >
+        cart_code,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="goodsCode != null" >
+        goods_code,
+      </if>
+      <if test="goodsBuyNum != null" >
+        goods_buy_num,
+      </if>
+      <if test="goodsRelPrice != null" >
+        goods_rel_price,
+      </if>
+      <if test="goodsImg != null" >
+        goods_img,
+      </if>
+      <if test="goodsTitle != null" >
+        goods_title,
+      </if>
+      <if test="goodsBigType != null" >
+        goods_big_type,
+      </if>
+      <if test="goodsSmallType != null" >
+        goods_small_type,
+      </if>
+      <if test="goodsOneSumPrice != null" >
+        goods_one_sum_price,
+      </if>
+      <if test="goodsSumPrice != null" >
+        goods_sum_price,
+      </if>
+      <if test="cartCreateTime != null" >
+        cart_create_time,
+      </if>
+      <if test="cartUpdateTime != null" >
+        cart_update_time,
+      </if>
+      <if test="cartBuySumNum != null" >
+        cart_buy_sum_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cartId != null" >
+        #{cartId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="cartCode != null" >
+        #{cartCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null" >
+        #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBuyNum != null" >
+        #{goodsBuyNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsRelPrice != null" >
+        #{goodsRelPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsImg != null" >
+        #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTitle != null" >
+        #{goodsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBigType != null" >
+        #{goodsBigType,jdbcType=INTEGER},
+      </if>
+      <if test="goodsSmallType != null" >
+        #{goodsSmallType,jdbcType=INTEGER},
+      </if>
+      <if test="goodsOneSumPrice != null" >
+        #{goodsOneSumPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsSumPrice != null" >
+        #{goodsSumPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="cartCreateTime != null" >
+        #{cartCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cartUpdateTime != null" >
+        #{cartUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cartBuySumNum != null" >
+        #{cartBuySumNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.manage.pojo.Cart" >
+    update shop_cart
+    <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="cartCode != null" >
+        cart_code = #{cartCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null" >
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBuyNum != null" >
+        goods_buy_num = #{goodsBuyNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsRelPrice != null" >
+        goods_rel_price = #{goodsRelPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsImg != null" >
+        goods_img = #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTitle != null" >
+        goods_title = #{goodsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBigType != null" >
+        goods_big_type = #{goodsBigType,jdbcType=INTEGER},
+      </if>
+      <if test="goodsSmallType != null" >
+        goods_small_type = #{goodsSmallType,jdbcType=INTEGER},
+      </if>
+      <if test="goodsOneSumPrice != null" >
+        goods_one_sum_price = #{goodsOneSumPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsSumPrice != null" >
+        goods_sum_price = #{goodsSumPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="cartCreateTime != null" >
+        cart_create_time = #{cartCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cartUpdateTime != null" >
+        cart_update_time = #{cartUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cartBuySumNum != null" >
+        cart_buy_sum_num = #{cartBuySumNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cart_id = #{cartId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.manage.pojo.Cart" >
+    update shop_cart
+    set goods_id = #{goodsId,jdbcType=INTEGER},
+      cart_code = #{cartCode,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      goods_code = #{goodsCode,jdbcType=VARCHAR},
+      goods_buy_num = #{goodsBuyNum,jdbcType=INTEGER},
+      goods_rel_price = #{goodsRelPrice,jdbcType=DOUBLE},
+      goods_img = #{goodsImg,jdbcType=VARCHAR},
+      goods_title = #{goodsTitle,jdbcType=VARCHAR},
+      goods_big_type = #{goodsBigType,jdbcType=INTEGER},
+      goods_small_type = #{goodsSmallType,jdbcType=INTEGER},
+      goods_one_sum_price = #{goodsOneSumPrice,jdbcType=DOUBLE},
+      goods_sum_price = #{goodsSumPrice,jdbcType=DOUBLE},
+      cart_create_time = #{cartCreateTime,jdbcType=TIMESTAMP},
+      cart_update_time = #{cartUpdateTime,jdbcType=TIMESTAMP},
+      cart_buy_sum_num = #{cartBuySumNum,jdbcType=INTEGER}
+    where cart_id = #{cartId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAllGoods" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    from shop_cart
+    <where>
+      <if test="userCode!=null and userCode!=''">
+        and user_code = #{userCode} and cart_buy_sum_num = 0
+      </if>
+    </where>
+  </select>
+  <select id="getShopCartNumber" parameterType="java.lang.String" resultType="int">
+    select count(1)
+    from shop_cart
+    where user_code = #{userCode} and cart_buy_sum_num = 0
+  </select>
+  <update id="updateCartSettlementType" parameterType="java.util.List">
+    update shop_cart
+    set cart_buy_sum_num = 1
+    where cart_id in
+    <foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </update>
+  <select id="getCartListByIds" parameterType="java.util.List" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from shop_cart
+    where cart_id in
+    <foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </select>
+</mapper>

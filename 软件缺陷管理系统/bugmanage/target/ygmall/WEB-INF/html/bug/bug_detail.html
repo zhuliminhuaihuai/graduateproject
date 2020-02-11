@@ -1,0 +1,342 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+	<base href="<%=basePath%>">
+	<meta charset="UTF-8">
+	<title>缺陷详情</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="../../../layui/css/layui.css">
+	<style>
+		.layui-table th{
+			font-weight:bold;
+			text-align:right;
+		}
+
+	</style>
+
+</head>
+<body>
+<fieldset class="layui-elem-field">
+	<div class="layui-field-box">
+		<table class="layui-table"  >
+			<tbody >
+			<tr>
+				<th colspan="4" >
+					<button class="layui-btn layui-btn-normal" style="float:left;display: none;" id="receive" onclick="receiveBug()"><i class="layui-icon">&#xe605;</i> 接收缺陷</button>
+					<button class="layui-btn layui-btn-normal" style="float:left;background-color: green;display: none;" id="turnTechnology" onclick="turnTechnology()"><i class="layui-icon">&#xe666;</i> 转移技术</button>
+					<button class="layui-btn layui-btn-danger" style="float:left;display: none;" id="withdraw" onclick="withdrawBug()"><i class="layui-icon">&#xe65b;</i> 撤回</button>
+					<!--<button class="layui-btn layui-btn-danger" style="float:left;display: none;background-color: purple" id="ignore" onclick="bugResult()"><i class="layui-icon">&#xe65b;</i> 忽略</button>-->
+					<button class="layui-btn layui-btn-danger" style="float:left;display: none;background-color: #5b8077" id="editBug" onclick="editBug()"><i class="layui-icon">&#xe642;</i> 重新编辑</button>
+					<button class="layui-btn layui-btn-warm" style="float:right" onclick="returnBugList()"><i class="layui-icon">&#xe65c;</i> 返回缺陷列表</button>
+				</th>
+			</tr>
+			<tr>
+				<th colspan="4" style="text-align:center;"><h3>基本信息</h3></th>
+			<tr>
+			<tr>
+				<th>缺陷标题</th>
+				<td id="bugTitle"></td>
+				<th>发布时间</th>
+				<td id="createTime" ></td>
+			</tr>
+			<tr>
+				<th>发布人(测试人员)</th>
+				<td id="realName"></td>
+				<th>解决人员（研发人员）</th>
+				<td id="technologyName"></td>
+			</tr>
+			<tr>
+				<th >所属分类</th>
+				<td id="bugName"></td>
+				<th>缺陷情况</th>
+				<td id="status"></td></tr>
+			<tr>
+				<th>项目经理</th>
+				<td id="userName"></td>
+				<th>所属项目</th>
+				<td id="projectName"></td></tr>
+			<tr>
+				<th>缺陷等级</th>
+				<td id="performance"></td>
+				<th>缺陷结束时间</th>
+				<td id="endTime"></td></tr>
+			<tr>
+				<th>缺陷描述</th>
+				<td id="" colspan="3">
+					<textarea placeholder="" class="layui-textarea" id="bugDescribe" name="bugDescribe" readonly></textarea>
+				</td>
+			<tr>
+			<tr>
+				<th colspan="4" style="text-align:center"><h3>处理结果信息</h3>
+				</th>
+			<tr>
+			<tr id="reason">
+				<th height="100px" >撤回原因</th>
+				<td colspan="3">
+					<div>
+						<textarea placeholder="" class="layui-textarea" id="withdrawDeason"  name="withdrawDeason" readonly></textarea>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th height="100px" >处理结果</th>
+				<td colspan="3">
+					<div>
+						<textarea placeholder="" class="layui-textarea" id="bugResult" onclick="bugResult()" name="bugResult" readonly></textarea>
+					</div>
+				</td>
+			</tr>
+
+			<th colspan="4" style="text-align:center"><h3><button class="layui-btn layui-btn-sm" style="display: none" id="write" onclick="bugResult()">填写处理信息</button></h3>
+			</th>
+			<tr>
+				<th colspan="4" style="text-align:center"><h3><button class="layui-btn layui-btn-sm"  style="display: none;background-color: blue" id="endBug" onclick="endBug()">确认完成</button></h3>
+				</th>
+			<tr>
+			</tbody>
+		</table>
+	</div>
+</fieldset>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="../../../layui/layui.js" charset="utf-8"></script>
+<script src="../../../js/formate.js" charset="utf-8"></script>
+<script src="../../../js/xadmin.js" charset="utf-8"></script>
+
+<script>
+    var role = '${session_manage_token.getRole()}';
+    $(function () {
+        //加载弹出层
+        layui.use(['form', 'element'],
+            function () {
+                layer = layui.layer;
+                element = layui.element;
+            });
+    })
+    var id = localStorage.getItem("id");
+    var projectId = localStorage.getItem("projectId");
+    var bugState = null;
+    //请求数据
+    $.ajax({
+        url:'/manage/bug/getBugDetail',
+        type:'post',
+        data:{
+            id:id,
+        },
+        dataType:'json',
+        success:function (data) {
+            if(data.status==0){
+                $("#bugTitle").html(data.data.bug_title);//标题
+                $("#bugName").html(data.data.bug_name);//分类名
+                $("#realName").html(data.data.real_name);//测试名字
+                $("#userName").html(data.data.user_name);//项目经理名字
+                $("#projectName").html(data.data.project_name);//项目名
+
+                if(data.data.technology_name!=null){//如果技术不为空显示名字
+                    $("#technologyName").html(data.data.technology_name);
+				}else {
+                    $("#technologyName").html("/");
+				}
+                $("#createTime").html(editTime(data.data.create_time));//创建时间
+                if(data.data.endTime!=null){//缺陷结束时间
+                    $("#endTime").html(editTime(data.data.end_time));
+                }else {
+                    $("#endTime").html("/");
+                }
+                $("#bugDescribe").html(data.data.bug_describe);//缺陷描述
+                if(data.data.withdraw_reason!=null&&data.data.withdraw_reason!=''){//撤回原因
+                    $("#withdrawDeason").html(data.data.withdraw_reason);
+                }else {
+                    $("#reason").hide();
+                }
+
+                $("#bugResult").html(data.data.bug_result);//缺陷处理结果
+
+                var performance = data.data.performance;//缺陷等级
+                if(performance==3){
+                    $("#performance").html("普通");
+				}else if(performance==2){
+                    $("#performance").html("一般");
+
+				}else if(performance==1){
+                    $("#performance").html("特急");
+                }
+
+
+                var status = data.data.status;//缺陷状态
+                bugState = status;
+				//页面所有按钮默认隐藏 只有某个状态下并根据角色显示按钮 用jquery中show()方法
+                if(status==0){//
+                    $("#status").html("待项目经理查看");
+                    if(role==1){//当角色为项目经理
+                        $("#turnTechnology").show();
+                        $("#ignore").show();
+                        $("#withdraw").show();
+                    }
+                }else if(status==1){
+                    $("#status").html("项目经理已撤回，描述不清晰");
+                    if(role==3){//当角色为测试
+                        $("#editBug").show();
+					}
+                }else if(status==2){
+                    $("#status").html("已被项目经理忽略");
+                }else if(status==3){
+                    if(role==2){//当角色为研发
+                        $("#receive").show();
+                        $("#withdraw").show();
+					}
+                    $("#status").html("待研发查看");
+                }else if(status==4){
+                    $("#status").html("研发已撤回，描述不清晰");
+                    if(role==3){//当角色为测试
+                        $("#editBug").show();
+                    }
+                }else if(status==5){
+                    $("#status").html("研发已受理，处理中");
+                    if(role==2){//当角色为研发
+                        $("#write").show();
+                    }
+                }else if(status==6){
+                    $("#status").html("研发已处理");
+                    if(role==3){//当角色为测试
+                        $("#endBug").show();
+					}
+                }else if(status==7){
+                    $("#status").html("测试确认已结束");
+                }
+
+
+
+
+            }
+        }
+    })
+	//技术接缺陷
+    function receiveBug() {
+        if(role==1){
+            layer.msg("管理员不支持接缺陷");
+            return false;
+        }
+        $.ajax({
+            url:'/manage/bug/technologyReceiveBug',
+            type:'post',
+            data:{
+                id:id,
+            },
+            dataType:'json',
+            success:function (data) {
+                if(data.status==0) {
+                    layer.msg("接收成功！",{icon: 6,time:500,end:function () {
+                            window.location.href="/manage/bug/bug_detail"
+                        }});
+                }
+            }
+        })
+    }
+    //转移工单
+    function turnNewTechnology() {
+        if(role==1){
+            layer.msg("管理员不支持转移");
+            return false;
+        }else {
+            x_admin_show('转移技术','/manage/bug/work_transaction_trun_newtechnology.html',400,500)
+        }
+    }
+    //撤回
+    function withdrawBug() {
+        if(role==0){
+            layer.msg("管理员不支持操作");
+            return false;
+        }else {
+            localStorage.setItem("id",id);
+            x_admin_show('撤回原因','/manage/bug/bug_withdraw',800,300)
+        }
+    }
+    //忽略/技术返回处理结果
+    function bugResult() {
+        if(role==0){
+            layer.msg("管理员不支持操作");
+            return false;
+        }else {
+            if(role!=3){//
+                if(bugState==3){
+                    layer.msg("请先接收，才能进行回复处理结果");
+                    return false;
+                }else if(bugState==4) {
+                    layer.msg("缺陷已撤回，无法进行回复处理结果");
+                    return false;
+                }else if(bugState==5) {
+                    localStorage.setItem("id",id);
+                    x_admin_show('结果','/manage/bug/bug_result',800,300)
+                }else {
+                    layer.msg("缺陷已完成 不用重复回复处理结果");
+                    return false;
+                }
+			}
+
+        }
+    }
+    //转移技术
+    function turnTechnology() {
+        if(role==0){
+            layer.msg("管理员不支持操作");
+            return false;
+        }else {
+                localStorage.setItem("id", id);
+                localStorage.setItem("projectId", projectId);
+                x_admin_show('转移研发', '/manage/bug/bug_trun_newtechnology', 400, 500)
+
+        }
+    }
+    //测试确认完成
+    function endBug() {
+        if(role==0){
+            layer.msg("管理员不支持操作");
+            return false;
+        }else {
+			if(role==3){//测试才能执行此操作
+                layer.confirm('确认已完成么', function(index){
+					$.ajax({
+						url:'/manage/bug/finishBug',
+						type:'post',
+						data:{
+							id:id,
+						},
+						dataType:'json',
+						success:function (data) {
+							if(data.status==0) {
+								layer.msg("确认完成！",{icon: 6,time:500,end:function () {
+										window.location.href="/manage/bug/bug_detail"
+									}});
+							}
+						}
+					})
+                });
+			}
+        }
+    }
+    //撤回工单重新编辑
+    function editBug() {
+        if(role==0){
+            layer.msg("管理员不支持操作");
+            return false;
+        }else {
+            if(role==3){//测试才能执行此操作
+                localStorage.setItem("id",id);
+                localStorage.setItem("bugState",bugState);
+                x_admin_show('发布项目缺陷','/manage/bug/bug_edit',800,500);
+            }
+        }
+    }
+    function returnBugList() {
+		window.location.href="/manage/bug/bug_list";
+    }
+</script>
+</body>
+</html>

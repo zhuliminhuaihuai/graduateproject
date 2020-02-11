@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Product" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="product_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="product_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="product_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="product_video" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_times" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="is_on" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="is_check" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="prodect_user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="product_user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="is_selected" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="product_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="read_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.project.pojo.Product" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="product_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="product_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="product_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="product_video" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_times" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="is_on" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="is_check" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="prodect_user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="product_user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="is_selected" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="product_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="read_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="product_introduce" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_code, product_name, product_img, product_video, create_times, is_on,
+    is_check, prodect_user_id, product_user_name, is_selected, product_type, read_num
+  </sql>
+  <sql id="Blob_Column_List" >
+    product_introduce
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from paint_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from paint_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Product" >
+    insert into paint_product (id, product_code, product_name,
+      product_img, product_video, create_times,
+      is_on, is_check, prodect_user_id,
+      product_user_name, is_selected, product_type,
+      read_num, product_introduce)
+    values (#{id,jdbcType=INTEGER}, #{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR},
+      #{productImg,jdbcType=VARCHAR}, #{productVideo,jdbcType=VARCHAR}, #{createTimes,jdbcType=TIMESTAMP},
+      #{isOn,jdbcType=INTEGER}, #{isCheck,jdbcType=INTEGER}, #{prodectUserId,jdbcType=INTEGER},
+      #{productUserName,jdbcType=VARCHAR}, #{isSelected,jdbcType=INTEGER}, #{productType,jdbcType=INTEGER},
+      #{readNum,jdbcType=INTEGER}, #{productIntroduce,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Product" >
+    insert into paint_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productCode != null" >
+        product_code,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="productImg != null" >
+        product_img,
+      </if>
+      <if test="productVideo != null" >
+        product_video,
+      </if>
+      <if test="createTimes != null" >
+        create_times,
+      </if>
+      <if test="isOn != null" >
+        is_on,
+      </if>
+      <if test="isCheck != null" >
+        is_check,
+      </if>
+      <if test="prodectUserId != null" >
+        prodect_user_id,
+      </if>
+      <if test="productUserName != null" >
+        product_user_name,
+      </if>
+      <if test="isSelected != null" >
+        is_selected,
+      </if>
+      <if test="productType != null" >
+        product_type,
+      </if>
+      <if test="readNum != null" >
+        read_num,
+      </if>
+      <if test="productIntroduce != null" >
+        product_introduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productCode != null" >
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null" >
+        #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="productVideo != null" >
+        #{productVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTimes != null" >
+        #{createTimes,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isOn != null" >
+        #{isOn,jdbcType=INTEGER},
+      </if>
+      <if test="isCheck != null" >
+        #{isCheck,jdbcType=INTEGER},
+      </if>
+      <if test="prodectUserId != null" >
+        #{prodectUserId,jdbcType=INTEGER},
+      </if>
+      <if test="productUserName != null" >
+        #{productUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="isSelected != null" >
+        #{isSelected,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=INTEGER},
+      </if>
+      <if test="readNum != null" >
+        #{readNum,jdbcType=INTEGER},
+      </if>
+      <if test="productIntroduce != null" >
+        #{productIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Product" >
+    update paint_product
+    <set >
+      <if test="productCode != null" >
+        product_code = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImg != null" >
+        product_img = #{productImg,jdbcType=VARCHAR},
+      </if>
+      <if test="productVideo != null" >
+        product_video = #{productVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTimes != null" >
+        create_times = #{createTimes,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isOn != null" >
+        is_on = #{isOn,jdbcType=INTEGER},
+      </if>
+      <if test="isCheck != null" >
+        is_check = #{isCheck,jdbcType=INTEGER},
+      </if>
+      <if test="prodectUserId != null" >
+        prodect_user_id = #{prodectUserId,jdbcType=INTEGER},
+      </if>
+      <if test="productUserName != null" >
+        product_user_name = #{productUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="isSelected != null" >
+        is_selected = #{isSelected,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null" >
+        product_type = #{productType,jdbcType=INTEGER},
+      </if>
+      <if test="readNum != null" >
+        read_num = #{readNum,jdbcType=INTEGER},
+      </if>
+      <if test="productIntroduce != null" >
+        product_introduce = #{productIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.project.pojo.Product" >
+    update paint_product
+    set product_code = #{productCode,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_img = #{productImg,jdbcType=VARCHAR},
+      product_video = #{productVideo,jdbcType=VARCHAR},
+      create_times = #{createTimes,jdbcType=TIMESTAMP},
+      is_on = #{isOn,jdbcType=INTEGER},
+      is_check = #{isCheck,jdbcType=INTEGER},
+      prodect_user_id = #{prodectUserId,jdbcType=INTEGER},
+      product_user_name = #{productUserName,jdbcType=VARCHAR},
+      is_selected = #{isSelected,jdbcType=INTEGER},
+      product_type = #{productType,jdbcType=INTEGER},
+      read_num = #{readNum,jdbcType=INTEGER},
+      product_introduce = #{productIntroduce,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Product" >
+    update paint_product
+    set product_code = #{productCode,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_img = #{productImg,jdbcType=VARCHAR},
+      product_video = #{productVideo,jdbcType=VARCHAR},
+      create_times = #{createTimes,jdbcType=TIMESTAMP},
+      is_on = #{isOn,jdbcType=INTEGER},
+      is_check = #{isCheck,jdbcType=INTEGER},
+      prodect_user_id = #{prodectUserId,jdbcType=INTEGER},
+      product_user_name = #{productUserName,jdbcType=VARCHAR},
+      is_selected = #{isSelected,jdbcType=INTEGER},
+      product_type = #{productType,jdbcType=INTEGER},
+      read_num = #{readNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="productList" resultMap="ResultMapWithBLOBs" parameterType="com.project.vo.CommonVo" >
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from paint_product as p left join  paint_user as u on p.prodect_user_id = u.user_id
+    <where>
+      <if test="role==1">
+        and (p.prodect_user_id= #{userId} )
+      </if>
+      <if test="role==2">
+        and p.prodect_user_id in
+        <foreach collection="userIds" item="userId" separator="," close=")" open="(">
+          #{userId}
+        </foreach>
+      </if>
+      <if test="role==3">
+        and p.prodect_user_id in
+        <foreach collection="userIds" item="userId" separator="," close=")" open="(">
+          #{userId}
+        </foreach>
+      </if>
+      <if test="userName!=null and userName!=''">
+        and (p.product_name like "%"#{userName}"%" )
+      </if>
+      <if test="isOn!=null and isOn!=''">
+        and p.is_on = #{isOn}
+      </if>
+      <if test="isCheck!=null and isCheck!=''">
+        and p.is_check = #{isCheck}
+      </if>
+      <if test="isSelect!=null and isSelect!=''">
+        and p.is_selected = #{isSelect}
+      </if>
+      <if test="productType!=null and productType!=''">
+        and p.product_type = #{productType}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ p.create_times >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ p.create_times <= #{endTime}]]>
+        </if>
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ p.create_times >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ p.create_times <= #{endTime}]]>
+          </if>
+        </if>
+      </if>
+    </where>
+    order by p.id desc
+  </select>
+  <select id="checkProductName" resultType="int" parameterType="java.lang.String" >
+    SELECT count(1) from paint_product
+    where product_name=#{productName}
+  </select>
+  <select id="checkProductNameExSelf"  resultType="int"  parameterType="map" >
+    SELECT count(1) from paint_product
+    where product_name=#{productName} and id!=#{id}
+  </select>
+  <select id="productBuSelected" resultMap="ResultMapWithBLOBs" parameterType="com.project.vo.CommonVo" >
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from paint_product
+    where is_on = 1 and is_selected =1 and is_check = 1
+    order by id desc
+  </select>
+  <select id="products" resultMap="ResultMapWithBLOBs" parameterType="com.project.vo.CommonVo" >
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from paint_product
+    where is_on = 1  and is_check = 1
+    order by id desc
+  </select>
+</mapper>

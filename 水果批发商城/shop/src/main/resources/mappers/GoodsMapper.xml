@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manage.dao.GoodsMapper" >
+    <resultMap id="BaseResultMap" type="com.manage.pojo.Goods" >
+        <constructor >
+            <idArg column="goods_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="goods_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="goods_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="goods_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="goods_big_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="goods_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="goods_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="goods_cost_price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+            <arg column="goods_rel_price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+            <arg column="goods_price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+            <arg column="goods_buy_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="goods_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+            <arg column="goods_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+            <arg column="goods_inventory" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        </constructor>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.manage.pojo.Goods" >
+        <constructor >
+            <idArg column="goods_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="goods_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="goods_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="goods_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="goods_big_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="goods_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="goods_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="goods_cost_price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+            <arg column="goods_rel_price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+            <arg column="goods_price" jdbcType="DOUBLE" javaType="java.lang.Double" />
+            <arg column="goods_buy_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="goods_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+            <arg column="goods_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+            <arg column="goods_inventory" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="goods_renark" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List" >
+    goods_id, goods_code, goods_img, goods_state, goods_big_type, goods_type, goods_title,
+    goods_cost_price, goods_rel_price, goods_price, goods_buy_num, goods_create_time,
+    goods_update_time, goods_inventory
+  </sql>
+    <sql id="Blob_Column_List" >
+    goods_renark
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from shop_goods
+        where goods_id = #{goodsId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shop_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.manage.pojo.Goods" >
+    insert into shop_goods (goods_id, goods_code, goods_img,
+      goods_state, goods_big_type, goods_type,
+      goods_title, goods_cost_price, goods_rel_price,
+      goods_price, goods_buy_num, goods_create_time,
+      goods_update_time, goods_inventory, goods_renark
+      )
+    values (#{goodsId,jdbcType=INTEGER}, #{goodsCode,jdbcType=VARCHAR}, #{goodsImg,jdbcType=VARCHAR},
+      #{goodsState,jdbcType=INTEGER}, #{goodsBigType,jdbcType=INTEGER}, #{goodsType,jdbcType=INTEGER},
+      #{goodsTitle,jdbcType=VARCHAR}, #{goodsCostPrice,jdbcType=DOUBLE}, #{goodsRelPrice,jdbcType=DOUBLE},
+      #{goodsPrice,jdbcType=DOUBLE}, #{goodsBuyNum,jdbcType=INTEGER}, #{goodsCreateTime,jdbcType=TIMESTAMP},
+      #{goodsUpdateTime,jdbcType=TIMESTAMP}, #{goodsInventory,jdbcType=INTEGER}, #{goodsRenark,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.manage.pojo.Goods" >
+        insert into shop_goods
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="goodsId != null" >
+                goods_id,
+            </if>
+            <if test="goodsCode != null" >
+                goods_code,
+            </if>
+            <if test="goodsImg != null" >
+                goods_img,
+            </if>
+            <if test="goodsState != null" >
+                goods_state,
+            </if>
+            <if test="goodsBigType != null" >
+                goods_big_type,
+            </if>
+            <if test="goodsType != null" >
+                goods_type,
+            </if>
+            <if test="goodsTitle != null" >
+                goods_title,
+            </if>
+            <if test="goodsCostPrice != null" >
+                goods_cost_price,
+            </if>
+            <if test="goodsRelPrice != null" >
+                goods_rel_price,
+            </if>
+            <if test="goodsPrice != null" >
+                goods_price,
+            </if>
+            <if test="goodsBuyNum != null" >
+                goods_buy_num,
+            </if>
+            <if test="goodsCreateTime != null" >
+                goods_create_time,
+            </if>
+            <if test="goodsUpdateTime != null" >
+                goods_update_time,
+            </if>
+            <if test="goodsInventory != null" >
+                goods_inventory,
+            </if>
+            <if test="goodsRenark != null" >
+                goods_renark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="goodsId != null" >
+                #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="goodsCode != null" >
+                #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsImg != null" >
+                #{goodsImg,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsState != null" >
+                #{goodsState,jdbcType=INTEGER},
+            </if>
+            <if test="goodsBigType != null" >
+                #{goodsBigType,jdbcType=INTEGER},
+            </if>
+            <if test="goodsType != null" >
+                #{goodsType,jdbcType=INTEGER},
+            </if>
+            <if test="goodsTitle != null" >
+                #{goodsTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsCostPrice != null" >
+                #{goodsCostPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="goodsRelPrice != null" >
+                #{goodsRelPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="goodsPrice != null" >
+                #{goodsPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="goodsBuyNum != null" >
+                #{goodsBuyNum,jdbcType=INTEGER},
+            </if>
+            <if test="goodsCreateTime != null" >
+                #{goodsCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsUpdateTime != null" >
+                #{goodsUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsInventory != null" >
+                #{goodsInventory,jdbcType=INTEGER},
+            </if>
+            <if test="goodsRenark != null" >
+                #{goodsRenark,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.manage.pojo.Goods" >
+        update shop_goods
+        <set >
+            <if test="goodsCode != null" >
+                goods_code = #{goodsCode,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsImg != null" >
+                goods_img = #{goodsImg,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsState != null" >
+                goods_state = #{goodsState,jdbcType=INTEGER},
+            </if>
+            <if test="goodsBigType != null" >
+                goods_big_type = #{goodsBigType,jdbcType=INTEGER},
+            </if>
+            <if test="goodsType != null" >
+                goods_type = #{goodsType,jdbcType=INTEGER},
+            </if>
+            <if test="goodsTitle != null" >
+                goods_title = #{goodsTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsCostPrice != null" >
+                goods_cost_price = #{goodsCostPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="goodsRelPrice != null" >
+                goods_rel_price = #{goodsRelPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="goodsPrice != null" >
+                goods_price = #{goodsPrice,jdbcType=DOUBLE},
+            </if>
+            <if test="goodsBuyNum != null" >
+                goods_buy_num = #{goodsBuyNum,jdbcType=INTEGER},
+            </if>
+            <if test="goodsCreateTime != null" >
+                goods_create_time = #{goodsCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsUpdateTime != null" >
+                goods_update_time = #{goodsUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="goodsInventory != null" >
+                goods_inventory = #{goodsInventory,jdbcType=INTEGER},
+            </if>
+            <if test="goodsRenark != null" >
+                goods_renark = #{goodsRenark,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where goods_id = #{goodsId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.manage.pojo.Goods" >
+    update shop_goods
+    set goods_code = #{goodsCode,jdbcType=VARCHAR},
+      goods_img = #{goodsImg,jdbcType=VARCHAR},
+      goods_state = #{goodsState,jdbcType=INTEGER},
+      goods_big_type = #{goodsBigType,jdbcType=INTEGER},
+      goods_type = #{goodsType,jdbcType=INTEGER},
+      goods_title = #{goodsTitle,jdbcType=VARCHAR},
+      goods_cost_price = #{goodsCostPrice,jdbcType=DOUBLE},
+      goods_rel_price = #{goodsRelPrice,jdbcType=DOUBLE},
+      goods_price = #{goodsPrice,jdbcType=DOUBLE},
+      goods_buy_num = #{goodsBuyNum,jdbcType=INTEGER},
+      goods_create_time = #{goodsCreateTime,jdbcType=TIMESTAMP},
+      goods_update_time = #{goodsUpdateTime,jdbcType=TIMESTAMP},
+      goods_inventory = #{goodsInventory,jdbcType=INTEGER},
+      goods_renark = #{goodsRenark,jdbcType=LONGVARCHAR}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.manage.pojo.Goods" >
+    update shop_goods
+    set goods_code = #{goodsCode,jdbcType=VARCHAR},
+      goods_img = #{goodsImg,jdbcType=VARCHAR},
+      goods_state = #{goodsState,jdbcType=INTEGER},
+      goods_big_type = #{goodsBigType,jdbcType=INTEGER},
+      goods_type = #{goodsType,jdbcType=INTEGER},
+      goods_title = #{goodsTitle,jdbcType=VARCHAR},
+      goods_cost_price = #{goodsCostPrice,jdbcType=DOUBLE},
+      goods_rel_price = #{goodsRelPrice,jdbcType=DOUBLE},
+      goods_price = #{goodsPrice,jdbcType=DOUBLE},
+      goods_buy_num = #{goodsBuyNum,jdbcType=INTEGER},
+      goods_create_time = #{goodsCreateTime,jdbcType=TIMESTAMP},
+      goods_update_time = #{goodsUpdateTime,jdbcType=TIMESTAMP},
+      goods_inventory = #{goodsInventory,jdbcType=INTEGER}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+
+  <select id="portalGetGoodsImg" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List"></include>,
+    <include refid="Blob_Column_List"></include>
+    from shop_goods
+    <where>
+      <if test="goodsTitle !=null and goodsTitle !=''">
+        and goods_title like "%"#{goodsTitle}"%"
+      </if>
+      <if test="goodsBigType !=null and goodsBigType !=''">
+        and goods_big_type = #{goodsBigType}
+      </if>
+      <if test="goodsType !=null and goodsType !=''">
+        and goods_type = #{goodsType}
+      </if>
+    </where>
+  </select>
+    <select id="getGoodsList" parameterType="com.manage.vo.GoodsQueryVo" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"></include>,
+        <include refid="Blob_Column_List"></include>
+        from shop_goods
+        <where>
+            <if test="goodsCode!='' and goodsCode!=null">
+                and goods_code = #{goodsCode}
+            </if>
+            <if test="goodsTitle!='' and goodsTitle!=null">
+                and goods_title like "%"#{goodsTitle}"%"
+            </if>
+            <if test="goodsState!='' and goodsState!=null">
+                and goods_state = #{goodsState}
+            </if>
+            <if test="goodsBigType!='' and goodsBigType!=null">
+                and goods_big_type = #{goodsBigType}
+            </if>
+            <if test="goodsType!='' and goodsType!=null">
+                and goods_type = #{goodsType}
+            </if>
+        </where>
+    </select>
+    <delete id="someDeleteGoods" parameterType="java.util.List">
+        delete from shop_goods
+        where goods_id in
+        <foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="getprofitMoneyTotal" resultType="double">
+        select sum(goods_buy_num *(goods_rel_price - goods_cost_price)) profitTotal
+        from shop_goods
+    </select>
+    <select id="goodsLowNumberLine" resultType="int">
+        select count(1)
+        from shop_goods
+        where goods_inventory &lt; 10
+    </select>
+    <select id="getReplenishmentList" resultMap="ResultMapWithBLOBs">
+        select <include refid="Base_Column_List"></include>
+        ,<include refid="Blob_Column_List"></include>
+        from shop_goods
+        where goods_inventory &lt; 10
+    </select>
+</mapper>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>检查单反馈</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all"/>
+</head>
+<body>
+
+<div class="x-body">
+    <div class="layui-form" id="form">
+
+        <legend>检查单信息</legend>
+        <div class="layui-form-item">
+            <label for="checkCode" class="layui-form-label" style="width: auto">
+                <span class="x-red">*</span>检查单编号-->
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" disabled="disabled" type="text" id="checkCode" name="checkCode"
+                       lay-verify="checkCode" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="roomCode" class="layui-form-label" style="width: auto">
+                <span class="x-red">*</span>教室编号
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" disabled="disabled" type="text" id="roomCode" name="roomCode"
+                       lay-verify="roomCode" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: auto">
+                <span class="x-red">*</span>窗户是否损坏
+            </label>
+            <div class="layui-form">
+                <input type="radio" name="roomIsDamageWindow" lay-filter="roomIsDamageWindow" required="required"
+                       lay-verify="roomIsDamageWindow" value="1" title="有损坏">
+                <input type="radio" name="roomIsDamageWindow" lay-filter="roomIsDamageWindow" required="required"
+                       lay-verify="roomIsDamageWindow" value="0" title="无损坏">
+            </div>
+            <!--<input id="distributionmode" style="display: none;">-->
+        </div>
+        <div class="layui-form-item" id="roomDamageWindowNumber1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏数量
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="roomDamageWindowNumber"
+                       name="roomDamageWindowNumber"
+                       lay-verify="roomDamageWindowNumber" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: auto">
+                <span class="x-red">*</span>座椅是否损坏
+            </label>
+            <div class="layui-form">
+                <input type="radio" name="roomIsDamageChair" lay-filter="roomIsDamageChair" required="required"
+                       lay-verify="roomIsDamageChair" value="1" title="有损坏">
+                <input type="radio" name="roomIsDamageChair" lay-filter="roomIsDamageChair" required="required"
+                       lay-verify="roomIsDamageChair" value="0" title="无损坏">
+            </div>
+            <!--<input id="distributionmode" style="display: none;">-->
+        </div>
+        <div class="layui-form-item" id="roomDamageChairNumber1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏数量
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="roomDamageChairNumber"
+                       name="roomDamageChairNumber"
+                       lay-verify="roomDamageChairNumber" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: auto">
+                <span class="x-red">*</span>粉笔是否需要
+            </label>
+            <div class="layui-form">
+                <input type="radio" name="roomIsNeedChalk" lay-filter="roomIsNeedChalk" required="required"
+                       lay-verify="roomIsNeedChalk" value="1" title="需要">
+                <input type="radio" name="roomIsNeedChalk" lay-filter="roomIsNeedChalk" required="required"
+                       lay-verify="roomIsNeedChalk" value="0" title="不需要">
+            </div>
+            <!--<input id="distributionmode" style="display: none;">-->
+        </div>
+        <div class="layui-form-item" id="roomNeedChalkNumber1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏数量
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="roomNeedChalkNumber"
+                       name="roomNeedChalkNumber"
+                       lay-verify="roomNeedChalkNumber" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: auto">
+                <span class="x-red">*</span>讲台是否损坏
+            </label>
+            <div class="layui-form">
+                <input type="radio" name="roomIsDamagePlatform" lay-filter="roomIsDamagePlatform" required="required"
+                       lay-verify="roomIsDamagePlatform" value="1" title="有损坏">
+                <input type="radio" name="roomIsDamagePlatform" lay-filter="roomIsDamagePlatform" required="required"
+                       lay-verify="roomIsDamagePlatform" value="0" title="无损坏">
+            </div>
+
+            <!--<input id="distributionmode" style="display: none;">-->
+        </div>
+        <div class="layui-form-item" id="roomDamagePlatformReason1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏原因
+            </label>
+            <!--<div class="layui-input-inline" style="display: none;">-->
+            <!--<input class="layui-input" disabled="disabled" type="text" id="roomDamagePlatformReason" name="roomNeedChalkNumber"-->
+            <!--lay-verify="roomNeedChalkNumber" autocomplete="off" value="">-->
+            <!--</div>-->
+            <div class="layui-input-block">
+                <textarea placeholder="原因备注..." class="layui-textarea" id="roomDamagePlatformReason"
+                          lay-verify="roomDamagePlatformReason" name="roomDamagePlatformReason"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: auto">
+                <span class="x-red">*</span>黑板是否损坏
+            </label>
+            <div class="layui-form">
+                <input type="radio" name="roomIsDamageBlackboard" lay-filter="roomIsDamageBlackboard"
+                       required="required"
+                       lay-verify="roomIsDamageBlackboard" value="1" title="有损坏">
+                <input type="radio" name="roomIsDamageBlackboard" lay-filter="roomIsDamageBlackboard"
+                       required="required"
+                       lay-verify="roomIsDamageBlackboard" value="0" title="无损坏">
+            </div>
+
+            <!--<input id="distributionmode" style="display: none;">-->
+        </div>
+        <div class="layui-form-item" id="roomDamageBlackboardReason1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏原因
+            </label>
+            <!--<div class="layui-input-inline" style="display: none;">-->
+            <!--<input class="layui-input" disabled="disabled" type="text" id="roomDamagePlatformReason" name="roomNeedChalkNumber"-->
+            <!--lay-verify="roomNeedChalkNumber" autocomplete="off" value="">-->
+            <!--</div>-->
+            <div class="layui-input-block">
+                <textarea placeholder="原因备注..." class="layui-textarea" id="roomDamageBlackboardReason"
+                          lay-verify="roomDamageBlackboardReason" name="roomDamageBlackboardReason"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: auto">
+                <span class="x-red">*</span>多媒体是否损坏
+            </label>
+            <div class="layui-form">
+                <input type="radio" name="roomIsDamageMedia" lay-filter="roomIsDamageMedia" required="required"
+                       lay-verify="roomIsDamageMedia" value="1" title="有损坏">
+                <input type="radio" name="roomIsDamageMedia" lay-filter="roomIsDamageMedia" required="required"
+                       lay-verify="roomIsDamageMedia" value="0" title="无损坏">
+            </div>
+
+            <!--<input id="distributionmode" style="display: none;">-->
+        </div>
+        <div class="layui-form-item" id="roomDamageMediaReason1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏原因
+            </label>
+            <!--<div class="layui-input-inline" style="display: none;">-->
+            <!--<input class="layui-input" disabled="disabled" type="text" id="roomDamagePlatformReason" name="roomNeedChalkNumber"-->
+            <!--lay-verify="roomNeedChalkNumber" autocomplete="off" value="">-->
+            <!--</div>-->
+            <div class="layui-input-block">
+                <textarea placeholder="原因备注..." class="layui-textarea" id="roomDamageMediaReason"
+                          lay-verify="roomDamageMediaReason" name="roomDamageMediaReason"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: auto">
+                <span class="x-red">*</span>麦克风是否损坏
+            </label>
+            <div class="layui-form">
+                <input type="radio" name="roomIsDamageMicrophone" lay-filter="roomIsDamageMicrophone"
+                       required="required"
+                       lay-verify="roomIsDamageMicrophone" value="1" title="有损坏">
+                <input type="radio" name="roomIsDamageMicrophone" lay-filter="roomIsDamageMicrophone"
+                       required="required"
+                       lay-verify="roomIsDamageMicrophone" value="0" title="无损坏">
+            </div>
+
+            <!--<input id="distributionmode" style="display: none;">-->
+        </div>
+        <div class="layui-form-item" id="roomDamageMicrophoneReason1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏原因
+            </label>
+            <!--<div class="layui-input-inline" style="display: none;">-->
+            <!--<input class="layui-input" disabled="disabled" type="text" id="roomDamagePlatformReason" name="roomNeedChalkNumber"-->
+            <!--lay-verify="roomNeedChalkNumber" autocomplete="off" value="">-->
+            <!--</div>-->
+            <div class="layui-input-block">
+                <textarea placeholder="原因备注..." class="layui-textarea" id="roomDamageMicrophoneReason"
+                          lay-verify="roomDamageMicrophoneReason" name="roomDamageMicrophoneReason"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: auto">
+                <span class="x-red">*</span>门是否损坏
+            </label>
+            <div class="layui-form">
+                <input type="radio" name="roomIsDamageDoor" lay-filter="roomIsDamageDoor" required="required"
+                       lay-verify="roomIsDamageDoor" value="1" title="有损坏">
+                <input type="radio" name="roomIsDamageDoor" lay-filter="roomIsDamageDoor" required="required"
+                       lay-verify="roomIsDamageDoor" value="0" title="无损坏">
+            </div>
+
+
+            <!--<input id="distributionmode" style="display: none;">-->
+        </div>
+        <div class="layui-form-item" id="roomDamageDoorNumber1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏数量
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="roomDamageDoorNumber"
+                       name="roomDamageDoorNumber"
+                       lay-verify="roomDamageDoorNumber" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item" id="roomDamageDoorReason1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏原因
+            </label>
+            <div class="layui-input-block">
+                <textarea placeholder="原因备注..." class="layui-textarea" id="roomDamageDoorReason"
+                          lay-verify="roomDamageDoorReason" name="roomDamageDoorReason"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: auto">
+                <span class="x-red">*</span>音响是否损坏
+            </label>
+            <div class="layui-form">
+                <input type="radio" name="roomIsDamageSound" lay-filter="roomIsDamageSound" required="required"
+                       lay-verify="roomIsDamageSound" value="1" title="有损坏">
+                <input type="radio" name="roomIsDamageSound" lay-filter="roomIsDamageSound" required="required"
+                       lay-verify="roomIsDamageSound" value="0" title="无损坏">
+            </div>
+            <!--<input id="distributionmode" style="display: none;">-->
+        </div>
+        <div class="layui-form-item" id="roomDamageSoundNumber1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏数量
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="roomDamageSoundNumber"
+                       name="roomDamageSoundNumber"
+                       lay-verify="roomDamageSoundNumber" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item" id="roomDamageSoundReason1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏原因
+            </label>
+            <div class="layui-input-block">
+                <textarea placeholder="原因备注..." class="layui-textarea" id="roomDamageSoundReason"
+                          lay-verify="roomDamageSoundReason" name="roomDamageSoundReason"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: auto">
+                <span class="x-red">*</span>窗帘是否损坏
+            </label>
+            <div class="layui-form">
+                <input type="radio" name="roomIsDamageCurtains" lay-filter="roomIsDamageCurtains" required="required"
+                       lay-verify="roomIsDamageCurtains" value="1" title="有损坏">
+                <input type="radio" name="roomIsDamageCurtains" lay-filter="roomIsDamageCurtains" required="required"
+                       lay-verify="roomIsDamageCurtains" value="0" title="无损坏">
+            </div>
+            <!--<input id="distributionmode" style="display: none;">-->
+        </div>
+        <div class="layui-form-item" id="roomDamageCurtainsNumber1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏数量
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="roomDamageCurtainsNumber"
+                       name="roomDamageCurtainsNumber"
+                       lay-verify="roomDamageCurtainsNumber" autocomplete="off" value="">
+            </div>
+        </div>
+        <div class="layui-form-item" id="roomDamageCurtainsReason1">
+            <label for="roomCode" class="layui-form-label">
+                <span class="x-red">*</span>损坏原因
+            </label>
+            <div class="layui-input-block">
+                <textarea placeholder="原因备注..." class="layui-textarea" id="roomDamageCurtainsReason"
+                          lay-verify="roomDamageCurtainsReason" name="roomDamageCurtainsReason"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+            <label class="layui-form-label"> </label>
+            <button class="layui-btn" lay-filter="feedback" lay-submit="">
+                反馈
+            </button>
+            <button class="layui-btn layui-btn-danger" class="layui-btn layui-btn-primary" onclick="goback()">
+                返回
+            </button>
+        </div>
+    </div>
+</div>
+
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+
+<script type="text/javascript">
+    var $;
+    var checkId = localStorage.getItem("checkId");
+    var form;
+    var defendObject = new Array();
+    $("#roomDamageWindowNumber1").hide();
+    $("#roomDamageChairNumber1").hide();
+    $("#roomNeedChalkNumber1").hide();
+    $("#roomDamagePlatformReason1").hide();
+    $("#roomDamageBlackboardReason1").hide();
+    $("#roomDamageMediaReason1").hide();
+    $("#roomDamageMicrophoneReason1").hide();
+    $("#roomDamageDoorNumber1").hide();
+    $("#roomDamageDoorReason1").hide();
+    $("#roomDamageSoundNumber1").hide();
+    $("#roomDamageSoundReason1").hide();
+    $("#roomDamageCurtainsNumber1").hide();
+    $("#roomDamageCurtainsReason1").hide();
+    localStorage.removeItem("checkId");
+    layui.use(['form', 'laydate', 'layer'], function () {
+        $ = layui.jquery;
+        form = layui.form
+            , layer = layui.layer
+            , laydate = layui.laydate;
+
+        form.verify({
+            // roomBuilding: function (value) {
+            //     if (value.length == null || value.length == "") {
+            //         return '大楼名称不能为空';
+            //     }
+            // },
+        });
+        $.ajax({
+            url: "/manage/check/getCheck",
+            type: "post",
+            dateType: "json",
+            data: {
+                checkId: checkId
+            },
+            success: function (res) {
+                var data = res.data;
+                $("#checkCode").val(data.checkCode);
+                $("#roomCode").val(data.roomCode);
+                form.render();
+            }
+        })
+
+        //监听单选框
+        form.on('radio(roomIsDamageWindow)', function (data) {
+            if (data.value == "1") {
+                $("#roomDamageWindowNumber1").show();
+            } else {
+                $("#roomDamageWindowNumber1").hide();
+            }
+        })
+        form.on('radio(roomIsDamageChair)', function (data) {
+            if (data.value == "1") {
+                $("#roomDamageChairNumber1").show();
+            } else {
+                $("#roomDamageChairNumber1").hide();
+            }
+        })
+        form.on('radio(roomIsNeedChalk)', function (data) {
+            if (data.value == "1") {
+                $("#roomNeedChalkNumber1").show();
+            } else {
+                $("#roomNeedChalkNumber1").hide();
+            }
+        })
+        form.on('radio(roomIsDamagePlatform)', function (data) {
+            if (data.value == "1") {
+                $("#roomDamagePlatformReason1").show();
+            } else {
+                $("#roomDamagePlatformReason1").hide();
+            }
+        })
+        form.on('radio(roomIsDamageBlackboard)', function (data) {
+            if (data.value == "1") {
+                $("#roomDamageBlackboardReason1").show();
+            } else {
+                $("#roomDamageBlackboardReason1").hide();
+            }
+        })
+        form.on('radio(roomIsDamageMedia)', function (data) {
+            if (data.value == "1") {
+                $("#roomDamageMediaReason1").show();
+            } else {
+                $("#roomDamageMediaReason1").hide();
+            }
+        })
+        form.on('radio(roomIsDamageMicrophone)', function (data) {
+            if (data.value == "1") {
+                $("#roomDamageMicrophoneReason1").show();
+            } else {
+                $("#roomDamageMicrophoneReason1").hide();
+            }
+        })
+        form.on('radio(roomIsDamageDoor)', function (data) {
+            if (data.value == "1") {
+                $("#roomDamageDoorNumber1").show();
+                $("#roomDamageDoorReason1").show();
+            } else {
+                $("#roomDamageDoorNumber1").hide();
+                $("#roomDamageDoorReason1").hide();
+            }
+        })
+        form.on('radio(roomIsDamageSound)', function (data) {
+            if (data.value == "1") {
+                $("#roomDamageSoundNumber1").show();
+                $("#roomDamageSoundReason1").show();
+            } else {
+                $("#roomDamageSoundNumber1").hide();
+                $("#roomDamageSoundReason1").hide();
+            }
+        })
+        form.on('radio(roomIsDamageCurtains)', function (data) {
+            if (data.value == "1") {
+                $("#roomDamageCurtainsNumber1").show();
+                $("#roomDamageCurtainsReason1").show();
+            } else {
+                $("#roomDamageCurtainsNumber1").hide();
+                $("#roomDamageCurtainsReason1").hide();
+            }
+        })
+        form.on('submit(feedback)', function (data) {
+            var roomIsDamageWindow = $("input[name='roomIsDamageWindow']:checked").val();
+            var roomDamageWindowNumber = $("#roomDamageWindowNumber").val();
+            var roomIsDamageChair = $("input[name='roomIsDamageChair']:checked").val();
+            var roomDamageChairNumber = $("#roomDamageChairNumber").val();
+            var roomIsNeedChalk = $("input[name='roomIsNeedChalk']:checked").val();
+            var roomNeedChalkNumber = $("#roomNeedChalkNumber").val();
+            var roomIsDamagePlatform = $("input[name='roomIsDamagePlatform']:checked").val();
+            var roomDamagePlatformReason = $("#roomDamagePlatformReason").val();
+            var roomIsDamageBlackboard = $("input[name='roomIsDamageBlackboard']:checked").val();
+            var roomDamageBlackboardReason = $("#roomDamageBlackboardReason").val();
+            var roomIsDamageMedia = $("input[name='roomIsDamageMedia']:checked").val();
+            var roomDamageMediaReason = $("#roomDamageMediaReason").val();
+            var roomIsDamageMicrophone = $("input[name='roomIsDamageMicrophone']:checked").val();
+            var roomDamageMicrophoneReason = $("#roomDamageMicrophoneReason").val();
+            var roomIsDamageDoor = $("input[name='roomIsDamageDoor']:checked").val();
+            var roomDamageDoorNumber = $("#roomDamageDoorNumber").val();
+            var roomDamageDoorReason = $("#roomDamageDoorReason").val();
+            var roomIsDamageSound = $("input[name='roomIsDamageSound']:checked").val();
+            var roomDamageSoundNumber = $("#roomDamageSoundNumber").val();
+            var roomDamageSoundReason = $("#roomDamageSoundReason").val();
+            var roomIsDamageCurtains = $("input[name='roomIsDamageCurtains']:checked").val();
+            var roomDamageCurtainsNumber = $("#roomDamageCurtainsNumber").val();
+            var roomDamageCurtainsReason = $("#roomDamageCurtainsReason").val();
+            if (roomIsDamageWindow == null || roomIsDamageChair == null || roomIsNeedChalk == null ||
+                roomIsDamagePlatform == null || roomIsDamageBlackboard == null || roomIsDamageMedia == null ||
+                roomIsDamageMicrophone == null || roomIsDamageDoor == null || roomIsDamageSound == null ||
+                roomIsDamageCurtains == null) {
+                layer.msg("带红色*为必填,不能为空！", {icon: 5, time: 1000});
+                return false;
+            }
+            if (roomIsDamageWindow == "1") {
+                defendObject.push("窗户");
+                if (roomDamageWindowNumber == "") {
+                    {
+                        layer.msg("带红色*为必填,不能为空！", {icon: 5, time: 1000});
+                        return false;
+                    }
+                }
+            }
+            if (roomIsDamageChair == "1") {
+                defendObject.push("座椅");
+                if (roomDamageChairNumber == "") {
+                    {
+                        layer.msg("带红色*为必填,不能为空！", {icon: 5, time: 1000});
+                        return false;
+                    }
+                }
+            }
+            if (roomIsNeedChalk == "1") {
+                defendObject.push("粉笔");
+                if (roomNeedChalkNumber == "") {
+                    {
+                        layer.msg("带红色*为必填,不能为空！", {icon: 5, time: 1000});
+                        return false;
+                    }
+                }
+            }
+            if (roomIsDamagePlatform == "1") {
+                defendObject.push("讲台");
+                if (roomDamagePlatformReason == "" || roomDamagePlatformReason == null) {
+                    {
+                        layer.msg("带红色*为必填,不能为空！", {icon: 5, time: 1000});
+                        return false;
+                    }
+                }
+            }
+            if (roomIsDamageBlackboard == "1") {
+                defendObject.push("黑板");
+                if (roomDamageBlackboardReason == "" || roomDamageBlackboardReason == null) {
+                    {
+                        layer.msg("带红色*为必填,不能为空！", {icon: 5, time: 1000});
+                        return false;
+                    }
+                }
+            }
+            if (roomIsDamageMedia == "1") {
+                defendObject.push("多媒体");
+                if (roomDamageMediaReason == "" || roomDamageMediaReason == null) {
+                    {
+                        layer.msg("带红色*为必填,不能为空！", {icon: 5, time: 1000});
+                        return false;
+                    }
+                }
+            }
+            if (roomIsDamageMicrophone == "1") {
+                defendObject.push("麦克风");
+                if (roomDamageMicrophoneReason == "" || roomDamageMicrophoneReason == null) {
+                    {
+                        layer.msg("带红色*为必填,不能为空！", {icon: 5, time: 1000});
+                        return false;
+                    }
+                }
+            }
+            if (roomIsDamageDoor == "1") {
+                defendObject.push("门");
+                if (roomDamageDoorNumber == "" || roomDamageDoorReason == "" || roomDamageDoorReason == null) {
+                    {
+                        layer.msg("带红色*为必填,不能为空！", {icon: 5, time: 1000});
+                        return false;
+                    }
+                }
+            }
+            if (roomIsDamageSound == "1") {
+                defendObject.push("音响");
+                if (roomDamageSoundNumber == "" || roomDamageSoundReason == "" || roomDamageSoundReason == null) {
+                    {
+                        layer.msg("带红色*为必填,不能为空！", {icon: 5, time: 1000});
+                        return false;
+                    }
+                }
+            }
+            if (roomIsDamageCurtains == "1") {
+                defendObject.push("窗帘");
+                if (roomDamageCurtainsNumber == "" || roomDamageCurtainsReason == "" || roomDamageCurtainsReason == null) {
+                    {
+                        layer.msg("带红色*为必填,不能为空！", {icon: 5, time: 1000});
+                        return false;
+                    }
+                }
+            }
+            console.log(defendObject);
+            $.ajax({
+                type: 'post',
+                url: '/manage/check/addCheckMoreMessgage',
+                dataType: 'json',
+                data: {
+                    checkId: checkId,
+                    roomIsDamageWindow: roomIsDamageWindow,
+                    roomDamageWindowNumber: roomDamageWindowNumber,
+                    roomIsDamageChair: roomIsDamageChair,
+                    roomDamageChairNumber: roomDamageChairNumber,
+                    roomIsNeedChalk: roomIsNeedChalk,
+                    roomNeedChalkNumber:roomNeedChalkNumber,
+                    roomIsDamagePlatform:roomIsDamagePlatform,
+                    roomDamagePlatformReason:roomDamagePlatformReason,
+                    roomIsDamageBlackboard:roomIsDamageBlackboard,
+                    roomDamageBlackboardReason:roomDamageBlackboardReason,
+                    roomIsDamageMedia:roomIsDamageMedia,
+                    roomDamageMediaReason:roomDamageMediaReason,
+                    roomIsDamageMicrophone:roomIsDamageMicrophone,
+                    roomDamageMicrophoneReason:roomDamageMicrophoneReason,
+                    roomIsDamageDoor:roomIsDamageDoor,
+                    roomDamageDoorNumber:roomDamageDoorNumber,
+                    roomDamageDoorReason:roomDamageDoorReason,
+                    roomIsDamageSound:roomIsDamageSound,
+                    roomDamageSoundNumber:roomDamageSoundNumber,
+                    roomDamageSoundReason:roomDamageSoundReason,
+                    roomIsDamageCurtains:roomIsDamageCurtains,
+                    roomDamageCurtainsNumber:roomDamageCurtainsNumber,
+                    roomDamageCurtainsReason:roomDamageCurtainsReason,
+                    defendObjectArray: defendObject
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg(data.msg, {
+                            icon: 6, time: 1500, end: function () {
+                                parent.location.reload();
+                            }
+                        });
+                    } else {
+                        layer.msg(data.msg, {
+                            icon: 5, time: 1500, end: function () {
+                                return false;
+                            }
+                        });
+                    }
+                },
+                error: function (XMLHttpResponse, textStatus, errorThrown, data) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                }
+            });
+
+        });
+
+
+    });
+
+    $('.content .layui-btn').on('click', function () {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+    function goback() {
+        parent.location.reload();
+    }
+
+    //数字时间转DATE时间类型
+    function createTime(v) {
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var M = date.getMinutes();
+        M = M < 10 ? ("0" + M) : M;
+        var S = date.getSeconds();
+        S = S < 10 ? ("0" + S) : S;
+        var str = y + "-" + m + "-" + d + " " + h + ":" + M + ":" + S;
+        return str;
+    }
+
+</script>
+
+</body>
+
+
+</html>

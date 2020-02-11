@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>报修订单</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+
+<div class="x-body">
+    <div class="layui-form" id="form">
+        <!--<fieldset class="layui-elem-field" style="margin-left: 10%;margin-right:10%;box-shadow: 5px 5px 5px #ddd;margin-bottom: 30px;padding-left: 10%">-->
+        <legend>报修订单信息</legend>
+        <!--<div class="layui-form-item">
+            <label  for="userRole" class="layui-form-label">
+                <span class="x-red">*</span>管理类型
+            </label>
+            <div class="layui-input-inline">
+                <select name="userRole" id="userRole" lay-verify="userRole" lay-search="" lay-filter="role">
+                    <option value="">请选择</option>
+                    <option value="2">宿舍管理员</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>选择您的管理类型
+            </div>
+        </div>-->
+        <div class="layui-form-item">
+            <label for="facultyList" class="layui-form-label"> <span
+                    class="x-red">*</span>所属院系
+            </label>
+            <div class="layui-input-inline">
+                <select name="facultyList" id="facultyList" disabled="disabled" lay-verify="facultyList" lay-search="">
+                    <option value="">请选择学院...</option>
+                    <option value="智慧教育学院">智慧教育学院</option>
+                    <option value="哲学与公共管理学院">哲学与公共管理学院</option>
+                    <option value="文学院">文学院</option>
+                    <option value="语言科学与艺术学院">语言科学与艺术学院</option>
+                    <option value="历史文化与旅游学院">历史文化与旅游学院</option>
+                    <option value="法律政治学院">法律政治学院</option>
+                    <option value="外国语学院">外国语学院</option>
+                    <option value="商学院">商学院</option>
+                    <option value="教育科学学院">教育科学学院</option>
+                    <option value="物理与电子工程学院">物理与电子工程学院</option>
+                    <option value="化学化工学院">化学化工学院</option>
+                    <option value="生命科学学院">生命科学学院</option>
+                    <option value="马克思主义学院">马克思主义学院</option>
+                    <option value="体育学院">体育学院</option>
+                    <option value="音乐学院">音乐学院</option>
+                    <option value="美术学院">美术学院</option>
+                    <option value="传媒与影视学院">传媒与影视学院</option>
+                    <option value="机电工程学院">机电工程学院</option>
+                    <option value="中俄学院">中俄学院</option>
+                    <option value="电气工程及自动化学院">电气工程及自动化学院</option>
+                    <option value="地理测绘与城乡规划学院">地理测绘与城乡规划学院</option>
+                    <option value="科文学院">科文学院</option>
+                    <option value="教育研究院">教育研究院</option>
+                    <option value="继续教育学院">继续教育学院</option>
+                    <option value="敬文书院">敬文书院</option>
+                    <option value="圣彼得堡彼得大帝理工大学联合工程学院">圣彼得堡彼得大帝理工大学联合工程学院</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>学生所属的院系
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="buildingName" class="layui-form-label">
+                <span class="x-red">*</span>宿舍大楼
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" disabled="disabled" type="text" id="buildingName" name="buildingName"
+                       lay-verify="buildingName" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>所住宿舍楼的名字---为了定位是哪个房间需要维修的
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="bedroomName" class="layui-form-label">
+                <span class="x-red">*</span>房间门牌号
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" disabled="disabled" id="bedroomName" name="bedroomName"
+                       lay-verify="bedroomName" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>房间门口的门牌号--如1-102--为了定位是哪个房间需要维修的
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="orderDetail" class="layui-form-label">
+                报修内容概括
+            </label>
+            <div class="layui-input-block">
+                        <textarea placeholder="详细描述下宿舍房间出现的问题..." id="orderDetail" lay-verify="orderDetail" name="orderDetail" autocomplete="off"
+                                  class="layui-textarea" style="height: 80px;"></textarea>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>描述想要报修的地方，越详细越好，包括出现的问题，目前的状况，以及出现问题的地方。这样方便我们叫师傅过来维修，对问题更好定位
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+            <label class="layui-form-label"> </label>
+            <button class="layui-btn" lay-filter="addOrder" lay-submit="">
+                提交
+            </button>
+            <button class="layui-btn layui-btn-danger" class="layui-btn layui-btn-primary" onclick="resetmessage()">
+                重置
+            </button>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+
+<script>
+    var userCode =  '${session_manage_token.getUserCode()}';
+    var userRole = '${session_manage_token.getUserRole()}';
+    layui.use(['form','laydate','layer'],function () {
+        $ = layui.jquery;
+        var form = layui.form
+            ,layer = layui.layer
+            ,laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#userBirthday',
+            type: 'date'
+        });
+        $.ajax({
+            url: "/manage/user/findUserByUserCode",
+            type: "post",
+            dataType: "json",
+            data:{
+                userCode: userCode
+            },
+            success: function (res) {
+                $("#facultyList").val(res.data.userFaculty);
+                $("#buildingName").val(res.data.city);
+                $("#bedroomName").val(res.data.province);
+                form.render();
+            }
+        })
+
+        form.verify({
+            buildingName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '宿舍大楼不能为空';
+                }
+            },
+            bedroomName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '房间门牌号不能为空';
+                }
+            },
+            orderDetail: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '报修详情内容不能为空';
+                }
+            },
+            facultyList: function (value) {
+                if (value.length ==null ||value.length =="") {
+                    return '院系管理不能为空!';
+                }
+            }
+        });
+        form.on('submit(addOrder)', function () {
+            if (userRole == 1 || userRole == 2) {
+                layer.msg("您无法做此操作！", {
+                    icon: 5, time: 1500
+                });
+            } else {
+                var userFaculty = $("#facultyList option:selected").val();
+                var buildingName = $("#buildingName").val();
+                var bedroomName = $("#bedroomName").val();
+                var orderDetail = $("#orderDetail").val();
+                $.ajax({
+                    type: 'post',
+                    url: '/manage/order/addRepairOrder',
+                    dataType: 'json',
+                    data: {
+                        buildingName: buildingName,
+                        bedroomName: bedroomName,
+                        orderDetail: orderDetail,
+                        userFaculty: userFaculty,
+                    },
+                    async: false,
+                    success: function (data) {
+                        console.log(JSON.stringify(data));
+                        if (data.status == 0) {
+                            layer.msg("报修订单提交成功！等待管理员审核",{
+                                icon :6,time:2000,end:function () {
+                                    window.location.reload();
+                                }
+                            });
+                        }else {
+                            layer.msg("充值失败！", {
+                                icon: 5, time: 1000
+                            });
+                        }
+                    },
+                    error :function (XMLHttpResponse, textStatus, errorThrown, data) {
+                        console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                        console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                        console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                        console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                    }
+                });
+            }
+        });
+
+
+    });
+
+    function resetmessage() {
+        window.location.reload();
+    }
+
+
+</script>
+
+</body>
+
+
+</html>

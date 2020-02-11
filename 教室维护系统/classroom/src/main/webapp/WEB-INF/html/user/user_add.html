@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>添加新用户</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+
+<div class="x-body">
+    <div class="layui-form" id="form">
+
+        <legend >用户信息设定</legend>
+        <!--<div class="layui-form-item">-->
+            <!--<label for="facultyList" class="layui-form-label"> <span-->
+                    <!--class="x-red">*</span>所属院系-->
+            <!--</label>-->
+            <!--<div class="layui-input-inline">-->
+                <!--<select name="facultyList" id="facultyList" lay-verify="facultyList" lay-search="">-->
+                    <!--<option value="">请选择学院...</option>-->
+                    <!--<option value="智慧教育学院">智慧教育学院</option>-->
+                    <!--<option value="哲学与公共管理学院">哲学与公共管理学院</option>-->
+                    <!--<option value="文学院">文学院</option>-->
+                    <!--<option value="语言科学与艺术学院">语言科学与艺术学院</option>-->
+                    <!--<option value="历史文化与旅游学院">历史文化与旅游学院</option>-->
+                    <!--<option value="法律政治学院">法律政治学院</option>-->
+                    <!--<option value="外国语学院">外国语学院</option>-->
+                    <!--<option value="商学院">商学院</option>-->
+                    <!--<option value="教育科学学院">教育科学学院</option>-->
+                    <!--<option value="物理与电子工程学院">物理与电子工程学院</option>-->
+                    <!--<option value="化学化工学院">化学化工学院</option>-->
+                    <!--<option value="生命科学学院">生命科学学院</option>-->
+                    <!--<option value="马克思主义学院">马克思主义学院</option>-->
+                    <!--<option value="体育学院">体育学院</option>-->
+                    <!--<option value="音乐学院">音乐学院</option>-->
+                    <!--<option value="美术学院">美术学院</option>-->
+                    <!--<option value="传媒与影视学院">传媒与影视学院</option>-->
+                    <!--<option value="机电工程学院">机电工程学院</option>-->
+                    <!--<option value="中俄学院">中俄学院</option>-->
+                    <!--<option value="电气工程及自动化学院">电气工程及自动化学院</option>-->
+                    <!--<option value="地理测绘与城乡规划学院">地理测绘与城乡规划学院</option>-->
+                    <!--<option value="科文学院">科文学院</option>-->
+                    <!--<option value="教育研究院">教育研究院</option>-->
+                    <!--<option value="继续教育学院">继续教育学院</option>-->
+                    <!--<option value="敬文书院">敬文书院</option>-->
+                    <!--<option value="圣彼得堡彼得大帝理工大学联合工程学院">圣彼得堡彼得大帝理工大学联合工程学院</option>-->
+                <!--</select>-->
+            <!--</div>-->
+            <!--<div class="layui-form-mid layui-word-aux">-->
+                <!--<span class="x-red">*</span>学生所属院系-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-form-item">-->
+            <!--<label for="userName" class="layui-form-label">-->
+                <!--所处班级-->
+            <!--</label>-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input class="layui-input" type="text" id="userClassroom" name="userClassroom"-->
+                       <!--lay-verify="userClassroom" autocomplete="off" value="">-->
+            <!--</div>-->
+            <!--<div class="layui-form-mid layui-word-aux">-->
+                <!--<span class="x-red">*</span>刚创建的用户先随便设置，后期让用户自己重新修改信息-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="layui-form-item">
+            <label for="userName" class="layui-form-label">
+                <span class="x-red">*</span>用户名
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="userName" name="userName"
+                       lay-verify="userName" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>用来登录系统的用户名
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userPassword" class="layui-form-label">
+                <span class="x-red">*</span>登陆密码
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="password" id="userPassword" name="userPassword"
+                       lay-verify="userPassword" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>将用来登陆系统时的密码  ps:密码长度在3-12
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="rePassword" class="layui-form-label">
+                <span class="x-red">*</span>确认密码
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="password" id="rePassword" name="rePassword"
+                       lay-verify="rePassword" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>再输入一遍你的密码
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userRealName" class="layui-form-label">
+                <span class="x-red">*</span>真实姓名
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="userRealName" name="userRealName"
+                       lay-verify="userRealName" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>你的真实姓名 ps：务必真实 方便管理
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userPhone" class="layui-form-label">
+                <span class="x-red">*</span>手机号
+            </label>
+            <div class="layui-input-inline">
+                <input class="layui-input" type="text" id="userPhone" name="userPhone"
+                       lay-verify="userPhone" placeholder="" autocomplete="off" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>用于联系
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label  class="layui-form-label">
+                <span class="x-red">*</span>性别
+            </label>
+            <div class="layui-form">
+                <input type="radio" name="userSex" id="userSex1" lay-filter="filter" required="required" lay-verify="userSex" value="男生" title="男生">
+                <input type="radio" name="userSex" id="userSex2" lay-filter="filter" required="required" lay-verify="userSex" value="女生" title="女生">
+                <input type="radio" name="userSex" id="userSex3" lay-filter="filter" required="required" lay-verify="userSex" value="保密" title="保密">
+            </div>
+            <input id="distributionmode" style="display: none;">
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>性别选择不想公开那就选择保密
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+            <label class="layui-form-label"> </label>
+            <button class="layui-btn" lay-filter="add" lay-submit="">
+                添加
+            </button>
+            <button class="layui-btn layui-btn-danger" class="layui-btn layui-btn-primary" onclick="resetmessage()">
+                重置
+            </button>
+        </div>
+    </div>
+</div>
+
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+
+<script type="text/javascript">
+    var $;
+    $("#coursesTitleList").hide();
+    layui.use(['form','laydate','layer'],function () {
+        $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , laydate = layui.laydate;
+
+
+        form.verify({
+            // facultyList: function (value) {
+            //     if (value.length == null || value.length == "") {
+            //         return '所属院系选择不能为空';
+            //     }
+            // },
+            userName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '用户名不能为空';
+                }
+            },
+            userRealName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '真实姓名不能为空';
+                }
+            },
+            userPassword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '登录密码不能为空';
+                }
+                if (value.length <3 ||value.length >12 ) {
+                    return '密码必须3到12位';
+                }
+            },
+            rePassword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '确认密码不能为空';
+                }
+                if (value != $("#userPassword").val()) {
+                    return '两次输入的密码不同';
+                }
+            },
+            userPhone: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '手机号不能为空';
+                }
+                var isPhone=/^1[0-9]{10}$/;
+                var flag=isPhone.test(value);
+                if(flag==false)
+                    return '手机号格式错误';
+            },
+
+
+        });
+
+        form.on('submit(add)', function (data) {
+            // var userCollege = $("#facultyList option:selected").val();
+            // var userClassroom = $("#userClassroom").val();
+            var userSex = $("input[name='userSex']:checked").val();
+            var userRealName = $("#userRealName").val();
+            var userName = $("#userName").val();
+            var userPassword = $("#userPassword").val();
+            var userPhone = $("#userPhone").val();
+            if (userSex == null || userSex == '') {
+                layer.msg("性别选择不能为空！", {icon: 5, time: 1000});
+                return false;
+            }
+            $.ajax({
+                type: 'post',
+                url: '/manage/user/addUser',
+                dataType: 'json',
+                data: {
+                    // userCollege:userCollege,
+                    // userClassroom:userClassroom,
+                    userSex:userSex,
+                    userName: userName,
+                    userRealName: userRealName,
+                    userPassword: userPassword,
+                    userPhone: userPhone,
+                },
+                async: false,
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg(data.msg,{
+                            icon :6,time:1500,end:function () {
+                                parent.location.reload();
+                            }
+                        });
+                    }else {
+                        layer.msg(data.msg,{
+                            icon :5,time:1500,end:function () {
+                                return false;
+                            }
+                        });
+                    }
+                },
+                error :function (XMLHttpResponse, textStatus, errorThrown, data) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:" + XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:" + XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:" + textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:" + errorThrown);
+                }
+            });
+
+        });
+
+
+    });
+
+    $('.content .layui-btn').on('click', function(){
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+    function resetmessage() {
+        window.location.reload();
+    }
+
+
+</script>
+
+</body>
+
+
+</html>

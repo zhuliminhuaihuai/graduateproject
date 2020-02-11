@@ -1,0 +1,383 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+	<base href="<%=basePath%>">
+	<meta charset="UTF-8">
+	<title>简历设置</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="../../../layui/css/layui.css">
+	<link rel="stylesheet" href="../../../css/news.css">
+	<style>
+		.layui-table th {
+			font-family: 楷体;
+			font-weight:bold;
+			text-align:right;
+
+		}
+		.layui-table th {
+			font-family: 楷体;
+			font-weight:bold;
+
+		}
+
+	</style>
+
+</head>
+<body>
+<fieldset class="layui-elem-field" style="text-align: center">
+	<div class="layui-field-box">
+		<table class="layui-table" style="width: 70%;margin-left: 15%">
+			<tbody >
+			<tr>
+				<th colspan="2" ><span style="color: red">*可上传简历word文件</span>
+					<input type="file" name="file" id="test20" >
+				</th>
+				<td colspan="3" id="fileName">
+
+				</td>
+				<input type="hidden" id="fName">
+			</tr>
+			<tr>
+				<th colspan="5" style="text-align:center;"><h3 style="font-size: 20px;font-family: 黑体;font-weight: bold">基本信息</h3></th>
+			<tr>
+			<tr>
+				<th width="15%">姓名</th>
+				<td id="realName"  ></td>
+				<th width="15%">性别</th>
+				<td  id="sex"></td>
+				<td rowspan="8" width="18%">
+					<div class="" id="test" style="max-width: 209px"  height="302">
+						<i class="layui-icon" id="icon"></i>
+						<p id="img">点击个人相片上传，或将相片拖拽到此处</p>
+						<div id="demo"></div>
+					</div>
+
+				</td>
+				<input type="hidden" id="resumeImg" />
+			</tr>
+			<tr>
+				<th><span style="color: red">*</span>求职意向</th>
+				<td contentEditable="true" id="jobIntention"></td>
+				<th><span style="color: red">*</span>期望薪水</th>
+				<td id="expectedSalary" contentEditable="true"></td>
+			<tr>
+				<th><span style="color: red">*</span>期望工作地点</th>
+				<td id="expectedPlace" contentEditable="true"></td>
+				<th>出生年月日</th>
+				<td id="birthday" ></td></tr>
+			<tr>
+				<th>年龄</th>
+				<td id="age" ></td>
+				<th>邮箱</th>
+				<td id="email" ></td></tr>
+			<tr>
+				<th>籍贯</th>
+				<td id="nativePlace" ></td>
+				<th>毕业学校</th>
+				<td id="school"></td></tr>
+			<tr>
+				<th>系专业</th>
+				<td id="courtyard"></td>
+				<th>学历</th>
+				<td id="education"></td></tr>
+			<tr>
+				<th>政治面貌</th>
+				<td id="politicalOutlook" ></td>
+				<th>联系电话</th>
+				<td id="mobilePhone" ></td></tr>
+
+			<tr>
+				<th >联系地址/现住地址</th>
+				<td id="address" colspan="3"  style="text-align: left"></td></tr>
+			<tr>
+			<tr>
+				<th colspan="5" style="text-align:center;"><h3 style="font-size: 20px;font-family: 黑体;font-weight: bold"><span style="color: red">*</span>专业技能</h3></th>
+			<tr>
+			<tr>
+				<th>技能</th>
+				<td id="masteringSkills" colspan="4" height="60px;" contentEditable="true" style="text-align: left"></td>
+			</tr>
+			<tr id="project">
+				<th colspan="5" style="text-align:center;"><h3 style="font-size: 20px;font-family: 黑体;font-weight: bold"><span style="color: red">*</span>项目经验<button class="layui-btn layui-btn-sm"  onclick="addProject()">添加</button></h3></th>
+			<tr>
+			<tr>
+				<th colspan="5" style="text-align:center;"><h3 style="font-size: 20px;font-family: 黑体;font-weight: bold"><span style="color: red">*</span>获奖经历<button class="layui-btn layui-btn-sm"  onclick="addWin()">添加</button></h3></th>
+			<tr>
+			<tr id="win" >
+				<th  colspan="1" >时间</th>
+				<th  colspan="4" style="text-align: center">经历</th>
+			</tr>
+			<tr>
+				<th colspan="5" style="text-align:center;"><h3 style="font-size: 20px;font-family: 黑体;font-weight: bold"><span style="color: red">*</span>自我评价</h3></th>
+			<tr>
+			<tr>
+				<th>自我评价</th>
+				<td id="personalEvaluation" colspan="4" style="text-align: left" height="60px;" contentEditable="true"></td>
+			</tr>
+			<th colspan="5" style="text-align:center"><h3><button class="layui-btn layui-btn-sm"  onclick="saveResume()">保存</button>
+				<button class="layui-btn layui-btn-warm layui-btn-sm"  onclick="javaScript:history.back(-1)">返回</button>
+			</h3>
+			</th>
+			</tbody>
+		</table>
+	</div>
+</fieldset>
+<!--
+<fieldset class="layui-elem-field">
+	<div class="layui-field-box">
+		&lt;!&ndash;<div colspan="4" style="text-align:center;background-color: white;color:gray;"><h3>客户附件信息</h3></div>&ndash;&gt;
+		<div class="layui-field-box">
+			<table class="layui-hide" id="items" lay-filter="test">
+			</table>
+		</div>
+	</div>
+</fieldset>
+<script type="text/html" id="barDemo">
+	<a href="javascript:;" class="" lay-event="detail">下载</a>
+	<a href="javascript:;" class="" lay-event="SeeOnline">在线预览</a>
+</script>
+-->
+
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../js/index.js"></script>
+<script src="../../../layui/layui.js" charset="utf-8"></script>
+<script src="../../../js/xcity.js" charset="utf-8"></script>
+<script>
+    var role = '${session_manage_token.getRole()}';
+    var userId ='${session_manage_token.getUserId()}';
+    var resumeCode = localStorage.getItem("resumeCode");
+    function delcommafy(num) {//userId 到千位会出现逗号例如1，001 因此使用此方法去除逗号
+        if (num != undefined) {
+            num = num.toString();
+            num = num.replace(/[ ]/g, ""); //去除空格
+            num = num.replace(/,/gi, '');
+            return Number(num);
+        }
+    }
+    $(function () {
+        //加载弹出层
+        layui.use(['form', 'element'],
+            function () {
+                layer = layui.layer;
+                element = layui.element;
+            });
+    })
+    //请求个人基本数据
+    $.ajax({
+        url:'/manage/user/getUserInfo',
+        type:'post',
+        data:{
+            id:delcommafy(userId),
+        },
+        dataType:'json',
+        success:function (data) {
+            if(data.status==0){
+                $("#realName").html(data.data.realName);
+                $("#mobilePhone").html(data.data.mobilePhone);
+                $("#email").html(data.data.email);
+                $("#address").html(data.data.province+data.data.city+data.data.district+data.data.address);
+                $("#courtyard").html(data.data.courtyard);
+                $("#education").html(data.data.education);
+                $("#nativePlace").html(data.data.nativePlace);
+                $("#userSign").html(data.data.userSign);
+                $("#birthday").html(editTime1(data.data.birthday));
+                $("#politicalOutlook").html(data.data.politicalOutlook);
+                $("#school").html(data.data.school);
+                $("#age").html(data.data.age);
+                var x=data.data.sex;
+                if(x==0){
+                    $("#sex").html("保密");
+                }else if(x=1) {
+                    $("#sex").html("男");
+
+                }else{
+                    $("#sex").html("女");
+                }
+            }
+        }
+    })
+	//获取简历 项目经验
+    $.ajax({
+        url:'/manage/resume/getResumeProject',
+        type:'post',
+        data:{
+            resumeCode:resumeCode,
+        },
+		async:false,
+        dataType:'json',
+        success:function (data) {
+            if(data.status==0){
+                var str =''
+				for(var i =0;i<data.data.length;i++){
+                    str+='<tr>'
+                    str+='<th >时间</th>'
+                    str+='<td id="projectDate" >'+data.data[i].projectDate+'</td>'
+                    str+='<th>项目名称</th>'
+                    str+='<td id="projectName" colspan="2" >'+data.data[i].projectName+'</td>'
+                    str+='</tr>'
+                    str+='<tr>'
+                    str+='<th>项目内容</th>'
+                    str+='<td id="projectContent" colspan="4"  style="text-align: left">'+data.data[i].projectContent+'</td>'
+                    str+='</tr>'
+                    str+='<tr id ="project">'
+                    str+='<th >项目收获</th>'
+                    str+='<td id="projectHarvest" colspan="4"  style="text-align: left">'+data.data[i].projectContent+'</td>'
+                    str+='</tr>'
+				}
+                $("#project").after(str);
+            }
+        }
+    })
+	//获取简历 获奖经历
+    $.ajax({
+        url:'/manage/resume/getResumeWin',
+        type:'post',
+        data:{
+            resumeCode:resumeCode,
+        },
+		async:false,
+        dataType:'json',
+        success:function (data) {
+            if(data.status==0){
+                console.log("da"+JSON.stringify(data.data))
+                var str =''
+				for(var i =0;i<data.data.length;i++){
+                    str+='<tr >'
+                    str+='    <td  colspan="1" height="30px;" style="text-align: right">'+data.data[i].winTime+'</td>'
+                    str+='  <td id="winContent" colspan="4"  style="text-align: left">'+data.data[i].winContenr+'</td>'
+                    str+='  </tr>'
+				}
+                $("#win").after(str);
+            }
+        }
+    })
+
+    //数字时间转DATE时间类型
+    //转年月日
+    function editTime1(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var str = y+"-"+m+"-"+d;
+        return str;
+    }
+	function addProject() {//拼接项目
+        x_admin_show('添加项目','/manage/resume/resume_project_add',800,400)
+    }
+	function addWin() {//拼接获奖
+
+        x_admin_show('添加获奖','/manage/resume/resume_win_add',800,650)
+		/*var str = '';
+        str+='<tr id="win" >'
+        str+='    <td id="winTime" colspan="1" height="30px;" contentEditable="true" style="text-align: right"></td>'
+        str+='  <td id="winContent" colspan="4" contentEditable="true" style="text-align: left"></td>'
+        str+='  </tr>'
+		$("#win").after(str);*/
+    }
+	//提交简历
+    function saveResume() {
+		var jobIntention = $("#jobIntention").html();
+		var expectedPlace = $("#expectedPlace").html();
+		var expectedSalary = $("#expectedSalary").html();
+		var masteringSkills = $("#masteringSkills").html();
+		var personalEvaluation = $("#personalEvaluation").html();
+		var resumeImg = $("#resumeImg").val();
+        var fName = $("#fName").val();
+        $.ajax({
+            url:'/manage/resume/saveResume',
+            type:'post',
+            data:{
+                resumeCode:resumeCode,
+                jobIntention:jobIntention,
+                expectedPlace:expectedPlace,
+                expectedSalary:expectedSalary,
+                masteringSkills:masteringSkills,
+                personalEvaluation:personalEvaluation,
+                resumeImg:resumeImg,
+                resumeWord:fName,
+            },
+            async:false,
+            dataType:'json',
+            success:function (data) {
+                if(data.status==0){
+                    layer.msg("简历设置成功！",{icon: 6,time:500,end:function () {
+                            window.location.href="/manage/resume/resume_list";
+                        }});
+                }
+            }
+        })
+    }
+    //多图容器 【注册全局变量】
+    var images = [];
+    layui.use('upload', function() {
+        var $ = layui.jquery
+            , upload = layui.upload;
+        upload.render({
+            elem: '#test'
+            ,url: '/manage/resume/uploadImg'
+            ,multiple: true
+            ,before: function(obj){
+                //追加图片时添加事件
+                obj.preview(function(index, file, result){
+                    $('#icon').hide();
+                    $('#img').hide();
+                    $('#demo').html('<img class="layui-upload-images" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" style="max-width: 209px"  height="302" >');
+                });
+            }
+            ,done: function(res){
+                //追加图片成功追加文件名至图片容器
+                images.push(res.data.uri);
+                $("#resumeImg").val(images);
+                //上传完毕
+            }
+        });
+        upload.render({
+            elem: '#test20'
+            ,url: '/manage/resume/uploadImg'//和上传图片共同调用一个接口方法
+            ,multiple: true
+            ,exts: 'doc|docx'
+
+            ,done: function(res){
+                layer.msg("上传完毕！", {
+                    icon: 6, time: 1000, end: function () {
+                        images.push(res.data.uri);
+                        $("#fName").val(images);
+                        $("#fileName").html(images);
+                        $("#fileName").append('<button class="layui-btn layui-btn-danger layui-btn-sm"  onclick="deleteResumeWord()">删除</button>')
+                        //上传完毕
+                    }
+                });
+
+            }
+        });
+    });
+    function deleteResumeWord(){
+        $.ajax({
+            url:'/manage/resume/saveResume',
+            type:'post',
+            data:{
+                resumeCode:resumeCode,
+            },
+            async:false,
+            dataType:'json',
+            success:function (data) {
+                if(data.status==0){
+                    layer.msg("删除成功！",{icon: 6,time:500,end:function () {
+                            window.location.reload();
+                        }});
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

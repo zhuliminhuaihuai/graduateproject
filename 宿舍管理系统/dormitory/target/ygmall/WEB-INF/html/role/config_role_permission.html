@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>配置用户权限</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+
+<div class="x-body">
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <label for="roleType" class="layui-form-label"> <span
+                    class="x-red">*</span>管理类型
+            </label>
+            <div class="layui-input-inline" >
+                <select name="roleType" id="roleType" lay-filter="chooseRole" lay-verify="userRole" lay-search="">
+                    <option value="">请选择管理类型...</option>
+                    <option value="2">宿舍管理员</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="userList" class="layui-form-label"> <span
+                    class="x-red">*</span>人员列表
+            </label>
+            <div class="layui-input-inline">
+                <select name="userList" id="userList" lay-verify="userList" lay-search="">
+                    <option value="">请选择人员...</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="name" class="layui-form-label"> <span
+                    class="x-red">*</span>名称
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="name" name="name"
+                       lay-verify="name" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>管理员配置别名与登录名不同
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="remark" class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" id="remark" name="remark"
+                       lay-verify="remark" autocomplete="off" class="layui-input" style="width:500px;">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>此用户权限配置说明
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"> <span
+                    class="x-red">*</span>用户权限
+            </label>
+            <div class="layui-input-inline">
+                <div id="xtree4" style="height:350px;width:500px;overflow:auto;" class="xtree_contianer"></div>
+            </div>
+        </div>
+        <input style="display: none" id="paresent">
+        <div class="layui-form-item" style="text-align: center">
+            <button class="layui-btn" lay-submit="" lay-filter="add">配置</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="../../../layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../js/xadmin.js"></script>
+<script src="../../../layui/lay/modules/layui-xtree.js"></script>
+<script>
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form,
+            layer = layui.layer;
+        var xtree4 = new layuiXtree({
+            elem: 'xtree4'                  //必填三兄弟之老大
+            , form: form                    //必填三兄弟之这才是真老大
+            /*  , data: '/manage/user/AllMenuList?userCode='+userCode //必填三兄弟之这也算是老大*/
+            , data: '/manage/menu/getPermissionsMenuList' //必填三兄弟之这也算是老大
+            , isopen: false  //加载完毕后的展开状态，默认值：true
+            , ckall: true    //启用全选功能，默认值：false
+            , ckallback: function () {
+
+            } //全选框状态改变后执行的回调函数
+            , icon: {        //三种图标样式，更改几个都可以，用的是layui的图标
+                open: "&#xe7a0;"       //节点打开的图标
+                , close: "&#xe622;"    //节点关闭的图标
+                , end: "&#xe621;"      //末尾节点的图标
+            }
+            , color: {       //三种图标颜色，独立配色，更改几个都可以
+                open: "#EE9A00"        //节点图标打开的颜色
+                , close: "#EEC591"     //节点图标关闭的颜色
+                , end: "#828282"       //末级节点图标的颜色
+            }
+            , click: function (data) {  //节点选中状态改变事件监听，全选框有自己的监听事件
+                console.log(data.value); //开关value值，也可以通过data.elem.value得到
+                $("#paresent").val(data.value);
+            }
+        });
+
+
+        //自定义验证规则
+        form.verify({
+            name: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '名称不能为空';
+                }
+            },
+            userRole: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '角色类型不能为空';
+                }
+            },
+            userList:function (value) {
+                if (value.length == null || value.length == "") {
+                    return '人员选择不能为空'
+                }
+            }
+        });
+        //选择角色请求对应角色列表
+        form.on('select(chooseRole)', function (data) {
+            $("#userList").empty();
+            var roleType = $("#roleType option:selected").val();
+            if (data.value == "" || data.value == null) {
+                $("#userList").empty();
+                var select = document.getElementById("userList");
+                select.add(new Option("请选择人员...", ""));
+                form.render();
+                return;
+            }
+            $.ajax({
+                url: '/manage/user/findManageByUserRole',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    userRole: roleType,
+                },
+                async: false,
+                success: function (data) {
+                    var select = document.getElementById("userList");
+                    if (data.status==0)
+                    {
+                        for (var i = 0; i < data.data.length; i++) {
+                            var userName = data.data[i].userName;
+                            var userCode = data.data[i].userCode;
+                            select.add(new Option(userName, userCode));
+
+                        }
+                    }else
+                    {
+                        select.add(new Option("暂无人员", ""));
+                    }
+                    form.render();
+                }
+            });
+        });
+        //监听提交
+        form.on('submit(add)', function(data) {
+            var roleType =$("#roleType option:selected").val();
+            var name = $("#name").val();
+            var remark = $("#remark").val();
+            var userList =$("#userList option:selected").val();
+            var oCks = xtree4.GetAllCheckBox(); //这是方法*! 获取所有子菜单和父菜单/*/
+            var ids1 = new Array();
+            for (var i = 0; i < oCks.length; i++) {
+                ids1.push(oCks[i].value);
+            }
+            //选择全选传入的数组里面会有个on
+            if (ids1[0] == "on") {
+                delete ids1[0];
+            }
+            var index = layer.load(3, {time: 30*1000});
+            $.ajax({
+                url: '/manage/role/insertPermissions',
+                type: 'post',
+                traditional:true,
+                data: {
+                    ids: ids1,
+                    usercode: userList,
+                    name:name,
+                    remark:remark,
+                    roletype:roleType,
+                },
+                async:false,
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(index);
+                    if(data.msg=="插入成功"){
+                        layer.msg("赋予权限成功！",{icon: 6,time:500,end:function () {
+                                parent.location.reload();
+                            }});
+                    }else if(data.msg=="权限已设置"){
+                        layer.msg("该用户已设置权限,请不要重复设置");
+                        return false;
+                    }else if (data.msg == "插入失败") {
+                        layer.msg("配置权限失败！");
+                        return false;
+                    }
+                },
+                error: function (data) {
+                    console.log(2);
+                }
+            });
+        });
+
+
+    });
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html class="iframe-h">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>作品信息</title>
+		<link rel="stylesheet" type="text/css" href="../../../layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/admin.css" />
+	</head>
+
+	<body>
+		<div class="wrap-container clearfix">
+				<div class="column-content-detail">
+					<div class="layui-form" >
+						<div class="demoTable">
+							<div class="layui-form-item">
+								<div class="layui-inline tool-btn">
+									<button class="layui-btn layui-btn-small layui-btn-normal" onclick="toAdd()" ><i class="layui-icon">&#xe654;</i>上传作品</button>
+								</div>
+								<div class="layui-inline">
+									<input type="text" name="userName" id="userName"  lay-verify="userName" placeholder="请输入作品名称" autocomplete="off" class="layui-input">
+								</div>
+								<div class="layui-inline">
+									<input type="text" name="startTime" id="startTime" placeholder="上传时间"
+										   class="layui-input">
+								</div>
+								~
+								<div class="layui-inline">
+									<input type="text" name="endTime" id="endTime"  placeholder="上传时间" class="layui-input">
+								</div>
+								&nbsp
+								作品类型
+								<div class="layui-inline" style="width:130px;">
+									<select name="productType" id="productType"  lay-search="" >
+										<option value="">请选择</option>
+										<option value="1">色彩作品</option>
+										<option value="2">素描作品</option>
+										<option value="3">速写作品</option>
+										<option value="4">油画作品</option>
+										<option value="5">其他</option>
+									</select>
+								</div>
+								是否审批通过
+								<div class="layui-inline" style="width:130px;">
+									<select name="isCheck" id="isCheck"  lay-search="" >
+										<option value="">请选择</option>
+										<option value="0">待审核</option>
+										<option value="1">审核通过</option>
+										<option value="2">审核不通过</option>
+									</select>
+								</div>
+								是否精品
+								<div class="layui-inline" style="width:100px;">
+									<select name="isSelect" id="isSelect1"  lay-search="" >
+										<option value="">请选择</option>
+										<option value="0">否</option>
+										<option value="1">是</option>
+									</select>
+								</div>
+								<button class="layui-btn layui-btn-normal"  data-type="reload" lay-submit="search">搜索</button>
+							</div>
+						</div>
+					</div>
+					<div class="layui-form" id="table-list">
+						<table class="layui-hide" id="demo" lay-filter="test"></table>
+						<!--<script type="text/html" id="barDemo" >
+							<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+							<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+							<a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="check">审核</a>
+							<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="set">上下架</a>
+							<a class="layui-btn layui-btn-container layui-btn-xs" lay-event="set">推荐精品</a>
+						</script>-->
+						<script type="text/html" id="barDemo">
+							{{showDD('${session_manage_token.getRole()}')}}
+						</script>
+					</div>
+
+				</div>
+		</div>
+		<script type="text/html" id="barDemo1">
+			{{showDD('${session_manage_token.getRole()}')}}
+		</script>
+		<!--<script type="text/html" id="switchTpl" lay-filter="test">
+			<input type="checkbox" name="isOn" id="isOn" value="{{d.id}}" lay-skin="switch" lay-text="上|下" lay-filter="isOn" {{ d.isOn == 1 ? 'checked' : '' }}>
+		</script>
+		<script type="text/html" id="switchTpl1" lay-filter="test">
+			<input type="checkbox" name="isSelect" id="isSelect" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="isSelect" {{ d.isSelect == 1 ? 'checked' : '' }}>
+		</script>-->
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="../../../layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../js/common.js" type="text/javascript" charset="utf-8"></script>
+
+		<script src="../../../js/formate.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../../js/xadmin.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+            var element = layui.element;
+            var table = layui.table;
+            var form = layui.form;
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#startTime'
+                ,type: 'datetime'
+            });
+            laydate.render({
+                elem: '#endTime'
+                ,type: 'datetime'
+            });
+            //展示已知数据
+            table.render({
+                elem: '#demo'
+                ,url:'/manage/product/productList?isOn=1'
+                ,id : 'testReload'
+                ,cols: [[ //标题栏
+                     {field: 'productCode', width:'9%' , title: '编号'}
+                     ,{field: 'productName', width:'7%' , title: '作品'}
+                    , {field: 'createTimes', width:'12%' , title: '上传时间',
+                        templet :function (row){
+                            return editTime(row.createTimes);
+                        }}
+                    , {field: 'productUserName', width:'7%' , title: '作者'}
+                    , {field: 'productType', width:'8%' , title: '作品类型'}
+                    , {field: 'isSelected', width:'12%' , title: '是否精品(推荐)'}
+                    , {field: 'isCheck', width:'10%' , title: '审核是否通过'}
+                    , {field: 'isOn', width:'7%' , title: '上下架'}
+                /*    , {field: 'readNum', width:'5%' , title: '浏览次数'}*/
+                    , {fixed: 'right', width: '25%', align: 'center', title: '操作', toolbar: '#barDemo'}
+                ]]
+                ,skin: 'line' //表格风格
+                ,even: true
+                ,page: true //是否显示分页
+                ,limits: [10, 20, 50]
+                ,limit: 10 //每页默认显示的数量
+                ,done: function(res, curr, count){
+                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    console.log(res);
+                    //得到当前页码
+                    console.log(curr);
+                    //得到数据总量
+                    console.log(count);
+
+                    $("[data-field='productType']").children().each(function(){
+                        if($(this).text()==1){
+                            $(this).text("色彩作品")
+                        }else if($(this).text()==2){
+                            $(this).text("素描作品")
+                        }else if($(this).text()==3){
+                            $(this).text("速写作品")
+                        }else if($(this).text()==4){
+                            $(this).text("油画作品")
+                        }else if($(this).text()==5){
+                            $(this).text("其他")
+                        }
+                    })
+                    $("[data-field='isCheck']").children().each(function(){
+                        if($(this).text()==1){
+                            $(this).text("审核通过")
+                        }else if($(this).text()==2){
+                            $(this).text("审核不通过")
+                        }else if($(this).text()==0){
+                            $(this).text("待审核")
+                        }
+                    })
+                    $("[data-field='isOn']").children().each(function(){
+                        if($(this).text()==1){
+                            $(this).text("已上架")
+                        }else if($(this).text()==0){
+                            $(this).text("已下架")
+                        }
+                    })
+                    $("[data-field='isSelected']").children().each(function(){
+                        if($(this).text()==1){
+                            $(this).text("是")
+                        }else if($(this).text()==0){
+                            $(this).text("否")
+                        }
+                    })
+                }
+            });
+            //表格数据操作-查看详情和删除
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                if(obj.event === 'detail'){
+                    localStorage.setItem("id",data.id);
+					window.location.href="/manage/product/product_edit";
+/*
+                    x_admin_show('管理者详情','/manage/product/product_edit',800,500)
+*/
+
+                }else if(obj.event === 'del'){
+                    layer.confirm('真的删除行么', function(index){
+                        $.ajax({
+                            type: 'post',
+                            url: '/manage/product/deleteProduct',
+                            data:{
+                                id:data.id,
+                            },
+                            dataType: 'json',
+                            success : function (data) {
+                                if(data.status==0){
+                                    layer.msg("删除成功！",
+                                        {icon: 6,time:1000,end:function () {
+                                                $(".layui-laypage-btn").click();
+                                            }});
+                                }
+                            },
+                            error : function () {
+                                layer.msg('删除失败');
+                            }
+                        });
+                    });
+                }else if(obj.event === 'set'){//设置上下架
+                    var s = data.isOn;
+                    var isOn ;
+                    if(s==0){
+                        isOn=1;
+                    }else {
+                        isOn=0;
+                    }
+                    layer.confirm('真的上架或下架么', function(index){
+                        $.ajax({
+                            url:'/manage/product/editStatus',
+                            type:'post',
+                            data:{
+                                isOn:isOn,
+                                type:1,
+                                id:data.id,
+                            },
+                            dataType:'json',
+                            success:function (data) {
+                                if(data.status==0){
+                                    layer.msg("设置成功！",
+                                        {icon: 6,time:1000,end:function () {
+                                                $(".layui-laypage-btn").click();
+                                            }});
+                                }
+                            },
+                            error:function () {
+
+                            }
+                        });
+                    });
+                }else if(obj.event === 'tuijian'){//设置精品推荐
+                    var s = data.isSelected;
+                    var isSelect ;
+                    if(s==0){
+                        isSelect=1;
+					}else {
+                        isSelect=0;
+					}
+                    console.log("select:" + isSelect);
+                    layer.confirm('真的设置精品推荐或下推荐么，', function(index){
+                        $.ajax({
+                            url:'/manage/product/editStatus',
+                            type:'post',
+                            data:{
+                                isOn:isSelect,
+                                type:2,
+                                id:data.id,
+                            },
+                            dataType:'json',
+                            success:function (data) {
+                                if(data.status==0){
+                                    layer.msg("设置成功！",
+                                        {icon: 6,time:1000,end:function () {
+                                                $(".layui-laypage-btn").click();
+                                            }});
+                                }
+                            },
+                            error:function () {
+
+                            }
+                        });
+                    });
+                }else if(obj.event === 'check'){//审核
+                    var isCheck = 1;
+                    layer.confirm('审核通过么，', function(index){
+                        $.ajax({
+                            url:'/manage/product/editStatus',
+                            type:'post',
+                            data:{
+                                isOn:isCheck,
+                                type:3,
+                                id:data.id,
+                            },
+                            dataType:'json',
+                            success:function (data) {
+                                if(data.status==0){
+                                    layer.msg("审核通过成功！",
+                                        {icon: 6,time:1000,end:function () {
+                                                $(".layui-laypage-btn").click();
+                                            }});
+                                }
+                            },
+                            error:function () {
+
+                            }
+                        });
+                    });
+                }else if(obj.event === 'check1'){//审核不通过
+                    var isCheck = 2;
+                    layer.confirm('审核不通过么，', function(index){
+                        $.ajax({
+                            url:'/manage/product/editStatus',
+                            type:'post',
+                            data:{
+                                isOn:isCheck,
+                                type:3,
+                                id:data.id,
+                            },
+                            dataType:'json',
+                            success:function (data) {
+                                if(data.status==0){
+                                    layer.msg("审核不通过成功！",
+                                        {icon: 6,time:1000,end:function () {
+                                                $(".layui-laypage-btn").click();
+                                            }});
+                                }
+                            },
+                            error:function () {
+
+                            }
+                        });
+                    });
+                }
+            });
+            /*//修改上下架
+            form.on('switch(isOn)', function(obj){
+                console.log("520:"+JSON.stringify(obj));
+                console.log("主键Id："+this.value);
+                var id = this.value;
+                console.log("主键Idsss："+id);
+                console.log("status："+ obj.elem.checked);
+                var isOn="";
+                if(obj.elem.checked==true){
+                    isOn=0;
+                }else {
+                    isOn=1;
+                }
+                $.ajax({
+                    url:'/manage/product/editStatus',
+                    type:'post',
+                    data:{
+                        isOn:isOn,
+						type:1,
+                        id:1,
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        if(data.status==0){
+                            $(".layui-laypage-btn").click();
+                        }
+                    },
+                    error:function () {
+
+                    }
+                });
+            });
+            //修改是否精品
+            form.on('switch(isSelect)', function(obj){
+                var data = obj.data;
+                console.log("主键Id："+this.value);
+                var id = this.value
+                console.log("status："+ obj.elem.checked);
+                var isSelect="";
+                if(obj.elem.checked==true){
+                    isSelect=0;
+                }else {
+                    isSelect=1;
+                }
+                $.ajax({
+                    url:'/manage/product/editProductStatus',
+                    type:'post',
+                    data:{
+                        id:id,
+                        isOn:isSelect,
+						type:2,
+                    },
+                    dataType:'json',
+                    success:function (data) {
+                        console.log("datastatus:"+data.status);
+                        if(data.status==0){
+
+                            $(".layui-laypage-btn").click();
+                        }
+                    },
+                    error:function () {
+						layer.msg("服务器异常")
+                    }
+                });
+            });*/
+            $('.demoTable .layui-btn').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+            var $ = layui.jquery, active = {
+                reload: function(){
+                    var userName = $("#userName").val();
+                    var startTime = $("#startTime").val();
+                    var endTime = $("#endTime").val();
+                    var isCheck = $("#isCheck option:selected").val();
+                    var isSelect = $("#isSelect1 option:selected").val();
+                    var productType = $("#productType option:selected").val();
+                    table.reload('testReload', {
+                        method:'post',
+                        where:{userName:userName,startTime:startTime,endTime:endTime,isCheck:isCheck,isSelect:isSelect,productType:productType}
+                    });
+                }
+            };
+
+			function toAdd() {
+				window.location.href="/manage/product/product_add"
+            }
+            function showDD(role) {
+                if(role==0){
+                    return "<a class=\"layui-btn layui-btn-xs\" lay-event=\"detail\">查看</a>\n" +
+                        "\t\t <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"del\">删除</a>\n" +
+                        "\t\t <a class=\"layui-btn layui-btn-xs layui-btn-warm\" lay-event=\"check\">审核通过</a>\n" +
+                        "\t\t <a class=\"layui-btn layui-btn-xs layui-btn-warm\" lay-event=\"check1\">审核不通过</a>\n" +
+                        "\t\t <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"set\">上下架</a>\n" +
+                        "\t\t <a class=\"layui-btn layui-btn-container layui-btn-xs\" lay-event=\"tuijian\">是否推荐</a>\n" +
+                        "\t  ";
+                }else if(role==1){
+                    return "<a class=\"layui-btn layui-btn-xs\" lay-event=\"detail\">查看</a>\n\t  ";
+                }else if(role==2){
+                    return "<a class=\"layui-btn layui-btn-xs\" lay-event=\"detail\">查看</a>\n" +
+                        "\t\t <a class=\"layui-btn layui-btn-danger layui-btn-xs\" lay-event=\"del\">删除</a>\n" +
+                        "\t\t <a class=\"layui-btn layui-btn-xs layui-btn-warm\" lay-event=\"check\">审核</a>\n" +
+                        "\t\t <a class=\"layui-btn layui-btn-xs layui-btn-warm\" lay-event=\"check1\">审核不通过</a>\n" +
+                        "\t\t <a class=\"layui-btn layui-btn-normal layui-btn-xs\" lay-event=\"set\">上下架</a>\n" +
+                        "\t\t <a class=\"layui-btn layui-btn-container layui-btn-xs\" lay-event=\"tuijian\">是否精品</a>\n" +
+                        "\t  ";
+                }else {
+                    return "<a class=\"layui-btn layui-btn-xs\" lay-event=\"detail\">查看</a>\n\t  ";
+                }
+            }
+		</script>
+
+	</body>
+
+</html>

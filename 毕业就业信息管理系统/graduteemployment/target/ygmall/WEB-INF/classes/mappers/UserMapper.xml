@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.User" >
+    <constructor >
+      <idArg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sex" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="birthday" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="mobile_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="real_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="country" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="province" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="city" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="district" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="headimg" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="role" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="user_sign" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="courtyard" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="education" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="political_outlook" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="native_place" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="school" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_code, email, user_name, password, sex, birthday, mobile_phone, real_name,
+    country, province, city, district, address, headimg, create_time, role, user_sign,
+    courtyard, education, political_outlook, native_place, update_time, age, school
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from ecs_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ecs_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.User" >
+    insert into ecs_user (user_id, user_code, email,
+      user_name, password, sex,
+      birthday, mobile_phone, real_name,
+      country, province, city,
+      district, address, headimg,
+      create_time, role, user_sign,
+      courtyard, education, political_outlook,
+      native_place, update_time, age,
+      school)
+    values (#{userId,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+      #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},
+      #{birthday,jdbcType=DATE}, #{mobilePhone,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
+      #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
+      #{district,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{headimg,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{role,jdbcType=TINYINT}, #{userSign,jdbcType=VARCHAR},
+      #{courtyard,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{politicalOutlook,jdbcType=VARCHAR},
+      #{nativePlace,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{age,jdbcType=INTEGER},
+      #{school,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.User" >
+    insert into ecs_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="headimg != null" >
+        headimg,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="userSign != null" >
+        user_sign,
+      </if>
+      <if test="courtyard != null" >
+        courtyard,
+      </if>
+      <if test="education != null" >
+        education,
+      </if>
+      <if test="politicalOutlook != null" >
+        political_outlook,
+      </if>
+      <if test="nativePlace != null" >
+        native_place,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="mobilePhone != null" >
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="headimg != null" >
+        #{headimg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=TINYINT},
+      </if>
+      <if test="userSign != null" >
+        #{userSign,jdbcType=VARCHAR},
+      </if>
+      <if test="courtyard != null" >
+        #{courtyard,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalOutlook != null" >
+        #{politicalOutlook,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null" >
+        #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.User" >
+    update ecs_user
+    <set >
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="headimg != null" >
+        headimg = #{headimg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=TINYINT},
+      </if>
+      <if test="userSign != null" >
+        user_sign = #{userSign,jdbcType=VARCHAR},
+      </if>
+      <if test="courtyard != null" >
+        courtyard = #{courtyard,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalOutlook != null" >
+        political_outlook = #{politicalOutlook,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null" >
+        native_place = #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.User" >
+    update ecs_user
+    set user_code = #{userCode,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=DATE},
+      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      headimg = #{headimg,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      role = #{role,jdbcType=TINYINT},
+      user_sign = #{userSign,jdbcType=VARCHAR},
+      courtyard = #{courtyard,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      political_outlook = #{politicalOutlook,jdbcType=VARCHAR},
+      native_place = #{nativePlace,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      age = #{age,jdbcType=INTEGER},
+      school = #{school,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <select id="userList" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ecs_user
+    <where>
+      <if test="userName!=null and userName!=''">
+        and (user_name like "%"#{userName}"%" or real_name like "%"#{userName}"%" or mobile_phone like "%"#{userName}"%"
+        or user_code like "%"#{userName}"%" )
+      </if>
+      <if test="role!=null ">
+        and role = #{role}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ create_time <= #{endTime}]]>
+        </if>
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ create_time <= #{endTime}]]>
+          </if>
+        </if>
+      </if>
+    </where>
+    order by user_id desc
+  </select>
+  <select id="checkUserName1" resultType="int" parameterType="java.lang.String" >
+    SELECT count(1) from  ecs_user
+    where user_name=#{userName} or mobile_phone=#{userName}
+  </select>
+  <select id="checkUserName" resultType="int" parameterType="java.lang.String" >
+    SELECT count(1) from  ecs_user
+    where user_name=#{userName}
+  </select>
+  <select id="checkUserPhone"   resultType="int" parameterType="java.lang.String" >
+    SELECT
+    count(1)
+    from  ecs_user
+    where mobile_phone=#{mobile}
+  </select>
+  <select id="checkUserNameExSelf"  resultType="int"  parameterType="map" >
+    SELECT count(1) from  ecs_user
+    where user_name=#{userName} and user_id !=#{userId}
+  </select>
+  <select id="checkUserPhoneExSelf"  resultType="int"  parameterType="map" >
+    SELECT count(1) from  ecs_user
+    where mobile_phone=#{mobile} and user_id !=#{userId}
+  </select>
+  <select id="checkUser" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from  ecs_user
+    <where>
+      <if test="userName!=null and userName!=''">
+        and (user_name=#{userName} or mobile_phone=#{userName})
+      </if>
+      <if test="password!=null ">
+        and password = #{password}
+      </if>
+    </where>
+  </select>
+  <select id="checkUserPass"  resultType="int"  parameterType="map" >
+    SELECT count(1) from  ecs_user
+    where password=#{oPass} and user_id =#{userId}
+  </select>
+  <select id="selectByUserCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from ecs_user
+    where user_code = #{userCode}
+  </select>
+</mapper>

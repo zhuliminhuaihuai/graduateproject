@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="education:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="ygmall.war">
+      <element id="artifact" artifact-name="education:war exploded" />
+    </root>
+  </artifact>
+</component>

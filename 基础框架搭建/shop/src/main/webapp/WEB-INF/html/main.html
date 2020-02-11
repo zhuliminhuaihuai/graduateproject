@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>首页--layui后台管理模板</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../../css/font_eolqem241z66flxr.css" media="all" />
+	<link rel="stylesheet" href="../../css/main.css" media="all" />
+	<link rel="stylesheet" href="../../css/news.css" media="all" />
+</head>
+<body class="childrenBody">
+<div id="1">
+	<div class="panel_box row">
+	<!--	<div class="panel col">
+			<a href="javascript:;" data-url="/manage/work/work_system_list.html">
+				<div class="panel_icon">
+					<i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i>
+				</div>
+				<div class="panel_word newMessage">
+					<span id="systemNum" style="color:red;"></span>
+					<cite>待解决系统报错工单</cite>
+				</div>
+			</a>
+		</div>-->
+	 <div class="panel col">
+			<a href="javascript:;" data-url="/manage/work/work_pending_list.html">
+				<div class="panel_icon" style="background-color:#FF5722;">
+					<i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i>
+				</div>
+				<div class="panel_word userAll">
+					<span id="11" style="color:red;"></span>
+					<cite>待解决工单</cite>
+				</div>
+			</a>
+		</div>
+		<div class="panel col">
+			<a href="javascript:;" data-url="/manage/work/work_processing_list.html"  >
+				<div class="panel_icon" style="background-color:#F7B824; ">
+					<i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i>
+				</div>
+				<div class="panel_word imgAll">
+					<span id="12" style="color:red;"></span>
+					<cite>处理中工单</cite>
+				</div>
+			</a>
+		</div>
+		<div class="panel col">
+			<a href="javascript:;" data-url="/manage/work/work_complete_list.html">
+				<div class="panel_icon" style="background-color:#5FB878;">
+					<i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i>
+				</div>
+				<div class="panel_word waitNews">
+					<span id="13" style="color:red;"></span>
+					<cite>已解决工单</cite>
+				</div>
+			</a>
+		</div>
+	 <div class="panel col">
+			<a href="javascript:;" data-url="/oemManage/oem_unsolved.html">
+				<div class="panel_icon" style="background-color:#FF5722;">
+					<i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i>
+				</div>
+				<div class="panel_word userAll">
+					<span id="21" style="color:red;"></span>
+					<cite>待解决贴牌</cite>
+				</div>
+			</a>
+		</div>
+		<div class="panel col">
+			<a href="javascript:;" data-url="/oemManage/oem_questionability.html"  >
+				<div class="panel_icon" style="background-color:#F7B824; ">
+					<i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i>
+				</div>
+				<div class="panel_word imgAll">
+					<span id="22" style="color:red;"></span>
+					<cite>处理中贴牌</cite>
+				</div>
+			</a>
+		</div>
+		<div class="panel col">
+			<a href="javascript:;" data-url="/oemManage/oem_resolved.html">
+				<div class="panel_icon" style="background-color:#5FB878;">
+					<i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i>
+				</div>
+				<div class="panel_word waitNews">
+					<span id="23" style="color:red;"></span>
+					<cite>已解决贴牌</cite>
+				</div>
+			</a>
+		</div>
+	<!--	<div class="panel col max_panel">
+			<a href="javascript:;" data-url="/manage/work/work_other_list.html">
+				<div class="panel_icon" style="background-color:#2F4056;">
+					<i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i>
+				</div>
+				<div class="panel_word allNews">
+					<span id="14" style="color:red;"></span>
+					<em>撤回工单</em>
+					<cite></cite>
+				</div>
+			</a>
+		</div>-->
+		<div class="panel col max_panel">
+			<button class="layui-btn  layui-btn-radius layui-btn-warm"  id="receive" onclick="reloadPage()"><i class="layui-icon">&#xe669;</i> 刷新</button>
+
+		</div>
+		<!--<div class="panel col">
+			<a href="javascript:;" data-url="">
+				<div class="panel_icon" style="background-color:#009688;">
+					<i class="layui-icon" data-icon="&#xe613;">&#xe613;</i>
+				</div>
+				<div class="panel_word userAll">
+					<span></span>
+					<cite>系统人数</cite>
+				</div>
+			</a>
+		</div>-->
+	</div>
+	<div class="row">
+		<div class="sysNotice col">
+			<blockquote class="layui-elem-quote title">更新日志</blockquote>
+			<div class="layui-elem-quote layui-quote-nm">
+				<h3># 1.0.0 （发行版） - 2018-11-20</h3>
+				<p>* 增加了天气</p>
+				<p>* 增加了头</p>
+				<p>* 修复Tab选项卡在出现下拉按钮时，点击最后的几个选项卡未能正常切换的bug</p>
+				<p>* 修复select组件搜索选择时会先显示之前的值再替换新的值的不良体验</p>
+				<p>* 修复默认进度条0%时，文本出现太过于左侧的问题</p>
+				<br />
+				<p># 1.0.1</p>
+				<p>* 新增“折叠面板”页面元素及相关事件监听</p>
+				<p>* select组件增加搜索匹配功能，通过参数 lay-search 开启</p>
+				<p>* checkbox组件增加原始风格样式，通过设置 lay-skin="primary" 开启（跟系统自带的类似样貌）</p>
+				<p>* 升级 layer弹层组件到 3.0.2 （ layer3.0.2更新日志 ）</p>
+				<p>* 表单元素增加属性 lay-ignore ,设置后，将不会对该标签进行美化渲染，即保留系统风格</p>
+				<p>* 开关增加两种状态的自定义文本，通过参数 lay-text="ON|OFF" 开启</p>
+				<p>* 修复Tab选项卡嵌套的Tab没有对应的内容结构时，切换到了父级内容的bug</p>
+				<p>* 修复Tab选项卡容器中使用下拉框时，被溢出隐藏的问题</p>
+				<p>* 修复Tab选项卡溢满情况下，点击展开按钮，再在外部添加一个选项卡出现异常的bug</p>
+				<p>* Tab选项卡部分UI细节优化</p>
+				<p>* Tab选项卡的tabAdd增加id参数，用于在删除和切换时，以id作为匹配媒介</p>
+			</div>
+		</div>
+		<div class="sysNotice col">
+			<blockquote class="layui-elem-quote title">系统基本参数</blockquote>
+			<table class="layui-table">
+				<colgroup>
+					<col width="150">
+					<col>
+				</colgroup>
+				<tbody>
+					<tr>
+						<td>当前版本</td>
+						<td class="version">v1.0.1</td>
+					</tr>
+					<tr>
+						<td>开发作者</td>
+						<td class="author">请叫我官先生</td>
+					</tr>
+					<tr>
+						<td>网站首页</td>
+						<td class="homePage">www.KDOA.com</td>
+					</tr>
+					<tr>
+						<td>服务器环境</td>
+						<td class="server">阿里云</td>
+					</tr>
+					<tr>
+						<td>数据库版本</td>
+						<td class="dataBase">mysql5.7</td>
+					</tr>
+					<tr>
+						<td>最大上传限制</td>
+						<td class="maxUpload">4K</td>
+					</tr>
+					<tr>
+						<td>当前用户权限</td>
+						<td class="userRights">你最棒棒啦</td>
+					</tr>
+				</tbody>
+			</table>
+			<blockquote class="layui-elem-quote title">最新文章<i class="iconfont icon-new1"></i></blockquote>
+
+
+			<table class="layui-table" lay-skin="line">
+				<colgroup>
+					<col>
+					<col width="110">
+				</colgroup>
+				<tbody class="hot_news"></tbody>
+			</table> 
+		</div>
+	</div>
+</div>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript" src="../../js/main.js"></script>
+	<script type="text/javascript" src="../../js/jQuery.speech.min.js"></script>
+	<script>
+        var role ='${session_manage_token.getRole()}';
+
+        if(role==0){
+            $("#1").hide();
+		}
+		$.ajax({
+			url:'/manage/work/unsolvedWork',
+			type:'post',
+			dataType:'json',
+			success:function (data) {
+                if(data.status==0){
+                    if(role==1 || role ==2){
+                        if(data.data.zeroNum==null&&data.data.threeNum!=null){
+                            var s1 =  parseFloat("0")+parseFloat(data.data.threeNum);
+						}else if(data.data.zeroNum!=null&&data.data.threeNum==null){
+                            var s1 =  parseFloat(data.data.zeroNum)+parseFloat("0");
+						}else if(data.data.zeroNum==null&&data.data.threeNum==null){
+                            var s1 =  parseFloat("0")+parseFloat("0");
+                        }else {
+                            var s1 =  parseFloat(data.data.zeroNum)+parseFloat(data.data.threeNum);
+						}
+                        if(data.data.oneNum==null&&data.data.fourNum!=null){
+                            var s2 =  parseFloat("0")+parseFloat(data.data.fourNum);
+						}else if(data.data.oneNum!=null&&data.data.fourNum==null){
+                            var s2 =  parseFloat(data.data.oneNum)+parseFloat("0");
+						}else if(data.data.oneNum==null&&data.data.fourNum==null){
+                            var s2 =  parseFloat("0")+parseFloat("0");
+                        }else {
+                            var s2 =  parseFloat(data.data.oneNum)+parseFloat(data.data.fourNum);
+						}
+
+                        if(data.data.twoNum==null&&data.data.fiveNum!=null){
+                            var s3 =  parseFloat("0")+parseFloat(data.data.fiveNum);
+						}else if(data.data.twoNum!=null&&data.data.fiveNum==null){
+                            var s3 =  parseFloat(data.data.twoNum)+parseFloat("0");
+						}else if(data.data.twoNum==null&&data.data.fiveNum==null){
+                            var s3 =  parseFloat("0")+parseFloat("0");
+                        }else {
+                            var s3 =  parseFloat(data.data.twoNum)+parseFloat(data.data.fiveNum);
+						}
+
+                        $("#11").html(s1);
+                        $("#12").html(s2);
+                        $("#13").html(s3);
+                      /*  $("#14").html(data.data.sixNum);*/
+					}else {
+                        console.log(JSON.stringify(data.data))
+                        if(data.data.threeNum==null){
+                            $("#11").html("0");
+                        }else {
+                            $("#11").html(data.data.threeNum);
+                        }
+                        if(data.data.fourNum==null){
+                            $("#12").html("0");
+                        }else {
+                            $("#12").html(data.data.fourNum);
+                        }
+                        if(data.data.fiveNum==null){
+                            $("#13").html("0");
+                        }else {
+                            $("#13").html(data.data.fiveNum);
+                        }
+                        /*$("#14").html(data.data.sixNum);*/
+					}
+                }
+            }
+		});
+		$.ajax({
+			url:'/oemManage/selectTotalDetail',
+			type:'post',
+			dataType:'json',
+			success:function (data) {
+				console.log(JSON.stringify(data));
+				var oem = data.data;
+				if(oem.zeroNum==null){
+                    $("#21").html(0);
+				}else {
+                    $("#21").html(oem.zeroNum);
+				}
+				if(oem.oneNum==null){
+				    $("#22").html(0);
+				}else {
+                    $("#22").html(oem.oneNum);
+				}
+				if(oem.threeNum==null){
+				    $("#23").html(0);
+				}else {
+                    $("#23").html(oem.threeNum);
+				}
+            }
+		});
+        function reloadPage()
+        {
+            window.location.reload()
+        }
+       /* var msg = new SpeechSynthesisUtterance("您有新的工单待处理");
+        console.log(msg);
+        window.speechSynthesis.speak(msg);*/
+</script>
+</body>
+</html>

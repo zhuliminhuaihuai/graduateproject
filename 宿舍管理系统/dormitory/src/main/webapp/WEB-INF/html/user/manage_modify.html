@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>管理员修改</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../../../css/user.css" media="all" />
+</head>
+<body>
+<fieldset class="layui-elem-field" style="width:60%;margin-left: 20%;margin-top: 1% ">
+    <div class="layui-form">
+        <tbody>
+        <tr>
+            <th colspan="2" style="text-align:left;background-color: #eee"><h2 style="font-family: 黑体">管理员信息</h2>
+            </th>
+        <tr>
+        </tbody>
+        <div class="layui-form-item">
+            <label class="layui-form-label">管理员名称</label>
+            <div class="layui-input-inline">
+                <input type="text" id="userName" name="userName" required=""
+                       lay-verify="userName" autocomplete="off"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>管理员的名字
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-inline">
+                <input type="text" id="userPhone" name="userPhone" required=""
+                       lay-verify="userPhone" autocomplete="off"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>用来联系管理员用的
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="facultyList" class="layui-form-label"> <span
+                    class="x-red">*</span>管理院系
+            </label>
+            <div class="layui-input-inline">
+                <select name="facultyList" id="facultyList" lay-verify="facultyList" lay-search="">
+                    <option value="">请选择学院...</option>
+                    <option value="智慧教育学院">智慧教育学院</option>
+                    <option value="哲学与公共管理学院">哲学与公共管理学院</option>
+                    <option value="文学院">文学院</option>
+                    <option value="语言科学与艺术学院">语言科学与艺术学院</option>
+                    <option value="历史文化与旅游学院">历史文化与旅游学院</option>
+                    <option value="法律政治学院">法律政治学院</option>
+                    <option value="外国语学院">外国语学院</option>
+                    <option value="商学院">商学院</option>
+                    <option value="教育科学学院">教育科学学院</option>
+                    <option value="物理与电子工程学院">物理与电子工程学院</option>
+                    <option value="化学化工学院">化学化工学院</option>
+                    <option value="生命科学学院">生命科学学院</option>
+                    <option value="马克思主义学院">马克思主义学院</option>
+                    <option value="体育学院">体育学院</option>
+                    <option value="音乐学院">音乐学院</option>
+                    <option value="美术学院">美术学院</option>
+                    <option value="传媒与影视学院">传媒与影视学院</option>
+                    <option value="机电工程学院">机电工程学院</option>
+                    <option value="中俄学院">中俄学院</option>
+                    <option value="电气工程及自动化学院">电气工程及自动化学院</option>
+                    <option value="地理测绘与城乡规划学院">地理测绘与城乡规划学院</option>
+                    <option value="科文学院">科文学院</option>
+                    <option value="教育研究院">教育研究院</option>
+                    <option value="继续教育学院">继续教育学院</option>
+                    <option value="敬文书院">敬文书院</option>
+                    <option value="圣彼得堡彼得大帝理工大学联合工程学院">圣彼得堡彼得大帝理工大学联合工程学院</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>管理员所管理的院系
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center">
+            <button class="layui-btn layui-btn-danger" lay-filter="modify" lay-submit="">保存</button>
+            <button class="layui-btn layui-btn-warm" onclick="goback()">返回</button>
+        </div>
+    </div>
+</fieldset>
+
+
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../js/main.js"></script>
+<script type="text/javascript" src="../../../js/index.js"></script>
+<script type="text/javascript" src="../../../js/xadmin.js"></script>
+<script>
+    var userId = localStorage.getItem("userId");
+    localStorage.removeItem("userId");
+    layui.use(['form', 'layer', 'laydate', 'code', 'upload'], function () {
+        $ = layui.jquery;
+        form = layui.form,
+            layer = layui.layer,
+            laydate = layui.laydate,
+            upload = layui.upload;
+        form.verify({
+            userName : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '用户名不能为空';
+                }
+            },
+            userPhone: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '手机号不能为空';
+                }
+                var isPhone=/^1[0-9]{10}$/;
+                var flag=isPhone.test(value);
+                if(flag==false)
+                    return '手机号格式错误';
+            },
+            facultyList: function (value) {
+                if (value.length ==null ||value.length =="") {
+                    return '院系管理不能为空!';
+                }
+            }
+        });
+
+        $.ajax({
+            url: "/manage/user/manageDetail",
+            type: "post",
+            dataType: "json",
+            data:{
+                userId:userId
+            },
+            success: function (data) {
+                console.log(JSON.stringify(data));
+                var data = data.data;
+                $("#userName").val(data.userName);
+                $("#userPhone").val(data.userPhone);
+                $("#facultyList").val(data.userFaculty);
+                form.render();
+            }
+        });
+
+
+        form.on('submit(modify)', function(data) {
+            var userName = $("#userName").val();
+            var facultyList = $("#facultyList option:selected").val();
+            var userPhone = $("#userPhone").val();
+            $.ajax({
+                url: "/manage/user/manageModify",
+                type: "post",
+                dataType: "json",
+                data:{
+                    userId:userId,
+                    userName:userName,
+                    userPhone:userPhone,
+                    userFaculty:facultyList,
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                   if (data.status == 0) {
+                        layer.msg('修改成功!刷新页面', {
+                            icon: 6,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            parent.location.reload();
+                        });
+                    }else {
+                        layer.msg('修改失败!', {
+                            icon: 5,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            return false;
+                        });
+                    }
+
+
+                }
+
+            });
+
+        });
+
+
+
+
+
+
+
+    });
+
+    function goback() {
+        parent.location.href = "/manage/user/jumpUserManage.html";
+
+    }
+    //数字时间转DATE时间类型
+    function editTime(v){
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        m = m<10?'0'+m:m;
+        var d = date.getDate();
+        d = d<10?("0"+d):d;
+        var h = date.getHours();
+        h = h<10?("0"+h):h;
+        var M = date.getMinutes();
+        M = M<10?("0"+M):M;
+        var S = date.getSeconds();
+        S = S<10?("0"+S):S;
+        var str = y+"-"+m+"-"+d;
+        if (str == "1970-01-01") {
+            return "";
+        }
+        return str;
+    }
+
+</script>
+</body>
+</html>

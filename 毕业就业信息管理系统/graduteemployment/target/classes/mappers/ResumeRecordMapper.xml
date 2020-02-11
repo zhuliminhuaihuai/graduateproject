@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.ResumeRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.ResumeRecord" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="resume_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="resume_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="hire_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="job_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enter_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enter_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.project.pojo.ResumeRecord" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="resume_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="resume_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="hire_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="job_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enter_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="enter_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="hire_result" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_time, update_time, user_id, user_code, resume_id, resume_code, hire_status,
+    job_name, enter_name, user_name, enter_code
+  </sql>
+  <sql id="Blob_Column_List" >
+    hire_result
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ecs_resume_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ecs_resume_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.ResumeRecord" >
+    insert into ecs_resume_record (id, create_time, update_time,
+      user_id, user_code, resume_id,
+      resume_code, hire_status, job_name,
+      enter_name, user_name, enter_code,
+      hire_result)
+    values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{userId,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR}, #{resumeId,jdbcType=INTEGER},
+      #{resumeCode,jdbcType=VARCHAR}, #{hireStatus,jdbcType=INTEGER}, #{jobName,jdbcType=VARCHAR},
+      #{enterName,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{enterCode,jdbcType=VARCHAR},
+      #{hireResult,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.ResumeRecord" >
+    insert into ecs_resume_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="resumeId != null" >
+        resume_id,
+      </if>
+      <if test="resumeCode != null" >
+        resume_code,
+      </if>
+      <if test="hireStatus != null" >
+        hire_status,
+      </if>
+      <if test="jobName != null" >
+        job_name,
+      </if>
+      <if test="enterName != null" >
+        enter_name,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="enterCode != null" >
+        enter_code,
+      </if>
+      <if test="hireResult != null" >
+        hire_result,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null" >
+        #{resumeId,jdbcType=INTEGER},
+      </if>
+      <if test="resumeCode != null" >
+        #{resumeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hireStatus != null" >
+        #{hireStatus,jdbcType=INTEGER},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterName != null" >
+        #{enterName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterCode != null" >
+        #{enterCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hireResult != null" >
+        #{hireResult,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.ResumeRecord" >
+    update ecs_resume_record
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null" >
+        resume_id = #{resumeId,jdbcType=INTEGER},
+      </if>
+      <if test="resumeCode != null" >
+        resume_code = #{resumeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hireStatus != null" >
+        hire_status = #{hireStatus,jdbcType=INTEGER},
+      </if>
+      <if test="jobName != null" >
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterName != null" >
+        enter_name = #{enterName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterCode != null" >
+        enter_code = #{enterCode,jdbcType=VARCHAR},
+      </if>
+      <if test="hireResult != null" >
+        hire_result = #{hireResult,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.project.pojo.ResumeRecord" >
+    update ecs_resume_record
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      resume_id = #{resumeId,jdbcType=INTEGER},
+      resume_code = #{resumeCode,jdbcType=VARCHAR},
+      hire_status = #{hireStatus,jdbcType=INTEGER},
+      job_name = #{jobName,jdbcType=VARCHAR},
+      enter_name = #{enterName,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      enter_code = #{enterCode,jdbcType=VARCHAR},
+      hire_result = #{hireResult,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.ResumeRecord" >
+    update ecs_resume_record
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      resume_id = #{resumeId,jdbcType=INTEGER},
+      resume_code = #{resumeCode,jdbcType=VARCHAR},
+      hire_status = #{hireStatus,jdbcType=INTEGER},
+      job_name = #{jobName,jdbcType=VARCHAR},
+      enter_name = #{enterName,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      enter_code = #{enterCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="resumeRecordList" parameterType="com.project.vo.CommonVo" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from  ecs_resume_record
+    <where>
+      <if test="role!=null">
+        <if test="role==1">
+          and user_code  = #{userCode}
+        </if>
+        <if test="role==2">
+          and enter_code  = #{userCode}
+        </if>
+      </if>
+      <if test="userName!=null and userName!=''">
+        and (resume_code like "%"#{userName}"%" or user_code like "%"#{userName}"%" or job_name like "%"#{userName}"%"  )
+      </if>
+      <if test="hireStatus!=null">
+        and hire_status  = #{hireStatus}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ create_time <= #{endTime}]]>
+        </if>
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''" >
+            and  <![CDATA[ create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ create_time <= #{endTime}]]>
+          </if>
+        </if>
+      </if>
+    </where>
+    order by id desc
+  </select>
+  <select id="checkResumeRecord" resultType="int" parameterType="map" >
+    select
+    count(1)
+    from ecs_resume_record
+    where user_code = #{userCode} and job_name = #{jobName}
+  </select>
+</mapper>

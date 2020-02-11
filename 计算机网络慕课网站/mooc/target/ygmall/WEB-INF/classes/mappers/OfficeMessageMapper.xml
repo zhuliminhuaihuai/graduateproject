@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.OfficeMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.OfficeMessage" >
+    <constructor >
+      <idArg column="message_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="message_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="message_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="message_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="message_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="message_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="message_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="message_video" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="message_tercher_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="message_tercher_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.project.pojo.OfficeMessage" >
+    <constructor >
+      <idArg column="message_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="message_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="message_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="message_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="message_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="message_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="message_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="message_video" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="message_tercher_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="message_tercher_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="message_detail" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    message_id, message_code, message_title, message_img, message_create_time, message_update_time,
+    message_state, message_video, message_tercher_code, message_tercher_name
+  </sql>
+  <sql id="Blob_Column_List" >
+    message_detail
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from education_office_message
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from education_office_message
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.OfficeMessage" >
+    insert into education_office_message (message_id, message_code, message_title,
+      message_img, message_create_time, message_update_time,
+      message_state, message_video, message_tercher_code,
+      message_tercher_name, message_detail)
+    values (#{messageId,jdbcType=INTEGER}, #{messageCode,jdbcType=VARCHAR}, #{messageTitle,jdbcType=VARCHAR},
+      #{messageImg,jdbcType=VARCHAR}, #{messageCreateTime,jdbcType=TIMESTAMP}, #{messageUpdateTime,jdbcType=TIMESTAMP},
+      #{messageState,jdbcType=INTEGER}, #{messageVideo,jdbcType=VARCHAR}, #{messageTercherCode,jdbcType=VARCHAR},
+      #{messageTercherName,jdbcType=VARCHAR}, #{messageDetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.OfficeMessage" >
+    insert into education_office_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="messageId != null" >
+        message_id,
+      </if>
+      <if test="messageCode != null" >
+        message_code,
+      </if>
+      <if test="messageTitle != null" >
+        message_title,
+      </if>
+      <if test="messageImg != null" >
+        message_img,
+      </if>
+      <if test="messageCreateTime != null" >
+        message_create_time,
+      </if>
+      <if test="messageUpdateTime != null" >
+        message_update_time,
+      </if>
+      <if test="messageState != null" >
+        message_state,
+      </if>
+      <if test="messageVideo != null" >
+        message_video,
+      </if>
+      <if test="messageTercherCode != null" >
+        message_tercher_code,
+      </if>
+      <if test="messageTercherName != null" >
+        message_tercher_name,
+      </if>
+      <if test="messageDetail != null" >
+        message_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="messageId != null" >
+        #{messageId,jdbcType=INTEGER},
+      </if>
+      <if test="messageCode != null" >
+        #{messageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="messageTitle != null" >
+        #{messageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="messageImg != null" >
+        #{messageImg,jdbcType=VARCHAR},
+      </if>
+      <if test="messageCreateTime != null" >
+        #{messageCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageUpdateTime != null" >
+        #{messageUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageState != null" >
+        #{messageState,jdbcType=INTEGER},
+      </if>
+      <if test="messageVideo != null" >
+        #{messageVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="messageTercherCode != null" >
+        #{messageTercherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="messageTercherName != null" >
+        #{messageTercherName,jdbcType=VARCHAR},
+      </if>
+      <if test="messageDetail != null" >
+        #{messageDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.OfficeMessage" >
+    update education_office_message
+    <set >
+      <if test="messageCode != null" >
+        message_code = #{messageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="messageTitle != null" >
+        message_title = #{messageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="messageImg != null" >
+        message_img = #{messageImg,jdbcType=VARCHAR},
+      </if>
+      <if test="messageCreateTime != null" >
+        message_create_time = #{messageCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageUpdateTime != null" >
+        message_update_time = #{messageUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageState != null" >
+        message_state = #{messageState,jdbcType=INTEGER},
+      </if>
+      <if test="messageVideo != null" >
+        message_video = #{messageVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="messageTercherCode != null" >
+        message_tercher_code = #{messageTercherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="messageTercherName != null" >
+        message_tercher_name = #{messageTercherName,jdbcType=VARCHAR},
+      </if>
+      <if test="messageDetail != null" >
+        message_detail = #{messageDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.project.pojo.OfficeMessage" >
+    update education_office_message
+    set message_code = #{messageCode,jdbcType=VARCHAR},
+      message_title = #{messageTitle,jdbcType=VARCHAR},
+      message_img = #{messageImg,jdbcType=VARCHAR},
+      message_create_time = #{messageCreateTime,jdbcType=TIMESTAMP},
+      message_update_time = #{messageUpdateTime,jdbcType=TIMESTAMP},
+      message_state = #{messageState,jdbcType=INTEGER},
+      message_video = #{messageVideo,jdbcType=VARCHAR},
+      message_tercher_code = #{messageTercherCode,jdbcType=VARCHAR},
+      message_tercher_name = #{messageTercherName,jdbcType=VARCHAR},
+      message_detail = #{messageDetail,jdbcType=LONGVARCHAR}
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.OfficeMessage" >
+    update education_office_message
+    set message_code = #{messageCode,jdbcType=VARCHAR},
+      message_title = #{messageTitle,jdbcType=VARCHAR},
+      message_img = #{messageImg,jdbcType=VARCHAR},
+      message_create_time = #{messageCreateTime,jdbcType=TIMESTAMP},
+      message_update_time = #{messageUpdateTime,jdbcType=TIMESTAMP},
+      message_state = #{messageState,jdbcType=INTEGER},
+      message_video = #{messageVideo,jdbcType=VARCHAR},
+      message_tercher_code = #{messageTercherCode,jdbcType=VARCHAR},
+      message_tercher_name = #{messageTercherName,jdbcType=VARCHAR}
+    where message_id = #{messageId,jdbcType=INTEGER}
+  </update>
+  <select id="getOfficeMessage" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from education_office_message
+    where message_state =1
+  </select>
+  <select id="getOfficeVideo" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from education_office_message limit 0,1
+  </select>
+  <select id="getAllOfficeMessage" resultMap="ResultMapWithBLOBs" resultType="com.project.vo.OfficeMessageVo">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from education_office_message
+    <where>
+      <if test="messageCode!=null and messageCode!=''">
+        and message_code = #{messageCode}
+      </if>
+      <if test="messageTitle!=null and messageTitle!=''">
+        and message_title like "%"#{messageTitle}"%"
+      </if>
+      <if test="messageTercherCode!=null and messageTercherCode!=''">
+        and message_tercher_code = #{messageTercherCode}
+      </if>
+      <if test="messageTercherName!=null and messageTercherName!=''">
+        and message_tercher_name like "%"#{messageTercherName}"%"
+      </if>
+      <if test="messageState!=null and messageState!=''">
+        and message_state = #{messageState}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ message_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ message_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ message_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ message_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+  <select id="getOfficeMessageCount" resultType="int">
+    select count(1)
+    from education_office_message;
+  </select>
+  <update id="updateOfficeVideo" parameterType="java.lang.String">
+    update education_office_message
+    set message_video = #{messageVideo}
+  </update>
+</mapper>

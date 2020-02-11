@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.managesystem.dao.BedRoomMapper" >
+  <resultMap id="BaseResultMap" type="com.managesystem.pojo.BedRoom" >
+    <constructor >
+      <idArg column="bedroom_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bedroom_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bedroom_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bedroom_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bedroom_bed" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bedroom_faculty" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bedroom_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bedroom_people" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bedroom_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bedroom_balance" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="building_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bedroom_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="bedroom_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="bedroom_detail" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    bedroom_id, bedroom_code, bedroom_title, bedroom_number, bedroom_bed, bedroom_faculty,
+    bedroom_type, bedroom_people, bedroom_state, bedroom_balance, building_code, bedroom_create_time,
+    bedroom_update_time, bedroom_detail
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from dormitory_bedroom
+    where bedroom_id = #{bedroomId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dormitory_bedroom
+    where bedroom_id = #{bedroomId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.managesystem.pojo.BedRoom" >
+    insert into dormitory_bedroom (bedroom_id, bedroom_code, bedroom_title,
+      bedroom_number, bedroom_bed, bedroom_faculty,
+      bedroom_type, bedroom_people, bedroom_state,
+      bedroom_balance, building_code, bedroom_create_time,
+      bedroom_update_time, bedroom_detail)
+    values (#{bedroomId,jdbcType=INTEGER}, #{bedroomCode,jdbcType=VARCHAR}, #{bedroomTitle,jdbcType=VARCHAR},
+      #{bedroomNumber,jdbcType=INTEGER}, #{bedroomBed,jdbcType=INTEGER}, #{bedroomFaculty,jdbcType=VARCHAR},
+      #{bedroomType,jdbcType=INTEGER}, #{bedroomPeople,jdbcType=INTEGER}, #{bedroomState,jdbcType=INTEGER},
+      #{bedroomBalance,jdbcType=DOUBLE}, #{buildingCode,jdbcType=VARCHAR}, #{bedroomCreateTime,jdbcType=TIMESTAMP},
+      #{bedroomUpdateTime,jdbcType=TIMESTAMP}, #{bedroomDetail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.managesystem.pojo.BedRoom" >
+    insert into dormitory_bedroom
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bedroomId != null" >
+        bedroom_id,
+      </if>
+      <if test="bedroomCode != null" >
+        bedroom_code,
+      </if>
+      <if test="bedroomTitle != null" >
+        bedroom_title,
+      </if>
+      <if test="bedroomNumber != null" >
+        bedroom_number,
+      </if>
+      <if test="bedroomBed != null" >
+        bedroom_bed,
+      </if>
+      <if test="bedroomFaculty != null" >
+        bedroom_faculty,
+      </if>
+      <if test="bedroomType != null" >
+        bedroom_type,
+      </if>
+      <if test="bedroomPeople != null" >
+        bedroom_people,
+      </if>
+      <if test="bedroomState != null" >
+        bedroom_state,
+      </if>
+      <if test="bedroomBalance != null" >
+        bedroom_balance,
+      </if>
+      <if test="buildingCode != null" >
+        building_code,
+      </if>
+      <if test="bedroomCreateTime != null" >
+        bedroom_create_time,
+      </if>
+      <if test="bedroomUpdateTime != null" >
+        bedroom_update_time,
+      </if>
+      <if test="bedroomDetail != null" >
+        bedroom_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bedroomId != null" >
+        #{bedroomId,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomCode != null" >
+        #{bedroomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bedroomTitle != null" >
+        #{bedroomTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="bedroomNumber != null" >
+        #{bedroomNumber,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomBed != null" >
+        #{bedroomBed,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomFaculty != null" >
+        #{bedroomFaculty,jdbcType=VARCHAR},
+      </if>
+      <if test="bedroomType != null" >
+        #{bedroomType,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomPeople != null" >
+        #{bedroomPeople,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomState != null" >
+        #{bedroomState,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomBalance != null" >
+        #{bedroomBalance,jdbcType=DOUBLE},
+      </if>
+      <if test="buildingCode != null" >
+        #{buildingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bedroomCreateTime != null" >
+        #{bedroomCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bedroomUpdateTime != null" >
+        #{bedroomUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bedroomDetail != null" >
+        #{bedroomDetail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.managesystem.pojo.BedRoom" >
+    update dormitory_bedroom
+    <set >
+      <if test="bedroomCode != null" >
+        bedroom_code = #{bedroomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bedroomTitle != null" >
+        bedroom_title = #{bedroomTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="bedroomNumber != null" >
+        bedroom_number = #{bedroomNumber,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomBed != null" >
+        bedroom_bed = #{bedroomBed,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomFaculty != null" >
+        bedroom_faculty = #{bedroomFaculty,jdbcType=VARCHAR},
+      </if>
+      <if test="bedroomType != null" >
+        bedroom_type = #{bedroomType,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomPeople != null" >
+        bedroom_people = #{bedroomPeople,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomState != null" >
+        bedroom_state = #{bedroomState,jdbcType=INTEGER},
+      </if>
+      <if test="bedroomBalance != null" >
+        bedroom_balance = #{bedroomBalance,jdbcType=DOUBLE},
+      </if>
+      <if test="buildingCode != null" >
+        building_code = #{buildingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bedroomCreateTime != null" >
+        bedroom_create_time = #{bedroomCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bedroomUpdateTime != null" >
+        bedroom_update_time = #{bedroomUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bedroomDetail != null" >
+        bedroom_detail = #{bedroomDetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bedroom_id = #{bedroomId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.managesystem.pojo.BedRoom" >
+    update dormitory_bedroom
+    set bedroom_code = #{bedroomCode,jdbcType=VARCHAR},
+      bedroom_title = #{bedroomTitle,jdbcType=VARCHAR},
+      bedroom_number = #{bedroomNumber,jdbcType=INTEGER},
+      bedroom_bed = #{bedroomBed,jdbcType=INTEGER},
+      bedroom_faculty = #{bedroomFaculty,jdbcType=VARCHAR},
+      bedroom_type = #{bedroomType,jdbcType=INTEGER},
+      bedroom_people = #{bedroomPeople,jdbcType=INTEGER},
+      bedroom_state = #{bedroomState,jdbcType=INTEGER},
+      bedroom_balance = #{bedroomBalance,jdbcType=DOUBLE},
+      building_code = #{buildingCode,jdbcType=VARCHAR},
+      bedroom_create_time = #{bedroomCreateTime,jdbcType=TIMESTAMP},
+      bedroom_update_time = #{bedroomUpdateTime,jdbcType=TIMESTAMP},
+      bedroom_detail = #{bedroomDetail,jdbcType=VARCHAR}
+    where bedroom_id = #{bedroomId,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteBuildingUnderBedRoom" parameterType="java.lang.String">
+    delete from dormitory_bedroom
+    where building_code = #{buildingCode}
+  </delete>
+    <select id="getBedRoomListUnderBuilding" parameterType="com.managesystem.pojo.BedRoom" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include>
+        from dormitory_bedroom
+        <where>
+          <if test="bedroomFaculty!=null and bedroomFaculty!=''">
+            and bedroom_faculty ="" or bedroom_faculty is null  or bedroom_faculty = #{bedroomFaculty}
+          </if>
+          <if test="1==1">
+            and building_code = #{buildingCode}
+          </if>
+          <if test="bedroomCode!=null and bedroomCode!=''">
+            and bedroom_code = #{bedroomCode}
+          </if>
+          <if test="bedroomTitle!=null and bedroomTitle!=''">
+            and bedroom_title like "%"#{bedroomTitle}"%"
+          </if>
+          <if test="bedroomState!=null and bedroomState!=''">
+            and bedroom_state = #{bedroomState}
+          </if>
+        </where>
+    </select>
+  <select id="findBedRoomByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from dormitory_bedroom
+    where bedroom_code = #{bedRoomCode}
+  </select>
+</mapper>

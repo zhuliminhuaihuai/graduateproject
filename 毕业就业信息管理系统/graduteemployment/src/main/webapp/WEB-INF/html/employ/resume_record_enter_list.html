@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>企业-查看简历投递列表</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../../../css/font_eolqem241z66flxr.css" media="all" />
+	<link rel="stylesheet" href="../../../css/news.css" media="all" />
+</head>
+<body >
+<div class="childrenBody">
+	<blockquote class="layui-elem-quote news_search layui-form">
+		<div class="demoTable">
+			<div class="layui-inline">
+				<label>简历关键字</label>&nbsp
+				<div class="layui-input-inline">
+					<input type="text" id="userName" placeholder="请输入简历关键字" class="layui-input search_input">
+				</div>
+				<label>生成时间范围</label>&nbsp
+				<div class="layui-input-inline">
+					<input type="text" name="startTime" id="startTime" lay-verify="date" placeholder="生成时间"
+						   class="layui-input">
+				</div>
+				~
+				<div class="layui-input-inline">
+					<input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="生成时间" class="layui-input">
+				</div>
+				<label>是否默认显示</label>&nbsp
+				<div class="layui-input-inline" style="width:100px;">
+					<select name="idDefault" id="idDefault" lay-verify="required" lay-search="" >
+						<option value="">请选择</option>
+						<option value="1">显示</option>
+						<option value="2">不显示</option>
+					</select>
+				</div>
+				<button class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i></button>
+<!--
+				<button class="layui-btn" onclick="x_admin_show('添加用户','/manage/user/toUserAdd',800,500)"><i class="layui-icon"></i>添加简历</button>
+-->
+
+				<!--		<a class="layui-btn search_btn">查询</a>-->
+			</div>
+		</div>
+	</blockquote>
+	<table class="layui-hide" id="work" lay-filter="test"></table>
+	<script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-xs" lay-event="resumeDetail">学生简历</a>
+		{{# if(d.hireStatus==0){}}
+		<a class="layui-btn layui-btn-xs" lay-event="yaoyue">邀约</a>
+		{{#}}}
+		{{# if(d.hireStatus==2){}}
+		<a class="layui-btn layui-btn-xs" lay-event="success">成功</a>
+		<a class="layui-btn layui-btn-xs" lay-event="fail">失败</a>
+		{{#}}}
+	</script>
+</div>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../layui/layui.js"></script>
+	<script type="text/javascript" src="../../../js/main.js"></script>
+	<script type="text/javascript" src="../../../js/index.js"></script>
+	<script type="text/javascript" src="../../../js/xadmin.js"></script>
+	<script>
+        layui.use(['table','laydate','layer'], function(){
+            $ = layui.jquery;
+            var table = layui.table,
+                laydate = layui.laydate,
+				layer = layui.layer;
+            var page=1;
+            var limit=5;
+
+            //渲染
+            table.render({
+                elem: '#work'
+                ,id : 'testReload'
+                ,url: '/manage/resume/resumeRecordList'//数据接口
+                ,cols: [[
+                    {type: 'checkbox'}
+                    , {field: 'jobName', width:'10%' , title: '投递职位',sort: true}
+                    , {field: 'createTime', width:'15%' , title: '投递时间',
+                        templet :function (row){
+                            return createTime(row.createTime);
+                        } }
+                    , {field: 'userName', width:'8%' , title: '姓名'}
+                    , {field: 'hireStatus', width:'10%' , title: '雇佣状态'}
+                    , {field: 'hireResult', width:'18%' , title: '面试意见'}
+                    , {fixed: 'right', width: '20%', align: 'center', title: '操作', toolbar: '#barDemo'}
+                ]]
+                ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                    layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                    ,curr: 1 //设定初始在第 1 页
+                    ,groups: 1 //只显示 1 个连续页码
+                    ,limit: 10
+                    ,limits: [5,10,15,20]
+                }  //true表示分页
+                ,done: function(res, curr, count){
+                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    console.log(res);
+                    //得到当前页码
+                    console.log(curr);
+                    //得到数据总量
+                    console.log(count);
+                    $("[data-field='hireStatus']").children().each(function(){
+                        if($(this).text()==0){
+                            $(this).text("待企业查看")
+                        }else if($(this).text()==1){
+                            $(this).text("已邀约面试")
+
+                        }else if($(this).text()==2){
+                            $(this).text("已接受面试，面试中")
+
+                        }else if($(this).text()==3){
+                            $(this).text("面试成功")
+                        }else if($(this).text()==4){
+                            $(this).text("面试失败")
+                        }else if($(this).text()==5){
+                            $(this).text("已同意加入企业")
+                        }else if($(this).text()==6){
+                            $(this).text("拒绝加入企业")
+                        }
+                    })
+
+                }
+
+            })
+            //表格数据操作-查看详情和删除
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                if(obj.event === 'resumeDetail'){
+                    //layer.msg('查看操作');
+                    localStorage.setItem("id",data.resumeId);
+                    localStorage.setItem("userCode",data.userCode);
+                    localStorage.setItem("resumeCode",data.resumeCode);
+                    window.location.href="/manage/resume/resume_enter_detail"
+                }else if(obj.event === 'yaoyue'){
+                    layer.confirm('确定邀约面试吗', function(index){
+                        $.ajax({
+                            type: 'post',
+                            url: '/manage/resume/editStatus',
+                            data:{
+                                id:data.id,
+								hireStatus:1
+                            },
+                            dataType: 'json',
+                            success : function (data) {
+                                if(data.status==0){
+                                    window.location.reload();
+								}
+                            },
+                            error : function () {
+                                layer.msg('删除失败');
+                            }
+                        });
+                    });
+                }else if(obj.event === 'success'){
+                    layer.confirm('确定面试成功吗', function(index){
+                        localStorage.setItem("id",data.id);
+                        localStorage.setItem("hireStatus","3");
+                    x_admin_show('回馈面试意见信息','/manage/resume/resume_return_result',800,300);
+
+                    });
+                }else if(obj.event === 'fail'){
+                    layer.confirm('确定面试失败吗', function(index){
+                        localStorage.setItem("id",data.id);
+                        localStorage.setItem("hireStatus","4");
+                        x_admin_show('回馈面试意见信息','/manage/resume/resume_return_result',800,300);
+                    });
+                }
+            });
+            var $ = layui.jquery, active = {
+                reload: function(){
+                    var userName = $("#userName").val();
+                    var endTime = $("#endTime").val();
+                    var startTime = $("#startTime").val();
+                    var idDefault = $("#idDefault option:selected").val();
+                    table.reload('testReload', {
+                        method:'post',
+                        where:{startTime:startTime,endTime:endTime,userName:userName,role:role,idDefault:idDefault}
+                    });
+                }
+            };
+            laydate.render({
+                elem: '#startTime'
+                ,type: 'datetime'
+            });
+            laydate.render({
+                elem: '#endTime'
+                ,type: 'datetime'
+            });
+            $('.demoTable .layui-btn').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+            $('i').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+            $('.layui-btn').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+        });
+
+        //数字时间转DATE时间类型
+        function createTime(v){
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth()+1;
+            m = m<10?'0'+m:m;
+            var d = date.getDate();
+            d = d<10?("0"+d):d;
+            var h = date.getHours();
+            h = h<10?("0"+h):h;
+            var M = date.getMinutes();
+            M = M<10?("0"+M):M;
+            var S = date.getSeconds();
+            S = S<10?("0"+S):S;
+            var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+            return str;
+        }
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<base href="<%=basePath%>">
+	<meta charset="UTF-8">
+	<title>添加会员</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"
+		  content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="../../../layui/css/layui.css">
+	<link rel="stylesheet" href="../../../css/news.css">
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="../../../layui/layui.js" charset="utf-8"></script>
+	<script src="../../../js/xcity.js" charset="utf-8"></script>
+</head>
+<body>
+<div class="childrenBody">
+	<div class="layui-form">
+		<div class="layui-form-item">
+			<label for="jobName" class="layui-form-label"> <span
+					class="x-red">*</span>职位名称
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" id="jobName" name="jobName" required=""
+					   lay-verify="jobName" autocomplete="off"
+					   class="layui-input" placeholder="请输入职位名称"><!--onblur="regist()"-->
+			</div>
+			<label for="jobPlace" class="layui-form-label"> <span
+					class="x-red">*</span>工作地点
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" id="jobPlace" name="jobPlace" required=""
+					   lay-verify="jobPlace" autocomplete="off"
+					   class="layui-input" placeholder="请输入工作地点"><!--onblur="regist()"-->
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> <span
+					class="x-red">*</span>职位类型
+			</label>
+			<div class="layui-input-inline" id="other">
+				<select name="jobType" id="jobType" lay-verify="jobType" lay-search="" lay-filter="job">
+					<option value="-1">请选择职位类型</option>
+					<option value="工程技术">工程技术</option>
+					<option value="农业技术">农业技术</option>
+					<option value="卫生医疗技术">卫生医疗技术</option>
+					<option value="经济专业">经济专业</option>
+					<option value="文学艺术">文学艺术</option>
+					<option value="新闻">新闻</option>
+					<option value="其他">其他</option>
+				</select>
+			</div>
+			<label for="jobPlace" class="layui-form-label" id="label" style="display: none">
+				<span class="x-red">*</span>其他类型
+			</label>
+			<div class="layui-input-inline" id="label1" style="display: none">
+				<input type="text" value="" name="otherJobType" id="otherJobType" required="" lay-verify="otherJobType" autocomplete="off" class="layui-input" placeholder="请输入其他工作类型">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span
+					class="x-red">*</span> 职位薪资
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="jobSalary" id="jobSalary"
+					   required="" lay-verify="jobSalary" autocomplete="off"
+					   class="layui-input" placeholder="请输入职位薪资">
+			</div>
+			<label class="layui-form-label"> <span
+					class="x-red">*</span>招聘人数
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="jobNum" id="jobNum"
+					   required="" lay-verify="jobNum" autocomplete="off"
+					   class="layui-input" placeholder="">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> 职位是否开启 </label>
+			<div class="layui-input-block" style="">
+				<input type="radio" name="isOn" value="1" title="开启" checked="">
+				<input type="radio" name="isOn" value="2" title="关闭">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span
+					class="x-red">*</span>福利待遇</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" id="jobWelfare" name="jobWelfare"
+					   required="jobWelfare" autocomplete="off"   lay-verify="jobWelfare"
+					   class="layui-input" style="width: 500px" placeholder="请输入福利待遇">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span
+					class="x-red">*</span>职位技能要求</label>
+			<div class="layui-input-block">
+				<textarea placeholder="请输入技能要求" lay-verify="jobSkill" name="jobSkill" id="jobSkill" class="layui-textarea linksDesc"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<textarea placeholder="请输入备注" name="remark" id="remark" class="layui-textarea linksDesc"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item" id="btn">
+			<label class="layui-form-label"> </label>
+			<button class="layui-btn" lay-filter="add" lay-submit="">
+				确定
+			</button>
+		</div>
+
+	</div>
+
+</div>
+<script>
+    var role ='${session_manage_token.getRole()}';
+	if(role!=2){
+	    $("#btn").hide()
+	}
+    var id = localStorage.getItem("id");
+		localStorage.removeItem(id);
+        $.ajax({
+            type: 'post',
+            url: '/manage/job/getJob',
+            data: {
+               id:id
+            },
+            dataType: 'json',
+            async:false,
+            success: function (data) {
+                if (data.status==0) {
+                     $("#jobName").val(data.data.jobName);
+                    $("#jobPlace").val(data.data.jobPlace);
+                    $("#jobType").val(data.data.jobType);
+                    console.log("data.data.jobType"+data.data.jobType)
+                    var s = $("#jobType option:selected").val();
+					if(s==undefined){
+                        $("#jobType").val("其他");
+                        $("#label").show();
+                        $("#label1").show();
+                        $("#otherJobType").val(data.data.jobType);
+					}
+
+                     $("#jobSalary").val(data.data.jobSalary);
+                     $("#jobNum").val(data.data.jobNum);
+                     $("#jobSkill").val(data.data.jobSkill);
+                     $("#remark").val(data.data.remark);
+                    $("#jobWelfare").val(data.data.jobWelfare);
+                    $("input[type=radio][value='"+data.data.isOn+"']").attr('checked',true);
+
+                }
+            },
+            error: function () {
+                layer.msg('请求失败，检查后台接口');
+            }
+        })
+
+
+
+
+        layui.use([ 'form', 'layer','laydate','code'], function() {
+            $ = layui.jquery;
+            var form = layui.form
+                ,layer = layui.layer
+                ,laydate = layui.laydate;
+
+            laydate.render({
+                elem: '#birthday'
+            });
+            var s = $("#jobType option:selected").val();
+            form.verify({
+                jobName : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '职位名称不能为空';
+                    }
+                },
+                jobPlace : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '职位工作地点不能为空';
+                    }
+                },
+                jobSalary : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '职位薪资不能为空';
+                    }
+                },
+                jobNum : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '职位招聘人数不能为空';
+                    }
+                },
+                otherJobType : function(value) {
+                    if(s=="其他"){
+                        if (value.length ==null ||value.length =="") {
+                            return '其他工作中类型不能为空';
+                        }
+                    }
+                },
+                jobWelfare : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '福利待遇不能为空';
+                    }
+                },
+
+                jobSkill : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '技能要求不能为空';
+                    }
+                },
+                jobType : function(value) {
+                    if (value=="-1" ) {
+                        return '请选择职位类型';
+                    }
+                },
+
+
+
+            });
+            form.on('select(job)', function(data) {
+                if(data.value=='其他'){
+                    $("#label").show();
+                    $("#label1").show();
+                }else {
+
+                    $("#label").hide();
+                    $("#label1").hide();
+                }
+            })
+
+            form.on('submit(add)', function(data) {
+                var jobName= $("#jobName").val();
+                var jobPlace= $("#jobPlace").val();
+                var jobType="";
+                var s = $("#jobType option:selected").val();
+                if(s=="其他"){
+                    jobType = $("#otherJobType").val();
+				}else {
+                    jobType = $("#jobType option:selected").val();
+				}
+                var jobSalary= $("#jobSalary").val();
+                var jobNum= $("#jobNum").val();
+                var jobSkill= $("#jobSkill").val();
+                var remark= $("#remark").val();
+                var jobWelfare= $("#jobWelfare").val();
+                var isOn=$('input:radio:checked').val();
+                $.ajax({
+                    type: 'post',
+                    url: '/manage/job/editJob',
+                    data: {
+						id:id,
+                        jobName:jobName,
+                        jobPlace:jobPlace,
+                        jobType:jobType,
+                        jobSalary:jobSalary,
+                        jobNum:jobNum,
+                        jobSkill:jobSkill,
+                        remark:remark,
+                        jobWelfare:jobWelfare,
+                        isOn:isOn,
+					},
+                    dataType: 'json',
+                    async:false,
+                    success: function (data) {
+                        console.log(data.msg);
+                        if (data.status==0) {
+                            layer.msg("修改成功！", {
+                                icon: 6, time: 1000, end: function () {
+                                    parent.location.reload();
+                                }
+                            });
+                        }
+                    },
+                    error: function () {
+                        layer.msg('请求失败，检查后台接口');
+                    }
+                })
+
+            })
+        });
+</script>
+</body>
+</html>

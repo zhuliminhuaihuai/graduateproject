@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>绘画首页</title>
+  <link rel="shortcut icon" href="../../images/logo.png" type="image/x-icon" />
+  <link rel="stylesheet" type="text/css" href="../../layui/css/layui.css">
+  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="stylesheet" type="text/css" href="../../css/login.css" />
+<!--加载meta IE兼容文件-->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+</head>
+<body>
+  <div class="header">
+    <div class="menu-btn">
+      <div class="menu"></div>
+    </div>
+    <h1 class="logo">
+      <a href="/manage/user/toFirst">
+        <span>MYBLOG</span>
+        <img src="../../images/logo.png" style="margin-bottom: 20px;">
+      </a>
+    </h1>
+
+    <p class="welcome-text">
+      <a href="#" onclick="returnFirst()" >
+        <span class="name" style="color: orange" >返回→</span>
+      </a>
+    </p>
+
+    </p>
+  </div>
+
+  <div class="about-content">
+    <div class="w1000">
+      <div class="item info">
+        <div class="title">
+          <h3 i>绘画官网-机构LOGO</h3>
+        </div>
+        <div class="cont">
+          <img id="demo2">
+          <div class="per-info">
+            <p>
+              机构名称：<span class="name" id="branchName"></span><br />
+              成立时间：<span class="age" id="branchCreateTime"></span><br />
+              <span class="Career">汇集各家高级画家作品</span><br />
+              宗旨：<span class="interest" id="branchService"></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="item tool">
+        <div class="title">
+          <h3>机构荣誉</h3>
+        </div>
+        <p id="branchHonor"></p>
+      </div>
+      <div class="item tool">
+        <div class="title">
+          <h3>机构介绍</h3>
+        </div>
+        <p id="branchIntroduce"></p>
+      </div>
+      <div class="item contact">
+        <div class="title">
+          <h3>联系方式</h3>
+        </div>
+        <div class="cont">
+          <img src="../../images/erweima.jpg">
+          <div class="text">
+            <p class="WeChat">地址：<span id="address">1234567890</span></p>
+            <p class="WeChat">微信：<span id="branchPhone">1234567890</span></p>
+            <p class="qq">qq：<span id="branchTel">123456789</span></p>
+            <p class="iphone">电话：<span id="branchEmail">123456789</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+  <div class="footer-wrap">
+    <div class="footer w1000">
+      <div class="qrcode">
+        <img src="../../images/erweima.jpg">
+      </div>
+      <div class="practice-mode">
+        <img src="../../images/down_img.jpg">
+        <div class="text">
+          <h4 class="title">联系方式</h4>
+          <p>手机<span class="WeChat" >1234567890</span></p>
+          <p>座机<span class="iphone" >1234567890</span></p>
+          <p>邮箱<span class="email" >1234567890</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="../../layui/layui.js"></script>
+  <script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="../../js/formate.js"></script>
+  <script type="text/javascript">
+    layui.config({
+      base: '../res/js/util/'
+    }).use(['element','laypage','form','layer','menu'],function(){
+      element = layui.element,laypage = layui.laypage,form = layui.form,layer = layui.layer,menu = layui.menu;
+      menu.init();
+    })
+    layui.use('layer','form', function(){ //独立版的layer无需执行这一句
+        var $ = layui.jquery, layer = layui.layer,form = layui.form; //独立版的layer无需执行这一句
+
+        form.on('submit(login)', function(data) {//
+            $(document).ready(function () {
+                $(".idv").click()
+            })
+
+        })
+
+        $('#layerDemo .layui-btn').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+    });
+    var branchId = localStorage.getItem("branchId");
+    var id = localStorage.getItem("id");
+    //请求机构详情
+    $.ajax({
+        url:'/manage/branch/getBranchInfo',
+        type:'post',
+        data:{
+            id:branchId,
+        },
+        dataType:'json',
+        success:function (data) {
+            if(data.status==0){
+                $("#branchName").html(data.data.branchName);
+                $("#branchCreateTime").html(editTime1(data.data.branchCreateTime));
+                $("#branchPhone").html(data.data.branchPhone);
+                $("#branchTel").html(data.data.branchTel);
+                $("#branchImg").html(data.data.branchImg);
+                $("#branchEmail").html(data.data.branchEmail);
+                $("#province").html(data.data.province);
+                $("#city").html(data.data.city);
+                $("#area").html(data.data.area);
+                $("#address").html(data.data.province+data.data.city+data.data.area+data.data.address);
+                $("#branchService").html(data.data.branchService);
+                $("#branchHonor").html(data.data.branchHonor);
+                $("#branchIntroduce").html(data.data.branchIntroduce);
+
+                $("#demo2").attr("src","http://127.0.0.1:8080/upload/"+data.data.branchImg);
+            }
+        }
+
+    });
+    function returnFirst() {
+        localStorage.setItem("id",id);
+        window.location.href = "/manage/user/toDetails"
+    }
+  </script>
+</body>
+</html>

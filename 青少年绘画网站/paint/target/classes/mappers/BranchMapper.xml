@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.BranchMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Branch" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="branch_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="branch_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="branch_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="branch_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_tel" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="province" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="city" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="area" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_honor" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_service" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.project.pojo.Branch" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="branch_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="branch_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="branch_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="branch_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_tel" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="province" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="city" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="area" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_honor" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_service" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="branch_introduce" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, branch_code, branch_name, user_id, branch_user, create_time, branch_create_time,
+    branch_phone, branch_tel, branch_email, branch_img, province, city, area, address,
+    branch_honor, branch_service
+  </sql>
+  <sql id="Blob_Column_List" >
+    branch_introduce
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from paint_branch
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from paint_branch
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Branch" >
+    insert into paint_branch (id, branch_code, branch_name,
+      user_id, branch_user, create_time,
+      branch_create_time, branch_phone, branch_tel,
+      branch_email, branch_img, province,
+      city, area, address,
+      branch_honor, branch_service, branch_introduce
+      )
+    values (#{id,jdbcType=INTEGER}, #{branchCode,jdbcType=VARCHAR}, #{branchName,jdbcType=VARCHAR},
+      #{userId,jdbcType=INTEGER}, #{branchUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{branchCreateTime,jdbcType=TIMESTAMP}, #{branchPhone,jdbcType=VARCHAR}, #{branchTel,jdbcType=VARCHAR},
+      #{branchEmail,jdbcType=VARCHAR}, #{branchImg,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
+      #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+      #{branchHonor,jdbcType=VARCHAR}, #{branchService,jdbcType=VARCHAR}, #{branchIntroduce,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Branch" >
+    insert into paint_branch
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="branchCode != null" >
+        branch_code,
+      </if>
+      <if test="branchName != null" >
+        branch_name,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="branchUser != null" >
+        branch_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="branchCreateTime != null" >
+        branch_create_time,
+      </if>
+      <if test="branchPhone != null" >
+        branch_phone,
+      </if>
+      <if test="branchTel != null" >
+        branch_tel,
+      </if>
+      <if test="branchEmail != null" >
+        branch_email,
+      </if>
+      <if test="branchImg != null" >
+        branch_img,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="branchHonor != null" >
+        branch_honor,
+      </if>
+      <if test="branchService != null" >
+        branch_service,
+      </if>
+      <if test="branchIntroduce != null" >
+        branch_introduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="branchCode != null" >
+        #{branchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="branchName != null" >
+        #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="branchUser != null" >
+        #{branchUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="branchCreateTime != null" >
+        #{branchCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="branchPhone != null" >
+        #{branchPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="branchTel != null" >
+        #{branchTel,jdbcType=VARCHAR},
+      </if>
+      <if test="branchEmail != null" >
+        #{branchEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="branchImg != null" >
+        #{branchImg,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="branchHonor != null" >
+        #{branchHonor,jdbcType=VARCHAR},
+      </if>
+      <if test="branchService != null" >
+        #{branchService,jdbcType=VARCHAR},
+      </if>
+      <if test="branchIntroduce != null" >
+        #{branchIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Branch" >
+    update paint_branch
+    <set >
+      <if test="branchCode != null" >
+        branch_code = #{branchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="branchName != null" >
+        branch_name = #{branchName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="branchUser != null" >
+        branch_user = #{branchUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="branchCreateTime != null" >
+        branch_create_time = #{branchCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="branchPhone != null" >
+        branch_phone = #{branchPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="branchTel != null" >
+        branch_tel = #{branchTel,jdbcType=VARCHAR},
+      </if>
+      <if test="branchEmail != null" >
+        branch_email = #{branchEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="branchImg != null" >
+        branch_img = #{branchImg,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="branchHonor != null" >
+        branch_honor = #{branchHonor,jdbcType=VARCHAR},
+      </if>
+      <if test="branchService != null" >
+        branch_service = #{branchService,jdbcType=VARCHAR},
+      </if>
+      <if test="branchIntroduce != null" >
+        branch_introduce = #{branchIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.project.pojo.Branch" >
+    update paint_branch
+    set branch_code = #{branchCode,jdbcType=VARCHAR},
+      branch_name = #{branchName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      branch_user = #{branchUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      branch_create_time = #{branchCreateTime,jdbcType=TIMESTAMP},
+      branch_phone = #{branchPhone,jdbcType=VARCHAR},
+      branch_tel = #{branchTel,jdbcType=VARCHAR},
+      branch_email = #{branchEmail,jdbcType=VARCHAR},
+      branch_img = #{branchImg,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      branch_honor = #{branchHonor,jdbcType=VARCHAR},
+      branch_service = #{branchService,jdbcType=VARCHAR},
+      branch_introduce = #{branchIntroduce,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Branch" >
+    update paint_branch
+    set branch_code = #{branchCode,jdbcType=VARCHAR},
+      branch_name = #{branchName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      branch_user = #{branchUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      branch_create_time = #{branchCreateTime,jdbcType=TIMESTAMP},
+      branch_phone = #{branchPhone,jdbcType=VARCHAR},
+      branch_tel = #{branchTel,jdbcType=VARCHAR},
+      branch_email = #{branchEmail,jdbcType=VARCHAR},
+      branch_img = #{branchImg,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      branch_honor = #{branchHonor,jdbcType=VARCHAR},
+      branch_service = #{branchService,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="branchList" resultMap="ResultMapWithBLOBs" parameterType="com.project.vo.CommonVo" >
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from paint_branch
+    <where>
+      <if test="userName!=null and userName!=''">
+        and (branch_name like "%"#{userName}"%" )
+      </if>
+    </where>
+    order by id desc
+  </select>
+  <select id="checkBranchName" resultType="int" parameterType="java.lang.String" >
+    SELECT count(1) from paint_branch
+    where branch_name=#{branchName}
+  </select>
+  <select id="checkbranchNameExSelf"  resultType="int"  parameterType="map" >
+    SELECT count(1) from paint_branch
+    where branch_name=#{branchName} and id!=#{id}
+  </select>
+  <select id="selectIdByCode" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from paint_branch
+    where branch_code=#{userCode}
+  </select>
+</mapper>

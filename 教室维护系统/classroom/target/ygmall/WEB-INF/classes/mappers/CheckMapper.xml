@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.dao.CheckMapper" >
+  <resultMap id="BaseResultMap" type="com.project.pojo.Check" >
+    <constructor >
+      <idArg column="check_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="check_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="check_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="check_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="check_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="check_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_is_damage_window" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_damage_window_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_is_damage_chair" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_damage_chair_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_is_need_chalk" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_need_chalk_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_is_damage_platform" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_damage_platform_reason" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_is_damage_blackboard" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_damage_blackboard_reason" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_is_damage_media" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_damage_media_reason" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_is_damage_microphone" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_damage_microphone_reason" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_is_damage_door" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_damage_door_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_damage_door_reason" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_is_damage_sound" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_damage_sound_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_damage_sound_reason" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_is_damage_curtains" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_damage_curtains_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_damage_curtains_reason" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    check_id, check_code, check_create_time, check_update_time, check_time, check_state, 
+    room_id, room_code, room_is_damage_window, room_damage_window_number, room_is_damage_chair, 
+    room_damage_chair_number, room_is_need_chalk, room_need_chalk_number, room_is_damage_platform, 
+    room_damage_platform_reason, room_is_damage_blackboard, room_damage_blackboard_reason, 
+    room_is_damage_media, room_damage_media_reason, room_is_damage_microphone, room_damage_microphone_reason, 
+    room_is_damage_door, room_damage_door_number, room_damage_door_reason, room_is_damage_sound, 
+    room_damage_sound_number, room_damage_sound_reason, room_is_damage_curtains, room_damage_curtains_number, 
+    room_damage_curtains_reason
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from classroom_check
+    where check_id = #{checkId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from classroom_check
+    where check_id = #{checkId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.project.pojo.Check" >
+    insert into classroom_check (check_id, check_code, check_create_time, 
+      check_update_time, check_time, check_state, 
+      room_id, room_code, room_is_damage_window, 
+      room_damage_window_number, room_is_damage_chair, 
+      room_damage_chair_number, room_is_need_chalk, 
+      room_need_chalk_number, room_is_damage_platform, 
+      room_damage_platform_reason, room_is_damage_blackboard, 
+      room_damage_blackboard_reason, room_is_damage_media, 
+      room_damage_media_reason, room_is_damage_microphone, 
+      room_damage_microphone_reason, room_is_damage_door, 
+      room_damage_door_number, room_damage_door_reason, 
+      room_is_damage_sound, room_damage_sound_number, 
+      room_damage_sound_reason, room_is_damage_curtains, 
+      room_damage_curtains_number, room_damage_curtains_reason
+      )
+    values (#{checkId,jdbcType=INTEGER}, #{checkCode,jdbcType=VARCHAR}, #{checkCreateTime,jdbcType=TIMESTAMP}, 
+      #{checkUpdateTime,jdbcType=TIMESTAMP}, #{checkTime,jdbcType=TIMESTAMP}, #{checkState,jdbcType=INTEGER}, 
+      #{roomId,jdbcType=INTEGER}, #{roomCode,jdbcType=VARCHAR}, #{roomIsDamageWindow,jdbcType=INTEGER}, 
+      #{roomDamageWindowNumber,jdbcType=INTEGER}, #{roomIsDamageChair,jdbcType=INTEGER}, 
+      #{roomDamageChairNumber,jdbcType=INTEGER}, #{roomIsNeedChalk,jdbcType=INTEGER}, 
+      #{roomNeedChalkNumber,jdbcType=INTEGER}, #{roomIsDamagePlatform,jdbcType=INTEGER}, 
+      #{roomDamagePlatformReason,jdbcType=VARCHAR}, #{roomIsDamageBlackboard,jdbcType=INTEGER}, 
+      #{roomDamageBlackboardReason,jdbcType=VARCHAR}, #{roomIsDamageMedia,jdbcType=INTEGER}, 
+      #{roomDamageMediaReason,jdbcType=VARCHAR}, #{roomIsDamageMicrophone,jdbcType=INTEGER}, 
+      #{roomDamageMicrophoneReason,jdbcType=VARCHAR}, #{roomIsDamageDoor,jdbcType=INTEGER}, 
+      #{roomDamageDoorNumber,jdbcType=INTEGER}, #{roomDamageDoorReason,jdbcType=VARCHAR}, 
+      #{roomIsDamageSound,jdbcType=INTEGER}, #{roomDamageSoundNumber,jdbcType=INTEGER}, 
+      #{roomDamageSoundReason,jdbcType=VARCHAR}, #{roomIsDamageCurtains,jdbcType=INTEGER}, 
+      #{roomDamageCurtainsNumber,jdbcType=INTEGER}, #{roomDamageCurtainsReason,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.pojo.Check" >
+    insert into classroom_check
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="checkId != null" >
+        check_id,
+      </if>
+      <if test="checkCode != null" >
+        check_code,
+      </if>
+      <if test="checkCreateTime != null" >
+        check_create_time,
+      </if>
+      <if test="checkUpdateTime != null" >
+        check_update_time,
+      </if>
+      <if test="checkTime != null" >
+        check_time,
+      </if>
+      <if test="checkState != null" >
+        check_state,
+      </if>
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="roomIsDamageWindow != null" >
+        room_is_damage_window,
+      </if>
+      <if test="roomDamageWindowNumber != null" >
+        room_damage_window_number,
+      </if>
+      <if test="roomIsDamageChair != null" >
+        room_is_damage_chair,
+      </if>
+      <if test="roomDamageChairNumber != null" >
+        room_damage_chair_number,
+      </if>
+      <if test="roomIsNeedChalk != null" >
+        room_is_need_chalk,
+      </if>
+      <if test="roomNeedChalkNumber != null" >
+        room_need_chalk_number,
+      </if>
+      <if test="roomIsDamagePlatform != null" >
+        room_is_damage_platform,
+      </if>
+      <if test="roomDamagePlatformReason != null" >
+        room_damage_platform_reason,
+      </if>
+      <if test="roomIsDamageBlackboard != null" >
+        room_is_damage_blackboard,
+      </if>
+      <if test="roomDamageBlackboardReason != null" >
+        room_damage_blackboard_reason,
+      </if>
+      <if test="roomIsDamageMedia != null" >
+        room_is_damage_media,
+      </if>
+      <if test="roomDamageMediaReason != null" >
+        room_damage_media_reason,
+      </if>
+      <if test="roomIsDamageMicrophone != null" >
+        room_is_damage_microphone,
+      </if>
+      <if test="roomDamageMicrophoneReason != null" >
+        room_damage_microphone_reason,
+      </if>
+      <if test="roomIsDamageDoor != null" >
+        room_is_damage_door,
+      </if>
+      <if test="roomDamageDoorNumber != null" >
+        room_damage_door_number,
+      </if>
+      <if test="roomDamageDoorReason != null" >
+        room_damage_door_reason,
+      </if>
+      <if test="roomIsDamageSound != null" >
+        room_is_damage_sound,
+      </if>
+      <if test="roomDamageSoundNumber != null" >
+        room_damage_sound_number,
+      </if>
+      <if test="roomDamageSoundReason != null" >
+        room_damage_sound_reason,
+      </if>
+      <if test="roomIsDamageCurtains != null" >
+        room_is_damage_curtains,
+      </if>
+      <if test="roomDamageCurtainsNumber != null" >
+        room_damage_curtains_number,
+      </if>
+      <if test="roomDamageCurtainsReason != null" >
+        room_damage_curtains_reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="checkId != null" >
+        #{checkId,jdbcType=INTEGER},
+      </if>
+      <if test="checkCode != null" >
+        #{checkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCreateTime != null" >
+        #{checkCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkUpdateTime != null" >
+        #{checkUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkState != null" >
+        #{checkState,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null" >
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageWindow != null" >
+        #{roomIsDamageWindow,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageWindowNumber != null" >
+        #{roomDamageWindowNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomIsDamageChair != null" >
+        #{roomIsDamageChair,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageChairNumber != null" >
+        #{roomDamageChairNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomIsNeedChalk != null" >
+        #{roomIsNeedChalk,jdbcType=INTEGER},
+      </if>
+      <if test="roomNeedChalkNumber != null" >
+        #{roomNeedChalkNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomIsDamagePlatform != null" >
+        #{roomIsDamagePlatform,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamagePlatformReason != null" >
+        #{roomDamagePlatformReason,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageBlackboard != null" >
+        #{roomIsDamageBlackboard,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageBlackboardReason != null" >
+        #{roomDamageBlackboardReason,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageMedia != null" >
+        #{roomIsDamageMedia,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageMediaReason != null" >
+        #{roomDamageMediaReason,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageMicrophone != null" >
+        #{roomIsDamageMicrophone,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageMicrophoneReason != null" >
+        #{roomDamageMicrophoneReason,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageDoor != null" >
+        #{roomIsDamageDoor,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageDoorNumber != null" >
+        #{roomDamageDoorNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageDoorReason != null" >
+        #{roomDamageDoorReason,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageSound != null" >
+        #{roomIsDamageSound,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageSoundNumber != null" >
+        #{roomDamageSoundNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageSoundReason != null" >
+        #{roomDamageSoundReason,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageCurtains != null" >
+        #{roomIsDamageCurtains,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageCurtainsNumber != null" >
+        #{roomDamageCurtainsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageCurtainsReason != null" >
+        #{roomDamageCurtainsReason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.pojo.Check" >
+    update classroom_check
+    <set >
+      <if test="checkCode != null" >
+        check_code = #{checkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCreateTime != null" >
+        check_create_time = #{checkCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkUpdateTime != null" >
+        check_update_time = #{checkUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkTime != null" >
+        check_time = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkState != null" >
+        check_state = #{checkState,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null" >
+        room_id = #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageWindow != null" >
+        room_is_damage_window = #{roomIsDamageWindow,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageWindowNumber != null" >
+        room_damage_window_number = #{roomDamageWindowNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomIsDamageChair != null" >
+        room_is_damage_chair = #{roomIsDamageChair,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageChairNumber != null" >
+        room_damage_chair_number = #{roomDamageChairNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomIsNeedChalk != null" >
+        room_is_need_chalk = #{roomIsNeedChalk,jdbcType=INTEGER},
+      </if>
+      <if test="roomNeedChalkNumber != null" >
+        room_need_chalk_number = #{roomNeedChalkNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomIsDamagePlatform != null" >
+        room_is_damage_platform = #{roomIsDamagePlatform,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamagePlatformReason != null" >
+        room_damage_platform_reason = #{roomDamagePlatformReason,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageBlackboard != null" >
+        room_is_damage_blackboard = #{roomIsDamageBlackboard,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageBlackboardReason != null" >
+        room_damage_blackboard_reason = #{roomDamageBlackboardReason,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageMedia != null" >
+        room_is_damage_media = #{roomIsDamageMedia,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageMediaReason != null" >
+        room_damage_media_reason = #{roomDamageMediaReason,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageMicrophone != null" >
+        room_is_damage_microphone = #{roomIsDamageMicrophone,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageMicrophoneReason != null" >
+        room_damage_microphone_reason = #{roomDamageMicrophoneReason,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageDoor != null" >
+        room_is_damage_door = #{roomIsDamageDoor,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageDoorNumber != null" >
+        room_damage_door_number = #{roomDamageDoorNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageDoorReason != null" >
+        room_damage_door_reason = #{roomDamageDoorReason,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageSound != null" >
+        room_is_damage_sound = #{roomIsDamageSound,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageSoundNumber != null" >
+        room_damage_sound_number = #{roomDamageSoundNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageSoundReason != null" >
+        room_damage_sound_reason = #{roomDamageSoundReason,jdbcType=VARCHAR},
+      </if>
+      <if test="roomIsDamageCurtains != null" >
+        room_is_damage_curtains = #{roomIsDamageCurtains,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageCurtainsNumber != null" >
+        room_damage_curtains_number = #{roomDamageCurtainsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomDamageCurtainsReason != null" >
+        room_damage_curtains_reason = #{roomDamageCurtainsReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where check_id = #{checkId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.pojo.Check" >
+    update classroom_check
+    set check_code = #{checkCode,jdbcType=VARCHAR},
+      check_create_time = #{checkCreateTime,jdbcType=TIMESTAMP},
+      check_update_time = #{checkUpdateTime,jdbcType=TIMESTAMP},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      check_state = #{checkState,jdbcType=INTEGER},
+      room_id = #{roomId,jdbcType=INTEGER},
+      room_code = #{roomCode,jdbcType=VARCHAR},
+      room_is_damage_window = #{roomIsDamageWindow,jdbcType=INTEGER},
+      room_damage_window_number = #{roomDamageWindowNumber,jdbcType=INTEGER},
+      room_is_damage_chair = #{roomIsDamageChair,jdbcType=INTEGER},
+      room_damage_chair_number = #{roomDamageChairNumber,jdbcType=INTEGER},
+      room_is_need_chalk = #{roomIsNeedChalk,jdbcType=INTEGER},
+      room_need_chalk_number = #{roomNeedChalkNumber,jdbcType=INTEGER},
+      room_is_damage_platform = #{roomIsDamagePlatform,jdbcType=INTEGER},
+      room_damage_platform_reason = #{roomDamagePlatformReason,jdbcType=VARCHAR},
+      room_is_damage_blackboard = #{roomIsDamageBlackboard,jdbcType=INTEGER},
+      room_damage_blackboard_reason = #{roomDamageBlackboardReason,jdbcType=VARCHAR},
+      room_is_damage_media = #{roomIsDamageMedia,jdbcType=INTEGER},
+      room_damage_media_reason = #{roomDamageMediaReason,jdbcType=VARCHAR},
+      room_is_damage_microphone = #{roomIsDamageMicrophone,jdbcType=INTEGER},
+      room_damage_microphone_reason = #{roomDamageMicrophoneReason,jdbcType=VARCHAR},
+      room_is_damage_door = #{roomIsDamageDoor,jdbcType=INTEGER},
+      room_damage_door_number = #{roomDamageDoorNumber,jdbcType=INTEGER},
+      room_damage_door_reason = #{roomDamageDoorReason,jdbcType=VARCHAR},
+      room_is_damage_sound = #{roomIsDamageSound,jdbcType=INTEGER},
+      room_damage_sound_number = #{roomDamageSoundNumber,jdbcType=INTEGER},
+      room_damage_sound_reason = #{roomDamageSoundReason,jdbcType=VARCHAR},
+      room_is_damage_curtains = #{roomIsDamageCurtains,jdbcType=INTEGER},
+      room_damage_curtains_number = #{roomDamageCurtainsNumber,jdbcType=INTEGER},
+      room_damage_curtains_reason = #{roomDamageCurtainsReason,jdbcType=VARCHAR}
+    where check_id = #{checkId,jdbcType=INTEGER}
+  </update>
+  <select id="getCheckList" resultMap="BaseResultMap" parameterType="com.project.vo.CheckQueryVo">
+    select <include refid="Base_Column_List"></include>
+    from classroom_check
+    <where>
+      <if test="checkCode!=null and checkCode!=''">
+        and check_code = #{checkCode}
+      </if>
+      <if test="checkState!=null and checkState!=''">
+        and check_state = #{checkState}
+      </if>
+      <if test="roomCode!=null and roomCode!=''">
+        and room_code = #{roomCode}
+      </if>
+      <if test="roomIsDamageWindow!=null and roomIsDamageWindow!=''">
+        and room_is_damage_window = #{roomIsDamageWindow}
+      </if>
+      <if test="roomIsDamageChair!=null and roomIsDamageChair!=''">
+        and room_is_damage_chair = #{roomIsDamageChair}
+      </if>
+      <if test="roomIsNeedChalk!=null and roomIsNeedChalk!=''">
+        and room_is_need_chalk = #{roomIsNeedChalk}
+      </if>
+      <if test="roomIsDamagePlatform!=null and roomIsDamagePlatform!=''">
+        and room_is_damage_platform = #{roomIsDamagePlatform}
+      </if>
+      <if test="roomIsDamageBlackboard!=null and roomIsDamageBlackboard!=''">
+        and room_is_damage_blackboard = #{roomIsDamageBlackboard}
+      </if>
+      <if test="roomIsDamageMedia!=null and roomIsDamageMedia!=''">
+        and room_is_damage_media = #{roomIsDamageMedia}
+      </if>
+      <if test="roomIsDamageMicrophone!=null and roomIsDamageMicrophone!=''">
+        and room_is_damage_microphone = #{roomIsDamageMicrophone}
+      </if>
+      <if test="roomIsDamageDoor!=null and roomIsDamageDoor!=''">
+        and room_is_damage_door = #{roomIsDamageDoor}
+      </if>
+      <if test="roomIsDamageSound!=null and roomIsDamageSound!=''">
+        and room_is_damage_sound = #{roomIsDamageSound}
+      </if>
+      <if test="roomIsDamageCurtains!=null and roomIsDamageCurtains!=''">
+        and room_is_damage_curtains = #{roomIsDamageCurtains}
+      </if>
+      <if test="startTime!=null and startTime!=''  or endTime!=null and endTime!=''">
+        <if test="startTime!=null and startTime!=''  and endTime!=null and endTime!=''">
+          <if test="startTime!=null and startTime!=''">
+            and  <![CDATA[ check_create_time >= #{startTime}]]>
+          </if>
+          <if test="endTime!=null and endTime!=''">
+            and <![CDATA[ check_create_time <= #{endTime}]]>
+          </if>
+        </if>
+        <if test="startTime!=null and startTime!='' and endTime==null or endTime==''">
+          and  <![CDATA[ check_create_time >= #{startTime}]]>
+        </if>
+        <if test="endTime!=null and endTime!='' and startTime==null or startTime==''">
+          and <![CDATA[ check_create_time <= #{endTime}]]>
+        </if>
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByRoomId" parameterType="int">
+    delete from classroom_check
+    where room_id = #{roomId}
+  </delete>
+</mapper>

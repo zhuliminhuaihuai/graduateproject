@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../x-admin/css/font.css">
+    <link rel="stylesheet" href="../../../x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script type="text/javascript" src="../../../x-admin/js/xadmin.js"></script>
+
+    <style>
+        .layui-unselect layui-form-radio layui-form-radioed div{
+            width: 18px;
+        }
+    </style>
+</head>
+
+<body>
+<!-- 顶部开始 -->
+<div class="container">
+    <div class="logo"><a href="">小型酒店管理系统</a></div>
+    <div class="open-nav"><i class="iconfont">&#xe699;</i></div>
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;" id="userName"></a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                <dd><a href="">个人信息</a></dd>
+                <dd><a href="/manage/user/jumpUserLogin.html">切换帐号</a></dd>
+                <dd><a href="/manage/user/jumpUserLogin.html">退出</a></dd>
+            </dl>
+        </li>
+        <!--<li class="layui-nav-item"><a href="/manage/user/jumpUserShop.html">前台首页</a></li>-->
+    </ul>
+</div>
+<!-- 顶部结束 -->
+<!-- 中部开始 -->
+<div class="wrapper">
+    <!-- 左侧菜单开始 -->
+    <div class="left-nav">
+        <div id="side-nav">
+            <ul id="nav">
+                <li class="list" current>
+                    <a id="shouye">
+                        <i class="iconfont">&#xe761;</i>
+                        后台首页
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="javascript:;">
+                        <i class="layui-icon">&#xe60a;</i>
+                        房源管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="/manage/room/jumpRoomList.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                房源列表
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/manage/room/jumpRoomAdd.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                添加房源
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="layui-icon">&#xe62b;</i>
+                        入住管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="/manage/user/jumpUserCheckInRoom.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                客户入住
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="layui-icon">&#xe613;</i>
+                        用户管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu" style="display:none">
+                        <li>
+                            <a href="/manage/user/jumpUserList.html">
+                                <i class="iconfont">&#xe6a7;</i>
+                                客户列表
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 左侧菜单结束 -->
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <div class="layui-form layui-form-pane">
+                <div class="layui-form-item">
+                    <label for="roomTitle" class="layui-form-label">
+                        房间标题
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="roomTitle" name="roomTitle" required lay-verify="roomTitle"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        房间名称
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="roomAddress" class="layui-form-label">
+                        房间位置
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="roomAddress" name="roomAddress" required lay-verify="roomAddress"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        房间所处位置，方便客户找到
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="roomAreas" class="layui-form-label">
+                        房间大小
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="roomAreas" id="roomAreas" lay-verify="roomAreas" lay-search="" >
+                            <option value="">请选择...</option>
+                            <option value="15㎡">15㎡</option>
+                            <option value="18㎡">18㎡</option>
+                            <option value="20㎡">20㎡</option>
+                            <option value="25㎡">25㎡</option>
+                            <option value="30㎡">30㎡</option>
+                            <option value="33㎡">33㎡</option>
+                            <option value="38㎡">38㎡</option>
+                            <option value="45㎡">45㎡</option>
+                        </select>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        房间区域大小
+                    </div>
+                </div>
+                <div class="layui-form-item" >
+                    <label  class="layui-form-label"> 房源封面照
+                    </label>
+                    <div class="layui-upload" >
+                        <button type="button" class="layui-btn" id="test2">上传照片</button>
+                        <div class="layui-upload-list" id="demo3" >
+                            <img class="layui-upload-img " id="demo2" width="250px" height="250px"  >
+                        </div>
+                    </div>
+                </div>
+                <input type="text" style="display: none" name="romImg" id="romImg" lay-verify="romImg" >
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+                    <legend>房间基本设施选定</legend>
+                </fieldset>
+                <div class="layui-form-item" >
+                    <label  class="layui-form-label">房内照片
+                    </label>
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="test3">多张图上传</button>
+                        <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                            照片预览图：
+                            <div class="layui-upload-list" lay-verify="demo4" id="demo4"></div>
+                        </blockquote>
+                    </div>
+                </div>
+                <input type="text" style="display: none" name="demo5" id="demo5" lay-verify="demo5" >
+
+                <div class="layui-form-item">
+                    <label for="roomBedLength" class="layui-form-label" style="width: 100px">
+                        床铺类型与大小
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="roomBedLength" id="roomBedLength" lay-verify="roomBedLength" lay-search="" >
+                            <option value="">请选择...</option>
+                            <option value="单床--1.5m*1.8m">单床--1.5m*1.8m</option>
+                            <option value="单床--1.5m*2.0m">单床--1.5m*2.0m</option>
+                            <option value="单床--1.8m*2.2m">单床--1.8m*2.2m</option>
+                            <option value="单床--1.8m*2.5m">单床--1.8m*2.5m</option>
+                            <option value="圆床--1.5m*1.8m">圆床--1.5m*1.8m</option>
+                            <option value="圆床--1.5m*2.0m">圆床--1.5m*2.0m</option>
+                            <option value="圆床--1.8m*2.2m">圆床--1.8m*2.2m</option>
+                            <option value="圆床--1.8m*2.5m">圆床--1.8m*2.5m</option>
+                            <option value="双床--1.5m*1.8m|1.5m*1.8m">双床--1.5m*1.8m|1.5m*1.8m</option>
+                            <option value="双床--1.5m*2m|1.5m*2m">双床--1.5m*2m|1.5m*2m</option>
+                            <option value="双床--1.8m*2.2m|1.8m*2.2m">双床--1.8m*2.2m|1.8m*2.2m</option>
+                            <option value="双床--1.8m*2.5m|1.8m*2.5m">双床--1.8m*2.5m|1.8m*2.5m</option>
+                        </select>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux" >
+                        选定房间床铺类型与大小
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">是否有窗户</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="roomIsWindow" id="roomIsWindow1" value="1" title="有" lay-filter="filter">
+                        <input type="radio" name="roomIsWindow" id="roomIsWindow2" value="0" title="无" lay-filter="filter">
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="" id="window">
+                    <label class="layui-form-label" style="width: 100px">是内窗还是外窗</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="roomIsBesideWindow" id="roomIsBesideWindow1" value="1" title="外窗" >
+                        <input type="radio" name="roomIsBesideWindow" id="roomIsBesideWindow2" value="0" title="内窗">
+                    </div>
+                </div>
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">是否含早</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="roomIsBreakfast" id="roomIsBreakfast" lay-skin="switch" lay-filter="roomIsBreakfast" title="开关">
+                    </div>
+                </div>
+                <div class="layui-input-inline" pane="">
+                    <label class="layui-form-label">是否有WIFI</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="roomIsWifi" id="roomIsWifi" lay-skin="switch" lay-filter="roomIsWifi" title="开关">
+                    </div>
+                </div>
+                <div class="layui-input-inline" pane="">
+                    <label class="layui-form-label" >是否有厕所</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="roomIsWc" id="roomIsWc" lay-skin="switch" lay-filter="roomIsWc" title="开关">
+                    </div>
+                </div>
+                <div class="layui-input-inline" pane="">
+                    <label class="layui-form-label">是否有电脑</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="roomIsPc" id="roomIsPc" lay-skin="switch" lay-filter="roomIsPc" title="开关">
+                    </div>
+                </div>
+                <div class="layui-input-inline" pane="">
+                    <label class="layui-form-label">是否有电视</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="roomIsTv" id="roomIsTv" lay-skin="switch" lay-filter="roomIsTv" title="开关">
+                    </div>
+                </div>
+                <div class="layui-input-inline" pane="">
+                    <label class="layui-form-label">是否有沙发</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="roomIsSofa" id="roomIsSofa" lay-skin="switch" lay-filter="roomIsSofa" title="开关">
+                    </div>
+                </div>
+                <div class="layui-form-item" >
+                    <label class="layui-form-label" style="width: 100px">房源是否启用</label>
+                    <div class="layui-input-inline" style="width:70px">
+                        <input type="checkbox" name="roomIsUse" id="roomIsUse" checked="" lay-skin="switch" lay-filter="roomIsUse" title="开关">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux" style="float: left">
+                        是否让该房源出售，让客户入住
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">房间详情</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容" id="roomDetail" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+
+                    <button class="layui-btn" key="set-mine" lay-filter="add" lay-submit>
+                        添加房源
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<!-- 中部结束 -->
+<!-- 底部开始 -->
+
+<!-- 底部结束 -->
+<!-- 背景切换开始 -->
+<div class="bg-changer">
+    <div class="swiper-container changer-list">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/a.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/b.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/c.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/d.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/e.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/f.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/g.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/h.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/i.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/j.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/k.jpg" alt=""></div>
+            <div class="swiper-slide"><span class="reset">初始化</span></div>
+        </div>
+    </div>
+    <div class="bg-out"></div>
+    <div id="changer-set"><i class="iconfont">&#xe696;</i></div>
+</div>
+<!-- 背景切换结束 -->
+<link rel="stylesheet" href="../../../x-admin/lib/layui/css/modules/layer/default/layer.css">
+
+<script src="../../../x-admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script>
+    var userName = '${session_manage_token.getUserName()}';
+    $("#userName").html( userName);
+    var userRole = '${session_manage_token.getUserRole()}';
+    $("#shouye").attr("href", "/manage/user/jumpUserBackStageIndex.html?userRole=" + userRole);
+    $("#window").hide();
+</script>
+<script>
+    var imgMany = "";
+    var roomIsBreakfast=0;
+    var roomIsWifi=0;
+    var roomIsWc=0;
+    var roomIsPc=0;
+    var roomIsTv=0;
+    var roomIsSofa=0;
+    var roomIsUse=1;
+
+    layui.use(['form', 'layer',  'code','upload' ], function () {
+        $ = layui.jquery;
+        var form = layui.form,
+            layer = layui.layer,
+            code = layui.code,
+            upload = layui.upload;
+        form.verify({
+            roomTitle : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '房间标题不能为空！';
+                }
+            },
+            roomAddress : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '房间位置不能为空！';
+                }
+            },
+            roomAreas : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '房间大小不能为空！';
+                }
+            },
+
+            romImg : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '房源封面照不能为空！';
+                }
+            },
+            demo5: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '房内照片不能为空!';
+                }
+
+            },
+            roomBedLength : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '床铺类型和大小不能为空！';
+                }
+            },
+        });
+       //图片上传
+        upload.render({
+            elem: '#test2'
+            , url: '/manage/room/uploadImg'
+            , multiple: false
+            , size: 2048
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    //console.log(file);
+                    $('#demo2').remove();
+                    $('#demo3').append('<img width="250px" height="250px" id="demo2" src="' + result + '" alt="' + file.name + '" class="layui-upload-img">');
+                });
+            }
+            , done: function (res) {
+                var img = res.data.uri;
+                $("#romImg").val(img);
+                layer.msg("上传完成", {icon: 6, time: 2000,});
+            }
+        });
+        //多图片上传
+        upload.render({
+            elem: '#test3'
+            ,url: '/manage/room/uploadImg'
+            ,multiple: true
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo4').append('<img width="250px" height="250px" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                });
+            }
+            ,done: function(res){
+                var imgUri = res.data.uri;
+                imgMany +=imgUri;
+                imgMany += "#";
+                $("#demo5").val(imgMany);
+                console.log("照片:" + imgMany);
+                layer.msg("上传完成", {icon: 6, time: 2000,});
+            }
+        });
+        form.on('radio(filter)', function (data) {
+            if (data.value == "1") {
+                $("#window").show();
+            } else {
+                $("#window").hide();
+                console.log(data.value); //被点击的radio的value值
+            }
+        })
+        form.on('switch(roomIsBreakfast)', function (obj) {
+            if (obj.elem.checked == true) {
+                roomIsBreakfast = 1;
+            } else {
+                roomIsBreakfast = 0;
+            }
+        });
+        form.on('switch(roomIsWifi)', function (obj) {
+            if (obj.elem.checked == true) {
+                roomIsWifi = 1;
+            } else {
+                roomIsWifi = 0;
+            }
+        });
+        form.on('switch(roomIsWc)', function (obj) {
+            if (obj.elem.checked == true) {
+                roomIsWc = 1;
+            } else {
+                roomIsWc = 0;
+            }
+        });
+        form.on('switch(roomIsPc)', function (obj) {
+            if (obj.elem.checked == true) {
+                roomIsPc = 1;
+            } else {
+                roomIsPc = 0;
+            }
+        });
+        form.on('switch(roomIsTv)', function (obj) {
+            if (obj.elem.checked == true) {
+                roomIsTv = 1;
+            } else {
+                roomIsTv = 0;
+            }
+        });
+        form.on('switch(roomIsSofa)', function (obj) {
+            if (obj.elem.checked == true) {
+                roomIsSofa = 1;
+            } else {
+                roomIsSofa = 0;
+            }
+        });
+        form.on('switch(roomIsUse)', function (obj) {
+            if (obj.elem.checked == true) {
+                roomIsUse = 1;
+            } else {
+                roomIsUse = 0;
+            }
+        });
+
+        form.on('submit(add)', function(data) {
+            var roomTitle =  $("#roomTitle").val();
+            var roomAddress = $("#roomAddress").val();
+            var roomAreas = $("#roomAreas option:selected").val();
+            var romImg =  $("#romImg").val();
+            var roomBedLength = $("#roomBedLength option:selected").val();
+            var roomIsWindow = $("input[name='roomIsWindow']:checked").val();
+            var roomIsBesideWindow = $("input[name='roomIsBesideWindow']:checked").val();
+            var roomDetail= $("#roomDetail").val();
+
+            $.ajax({
+                url: "/manage/room/addRoom",
+                type: "post",
+                dataType: "json",
+                data:{
+                    roomTitle:roomTitle,
+                    roomAddress:roomAddress,
+                    roomAreas:roomAreas,
+                    romImg:romImg,
+                    imgMany:imgMany,
+                    roomBedLength:roomBedLength,
+                    roomIsWindow:roomIsWindow,
+                    roomIsBesideWindow:roomIsBesideWindow,
+                    roomIsBreakfast:roomIsBreakfast,
+                    roomIsWifi:roomIsWifi,
+                    roomIsWc:roomIsWc,
+                    roomIsPc:roomIsPc,
+                    roomIsTv:roomIsTv,
+                    roomIsSofa:roomIsSofa,
+                    roomIsUse:roomIsUse,
+                    roomDetail:roomDetail
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg('添加成功!', {
+                            icon: 6,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            window.location.reload();
+                        });
+                    }else  {
+                        layer.msg('添加失败!', {
+                            icon: 5,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            return false;
+                        });
+                    }
+
+
+                }
+
+            });
+
+        });
+
+
+
+
+
+    });
+
+
+
+
+</script>
+
+</body>
+</html>

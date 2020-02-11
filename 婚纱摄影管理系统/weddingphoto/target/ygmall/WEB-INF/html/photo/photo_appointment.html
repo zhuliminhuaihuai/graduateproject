@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>婚纱预约</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../css/font.css">
+    <link rel="stylesheet" href="../../../css/xadmin.css">
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body>
+<div class="x-body">
+    <div class="layui-form">
+
+        <div class="layui-form-item">
+            <label for="photographerList" class="layui-form-label"> <span
+                    class="x-red">*</span>摄影师列表
+            </label>
+            <div class="layui-input-inline">
+                <select name="photographerList" id="photographerList" lay-filter="photographerList" lay-verify="photographerList" lay-search="">
+                    <option value="">请选择...</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>选择你中意的摄影师或者不选
+            </div>
+        </div>
+        <div class="layui-form-item" id="1">
+            <label  class="layui-form-label"> <span
+                    class="x-red">*</span>摄影师成果图
+            </label>
+
+        </div>
+        <div class="layui-form-item" id="images">
+
+        </div>
+        <!--<ul class="layer-photos-demo" id="images"></ul>-->
+        <div class="layui-form-item">
+            <label for="orderRemark" class="layui-form-label"> <span
+                    class="x-red">*</span>订单备注
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="orderRemark" name="orderRemark"
+                       lay-verify="orderRemark" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>可以说出你的要求
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 30%;margin-right:30%;margin-bottom: 30px">
+            <label class="layui-form-label"> </label>
+            <button class="layui-btn" lay-filter="appointment" lay-submit="">
+                预约
+            </button>
+            <button type="layui-btn" class="layui-btn layui-btn-primary" onclick="goback()">
+                取消
+            </button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../js/main.js"></script>
+<script type="text/javascript" src="../../../js/index.js"></script>
+<script type="text/javascript" src="../../../js/xadmin.js"></script>
+<script>
+    var photoId = localStorage.getItem("photoId");
+    var userCode = '${session_manage_token.getUserCode()}';
+    $("#1").hide();
+    $("#images").hide();
+
+
+    console.log("userCode:" + userCode);
+    layui.use(['flow','form', 'layer'], function () {
+        $ = layui.jquery;
+        var layer = layui.layer,
+            form = layui.form,
+            flow = layui.flow;
+
+
+        $.ajax({
+            url: '/manage/user/findAllPhotographer',
+            type: 'post',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                var select = document.getElementById("photographerList");
+                if (data.status==0)
+                {
+                    for (var i = 0; i < data.data.length; i++) {
+                        var userName = data.data[i].userName;
+                        var userCode = data.data[i].userCode;
+                        select.add(new Option(userName, userCode));
+                    }
+                }else
+                {
+                    select.add(new Option("暂无人员", ""));
+                }
+                form.render();
+            }
+        });
+
+        //选择角色请求对应角色列表
+        form.on('select(photographerList)', function (data) {
+
+            var data;
+            var photographerList = $("#photographerList option:selected").val();
+            console.log("photographerList:" + photographerList);
+            $("#images").empty();
+
+            $("#1").show();
+            $("#images").show();
+            //流加载图片
+            var imgNums = 15;  //单页显示图片数量
+            flow.load({
+                elem: '#images', //流加载容器
+                done: function(page, next){ //加载下一页
+                    $.get("/manage/photo/getphotographerphoto?userCode="+photographerList,function(res){
+                        //模拟插入
+                        var imgList = [];
+                        data = res.data;
+                        var maxPage = imgNums*page < data.length ? imgNums*page : data.length;
+
+                        setTimeout(function(){
+                            for(var i=imgNums*(page-1); i<maxPage; i++){
+                                imgList.push('<div class="layui-input-inline"><img style="width: 200px;height: 200px" layer-src="http://127.0.0.1:8080/upload/'+ data[i].photo_img +'" src="http://127.0.0.1:8080/upload/'+ data[i].photo_img +'" alt="照片'+(i+1)+'"></div>');
+                            }
+                            next(imgList.join(''), page < (data.length/imgNums));
+                            form.render();
+                        }, 500);
+                    });
+                }
+            });
+            flow.render();
+
+        });
+
+
+        //设置图片的高度
+        $(window).resize(function(){
+            $("#images li img").height($("#images li img").width());
+
+        })
+        form.on('submit(appointment)', function () {
+            var photographerCode = $("#photographerList option:selected").val();
+            var orderRemark = $("#orderRemark").val();
+            layer.confirm('确定预约这套婚纱？', function(index){
+                $.ajax({
+                    type: 'post',
+                    url: '/manage/order/addOrder',
+                    data:{
+                        photographerCode:photographerCode,
+                        orderRemark:orderRemark,
+                        photoId:photoId,
+                        userCode:userCode
+                    },
+                    dataType: 'json',
+                    success : function (data) {
+                        if (data.status == 0) {
+                            layer.msg('预约成功', {
+                                icon: 6,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function(){
+                                parent.location.reload();
+                            });
+                        } else {
+                            layer.msg("预约失败！");
+                        }
+                    },
+                    error : function () {
+                        layer.msg('预约失败');
+                    }
+                });
+            });
+
+        });
+    });
+
+    function goback() {
+
+        parent.location.reload();
+
+    }
+</script>
+</body>
+</html>

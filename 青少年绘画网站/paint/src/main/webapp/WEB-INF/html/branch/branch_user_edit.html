@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<base href="<%=basePath%>">
+	<meta charset="UTF-8">
+	<title>修改</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="../../../layui/css/layui.css">
+	<style>
+		.x-red{
+			color: red;
+		}
+	</style>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="../../../layui/layui.all.js" charset="utf-8"></script>
+	<script src="../../../js/xcity.js" charset="utf-8"></script>
+	<script src="../../../js/formate.js" charset="utf-8"></script>
+
+</head>
+<body>
+<div class="childrenBody" style="padding-top: 5%">
+	<div class="layui-form">
+		<div class="layui-form-item">
+			<label for="userName" class="layui-form-label"> <span
+					class="x-red">*</span>用户名
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" id="userName" name="userName" required=""
+					   lay-verify="userName" autocomplete="off"
+					   class="layui-input" placeholder="请输入用户名"><!--onblur="regist()"-->
+			</div>
+			<label class="layui-form-label">  <span
+					class="x-red">*</span>姓名
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="realName" id="realName"
+					   required="" lay-verify="realName" autocomplete="off"
+					   class="layui-input" placeholder="请输入真实姓名">
+			</div>
+		</div>
+		<div class="layui-form-item">
+
+			<label class="layui-form-label"> <span
+					class="x-red">*</span>手机
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="mobilePhone" id="mobilePhone"
+					   required="" lay-verify="mobilePhone" autocomplete="off"
+					   class="layui-input" placeholder="请输入手机号码">
+			</div>
+			<label class="layui-form-label"> 邮箱
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="email" id="email"
+					   required="" lay-verify="" autocomplete="off"
+					   class="layui-input" placeholder="请输入邮箱">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> 生日
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="birthday" id="birthday"
+					   required="" lay-verify="" autocomplete="off"
+					   class="layui-input" placeholder="请输入生日">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> 性别 </label>
+			<div class="layui-input-block" style="">
+				<input type="radio" name="sex" id="man" value="1" title="男" >
+				<input type="radio" name="sex" id="woman" value="2" title="女">
+				<input type="radio" name="sex" id="baomi" value="0" title="保密" >
+			</div>
+		</div>
+		<input type="hidden" name="userId" id="userId">
+		<div class="layui-form-item">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<textarea placeholder="请输入备注" name="userSign" id="userSign" class="layui-textarea linksDesc"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item" id="editUser">
+			<label class="layui-form-label"> </label>
+			<button class="layui-btn" lay-filter="editUser" lay-submit="">
+				保存
+			</button>
+		</div>
+
+	</div>
+
+</div>
+
+
+<script>
+    	var role ='${session_manage_token.getRole()}';
+    	if(role!=0){
+    	    $("#editUser").hide();
+		}
+		var userCode = localStorage.getItem("userCode");
+		localStorage.removeItem("userCode");
+        var form = layui.form;
+		//请求数据
+		$.ajax({
+			url:'/manage/user/getUserInfoByUserCode',
+			type:'post',
+			data:{
+                userCode:userCode,
+			},
+			dataType:'json',
+			success:function (data) {
+				if(data.status==0){
+				    $("#userName").val(data.data.userName);
+				    $("#userId").val(data.data.userId);
+				    $("#role").val(data.data.role);
+				    $("#realName").val(data.data.realName);
+				    $("#mobilePhone").val(data.data.mobilePhone);
+				    $("#email").val(data.data.email);
+				    $("#userSign").val(data.data.userSign);
+				    $("#birthday").val(editTime1(data.data.birthday));
+				    $("#sex").val(data.data.sex);
+				    $("#age").val(data.data.age);
+                    var x=data.data.sex;
+                    if(x==0){
+                        $("#baomi").attr('checked','true');
+                        form.render();
+                    }else if(x==1) {
+                        $("#man").attr('checked','true');
+                        form.render();
+
+                    }else{
+                        $("#woman").attr('checked','true');
+                        form.render();
+					}
+				}
+            }
+		})
+
+        layui.use([ 'form', 'layer','laydate','code'], function() {
+            $ = layui.jquery;
+            var form = layui.form
+                ,layer = layui.layer
+                ,laydate = layui.laydate;
+
+            laydate.render({
+                elem: '#birthday'
+            });
+            form.verify({
+                userName : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '用户名不能为空';
+                    }
+                },
+                realName : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '真实姓名不能为空';
+                    }
+                },
+                role : function(value) {
+                    if (value=="-1" ) {
+                        return '请选择用户类型';
+                    }
+                },
+                mobilePhone : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '手机号不能为空';
+                    }
+                    var isPhone=/^1[0-9]{10}$/;
+                    var flag=isPhone.test(value);
+                    if(flag==false)
+                        return '手机号格式错误';
+                },
+            });
+            form.on('submit(editUser)', function(data) {
+                var userId= $("#userId").val();
+                var userName= $("#userName").val();
+                var realName= $("#realName").val();
+                var mobilePhone= $("#mobilePhone").val();
+                var role = $("#role option:selected").val();
+                var birthday= $("#birthday").val();
+                var sex=$('input:radio:checked').val();
+                var email= $("#email").val();
+                var userSign= $("#userSign").val();
+                $.ajax({
+                    type: 'post',
+                    url: '/manage/user/editUser',
+                    data: {
+                        userId:userId,
+                        userName:userName,
+                        mobilePhone:mobilePhone,
+                        role:role,
+                        realName:realName,
+                        birthdays:birthday,
+                        sex:sex,
+                        email:email,
+                        userSign:userSign,
+					},
+                    dataType: 'json',
+                    async:false,
+                    success: function (data) {
+                        console.log(data.msg);
+                        if (data.status==0) {
+                            layer.msg(data.msg, {
+                                icon: 6, time: 1000, end: function () {
+                                    parent.location.reload();
+                                }
+                            });
+                        } else {
+                            layer.msg(data.msg);
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        layer.msg('请求失败，检查后台接口');
+                    }
+                })
+
+            })
+        });
+
+</script>
+</body>
+</html>
