@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../../css/view.css"/>
+    <link rel="icon" href="/favicon.ico">
+    <title>预警商品列表</title>
+</head>
+<body>
+<!-- 中部开始 -->
+<div class="wrapper">
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <table class="layui-table" id="order" lay-filter="orderTable"></table>
+            <script type="text/html" id="barDemo">
+                <a  title="入库" lay-event="add"><i class="layui-icon">&#xe608;</i></a>
+            </script>
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<!-- 中部结束 -->
+<link rel="stylesheet" href="../../../x-admin/lib/layui/css/modules/layer/default/layer.css">
+
+<script src="../../../x-admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../x-admin/js/xadmin.js"></script>
+<script src="../../../js/xadmin.js"></script>
+
+<style>
+    .laytable-cell-1-0-7 img{ /*最后的pic为字段的field*/
+        height: 70px;
+        width: 70px !important;
+    }
+    .laytable-cell-2-0-7 img{ /*最后的pic为字段的field*/
+        height: 70px;
+        width: 70px !important;
+    }
+    .laytable-cell-3-0-7 img{ /*最后的pic为字段的field*/
+        height: 70px;
+        width: 70px !important;
+    }
+    .laytable-cell-4-0-7 img{ /*最后的pic为字段的field*/
+        height: 70px;
+        width: 70px !important;
+    }
+    .laytable-cell-5-0-7 img{ /*最后的pic为字段的field*/
+        height: 70px;
+        width: 70px !important;
+    }
+    .laytable-cell-6-0-7 img{ /*最后的pic为字段的field*/
+        height: 70px;
+        width: 70px !important;
+    }
+    .laytable-cell-7-0-7 img{ /*最后的pic为字段的field*/
+        height: 70px;
+        width: 70px !important;
+    }
+    .laytable-cell-8-0-7 img{ /*最后的pic为字段的field*/
+        height: 70px;
+        width: 70px !important;
+    }
+</style>
+<script>
+
+    layui.use(['table','laydate','layer','form'], function(){
+        $ = layui.jquery;
+        var table = layui.table,
+            laydate = layui.laydate,
+            layer = layui.layer,
+            form = layui.form;
+
+        //渲染
+        table.render({
+            elem: '#order'
+            ,id : 'testReload'
+            ,url: '/manage/goods/getReplenishmentList'//数据接口
+            ,cols: [[
+                {field: 'goodsCode',width: '15%', title: '商品编号'}
+                , {field: 'goodsTitle',width: '10%',align: 'center', title: '商品名称'}
+                , {field: 'goodsCostPrice' ,width: '10%', title: '成本价',
+                    templet:function (row){
+                        return fixed(row.goodsCostPrice);
+                    }}
+                , {field: 'goodsRelPrice',width: '10%', align: 'center', title: '交易价',
+                    templet:function (row){
+                        return fixed(row.goodsRelPrice);
+                    }}
+                , {field: 'goodsSort',width: '10%',align: 'center',  title: '商品分类'}
+                , {field: 'goodsInventory',width: '10%',align: 'center',  title: '库存量'}
+                , {field: 'goodsImg',width: '10%',align: 'center', title: '商品照片',templet:'<div><img style="height: 150px;width: 70px" src="{{ d.goodsImg}}"></div>'}
+                // , {field: 'goodsState',width:'8%',  title: '是否启用',templet:"#switchTpl"}
+                , {fixed: 'right',width:'10%',  align: 'center', title: '操作', toolbar: '#barDemo'}
+            ]]
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next'] //自定义分页布局
+                ,curr: 1 //设定初始在第 1 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit: 10
+                ,limits: [5,10,15,20]
+            }  //true表示分页
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+                $("[data-field='goodsBigType']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("常见水果")
+                    }else if($(this).text()=='2') {
+                        $(this).text("进口水果")
+                    }
+                })
+                $("[data-field='goodsType']").children().each(function(){
+                    if($(this).text()=='1'){
+                        $(this).text("寒性水果")
+                    }else if($(this).text()=='2') {
+                        $(this).text("温性水果")
+                    } else if($(this).text()=='3') {
+                        $(this).text("中性水果")
+                    }
+
+                })
+                $("#count").text("共有数据：" + count+"条");
+                hoverOpenImg();//显示大图 鼠标悬浮时显示大图
+
+            }
+
+        })
+        table.on('tool(orderTable)', function(obj){
+            var data = obj.data;
+            if (obj.event === 'add') {
+                localStorage.setItem("goodsId", data.goodsId);
+                x_admin_show('商品入库', '/manage/order/jumpOrderAddSelect.html',500,500);
+            }else if(obj.event === 'modify'){
+                localStorage.setItem("orderId",data.orderId);
+                x_admin_show('订单修改','/manage/order/jumpOrderModify.html',800,800);
+            }else if(obj.event === 'del'){
+                layer.confirm('确定删除此订单么？', function(index){
+                    $.ajax({
+                        type: 'post',
+                        url: '/manage/goods/deleteGoods',
+                        data:{
+                            goodsId:data.goodsId,
+                        },
+                        dataType: 'json',
+                        success : function (data) {
+                            if (data.msg == "删除成功") {
+                                layer.msg("删除成功！", {
+                                    icon: 6, time: 1500, end: function () {
+                                        window.location.reload();
+                                    }
+                                })
+                            } else {
+                                layer.msg("删除失败！");
+                            }
+                        },
+                        error : function () {
+                            layer.msg('删除失败');
+                        }
+                    });
+                });
+            }
+
+        });
+
+
+
+        function hoverOpenImg(){
+            var img_show = null; // tips提示
+            $('td img').hover(function(){
+                var kd=$(this).width();
+                kd1=kd*6;          //图片放大倍数
+                kd2=kd*6+30;       //图片放大倍数
+                var img = "<img class='img_msg' src='"+$(this).attr('src')+"' style='width:"+kd1+"px;' />";
+                img_show = layer.tips(img, this,{
+                    tips:[2, 'rgba(41,41,41,.5)']
+                    ,area: [kd2+'px']
+                });
+            },function(){
+                layer.close(img_show);
+            });
+            $('td img').attr('style','max-width:70px;display:block!important');
+        }
+
+        //金额转换
+        function fixed(str) {
+            if (!str) str = '0.00';
+            var ret = Math.round(parseFloat(str) * 100) / 100;
+            var decimal = ret.toString().split('.');
+            if (decimal.length === 1) {
+                return ret.toString() + '.00'
+            };
+            if (decimal.length > 1) {
+                if (decimal[1].length < 2) {
+                    return ret.toString() + '0'
+                }
+                return ret
+            };
+            return ret;
+        }
+        //数字时间转DATE时间类型
+        function createTime(v){
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth()+1;
+            m = m<10?'0'+m:m;
+            var d = date.getDate();
+            d = d<10?("0"+d):d;
+            var h = date.getHours();
+            h = h<10?("0"+h):h;
+            var M = date.getMinutes();
+            M = M<10?("0"+M):M;
+            var S = date.getSeconds();
+            S = S<10?("0"+S):S;
+            var str = y+"-"+m+"-"+d+" "+h+":"+M+":"+S;
+            return str;
+        }
+        $('.content .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+
+</script>
+</body>
+</html>

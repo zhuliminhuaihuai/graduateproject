@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../../../x-admin/css/font.css">
+    <link rel="stylesheet" href="../../../x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script type="text/javascript" src="../../../x-admin/js/xadmin.js"></script>
+
+</head>
+<body>
+<div class="login-logo"><h1>民宿网站后台管理</h1></div>
+<div class="login-box">
+    <div class="layui-form layui-form-pane">
+
+        <h3>登录您的帐号</h3>
+        <label class="login-title" for="userName">用户名</label>
+        <div class="layui-form-item">
+            <label class="layui-form-label login-form"><i class="iconfont">&#xe6b8;</i></label>
+            <div class="layui-input-inline login-inline">
+                <input type="text" name="userName" id="userName" lay-verify="userName" placeholder="请输入你的用户名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <label class="login-title" for="userPassword">密码</label>
+        <div class="layui-form-item">
+            <label class="layui-form-label login-form"><i class="iconfont">&#xe82b;</i></label>
+            <div class="layui-input-inline login-inline">
+                <input type="password" name="userPassword" id="userPassword" lay-verify="userPassword" placeholder="请输入你的密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-warning pull-right" lay-submit="" id="login" lay-filter="login" >登录</button>
+            <button class="btn btn-warning pull-right" lay-submit="" onclick="back()"  >返回网站</button>
+            <!--<div class="forgot"><a href="#" class="forgot">忘记帐号或者密码</a></div>-->
+        </div>
+    </div>
+</div>
+<div class="bg-changer">
+    <div class="swiper-container changer-list">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/a.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/b.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/c.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/d.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/e.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/f.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/g.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/h.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/i.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/j.jpg" alt=""></div>
+            <div class="swiper-slide"><img class="item" src="../../../x-admin/images/k.jpg" alt=""></div>
+            <div class="swiper-slide"><span class="reset">初始化</span></div>
+        </div>
+    </div>
+    <div class="bg-out"></div>
+    <div id="changer-set"><i class="iconfont">&#xe696;</i></div>
+</div>
+<link rel="stylesheet" href="../../../x-admin/lib/layui/css/modules/layer/default/layer.css">
+<script src="../../../x-admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript"  language=JavaScript charset="UTF-8">
+    //绑定键盘enter键
+    document.onkeydown=function(event){
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if(e && e.keyCode==13){ // enter 键
+            // alert("safasfas");
+            $("#login").trigger("click");
+        }
+    };
+</script>
+<script>
+
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form,
+                layer = layui.layer;
+        form.verify({
+            userName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '用户名不能为空';
+                }
+            },
+            userPassword: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '密码不能为空';
+                }
+            }
+        });
+            //监听提交
+        form.on('submit(login)', function () {
+            var userName = $("#userName").val();
+            var userPassword = $("#userPassword").val();
+            $.ajax({
+                url: "/manage/user/login",
+                type: "post",
+                dataType: "json",
+                data:{
+                    userName:userName,
+                    userPassword:userPassword
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+
+                    if (data.status == 0) {
+                        var userRole = data.data.userRole;
+                        console.log("role:" + userRole);
+                        layer.msg("登录成功！",{icon: 6,time:1500, end: function () {
+
+                                window.location.href = "/manage/user/jumpIndex.html";
+                                // window.location.href="";
+                            }
+                        })
+                    }
+                    else {
+                        layer.msg("用户名或密码错误!",{icon: 5,time:2500});
+                    }
+
+                }
+            })
+            });
+        });
+    function back() {
+        parent.location.href="/manage/user/jumpShop.html"
+    }
+
+</script>
+
+</body>
+</html>

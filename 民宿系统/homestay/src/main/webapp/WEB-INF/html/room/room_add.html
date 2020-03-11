@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <title>添加房源</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../../css1/news.css">
+    <link rel="stylesheet" href="../../../css1/user.css" media="all"/>
+    <style>
+        .x-red {
+            color: red;
+        }
+    </style>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../../../layui/layui.js" charset="utf-8"></script>
+    <script src="../../../js1/xcity.js" charset="utf-8"></script>
+
+</head>
+<body>
+<div class="layui-form">
+    <div class="layui-form-item">
+        <label for="roomTitle" class="layui-form-label"><span
+                class="x-red">*</span>房东选择
+        </label>
+        <div class="layui-input-inline">
+            <select name="tenantName" id="tenantName" lay-verify="tenantName" lay-search="">
+                <!--<option value="">请选择...</option>-->
+            </select>
+        </div>
+        <div class="layui-form-mid layui-word-aux">
+            null 的房东为未实名认证
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="roomTitle" class="layui-form-label"><span
+                class="x-red">*</span>房源主题
+        </label>
+        <div class="layui-input-inline">
+            <select name="roomTitle" id="roomTitle" lay-verify="roomTitle" lay-search="">
+                <option value="">请选择...</option>
+                <option value="情侣亲密">情侣亲密</option>
+                <option value="商务出差">商务出差</option>
+                <option value="乡村风">乡村风</option>
+                <option value="田野风">田野风</option>
+                <option value="怪异复杂风">怪异复杂风</option>
+                <option value="搞笑鬼怪风">搞笑鬼怪风</option>
+                <option value="柔和温馨风">柔和温馨风</option>
+                <option value="女生粉嫩风">女生粉嫩风</option>
+                <option value="深海世界风">深海世界风</option>
+                <option value="甜美和谐风">甜美和谐风</option>
+                <option value="复古古代风">复古古代风</option>
+                <option value="英伦欧式风">英伦欧式风</option>
+                <option value="新中式风">新中式风</option>
+            </select>
+        </div>
+        <div class="layui-form-mid layui-word-aux">
+            房源装修风格
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="roomSimpleRemark" class="layui-form-label">
+            <span
+                    class="x-red">*</span>房源呈现标题
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="roomSimpleRemark" name="roomSimpleRemark" required lay-verify="roomSimpleRemark"
+                   autocomplete="off" value="" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">
+            简单描述房源特点、特征，方便网站搜索
+        </div>
+    </div>
+    <input type="text" style="display: none" name="headimg" id="headimg" lay-verify="headimg">
+    <div class="layui-form-item">
+        <label class="layui-form-label"> <span
+                class="x-red">*</span>房源封面照片
+        </label>
+        <div class="layui-upload">
+            <div class="layui-upload-list" id="demo3">
+                <img class="layui-upload-img " id="demo2" width="250px" height="250px">
+            </div>
+            <label class="layui-form-label">
+            </label>
+            <button type="button" class="layui-btn" id="test2">上传照片</button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="roomBedNumber" class="layui-form-label">
+            <span class="x-red">*</span>几张床
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="roomBedNumber" name="roomBedNumber" required lay-verify="roomBedNumber"
+                   autocomplete="off" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="roomBathNumber" class="layui-form-label">
+            <span class="x-red">*</span>浴室数量
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="roomBathNumber" name="roomBathNumber" required lay-verify="roomBathNumber"
+                   autocomplete="off" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="roomWcNumber" class="layui-form-label">
+            <span class="x-red">*</span>厕所数量
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="roomWcNumber" name="roomWcNumber" required lay-verify="roomWcNumber"
+                   autocomplete="off" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="roomNumber" class="layui-form-label">
+            <span class="x-red">*</span>房间数量
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="roomNumber" name="roomNumber" required lay-verify="roomNumber"
+                   autocomplete="off" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="roomMaxCustomerNumber" class="layui-form-label">
+            <span class="x-red">*</span>房源最多可容纳人数
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="roomMaxCustomerNumber" name="roomMaxCustomerNumber" required
+                   lay-verify="roomMaxCustomerNumber"
+                   autocomplete="off" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">生活用品</label>
+        <div class="layui-input-block" style="">
+            <input type="radio" name="roomIsDaylyUse" value="1" title="有" checked="">
+            <input type="radio" name="roomIsDaylyUse" value="0" title="无">
+        </div>
+        <div class="layui-form-mid layui-word-aux">
+            生活用品指：吹风机、沐浴露、洗发露、卫生纸、烧水壶等常见生活用品
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">WIFI</label>
+        <div class="layui-input-block" style="">
+            <input type="radio" name="roomIsWifi" value="1" title="有" checked="">
+            <input type="radio" name="roomIsWifi" value="0" title="无">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">免费停车位</label>
+        <div class="layui-input-block" style="">
+            <input type="radio" name="roomIsParking" value="1" title="有" checked="">
+            <input type="radio" name="roomIsParking" value="0" title="无">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="roomReferencePrice" class="layui-form-label">
+            <span class="x-red">*</span>参考价
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="roomReferencePrice" name="roomReferencePrice" required
+                   lay-verify="roomReferencePrice"
+                   autocomplete="off" value="" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">
+            假价格
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="roomRelPrice" class="layui-form-label">
+            <span class="x-red">*</span>交易价
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="roomRelPrice" name="roomRelPrice" required lay-verify="roomRelPrice"
+                   autocomplete="off" value="" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">
+            真实交易价格
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label for="roomRemark" class="layui-form-label">
+            房源详情介绍
+        </label>
+        <div class="layui-input-block">
+                        <textarea placeholder="房源的具体特点、来源、变成民宿的原因等..." id="roomRemark" name="roomRemark"
+                                  autocomplete="off"
+                                  class="layui-textarea" style="height: 80px;" lay-verify="roomRemark"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="roomRelPrice" class="layui-form-label">
+            <span class="x-red">*</span>房源是否出租
+        </label>
+        <div class="layui-input-inline">
+            <input type="checkbox" name="roomState" id="roomState" lay-skin="switch" lay-text="启用|关闭"
+                   lay-filter="roomState">
+        </div>
+        <div class="layui-form-mid layui-word-aux">
+            房源是否正式对外开放出租 默认是不开放
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+        </label>
+        <button class="layui-btn" key="set-mine" lay-filter="save" lay-submit>
+            添加房源
+        </button>
+    </div>
+</div>
+<script>
+    var roomState = 0;//默认未开设
+
+    layui.use(['form', 'layer', 'code', 'upload'], function () {
+        $ = layui.jquery;
+        var form = layui.form,
+            layer = layui.layer,
+            code = layui.code,
+            upload = layui.upload;
+        form.verify({
+            tenantName: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '房东不能为空！';
+                }
+            },
+            roomTitle: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '房源主题不能为空！';
+                }
+            },
+            roomSimpleRemark: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '房源呈现标题不能为空';
+                }
+            },
+            headimg: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '房源照片不能为空!';
+                }
+
+            },
+            roomBedNumber: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '床的数量不能为空!';
+                }
+            },
+            roomBathNumber: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '浴室数量不能为空!';
+                }
+            },
+            roomWcNumber: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '厕所数量不能为空!';
+                }
+            },
+            roomNumber: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '房间数量不能为空!';
+                }
+            },
+            roomMaxCustomerNumber: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '房源最多容纳人数不能为空!';
+                }
+            },
+            roomReferencePrice: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '参考价不能为空！';
+                }
+                if (fixed(value) < fixed($("#roomRelPrice").val())) {
+                    return '交易价不能高于参考价';
+                }
+            },
+            roomRelPrice: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '交易价不能为空！';
+                }
+                // if (fixed(value) > fixed($("#goodsPrice").val)) {
+                //
+                //     return '交易价不能高于参考价';
+                // }
+            },
+            roomRemark: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '房源详情介绍是必须要有的，让租户看到你房子的来源与漂亮介绍';
+                }
+            },
+
+
+        });
+        $.ajax({
+            url: '/manage/user/findTenant',
+            type: 'post',
+            dataType: 'json',
+            data: {
+
+            },
+            async:true,
+            success: function (data) {
+                console.log(JSON.stringify(data));
+                var select = document.getElementById("tenantName");
+                if (data.status==0)
+                {
+                    for (var i = 0; i < data.data.length; i++) {
+                        var userName = data.data[i].headimg;
+                        var userCode = data.data[i].userCode;
+                        select.add(new Option(userName, userCode));
+
+                    }
+                }else
+                {
+                    select.add(new Option("暂无房东...", ""));
+                }
+                form.render();
+            }
+        });
+        //图片上传
+        upload.render({
+            elem: '#test2'
+            , url: '/manage/room/uploadImg'
+            , multiple: false
+            , size: 2048
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    //console.log(file);
+                    $('#demo2').remove();
+                    $('#demo3').append('<img width="250px" height="250px" id="demo2" src="' + result + '" alt="' + file.name + '" class="layui-upload-img">');
+                });
+            }
+            , done: function (res) {
+                var img = res.data.uri;
+                $("#headimg").val(img);
+                s = img;
+                layer.msg("上传完成", {icon: 6, time: 5000,});
+            }
+
+        });
+        //监听是否启用操作
+        form.on('switch(roomState)', function (obj) {
+            if (obj.elem.checked == true) {
+                roomState = 1;
+            } else {
+                roomState = 0;
+            }
+
+        });
+        form.on('submit(save)', function (data) {
+            var tenantCode = $("#tenantName option:selected").val();
+            var roomTitle = $("#roomTitle option:selected").val();
+            var roomSimpleRemark = $("#roomSimpleRemark").val();
+            var roomImg = $("#headimg").val();
+            var roomBedNumber = $("#roomBedNumber").val();
+            var roomBathNumber = $("#roomBathNumber").val();
+            var roomWcNumber = $("#roomWcNumber").val();
+            var roomMaxCustomerNumber = $("#roomMaxCustomerNumber").val();
+            var roomNumber = $("#roomNumber").val();
+            var roomRelPrice = $("#roomRelPrice").val();
+            var roomReferencePrice = $("#roomReferencePrice").val();
+            var roomIsDaylyUse = $("input[name='roomIsDaylyUse']:checked").val();
+            var roomIsWifi = $("input[name='roomIsWifi']:checked").val();
+            var roomIsParking = $("input[name='roomIsParking']:checked").val();
+            var roomRemark = $("#roomRemark").val();
+
+
+
+            $.ajax({
+                url: "/manage/room/add",
+                type: "post",
+                dataType: "json",
+                data: {
+                    roomTitle: roomTitle,
+                    roomSimpleRemark: roomSimpleRemark,
+                    roomImg: roomImg,
+                    roomBedNumber: roomBedNumber,
+                    roomBathNumber: roomBathNumber,
+                    roomWcNumber: roomWcNumber,
+                    roomMaxCustomerNumber:roomMaxCustomerNumber,
+                    roomNumber:roomNumber,
+                    roomRelPrice:roomRelPrice,
+                    roomReferencePrice:roomReferencePrice,
+                    roomIsDaylyUse:roomIsDaylyUse,
+                    roomIsWifi:roomIsWifi,
+                    roomIsParking:roomIsParking,
+                    roomRemark:roomRemark,
+                    roomState:roomState,
+                    tenantCode:tenantCode
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg(data.msg, {
+                            icon: 6,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg(data.msg, {
+                            icon: 5,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            return false;
+                        });
+                    }
+
+
+                }
+
+            });
+
+        });
+
+        //金额转换
+        function fixed(str) {
+            if (!str) str = '0.00';
+            var ret = Math.round(parseFloat(str) * 100) / 100;
+            var decimal = ret.toString().split('.');
+            if (decimal.length === 1) {
+                return ret.toString() + '.00'
+            }
+            ;
+            if (decimal.length > 1) {
+                if (decimal[1].length < 2) {
+                    return ret.toString() + '0'
+                }
+                return ret
+            }
+            ;
+            return ret;
+        }
+    });
+</script>
+</body>
+</html>

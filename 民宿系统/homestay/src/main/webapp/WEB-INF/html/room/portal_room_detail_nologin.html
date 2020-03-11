@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>房源详情</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../../../layui/css/layui.css">
+    <script type="text/javascript" src="../../../layui/layui.js"></script>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+
+</head>
+<body>
+<style type="text/css">
+    .vintage2 {
+        font-weight: 600;
+        font-size: 35px;
+        font-family: "黑体";
+        color: #8c888b;
+        background: -webkit-linear-gradient(45deg, #70f7fe, #fbd7c6, #fdefac, #bfb5dd, #bed5f5);
+    -moz-linear-gradient(45 deg, #70f7fe, #fbd7c6, #fdefac, #bfb5dd, #bed5f5);
+    -ms-linear-gradient(45 deg, #70f7fe, #fbd7c6, #fdefac, #bfb5dd, #bed5f5);
+        color: transparent;
+        /*设置字体颜色透明*/
+        -webkit-background-clip: text;
+        /*背景裁剪为文本形式*/
+        animation: ran 10s linear infinite;
+        /*动态10s展示*/
+    }
+
+    @keyframes ran {
+        from {
+            backgroud-position: 0 0;
+        }
+        to {
+            background-position: 2000px 0;
+        }
+    }
+</style>
+
+<div class="site-nav-bg">
+    <div class="site-nav w1200">
+        <!-- <p class="sn-back-home">
+             <i class="layui-icon layui-icon-home"></i>
+             <a href="#">首页</a>
+         </p>-->
+        <div class="sn-quick-menu">
+            <!--<div class="login"><a href="login.html">登录</a></div>-->
+            <!--<div class="sp-cart"><a onclick="shoppingCart()" >购物车</a><span>0</span></div>-->
+        </div>
+    </div>
+</div>
+
+
+<div class="header">
+    <div class="headerLayout w1200">
+        <div class="headerCon">
+            <h1 style="height: 80px" class="vintage2">
+                民宿网站
+            </h1>
+            <!-- <div class="mallSearch">
+                 <form action="" class="layui-form" novalidate>
+                     <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
+                     <button class="layui-btn" lay-submit lay-filter="formDemo">
+                         <i class="layui-icon layui-icon-search"></i>
+                     </button>
+                     <input type="hidden" name="" value="">
+                 </form>
+             </div>-->
+        </div>
+    </div>
+</div>
+
+
+<div class="content content-nav-base datails-content">
+    <div class="main-nav">
+        <div class="inner-cont0">
+            <!-- <div class="inner-cont1 w1200">
+                 <div class="inner-cont2">
+                     <a href="commodity.html" class="active">所有商品</a>
+                     <a href="buytoday.html">今日团购</a>
+                     <a href="information.html">母婴资讯</a>
+                     <a href="about.html">关于我们</a>
+                 </div>
+             </div>-->
+        </div>
+    </div>
+    <div class="data-cont-wrap w1200">
+        <!-- <div class="crumb">
+             <a href="javascript:;">首页</a>
+             <span>></span>
+             <a href="javascript:;">所有商品</a>
+             <span>></span>
+             <a href="javascript:;">产品详情</a>
+         </div>-->
+        <div class="product-intro layui-clear">
+            <div class="preview-wrap">
+                <a href="javascript:;"><img style="height:280px; width:280px" id="goodsImg"></a>
+            </div>
+            <div class="itemInfo-wrap">
+                <div class="itemInfo">
+                    <div class="title">
+                        <h4 style="padding-top: 10px" id="goodsTitle"></h4>
+                        <!--<span><i class="layui-icon layui-icon-rate-solid"></i>收藏</span>-->
+                    </div>
+                    <div class="summary">
+
+                        <p class="reference"><span>参考价</span>
+                            <del id="goodsPrice"></del>
+                        </p>
+                        <p class="activity"><span>活动价</span><strong class="price" id="goodsRelPrice"><i>￥</i></strong>
+                        </p>
+                        <!--<p class="activity"><span>库存量</span><i  id="goodsInventory"></i></p>-->
+
+                        <!--
+                                                <p class="address-box"><span>送&nbsp;&nbsp;&nbsp;&nbsp;至</span><strong class="address">江西&nbsp;&nbsp;南昌&nbsp;&nbsp;东湖区</strong></p>
+                        -->
+                    </div>
+                    <div class="choose-attrs">
+                        <!--
+                                                <div class="color layui-clear"><span class="title">颜&nbsp;&nbsp;&nbsp;&nbsp;色</span> <div class="color-cont"><span class="btn">白色</span> <span class="btn active">粉丝</span></div></div>
+                        -->
+                        <!--<div class="number layui-clear"><span class="title">数&nbsp;&nbsp;&nbsp;&nbsp;量</span><div class="number-cont"><span class="cut btn">-</span><input onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" maxlength="4" type="" id="number" name="" value="1"><span class="add btn">+</span></div></div>-->
+                    </div>
+                    <label>入住时间</label>&nbsp
+                    <div class="layui-input-inline">
+                        <input type="text" name="startTime" id="startTime" lay-verify="date" placeholder="开始时间"
+                               class="layui-input">
+                    </div>
+                    ~
+                    <div class="layui-input-inline">
+                        <input type="text" name="endTime" id="endTime" lay-verify="date" placeholder="结束时间"
+                               class="layui-input">
+                    </div>
+                    <div class="choose-btns">
+                        <!--<button class="layui-btn layui-btn-primary purchase-btn">立刻购买</button>-->
+                        <button class="layui-btn  layui-btn-danger car-btn" onclick="addShopCart()"><i
+                                class="layui-icon layui-icon-cart-simple"></i>立即预约
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="detail">
+            <h4 style="padding-left: 50px">具体详情</h4>
+            <div class="item">
+                <textarea id="goodsRenark" style="width:1500px;height: 200px" readonly="readonly"></textarea>
+            </div>
+        </div>
+        <div class="cont-list layui-clear" id="list-cont">
+            <h4 style="font-size: 18px; line-height: 42px; padding-left: 18px; color: #888888;">套内照片</h4>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/1.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>客厅</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/2.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>客厅</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/3.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>客厅电视机</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/4.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>客厅沙发</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/5.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>客厅空间</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/6.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>客厅墙壁</span></p>
+                </div>
+            </div>
+            <h4 style="font-size: 18px; line-height: 42px; padding-left: 18px; color: #888888;">床铺照片</h4>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/7.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>头顶灯</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/8.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>床铺</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/9.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>卧室</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/10.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>床头灯</span></p>
+                </div>
+            </div>
+            <h4 style="font-size: 18px; line-height: 42px; padding-left: 18px; color: #888888;">阳台照片</h4>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/11.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>阳台景</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/12.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>阳台角落</span></p>
+                </div>
+            </div>
+            <h4 style="font-size: 18px; line-height: 42px; padding-left: 18px; color: #888888;">卫生间照片</h4>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/13.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>卫生间全景</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/14.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>马桶</span></p>
+                </div>
+            </div>
+            <h4 style="font-size: 18px; line-height: 42px; padding-left: 18px; color: #888888;">其他</h4>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/15.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>沐浴露</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/16.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>全身妆容镜</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/17.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>毛巾架</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/18.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>房内绿植</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/19.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>房内卧室</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/20.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>杂物篮</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/21.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>洗衣机</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/22.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>开放厨房</span></p>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="img">
+                    <img src="../../../images/23.jpg">
+                </div>
+                <div class="text">
+                    <p style="text-align: center"><span>厨房灶台</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var roomId = '${roomId}';
+    console.log("id:" + roomId);
+    $.ajax({
+        url: "/manage/room/getRoom",
+        type: "post",
+        dataType: "json",
+        data: {
+            roomId: roomId
+        },
+        success: function (data) {
+            var data = data.data;
+            $("#goodsTitle").html(data.roomSimpleRemark);
+            $("#goodsPrice").html('￥' + data.roomReferencePrice);
+            $("#goodsRelPrice").html('￥' + data.roomRelPrice);
+            $("#goodsRenark").html(data.roomRemark);
+            // $("#goodsInventory").html(data.goodsInventory+'件');
+            var goodsImg = data.roomImg;
+            $("#goodsImg").attr("src", "http://127.0.0.1:8080/upload" + goodsImg);
+
+        }
+    })
+
+    layui.config({
+        base: '../../../static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+    }).use(['mm', 'jquery', 'laydate'], function () {
+        var mm = layui.mm, $ = layui.$, laydate = layui.laydate;
+        var cur = $('.number-cont input').val();
+        laydate.render({
+            elem: '#startTime'
+            , type: 'date'
+        });
+        laydate.render({
+            elem: '#endTime'
+            , type: 'date'
+        });
+        $('.number-cont .btn').on('click', function () {
+            if ($(this).hasClass('add')) {
+                cur++;
+
+            } else {
+                if (cur > 1) {
+                    cur--;
+                }
+            }
+            $('.number-cont input').val(cur)
+        })
+
+    });
+
+    function addShopCart() {
+        layui.use(['layer', 'laydate'], function () {
+            var layer = layui.layer,
+                laydate = layui.laydate;
+            laydate.render({
+                elem: '#startTime'
+                , type: 'datetime'
+            });
+            laydate.render({
+                elem: '#endTime'
+                , type: 'datetime'
+            });
+            layer.msg("亲~请您先登录再预约", {
+                icon: 6, time: 2500, end: function () {
+                    window.location.href = "/manage/user/jumpUserLogin.html";
+                }
+            })
+        });
+
+    }
+
+    //点击购物车
+    function shoppingCart() {
+        layui.use(['layer'], function () {
+            var layer = layui.layer;
+            layer.msg("亲~请您先登录再查看购物车", {
+                icon: 6, time: 2500, end: function () {
+                    window.location.href = "/manage/user/jumpUserLogin.html";
+                }
+            })
+        });
+
+    }
+</script>
+
+
+</body>
+</html>

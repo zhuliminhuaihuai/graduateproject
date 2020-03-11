@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manage.dao.RoomMapper" >
+  <resultMap id="BaseResultMap" type="com.manage.pojo.Room" >
+    <constructor >
+      <idArg column="room_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="room_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="room_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_rel_price" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_reference_price" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_simple_remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_bed_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_bath_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_wc_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_max_customer_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_is_dayly_use" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_is_wifi" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_is_parking" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="room_remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="upload_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="upload_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tenant_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tenant_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_spare1" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_spare2" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="room_spare3" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    room_id, room_code, room_state, room_create_time, room_update_time, room_img, room_title, 
+    room_rel_price, room_reference_price, room_simple_remark, room_bed_number, room_bath_number, 
+    room_wc_number, room_number, room_max_customer_number, room_is_dayly_use, room_is_wifi, 
+    room_is_parking, room_remark, upload_name, upload_code, tenant_name, tenant_code, 
+    room_spare1, room_spare2, room_spare3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from homestay_room
+    where room_id = #{roomId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from homestay_room
+    where room_id = #{roomId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.manage.pojo.Room" >
+    insert into homestay_room (room_id, room_code, room_state, 
+      room_create_time, room_update_time, room_img, 
+      room_title, room_rel_price, room_reference_price, 
+      room_simple_remark, room_bed_number, room_bath_number, 
+      room_wc_number, room_number, room_max_customer_number, 
+      room_is_dayly_use, room_is_wifi, room_is_parking, 
+      room_remark, upload_name, upload_code, 
+      tenant_name, tenant_code, room_spare1, 
+      room_spare2, room_spare3)
+    values (#{roomId,jdbcType=INTEGER}, #{roomCode,jdbcType=VARCHAR}, #{roomState,jdbcType=INTEGER}, 
+      #{roomCreateTime,jdbcType=TIMESTAMP}, #{roomUpdateTime,jdbcType=TIMESTAMP}, #{roomImg,jdbcType=VARCHAR}, 
+      #{roomTitle,jdbcType=VARCHAR}, #{roomRelPrice,jdbcType=INTEGER}, #{roomReferencePrice,jdbcType=INTEGER}, 
+      #{roomSimpleRemark,jdbcType=VARCHAR}, #{roomBedNumber,jdbcType=INTEGER}, #{roomBathNumber,jdbcType=INTEGER}, 
+      #{roomWcNumber,jdbcType=INTEGER}, #{roomNumber,jdbcType=INTEGER}, #{roomMaxCustomerNumber,jdbcType=INTEGER}, 
+      #{roomIsDaylyUse,jdbcType=INTEGER}, #{roomIsWifi,jdbcType=INTEGER}, #{roomIsParking,jdbcType=INTEGER}, 
+      #{roomRemark,jdbcType=VARCHAR}, #{uploadName,jdbcType=VARCHAR}, #{uploadCode,jdbcType=VARCHAR}, 
+      #{tenantName,jdbcType=VARCHAR}, #{tenantCode,jdbcType=VARCHAR}, #{roomSpare1,jdbcType=VARCHAR}, 
+      #{roomSpare2,jdbcType=VARCHAR}, #{roomSpare3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.manage.pojo.Room" >
+    insert into homestay_room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="roomState != null" >
+        room_state,
+      </if>
+      <if test="roomCreateTime != null" >
+        room_create_time,
+      </if>
+      <if test="roomUpdateTime != null" >
+        room_update_time,
+      </if>
+      <if test="roomImg != null" >
+        room_img,
+      </if>
+      <if test="roomTitle != null" >
+        room_title,
+      </if>
+      <if test="roomRelPrice != null" >
+        room_rel_price,
+      </if>
+      <if test="roomReferencePrice != null" >
+        room_reference_price,
+      </if>
+      <if test="roomSimpleRemark != null" >
+        room_simple_remark,
+      </if>
+      <if test="roomBedNumber != null" >
+        room_bed_number,
+      </if>
+      <if test="roomBathNumber != null" >
+        room_bath_number,
+      </if>
+      <if test="roomWcNumber != null" >
+        room_wc_number,
+      </if>
+      <if test="roomNumber != null" >
+        room_number,
+      </if>
+      <if test="roomMaxCustomerNumber != null" >
+        room_max_customer_number,
+      </if>
+      <if test="roomIsDaylyUse != null" >
+        room_is_dayly_use,
+      </if>
+      <if test="roomIsWifi != null" >
+        room_is_wifi,
+      </if>
+      <if test="roomIsParking != null" >
+        room_is_parking,
+      </if>
+      <if test="roomRemark != null" >
+        room_remark,
+      </if>
+      <if test="uploadName != null" >
+        upload_name,
+      </if>
+      <if test="uploadCode != null" >
+        upload_code,
+      </if>
+      <if test="tenantName != null" >
+        tenant_name,
+      </if>
+      <if test="tenantCode != null" >
+        tenant_code,
+      </if>
+      <if test="roomSpare1 != null" >
+        room_spare1,
+      </if>
+      <if test="roomSpare2 != null" >
+        room_spare2,
+      </if>
+      <if test="roomSpare3 != null" >
+        room_spare3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roomId != null" >
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomState != null" >
+        #{roomState,jdbcType=INTEGER},
+      </if>
+      <if test="roomCreateTime != null" >
+        #{roomCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roomUpdateTime != null" >
+        #{roomUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roomImg != null" >
+        #{roomImg,jdbcType=VARCHAR},
+      </if>
+      <if test="roomTitle != null" >
+        #{roomTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="roomRelPrice != null" >
+        #{roomRelPrice,jdbcType=INTEGER},
+      </if>
+      <if test="roomReferencePrice != null" >
+        #{roomReferencePrice,jdbcType=INTEGER},
+      </if>
+      <if test="roomSimpleRemark != null" >
+        #{roomSimpleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="roomBedNumber != null" >
+        #{roomBedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomBathNumber != null" >
+        #{roomBathNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomWcNumber != null" >
+        #{roomWcNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomNumber != null" >
+        #{roomNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomMaxCustomerNumber != null" >
+        #{roomMaxCustomerNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomIsDaylyUse != null" >
+        #{roomIsDaylyUse,jdbcType=INTEGER},
+      </if>
+      <if test="roomIsWifi != null" >
+        #{roomIsWifi,jdbcType=INTEGER},
+      </if>
+      <if test="roomIsParking != null" >
+        #{roomIsParking,jdbcType=INTEGER},
+      </if>
+      <if test="roomRemark != null" >
+        #{roomRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadName != null" >
+        #{uploadName,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadCode != null" >
+        #{uploadCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantName != null" >
+        #{tenantName,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantCode != null" >
+        #{tenantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomSpare1 != null" >
+        #{roomSpare1,jdbcType=VARCHAR},
+      </if>
+      <if test="roomSpare2 != null" >
+        #{roomSpare2,jdbcType=VARCHAR},
+      </if>
+      <if test="roomSpare3 != null" >
+        #{roomSpare3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.manage.pojo.Room" >
+    update homestay_room
+    <set >
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomState != null" >
+        room_state = #{roomState,jdbcType=INTEGER},
+      </if>
+      <if test="roomCreateTime != null" >
+        room_create_time = #{roomCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roomUpdateTime != null" >
+        room_update_time = #{roomUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roomImg != null" >
+        room_img = #{roomImg,jdbcType=VARCHAR},
+      </if>
+      <if test="roomTitle != null" >
+        room_title = #{roomTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="roomRelPrice != null" >
+        room_rel_price = #{roomRelPrice,jdbcType=INTEGER},
+      </if>
+      <if test="roomReferencePrice != null" >
+        room_reference_price = #{roomReferencePrice,jdbcType=INTEGER},
+      </if>
+      <if test="roomSimpleRemark != null" >
+        room_simple_remark = #{roomSimpleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="roomBedNumber != null" >
+        room_bed_number = #{roomBedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomBathNumber != null" >
+        room_bath_number = #{roomBathNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomWcNumber != null" >
+        room_wc_number = #{roomWcNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomNumber != null" >
+        room_number = #{roomNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomMaxCustomerNumber != null" >
+        room_max_customer_number = #{roomMaxCustomerNumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomIsDaylyUse != null" >
+        room_is_dayly_use = #{roomIsDaylyUse,jdbcType=INTEGER},
+      </if>
+      <if test="roomIsWifi != null" >
+        room_is_wifi = #{roomIsWifi,jdbcType=INTEGER},
+      </if>
+      <if test="roomIsParking != null" >
+        room_is_parking = #{roomIsParking,jdbcType=INTEGER},
+      </if>
+      <if test="roomRemark != null" >
+        room_remark = #{roomRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadName != null" >
+        upload_name = #{uploadName,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadCode != null" >
+        upload_code = #{uploadCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantName != null" >
+        tenant_name = #{tenantName,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantCode != null" >
+        tenant_code = #{tenantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomSpare1 != null" >
+        room_spare1 = #{roomSpare1,jdbcType=VARCHAR},
+      </if>
+      <if test="roomSpare2 != null" >
+        room_spare2 = #{roomSpare2,jdbcType=VARCHAR},
+      </if>
+      <if test="roomSpare3 != null" >
+        room_spare3 = #{roomSpare3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where room_id = #{roomId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.manage.pojo.Room" >
+    update homestay_room
+    set room_code = #{roomCode,jdbcType=VARCHAR},
+      room_state = #{roomState,jdbcType=INTEGER},
+      room_create_time = #{roomCreateTime,jdbcType=TIMESTAMP},
+      room_update_time = #{roomUpdateTime,jdbcType=TIMESTAMP},
+      room_img = #{roomImg,jdbcType=VARCHAR},
+      room_title = #{roomTitle,jdbcType=VARCHAR},
+      room_rel_price = #{roomRelPrice,jdbcType=INTEGER},
+      room_reference_price = #{roomReferencePrice,jdbcType=INTEGER},
+      room_simple_remark = #{roomSimpleRemark,jdbcType=VARCHAR},
+      room_bed_number = #{roomBedNumber,jdbcType=INTEGER},
+      room_bath_number = #{roomBathNumber,jdbcType=INTEGER},
+      room_wc_number = #{roomWcNumber,jdbcType=INTEGER},
+      room_number = #{roomNumber,jdbcType=INTEGER},
+      room_max_customer_number = #{roomMaxCustomerNumber,jdbcType=INTEGER},
+      room_is_dayly_use = #{roomIsDaylyUse,jdbcType=INTEGER},
+      room_is_wifi = #{roomIsWifi,jdbcType=INTEGER},
+      room_is_parking = #{roomIsParking,jdbcType=INTEGER},
+      room_remark = #{roomRemark,jdbcType=VARCHAR},
+      upload_name = #{uploadName,jdbcType=VARCHAR},
+      upload_code = #{uploadCode,jdbcType=VARCHAR},
+      tenant_name = #{tenantName,jdbcType=VARCHAR},
+      tenant_code = #{tenantCode,jdbcType=VARCHAR},
+      room_spare1 = #{roomSpare1,jdbcType=VARCHAR},
+      room_spare2 = #{roomSpare2,jdbcType=VARCHAR},
+      room_spare3 = #{roomSpare3,jdbcType=VARCHAR}
+    where room_id = #{roomId,jdbcType=INTEGER}
+  </update>
+  <select id="getRoomList" parameterType="com.manage.vo.RoomQueryVo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from homestay_room
+    <where>
+      <if test="roomSimpleRemark!=null and roomSimpleRemark!=''">
+        and room_simple_remark like "%"#{roomSimpleRemark}"%"
+      </if>
+      <if test="roomTitle!=null and roomTitle!=''">
+        and room_title = #{roomTitle}
+      </if>
+      <if test="tenantName!=null and tenantName!=''">
+        and tenant_name like  "%"#{tenantName}"%"
+      </if>
+      <if test="roomBedNumber!=null and roomBedNumber!=''">
+        and room_bed_number = #{roomBedNumber}
+      </if>
+      <if test="roomMaxCustomerNumber!=null and roomMaxCustomerNumber!=''">
+        and room_max_customer_number = #{roomMaxCustomerNumber}
+      </if>
+      <if test="roomIsDaylyUse!=null and roomIsDaylyUse!=''">
+        and room_is_dayly_use = #{roomIsDaylyUse}
+      </if>
+      <if test="roomIsWifi!=null and roomIsWifi!=''">
+        and room_is_wifi = #{roomIsWifi}
+      </if>
+      <if test="roomIsParking!=null and roomIsParking!=''">
+        and room_is_parking = #{roomIsParking}
+      </if>
+      <if test="roomState!=null and roomState!=''">
+        and room_state = #{roomState}
+      </if>
+      <if test="tenantCode!=null and tenantCode!=''">
+        and tenant_code = #{tenantCode}
+      </if>
+    </where>
+  </select>
+</mapper>

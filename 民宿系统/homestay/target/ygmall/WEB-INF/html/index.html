@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="../../images/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../../css1/layui.css">
+    <link rel="stylesheet" href="../../css1/admin.css">
+    <title>管理后台</title>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header custom-header">
+            
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item slide-sidebar" lay-unselect>
+                    <a href="javascript:;" class="icon-font"><i class="ai ai-menufold"></i></a>
+                </li>
+            </ul>
+
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" > 欢迎您，<span id="userName"></span>&nbsp&nbsp个人中心</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" onclick="x_admin_show('个人信息','/manage/user/index_user_info',800,450)">个人信息</a></dd>
+                        <dd><a href="javascript:;" onclick="x_admin_show('修改密码','/manage/user/user_modify_password',600,400)">修改密码</a></dd>
+                        <dd><a href="/manage/user/jumpUserShop.html">返回网站</a></dd>
+                        <dd><a href="/manage/user/jumpUserBackStageLogin.html">退出</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+
+        <div class="layui-side custom-admin">
+            <div class="layui-side-scroll">
+
+                <div class="custom-logo">
+                    <img src="../../images/logo.png" alt=""/>
+                    <h1>民宿后台管理</h1>
+                </div>
+                <ul id="Nav" class="layui-nav layui-nav-tree" >
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe609;</i>
+                            <em>主页</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/manage/user/jumpMain.html">欢迎页</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" id="room">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe62e;</i>
+                            <em>房源管理</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/manage/room/jumpAddRoom.html">添加房源</a></dd>
+                        </dl>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/manage/room/jumpRoomList.html">房源列表</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe857;</i>
+                            <em>预约单管理</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/manage/order/jumpOrderList.html">预约单列表</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe857;</i>
+                            <em>评论管理</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/manage/comment/jumpCommentList.html">评论列表</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" id="user">
+                        <a href="javascript:;">
+                            <i class="layui-icon">&#xe612;</i>
+                            <em>用户管理</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/manage/user/jumpUserList.html">用户列表</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+             <div class="layui-tab app-container" lay-allowClose="true" lay-filter="tabs">
+                <ul id="appTabs" class="layui-tab-title custom-tab"></ul>
+                <div id="appTabPage" class="layui-tab-content"></div>
+            </div>
+        </div>
+
+        <div class="mobile-mask"></div>
+    </div>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../js1/home.js"></script>
+    <script src="../../js1/jquery-3.3.1.min.js"></script>
+    <script src="../../js1/xadmin.js"></script>
+    <script>
+        var userName ='${session_manage_token.getUserName()}';
+        var role ='${session_manage_token.getUserRole()}';
+        $("#userName").html(userName);
+        if (role == 0) {
+            $("#user").hide();
+        }
+        if (role == 2) {
+            $("#user").hide();
+            $("#room").hide();
+        }
+        layui.use(['table', 'laydate', 'layer', 'form'], function () {
+
+            $.ajax({
+                url: "/manage/user/isHaveRealName",
+                type: "post",
+                dataType: "json",
+                async: false,
+                success: function (res) {
+                    console.log(JSON.stringify(res));
+                    if (res.status == 1 ) {
+                        layer.open({
+                            type: 1,
+                            title: "系统公告", //不显示标题栏
+                            closeBtn: false,
+                            area: '310px',
+                            shade: 0.8,
+                            anim: 6,
+                            id: 'LAY_layuipro', //设定一个id，防止重复弹出
+                            btn: ['收到', '实名'],
+                            btn2: function (index, layero) {
+                                x_admin_show('用户信息', '/manage/user/index_user_info.html', 1200, 600);
+                            },
+                            moveType: 1, //拖拽模式，0或者1
+                            content: '<div style="padding:15px 20px; text-align:justify; line-height: 22px; text-indent:2em;border-bottom:1px solid #e2e2e2;"><p><strong>亲~您好~您还未实名哦~不实名的话，不能住房和放置房源哦！</strong></p></div>',
+                            success: function (layero) {
+                                var btn = layero.find('.layui-layer-btn');
+                                btn.css('text-align', 'center');
+                                btn.on("click", function () {
+                                    window.sessionStorage.setItem("showNotice", "true");
+                                })
+                                // if($(window).width() > 432){  //如果页面宽度不足以显示顶部“系统公告”按钮，则不提示
+                                //     btn.on("click",function(){
+                                //         layer.tips('系统公告躲在了这里', '#showNotice', {
+                                //             tips: 3
+                                //         });
+                                //     })
+                                // }
+                            }
+                        });
+                    }
+                }
+            })
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../../css/view.css"/>
+    <link rel="icon" href="/favicon.ico">
+    <title>商品详情</title>
+</head>
+<body>
+<!-- 中部开始 -->
+<div class="wrapper">
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <label for="goodsTitle" class="layui-form-label">
+                        商品名
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="goodsTitle" name="goodsTitle" required lay-verify="goodsTitle"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="goodsSort" class="layui-form-label">
+                        商品分类
+                    </label>
+                    <div class="layui-input-inline">
+                        <select name="goodsSort" id="goodsSort" lay-verify="goodsSort" lay-search="" >
+                            <option value="">请选择...</option>
+                            <option value="生活类">生活类</option>
+                            <option value="零食类">零食类</option>
+                            <option value="日用品类">日用品类</option>
+                            <option value="即食类">即食类</option>
+                            <option value="五金类">五金类</option>
+                            <option value="洗漱类">洗漱类</option>
+                            <option value="床上用品类">床上用品类</option>
+                            <option value="饮料类">饮料类</option>
+                            <option value="厨房调味类">厨房调味类</option>
+                        </select>
+                    </div>
+                </div>
+                    <input type="text" style="display: none" name="headimg" id="headimg" lay-verify="headimg" >
+                    <div class="layui-form-item" >
+                        <label  class="layui-form-label"> 商品照片
+                        </label>
+                        <div class="layui-upload" >
+                            <div class="layui-upload-list" id="demo3" >
+                                <img class="layui-upload-img " id="demo2" width="250px" height="250px"  >
+                            </div>
+                            <button type="button" class="layui-btn" id="test2">修改图片</button>
+                            <div class="layui-form-mid layui-word-aux">
+                                修改商品的照片
+                            </div>
+                        </div>
+                    </div>
+                <div class="layui-form-item">
+                    <label for="goodsCostPrice" class="layui-form-label">
+                        成本价
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="goodsCostPrice" name="goodsCostPrice" required lay-verify="goodsCostPrice"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="goodsRelPrice" class="layui-form-label">
+                        交易价
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="goodsRelPrice" name="goodsRelPrice" required lay-verify="goodsRelPrice"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="goodsInventory" class="layui-form-label">
+                        库存量
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" disabled id="goodsInventory" name="goodsInventory" required lay-verify="number"
+                               autocomplete="off" value="" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        商品的库存量
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label for="goodsRenark" class="layui-form-label">
+                        商品详情
+                    </label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="" id="goodsRenark" name="goodsRenark" autocomplete="off"
+                                  class="layui-textarea" style="height: 80px;" lay-verify="goodsRenark"></textarea>
+                    </div>
+                </div>
+
+
+
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                    </label>
+                    <button class="layui-btn" key="set-mine" lay-filter="save" lay-submit>
+                        保存
+                    </button>
+                </div>
+            </div>
+            <!-- 右侧内容框架，更改从这里结束 -->
+        </div>
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<!-- 中部结束 -->
+<link rel="stylesheet" href="../../../x-admin/lib/layui/css/modules/layer/default/layer.css">
+
+<script src="../../../x-admin/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../x-admin/js/xadmin.js"></script>
+
+<script>
+    var goodsId = localStorage.getItem("goodsId");
+    localStorage.removeItem("goodsId");
+    layui.use(['form', 'layer',  'code','upload' ], function () {
+        $ = layui.jquery;
+        var form = layui.form,
+            layer = layui.layer,
+            code = layui.code,
+            upload = layui.upload;
+        form.verify({
+            goodsTitle : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '商品名不能为空！';
+                }
+            },
+            goodsSort : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '商品分类不能为空';
+                }
+            },
+
+            goodsCostPrice : function(value) {
+                if (value.length ==null ||value.length =="") {
+                    return '成本价不能为空！';
+                }
+                if (value > $("#goodsRelPrice").val()) {
+                    return '成本价不能高于交易价';
+                }
+            },
+            goodsRelPrice: function (value) {
+                if (value.length == null || value.length == "") {
+                    return '交易价不能为空！';
+                }
+            },
+            goodsRenark : function (value) {
+                if (value.length == null || value.length == "") {
+                    return '给商品做个备注。。。良好习惯';
+                }
+            },
+
+            });
+        $.ajax({
+            url: "/manage/goods/detailGoods",
+            type: "post",
+            dataType: "json",
+            data:{
+                goodsId:goodsId
+            },
+            success: function (data) {
+                console.log(JSON.stringify(data));
+                var data = data.data;
+
+                $("#orderGoodName").val(data.goodsTitle);
+                $("#goodsSort").val(data.goodsSort);
+                $("#goodsType").val(data.goodsType);
+                $("#goodsCostPrice").val(fixed(data.goodsCostPrice));
+                $("#goodsRelPrice").val(fixed(data.goodsRelPrice));
+                $("#goodsRenark").val(data.goodsRenark);
+                var upload_file = data.goodsImg;
+                $("#demo2").attr("src","http://127.0.0.1:8080/upload/"+upload_file);
+                $("#headimg").val(data.goodsImg);
+                $("#goodsInventory").val(data.goodsInventory);
+                form.render();
+
+
+            }
+        })
+        //图片上传
+        upload.render({
+            elem: '#test2'
+            , url: '/manage/goods/uploadImg'
+            , multiple: false
+            , size: 2048
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    //console.log(file);
+                    $('#demo2').remove();
+                    $('#demo3').append('<img width="250px" height="250px" id="demo2" src="' + result + '" alt="' + file.name + '" class="layui-upload-img">');
+                });
+            }
+            , done: function (res) {
+                var img = res.data.uri;
+                $("#headimg").val(img);
+                s=img;
+                layer.msg("上传完成", {icon: 6, time: 5000,});
+            }
+
+        });
+        form.on('submit(save)', function(data) {
+            var goodsTitle =  $("#goodsTitle").val();
+            var goodsCostPrice =  $("#goodsCostPrice").val();
+            var goodsRelPrice = $("#goodsRelPrice").val();
+            var goodsSort = $("#goodsSort option:selected").val();
+            var goodsRenark = $("#goodsRenark").val();
+            var headimg= $("#headimg").val();
+
+            $.ajax({
+                url: "/manage/goods/modifyGoods",
+                type: "post",
+                dataType: "json",
+                data:{
+                    goodsId:goodsId,
+                    goodsTitle:goodsTitle,
+                    goodsCostPrice1:goodsCostPrice,
+                    goodsRelPrice1:goodsRelPrice,
+                    goodsSort:goodsSort,
+                    goodsRenark:goodsRenark,
+                    goodsImg:headimg,
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    if (data.status == 0) {
+                        layer.msg('保存成功!', {
+                            icon: 6,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            parent.location.reload();
+                        });
+                    }else  {
+                        layer.msg('保存失败!', {
+                            icon: 5,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            return false;
+                        });
+                    }
+
+
+                }
+
+            });
+
+        });
+        //金额转换
+        function fixed(str) {
+            if (!str) str = '0.00';
+            var ret = Math.round(parseFloat(str) * 100) / 100;
+            var decimal = ret.toString().split('.');
+            if (decimal.length === 1) {
+                return ret.toString() + '.00'
+            };
+            if (decimal.length > 1) {
+                if (decimal[1].length < 2) {
+                    return ret.toString() + '0'
+                }
+                return ret
+            };
+            return ret;
+        }
+    });
+</script>
+</body>
+</html>

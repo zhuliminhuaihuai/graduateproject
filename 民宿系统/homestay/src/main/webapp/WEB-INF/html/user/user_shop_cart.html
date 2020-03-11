@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <link rel="stylesheet" type="text/css" href="../../../static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../../../layui/css/layui.css">
+    <script type="text/javascript" src="../../../layui/layui.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+<body>
+<style type="text/css">
+    .vintage2 {
+        font-weight: 600;
+        font-size: 35px;
+        font-family: "黑体";
+        color: #8c888b;
+        background: -webkit-linear-gradient(45deg, #70f7fe, #fbd7c6, #fdefac, #bfb5dd, #bed5f5);
+    -moz-linear-gradient(45deg, #70f7fe, #fbd7c6, #fdefac, #bfb5dd, #bed5f5);
+    -ms-linear-gradient(45deg, #70f7fe, #fbd7c6, #fdefac, #bfb5dd, #bed5f5);
+        color: transparent;
+        /*设置字体颜色透明*/
+        -webkit-background-clip: text;
+        /*背景裁剪为文本形式*/
+        animation: ran 10s linear infinite;
+        /*动态10s展示*/
+    }
+
+    @keyframes ran {
+        from {
+            backgroud-position: 0 0;
+        }
+        to {
+            background-position: 2000px 0;
+        }
+    }
+</style>
+<div class="site-nav-bg">
+    <div class="site-nav w1200">
+       <!-- <p class="sn-back-home">
+            <i class="layui-icon layui-icon-home"></i>
+            <a href="#">首页</a>
+        </p>
+        <div class="sn-quick-menu">
+            <div class="login"><a href="login.html">登录</a></div>
+            <div class="sp-cart"><a href="shopcart.html">购物车</a><span>2</span></div>
+        </div>-->
+    </div>
+</div>
+
+
+
+<div class="header">
+    <div class="headerLayout w1200">
+        <div class="headerCon">
+            <h1 style="height: 80px" class="vintage2">
+                水果批发商城
+            </h1>
+            <!--<div class="mallSearch">
+                <form action="" class="layui-form" novalidate>
+                    <input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">
+                        <i class="layui-icon layui-icon-search"></i>
+                    </button>
+                    <input type="hidden" name="" value="">
+                </form>
+            </div>-->
+        </div>
+    </div>
+</div>
+
+
+<div class="content content-nav-base shopcart-content">
+    <div class="main-nav">
+        <div class="inner-cont0">
+            <div class="inner-cont1 w1200">
+               <!-- <div class="inner-cont2">
+                    <a href="commodity.html" class="active">所有商品</a>
+                    <a href="buytoday.html">今日团购</a>
+                    <a href="information.html">母婴资讯</a>
+                    <a href="about.html">关于我们</a>
+                </div>-->
+            </div>
+        </div>
+    </div>
+    <!--<div class="banner-bg w1200">
+        <h3>夏季清仓</h3>
+        <p>宝宝被子、宝宝衣服3折起</p>
+    </div>-->
+    <div class="cart w1200">
+        <div class="cart-table-th">
+            <div class="th th-chk">
+                <div class="select-all">
+                    <div class="cart-checkbox">
+                        <input class="check-all check" id="allCheckked" type="checkbox" value="true">
+                    </div>
+                    <label>&nbsp;&nbsp;全选</label>
+                </div>
+            </div>
+            <div class="th th-item">
+                <div class="th-inner">
+                    商品
+                </div>
+            </div>
+            <div class="th th-price">
+                <div class="th-inner">
+                    单价
+                </div>
+            </div>
+            <div class="th th-amount">
+                <div class="th-inner">
+                    数量
+                </div>
+            </div>
+            <div class="th th-sum">
+                <div class="th-inner">
+                    小计
+                </div>
+            </div>
+            <div class="th th-op">
+                <div class="th-inner">
+                    操作
+                </div>
+            </div>
+        </div>
+        <div class="OrderList">
+            <div class="order-content" id="list-cont">
+
+            </div>
+        </div>
+
+        <!-- 模版导入数据 -->
+        <script type="text/html" id="demo">
+            {{# layui.each(d.infoList,function(index,item){}}
+            <ul class="item-content layui-clear">
+                <li class="th th-chk">
+                    <div class="select-all">
+                        <div class="cart-checkbox">
+                            <input class="CheckBoxShop check" id="" type="checkbox" num="all" name="select-all" value="true">
+                        </div>
+                    </div>
+                </li>
+                <li class="th th-item">
+                    <div class="item-cont">
+                        <a href="javascript:;"><img src="{{item.img}}" alt=""></a>
+                        <div class="text">
+                            <div class="title">{{item.title}}</div>
+                            <p><span>{{item.goodsBigTypeString}}</span>  <span>{{item.goodsSmallTypeString}}</span></p>
+                        </div>
+                    </div>
+                </li>
+                <li class="th th-price">
+                    <span class="th-su">{{item.price}}</span>
+                </li>
+                <li class="th th-amount">
+                    <div class="box-btn layui-clear">
+                        <div class="less layui-btn">-</div>
+                        <input class="Quantity-input" type="" name="" value="{{item.goodsBuyNum}}" disabled="disabled">
+                        <input class="cartId" type="hidden" value="{{item.cartId}}">
+                        <div class="add layui-btn">+</div>
+                    </div>
+                </li>
+                <li class="th th-sum">
+                    <span class="sum">{{item.goodsOneSumPrice}}</span>
+                </li>
+                <li class="th th-op">
+                    <span class="dele-btn">删除</span>
+                </li>
+            </ul>
+            {{# });}}
+        </script>
+
+
+
+        <div class="FloatBarHolder layui-clear">
+            <div class="th th-chk">
+                <div class="select-all">
+                    <div class="cart-checkbox">
+                        <input class="check-all check" id="" name="select-all" type="checkbox"  value="true">
+                    </div>
+                    <label>&nbsp;&nbsp;已选<span class="Selected-pieces">0</span>件</label>
+                </div>
+            </div>
+            <div class="th batch-deletion">
+                <span class="batch-dele-btn">批量删除</span>
+            </div>
+            <div class="th Settlement">
+                <button class="layui-btn">结算</button>
+            </div>
+            <div class="th total">
+                <p>应付：<span class="pieces-total">0</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    layui.config({
+        base: '../../../static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+    }).use(['mm','jquery','element','car'],function(){
+        var mm = layui.mm,$ = layui.$,element = layui.element,car = layui.car;
+
+        // 模版导入数据
+        var html = demo.innerHTML,
+        listCont = document.getElementById('list-cont');
+        mm.request({
+          url: '/manage/cart/getAllGoodsUnderCart',
+          success : function(res){
+            listCont.innerHTML = mm.renderHtml(html,res.data)
+            element.render();
+            car.init()
+          },
+          error: function(res){
+            console.log(res);
+          }
+        })
+
+        car.init()
+
+
+    });
+    //金额转换
+    function fixed(str) {
+        if (!str) str = '0.00';
+        var ret = Math.round(parseFloat(str) * 100) / 100;
+        var decimal = ret.toString().split('.');
+        if (decimal.length === 1) {
+            return ret.toString() + '.00'
+        };
+        if (decimal.length > 1) {
+            if (decimal[1].length < 2) {
+                return ret.toString() + '0'
+            }
+            return ret
+        };
+        return ret;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.manage.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.manage.pojo.User">
+        <constructor>
+            <idArg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="user_name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_password" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_code" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_role" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="user_find_password" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_provice" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_city" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_region" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_phone" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_birthday" jdbcType="DATE" javaType="java.util.Date"/>
+            <arg column="headimg" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="user_create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="user_update_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    user_id, user_name, user_password, user_code, user_role, user_find_password, user_provice, 
+    user_city, user_region, user_phone, user_birthday, headimg, user_create_time, user_update_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from homestay_user
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from homestay_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.manage.pojo.User">
+    insert into homestay_user (user_id, user_name, user_password, 
+      user_code, user_role, user_find_password, 
+      user_provice, user_city, user_region, 
+      user_phone, user_birthday, headimg, 
+      user_create_time, user_update_time)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+      #{userCode,jdbcType=VARCHAR}, #{userRole,jdbcType=INTEGER}, #{userFindPassword,jdbcType=VARCHAR}, 
+      #{userProvice,jdbcType=VARCHAR}, #{userCity,jdbcType=VARCHAR}, #{userRegion,jdbcType=VARCHAR}, 
+      #{userPhone,jdbcType=VARCHAR}, #{userBirthday,jdbcType=DATE}, #{headimg,jdbcType=VARCHAR}, 
+      #{userCreateTime,jdbcType=TIMESTAMP}, #{userUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.manage.pojo.User">
+        insert into homestay_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="userPassword != null">
+                user_password,
+            </if>
+            <if test="userCode != null">
+                user_code,
+            </if>
+            <if test="userRole != null">
+                user_role,
+            </if>
+            <if test="userFindPassword != null">
+                user_find_password,
+            </if>
+            <if test="userProvice != null">
+                user_provice,
+            </if>
+            <if test="userCity != null">
+                user_city,
+            </if>
+            <if test="userRegion != null">
+                user_region,
+            </if>
+            <if test="userPhone != null">
+                user_phone,
+            </if>
+            <if test="userBirthday != null">
+                user_birthday,
+            </if>
+            <if test="headimg != null">
+                headimg,
+            </if>
+            <if test="userCreateTime != null">
+                user_create_time,
+            </if>
+            <if test="userUpdateTime != null">
+                user_update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userCode != null">
+                #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userRole != null">
+                #{userRole,jdbcType=INTEGER},
+            </if>
+            <if test="userFindPassword != null">
+                #{userFindPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userProvice != null">
+                #{userProvice,jdbcType=VARCHAR},
+            </if>
+            <if test="userCity != null">
+                #{userCity,jdbcType=VARCHAR},
+            </if>
+            <if test="userRegion != null">
+                #{userRegion,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null">
+                #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="userBirthday != null">
+                #{userBirthday,jdbcType=DATE},
+            </if>
+            <if test="headimg != null">
+                #{headimg,jdbcType=VARCHAR},
+            </if>
+            <if test="userCreateTime != null">
+                #{userCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userUpdateTime != null">
+                #{userUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.manage.pojo.User">
+        update homestay_user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                user_password = #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userCode != null">
+                user_code = #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userRole != null">
+                user_role = #{userRole,jdbcType=INTEGER},
+            </if>
+            <if test="userFindPassword != null">
+                user_find_password = #{userFindPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userProvice != null">
+                user_provice = #{userProvice,jdbcType=VARCHAR},
+            </if>
+            <if test="userCity != null">
+                user_city = #{userCity,jdbcType=VARCHAR},
+            </if>
+            <if test="userRegion != null">
+                user_region = #{userRegion,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null">
+                user_phone = #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="userBirthday != null">
+                user_birthday = #{userBirthday,jdbcType=DATE},
+            </if>
+            <if test="headimg != null">
+                headimg = #{headimg,jdbcType=VARCHAR},
+            </if>
+            <if test="userCreateTime != null">
+                user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userUpdateTime != null">
+                user_update_time = #{userUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.manage.pojo.User">
+    update homestay_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      user_role = #{userRole,jdbcType=INTEGER},
+      user_find_password = #{userFindPassword,jdbcType=VARCHAR},
+      user_provice = #{userProvice,jdbcType=VARCHAR},
+      user_city = #{userCity,jdbcType=VARCHAR},
+      user_region = #{userRegion,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_birthday = #{userBirthday,jdbcType=DATE},
+      headimg = #{headimg,jdbcType=VARCHAR},
+      user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+      user_update_time = #{userUpdateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+    <select id="checkUserName" parameterType="java.lang.String" resultType="int">
+    select count(1)
+    from homestay_user
+    where user_name = #{userName}
+  </select>
+    <select id="checkUserPass" resultType="int" parameterType="map">
+    SELECT count(1) from  homestay_user
+    where password=#{oPass} and user_id =#{userId}
+  </select>
+    <select id="login" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from homestay_user
+        where user_name = #{userName}
+        and user_password = #{password}
+    </select>
+    <select id="findUserByUserCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from homestay_user
+        where user_code = #{userCode}
+    </select>
+    <select id="getTenant" parameterType="int" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from homestay_user
+        where user_role = #{userRole}
+    </select>
+    <select id="getUserList" parameterType="com.manage.vo.UserVo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from homestay_user
+        <where>
+            <if test="1==1">
+                and user_role !=1
+            </if>
+            <if test="userName!=null and userName!=''">
+                and user_name like "%"#{userName}"%"
+            </if>
+            <if test="headimg!=null and headimg!=''">
+                and headimg like "%"#{headimg}"%"
+            </if>
+            <if test="userRole!=null and userRole!=''">
+                and user_role = #{userRole}
+            </if>
+            <if test="userFindPassword!=null and userFindPassword!=''">
+                and user_find_password like "%"#{userFindPassword}"%"
+            </if>
+            <if test="userPhone!=null and userPhone!=''">
+                and user_phone like "%"#{userPhone}"%"
+            </if>
+
+        </where>
+    </select>
+    <delete id="deleteSomeUser" parameterType="java.util.List">
+        delete from homestay_user
+        where user_id in
+        <foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="getUserCountTotal" resultType="int">
+    select count(1)
+    from homestay_user
+    where user_role = 2
+  </select>
+    <select id="getTodayUserCount" resultType="int">
+    select count(1)
+    from homestay_user
+    where user_role = 2 and DATE (user_create_time) = DATE (now())
+  </select>
+    <select id="getYestodayUserCount" resultType="int">
+    select count(1)
+    from homestay_user
+    where user_role = 2 and MONTH(user_create_time) = MONTH(NOW()) and	Day	(user_create_time) = Day (now())-1
+  </select>
+    <select id="getWeekUserCount" resultType="int">
+    select count(1)
+    from homestay_user
+    where user_role = 2 and YEARWEEK(date_format(user_create_time,'%Y-%m-%d')) = YEARWEEK(now())
+  </select>
+    <select id="getMonthUserCount" resultType="int">
+    select count(1)
+    from homestay_user
+    where user_role = 2 and YEAR(user_create_time) = YEAR(NOW()) AND MONTH(user_create_time) = MONTH(NOW())
+  </select>
+</mapper>

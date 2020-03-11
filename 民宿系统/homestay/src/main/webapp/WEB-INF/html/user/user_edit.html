@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<base href="<%=basePath%>">
+	<meta charset="UTF-8">
+	<title>修改会员</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="../../../layui/css/layui.css">
+	<style>
+		.x-red{
+			color: red;
+		}
+	</style>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="../../../layui/layui.all.js" charset="utf-8"></script>
+	<script src="../../../js/xcity.js" charset="utf-8"></script>
+	<script src="../../../js/formate.js" charset="utf-8"></script>
+
+</head>
+<body>
+<div class="childrenBody" style="padding-top: 5%">
+	<div class="layui-form">
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span
+					class="x-red">*</span>用户类型</label>
+			<div class="layui-input-inline">
+				<!--	<select class="layui-select-disabled" name="role" id="role" lay-verify="role" lay-search="" >
+						<option value="-1">请选择</option>
+						<option value="0">管理员</option>
+						<option value="1">项目经理</option>
+						<option value="2">研发人员</option>
+						<option value="3">测试人员</option>
+					</select>-->
+				<input type="text" id="role"  disabled name="role" required=""
+					   lay-verify="userName" autocomplete="off"
+					   class="layui-input layui-disabled" placeholder=""><!--onblur="regist()"-->
+			</div>
+			<label for="userName" class="layui-form-label"> <span
+					class="x-red">*</span>用户名
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" id="userName" disabled  name="userName" required=""
+					   lay-verify="userName" autocomplete="off"
+					   class="layui-input" placeholder="请输入用户名"><!--onblur="regist()"-->
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> <span
+					class="x-red">*</span>真实姓名
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" disabled name="realName" id="realName"
+					   required="" lay-verify="realName" autocomplete="off"
+					   class="layui-input" placeholder="请输入真实姓名">
+			</div>
+			<label class="layui-form-label"><span
+					class="x-red">*</span> 身份证号 </label>
+			<div class="layui-input-inline">
+				<input type="text" value="" disabled name="userFindPassword" id="userFindPassword"
+					   required="" lay-verify="userFindPassword" autocomplete="off"
+					   class="layui-input" placeholder="身份证号">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> 邮箱
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="email" id="email"
+					   required="" lay-verify="" autocomplete="off"
+					   class="layui-input" placeholder="请输入邮箱">
+			</div>
+			<label class="layui-form-label"> 生日
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="birthday" id="birthday"
+					   required="" lay-verify="" autocomplete="off"
+					   class="layui-input" placeholder="请输入生日">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> <span
+					class="x-red">*</span>手机
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" value="" name="mobilePhone" id="mobilePhone"
+					   required="" lay-verify="mobilePhone" autocomplete="off"
+					   class="layui-input" placeholder="请输入手机号码">
+			</div>
+			<label class="layui-form-label"> <span
+					class="x-red">*</span>用户编号
+			</label>
+			<div class="layui-input-inline">
+				<input type="text" disabled value="" name="userCode" id="userCode"
+					   required="" lay-verify="userCode" autocomplete="off"
+					   class="layui-input" placeholder="">
+			</div>
+
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"> 性别 </label>
+			<div class="layui-input-block" style="">
+				<input type="radio" name="sex" value="1" id="man" title="男" >
+				<input type="radio" name="sex" value="2" id="woman" title="女" checked="">
+				<input type="radio" name="sex" value="0" id="baomi" title="保密" >
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<textarea placeholder="请输入备注" name="userSign" id="userSign" class="layui-textarea linksDesc"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item" id="editUser">
+			<label class="layui-form-label"> </label>
+			<button class="layui-btn" lay-filter="editUser" lay-submit="">
+				保存
+			</button>
+		</div>
+
+	</div>
+
+</div>
+
+
+<script>
+		var userId = localStorage.getItem("userId");
+		localStorage.removeItem("userId");
+        var form = layui.form;
+		//请求数据
+		$.ajax({
+			url:'/manage/user/detailUser',
+			type:'post',
+			data:{
+                userId:userId,
+			},
+			dataType:'json',
+			success:function (data) {
+				if(data.status==0){
+                    $("#userName").val(data.data.userName);
+                    if(data.data.userRole==1){
+                        $("#role").val("民宿管理员");
+                    }else if(data.data.userRole==0){
+                        $("#role").val("房东");
+                    }else if(data.data.userRole==2){
+                        $("#role").val("住户");
+                    }else {
+                        $("#role").val("");
+                    }
+                    $("#realName").val(data.data.headimg);
+                    $("#mobilePhone").val(data.data.userPhone);
+                    $("#email").val(data.data.userRegion);
+                    $("#birthday").val(editTime1(data.data.userBirthday));
+                    $("#userFindPassword").val(data.data.userFindPassword);
+                    $("#userCode").val(data.data.userCode);
+                    var x=data.data.userProvice;
+                    console.log("adsdasdasdsdzdas:" + x);
+                    if(x=="0"){
+                        $("#baomi").attr('checked','true');
+                    }
+                    else if(x=="1") {
+                        $("#man").attr('checked','true');
+
+                    }else if (x == "2") {
+                        $("#woman").attr('checked','true');
+                    }
+				}
+                form.render();
+            }
+		})
+
+        layui.use([ 'form', 'layer','laydate','code'], function() {
+            $ = layui.jquery;
+            var form = layui.form
+                ,layer = layui.layer
+                ,laydate = layui.laydate;
+
+            laydate.render({
+                elem: '#birthday'
+            });
+            form.verify({
+                userName : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '用户名不能为空';
+                    }
+                },
+
+
+                realName : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '真实姓名不能为空';
+                    }
+                },
+
+                mobilePhone : function(value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '手机号不能为空';
+                    }
+                    var isPhone=/^1[0-9]{10}$/;
+                    var flag=isPhone.test(value);
+                    if(flag==false)
+                        return '手机号格式错误';
+                },
+                userFindPassword: function (value) {
+                    if (value.length ==null ||value.length =="") {
+                        return '身份证号不能为空';
+                    }
+                },
+            });
+            form.on('submit(editUser)', function(data) {
+                var userName= $("#userName").val();
+                var headimg= $("#realName").val();
+                var userPhone= $("#mobilePhone").val();
+                var userRole = $("#role option:selected").val();
+                var userBirthday= $("#birthday").val();
+                var userProvice=$('input:radio:checked').val();
+                var userRegion= $("#email").val();
+                var userCity= $("#userSign").val();
+                var userFindPassword = $("#userFindPassword").val();
+                $.ajax({
+                    type: 'post',
+                    url: '/manage/user/saveUser',
+                    data: {
+                        userId:userId,
+                        userName:userName,
+                        headimg:headimg,
+                        userPhone:userPhone,
+                        userRole:userRole,
+                        birthdays:userBirthday,
+                        userProvice:userProvice,
+                        userRegion:userRegion,
+                        userCity:userCity,
+                        userFindPassword:userFindPassword
+                    },
+                    dataType: 'json',
+                    async:false,
+                    success: function (data) {
+                        console.log(data.msg);
+                        if (data.status == 0) {
+                            layer.msg(data.msg, {
+                                icon: 6, time: 1000, end: function () {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            layer.msg(data.msg);
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        layer.msg('请求失败，检查后台接口');
+                    }
+                })
+
+            })
+        });
+        function editTime(v){
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth()+1;
+            m = m<10?'0'+m:m;
+            var d = date.getDate();
+            d = d<10?("0"+d):d;
+            var h = date.getHours();
+            h = h<10?("0"+h):h;
+            var M = date.getMinutes();
+            M = M<10?("0"+M):M;
+            var S = date.getSeconds();
+            S = S<10?("0"+S):S;
+            var str = h+":"+M+":"+S;
+            return str;
+        }
+        function editTime1(v){
+            var date = new Date(v);
+            var y = date.getFullYear();
+            var m = date.getMonth()+1;
+            m = m<10?'0'+m:m;
+            var d = date.getDate();
+            d = d<10?("0"+d):d;
+            var h = date.getHours();
+            h = h<10?("0"+h):h;
+            var M = date.getMinutes();
+            M = M<10?("0"+M):M;
+            var S = date.getSeconds();
+            S = S<10?("0"+S):S;
+            var str = y+"-"+m+"-"+d;
+            return str;
+        }
+</script>
+</body>
+</html>
